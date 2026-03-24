@@ -635,16 +635,16 @@ function updateApiKeyStatus(){
   const statusEl=document.getElementById('api-status');
   const btn=document.getElementById('btn-generate');
   if(key.startsWith('sk-ant')){
-    statusEl.textContent='&#10003; Connected';
+    statusEl.textContent='✓ Connected';
     statusEl.className='api-status ok';
     btn.disabled=false;
     btn.textContent='✨ Generate My Meal Plan';
   } else if(key.length>0){
-    statusEl.textContent='&#9679; Key format looks off — should start with sk-ant';
+    statusEl.textContent='● Key format looks off — should start with sk-ant';
     statusEl.className='api-status missing';
     btn.disabled=false;
   } else {
-    statusEl.textContent='&#9679; Enter your key to enable AI generation';
+    statusEl.textContent='● Enter your key to enable AI generation';
     statusEl.className='api-status missing';
     btn.disabled=false; // still allow fallback
   }
@@ -1349,13 +1349,16 @@ function showScreen(name){
 
 // ── INIT ──────────────────────────────────────────────────────
 function init(){
-  const savedKey=localStorage.getItem('maund_api_key');
-  if(savedKey){
-    document.getElementById('api-key-input').value=savedKey;
-    STATE.apiKey=savedKey;
-    updateApiKeyStatus();
-  }
   updateWeekLabel();buildDayRows();renderPreferences();
+  // Load API key after DOM is fully ready
+  setTimeout(()=>{
+    const savedKey=localStorage.getItem('maund_api_key');
+    if(savedKey){
+      document.getElementById('api-key-input').value=savedKey;
+      STATE.apiKey=savedKey;
+      updateApiKeyStatus();
+    }
+  },100);
 }
 init();
 </script>
