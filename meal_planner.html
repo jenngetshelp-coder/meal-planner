@@ -848,7 +848,7 @@ async function generatePlanWithAI(){
 }
 
 async function callClaudeAPI(prompt){
-  const response=await fetch('https://api.anthropic.com/v1/messages',{
+  const response=await fetch('https://meal-planner-proxy.jenngetshelp.workers.dev',{
     method:'POST',
     headers:{
       'x-api-key':STATE.apiKey,
