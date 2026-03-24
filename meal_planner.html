@@ -858,7 +858,7 @@ async function callClaudeAPI(prompt){
     },
     body:JSON.stringify({
       model:'claude-sonnet-4-6',
-      max_tokens:4096,
+      max_tokens:8192,
       system:'You are a meal planning assistant for a Canadian family. Respond only with valid JSON matching the requested format. No other text.',
       messages:[{role:'user',content:prompt}]
     })
