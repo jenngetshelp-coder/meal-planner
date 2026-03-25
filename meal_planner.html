@@ -195,6 +195,37 @@ body{font-family:'Segoe UI',system-ui,-apple-system,sans-serif;background:#F9F8F
 .recipe-notes label{font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:.5px;color:#C09F80;margin-bottom:4px;display:block}
 .recipe-notes textarea{width:100%;padding:8px 12px;border:1.5px solid #D8DFF0;border-radius:8px;font-size:13px;color:#3a3a3a;font-family:inherit;resize:vertical;min-height:40px}
 .recipe-notes textarea:focus{outline:none;border-color:#C09F80}
+/* ââ SWAP PANEL MODAL ââ */
+.swap-overlay{position:fixed;inset:0;background:rgba(0,0,0,.4);z-index:998;display:none;backdrop-filter:blur(3px)}
+.swap-overlay.vis{display:block}
+.swap-panel{position:fixed;top:50%;left:50%;transform:translate(-50%,-50%);background:#fff;border-radius:16px;box-shadow:0 20px 60px rgba(0,0,0,.2);z-index:999;width:92%;max-width:560px;max-height:85vh;overflow-y:auto;display:none}
+.swap-panel.vis{display:block}
+.swap-header{padding:20px 24px 0;display:flex;align-items:center;justify-content:space-between}
+.swap-title{font-size:18px;font-weight:700;color:#2C2C2C}
+.swap-close{background:none;border:none;font-size:22px;color:#bbb;cursor:pointer;padding:4px 8px}
+.swap-close:hover{color:#666}
+.swap-subtitle{padding:4px 24px 16px;font-size:13px;color:#999}
+.swap-feedback{padding:0 24px 16px}
+.swap-feedback label{font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:.5px;color:#6B82B0;margin-bottom:6px;display:block}
+.swap-feedback textarea{width:100%;padding:8px 12px;border:1.5px solid #E0DDD7;border-radius:8px;font-size:13px;color:#3a3a3a;font-family:inherit;resize:vertical;min-height:50px;box-sizing:border-box}
+.swap-feedback textarea:focus{outline:none;border-color:#6B82B0;box-shadow:0 0 0 3px rgba(107,130,176,.1)}
+.swap-options{padding:0 24px}
+.swap-option{background:#F7F9FC;border:1.5px solid #D8DFF0;border-radius:12px;padding:14px 16px;margin-bottom:10px;cursor:pointer;transition:all .15s}
+.swap-option:hover{border-color:#6B82B0;background:#EEF2F9;box-shadow:0 2px 8px rgba(107,130,176,.1)}
+.swap-option.selected{border-color:#6B82B0;background:#E0E8F4}
+.swap-option-name{font-size:15px;font-weight:600;color:#2C2C2C}
+.swap-option-desc{font-size:12px;color:#888;margin-top:3px}
+.swap-option-pairing{font-size:12px;color:#6B82B0;margin-top:2px;font-style:italic}
+.swap-actions{padding:16px 24px;display:flex;gap:8px;flex-wrap:wrap;justify-content:space-between;border-top:1px solid #F0EDE8}
+.btn-swap-pick{background:#6B82B0;color:#fff;border:none;padding:10px 20px;border-radius:8px;font-size:14px;font-weight:600;cursor:pointer;transition:all .15s}
+.btn-swap-pick:hover{background:#5A70A0}
+.btn-swap-pick:disabled{background:#B0BAC8;cursor:not-allowed}
+.btn-swap-retry{background:#fff;border:1.5px solid #6B82B0;color:#6B82B0;padding:9px 18px;border-radius:8px;font-size:13px;font-weight:500;cursor:pointer;transition:all .15s}
+.btn-swap-retry:hover{background:#F5F7FB}
+.swap-loading{text-align:center;padding:40px 24px;color:#999;font-size:14px}
+.swap-loading .spinner{margin:0 auto 12px}
+.swap-error{padding:12px 24px;color:#8B3A3A;font-size:13px;background:#FDF0F0;margin:0 24px 12px;border-radius:8px}
+
 
 /* ── GROCERY LIST ── */
 .grocery-section{background:#fff;border-radius:12px;border:1px solid #E8E6E1;margin-bottom:16px;overflow:hidden}
@@ -538,6 +569,25 @@ body.print-lists .top-nav,.print-lists .plan-toolbar,.print-lists .hf-section,.p
 
 
 <!-- ═══════════════════════════════════════════════════════════ -->
+
+<!-- SWAP PANEL MODAL -->
+<div class="swap-overlay" id="swap-overlay" onclick="closeSwapPanel()"></div>
+<div class="swap-panel" id="swap-panel">
+  <div class="swap-header">
+    <div class="swap-title" id="swap-title">Swap Meal</div>
+    <button class="swap-close" onclick="closeSwapPanel()">&#x2715;</button>
+  </div>
+  <div class="swap-subtitle" id="swap-subtitle"></div>
+  <div class="swap-feedback">
+    <label>Why are you swapping? <span style="font-weight:400;text-transform:none;color:#bbb">(optional â helps improve future plans)</span></label>
+    <textarea id="swap-reason" placeholder="e.g. Had chicken twice already, want something lighter, not in the mood for this..."></textarea>
+  </div>
+  <div id="swap-content"></div>
+  <div class="swap-actions" id="swap-actions" style="display:none">
+    <button class="btn-swap-retry" onclick="retrySwap()">Try Again</button>
+    <button class="btn-swap-pick" id="btn-swap-confirm" onclick="confirmSwap()" disabled>Use This Meal</button>
+  </div>
+</div>
 <script>
 // ── STATE ──────────────────────────────────────────────────────
 const STATE = {
@@ -553,6 +603,39 @@ const STATE = {
 
 // AI-generated recipes get stored here (keyed by dynamic ID)
 const DYNAMIC_RECIPES = {};
+
+// Dinner review history endpoint (Google Apps Script Web App)
+const DINNER_HISTORY_URL = 'https://script.google.com/macros/s/AKfycbxdF2YSeVC2v8dfrkoojwAFcUnKSvzQpiOuJUYuFgE4M-vms2AZvUQT0IR1oowCRaolDg/exec';
+let cachedDinnerHistory = null;
+
+async function fetchDinnerHistory(){
+  if(!DINNER_HISTORY_URL) return [];
+  if(cachedDinnerHistory && Date.now()-cachedDinnerHistory._ts < 300000) return cachedDinnerHistory.data;
+  try {
+    const resp = await fetch(DINNER_HISTORY_URL);
+    if(!resp.ok) return [];
+    const data = await resp.json();
+    cachedDinnerHistory = { data: data.reviews || [], _ts: Date.now() };
+    return cachedDinnerHistory.data;
+  } catch(e){
+    console.warn('Could not fetch dinner history:', e);
+    return [];
+  }
+}
+
+function formatDinnerHistoryForPrompt(reviews){
+  if(!reviews || reviews.length === 0) return '';
+  const lines = reviews.slice(0, 60).map(r => {
+    let line = '- ' + r.date + ': ' + r.meal;
+    if(r.rating) line += ' (' + r.rating + '/5)';
+    if(r.liked) line += ' â Liked: ' + r.liked;
+    if(r.change) line += ' â Would change: ' + r.change;
+    if(r.keepOrDrop && r.keepOrDrop.toLowerCase().includes('drop')) line += ' [DROP]';
+    if(r.notes) line += ' â ' + r.notes;
+    return line;
+  });
+  return '\n\nDINNER HISTORY (recent meals and family feedback â use this to learn patterns, avoid repeats, and improve suggestions):\n' + lines.join('\n');
+}
 
 const WEEK_DAYS = ['Saturday','Sunday','Monday','Tuesday','Wednesday','Thursday','Friday'];
 const SHORT_WEEK = ['Sat','Sun','Mon','Tue','Wed','Thu','Fri'];
@@ -798,7 +881,8 @@ async function generatePlan(){
 
 // ── AI GENERATION ─────────────────────────────────────────────
 async function generatePlanWithAI(){
-  const prompt=buildPrompt();
+  const dinnerHistory = await fetchDinnerHistory();
+  const prompt=buildPrompt(dinnerHistory);
   const responseText=await callClaudeAPI(prompt);
 
   // Extract JSON from response (handle markdown code blocks)
@@ -874,7 +958,7 @@ async function callClaudeAPI(prompt){
   return data.content[0].text;
 }
 
-function buildPrompt(){
+function buildPrompt(dinnerHistory){
   const dates=getWeekDates(STATE.weekOffset);
   const ryanLunches=parseInt(document.getElementById('ryan-lunches').value)||0;
   const weekNotes=document.getElementById('week-notes').value.trim();
@@ -964,7 +1048,7 @@ Return ONLY valid JSON in this exact format:
   ]
 }
 
-Include all 7 days. For days marked LEFTOVERS, EATING OUT, or CHOSEN, use type "skip" and only include dayName and type fields.`;
+Include all 7 days. For days marked LEFTOVERS, EATING OUT, or CHOSEN, use type "skip" and only include dayName and type fields.${formatDinnerHistoryForPrompt(dinnerHistory||[])}`;
 }
 
 // ── FALLBACK PLAN (no API key) ────────────────────────────────
@@ -1069,87 +1153,143 @@ function renderPlan(){
 
 function toggleApprove(i){STATE.plan[i].approved=!STATE.plan[i].approved;renderPlan();}
 
-async function swapMeal(i){
-  if(!STATE.apiKey||!STATE.apiKey.startsWith('sk-ant')){
-    // Fallback: cycle through fallback recipes
-    const ryanHome=isRyanHomeOnDay(i);
-    const cur=STATE.plan[i].recipeId;
-    const opts=FALLBACK_RECIPES.filter(r=>r.id!==cur&&!(ryanHome&&r.beef)&&r.isCompleteMeal);
-    const picks=opts.slice(0,3);
-    const list=picks.map((r,n)=>`${n+1}. ${r.name}\n   ${r.desc}`).join('\n\n');
-    const choice=prompt(`Alternatives for ${STATE.plan[i].dayName}:\n\n${list}\n\nEnter 1, 2, or 3:`);
-    const idx=parseInt(choice)-1;
-    if(idx>=0&&idx<picks.length){
-      const p=picks[idx];
-      DYNAMIC_RECIPES[p.id]=p;
-      STATE.plan[i]={...STATE.plan[i],recipeId:p.id,mealName:p.name,desc:p.desc,pairing:p.pairing,jennVegSub:'',tags:buildTagsFrom(p)};
-      renderPlan();
-    }
+// ââ SWAP PANEL STATE ââââââââââââââââââââââââââââââââââââââââââ
+let swapState = { dayIndex: -1, options: [], selectedIdx: -1 };
+
+function openSwapPanel(i){
+  swapState = { dayIndex: i, options: [], selectedIdx: -1 };
+  document.getElementById('swap-title').textContent = 'Swap ' + STATE.plan[i].dayName + "'s Meal";
+  document.getElementById('swap-subtitle').textContent = 'Currently: ' + STATE.plan[i].mealName;
+  document.getElementById('swap-reason').value = '';
+  document.getElementById('swap-actions').style.display = 'none';
+  document.getElementById('swap-content').innerHTML = '';
+  document.getElementById('swap-overlay').classList.add('vis');
+  document.getElementById('swap-panel').classList.add('vis');
+  loadSwapOptions();
+}
+
+function closeSwapPanel(){
+  document.getElementById('swap-overlay').classList.remove('vis');
+  document.getElementById('swap-panel').classList.remove('vis');
+}
+
+function retrySwap(){ loadSwapOptions(); }
+
+async function loadSwapOptions(){
+  const i = swapState.dayIndex;
+  const content = document.getElementById('swap-content');
+  const actions = document.getElementById('swap-actions');
+  actions.style.display = 'none';
+  swapState.selectedIdx = -1;
+
+  if(!STATE.apiKey || !STATE.apiKey.startsWith('sk-ant')){
+    const ryanHome = isRyanHomeOnDay(i);
+    const cur = STATE.plan[i].recipeId;
+    const opts = FALLBACK_RECIPES.filter(r => r.id !== cur && !(ryanHome && r.beef) && r.isCompleteMeal).slice(0,3);
+    swapState.options = opts.map(r => ({
+      mealName: r.name, protein: r.protein, gf: r.gf, isStarch: r.tags && r.tags.includes('starch'),
+      desc: r.desc, pairing: r.pairing, jennVegSub: '', ingredients: r.ingredients,
+      butcherItems: r.butcherItems, steps: r.steps, _fallbackId: r.id
+    }));
+    renderSwapOptions();
     return;
   }
 
-  // AI-powered swap
-  const loader=document.getElementById('loading');
-  document.getElementById('loading-txt').textContent='Getting fresh ideas...';
-  document.getElementById('loading-sub').textContent='Asking Claude for 3 alternatives for '+STATE.plan[i].dayName;
-  loader.classList.add('vis');
+  content.innerHTML = '<div class="swap-loading"><div class="spinner"></div>Asking Claude for fresh ideas...</div>';
 
   try {
-    const ryanHome=isRyanHomeOnDay(i);
-    const currentMeal=STATE.plan[i].mealName;
-    const swapPrompt=`Suggest 3 dinner alternatives for ${STATE.plan[i].dayName} for the Maund family.
+    const ryanHome = isRyanHomeOnDay(i);
+    const currentMeal = STATE.plan[i].mealName;
+    const reason = document.getElementById('swap-reason').value.trim();
+    const dinnerHistory = await fetchDinnerHistory();
 
-Current meal (avoid suggesting this): ${currentMeal}
-Ryan is ${ryanHome?'HOME (no beef)':'AWAY (beef OK)'} this day.
-Adventure level: ${STATE.adventure}
+    const otherMeals = STATE.plan
+      .filter(function(_,idx){ return idx !== i && _.mealName && _.type === 'claude'; })
+      .map(function(p){ return p.mealName; });
 
-Family rules:
-- Hard NO: ${PREFS.hardNo.join(', ')}
-- Jenn doesn't eat (needs sub): ${PREFS.jennNo.join(', ')}
-- ${PREFS.limited.join('; ')}
-- Every meal needs protein + veg, no slow cooker, quick prep preferred, no BBQ sauce
+    const swapPrompt = 'Suggest 3 dinner alternatives for ' + STATE.plan[i].dayName + ' for the Maund family.\n\n' +
+      'Current meal being replaced: ' + currentMeal + '\n' +
+      (reason ? 'Reason for swapping: ' + reason + '\n' : '') +
+      (otherMeals.length ? 'OTHER MEALS ALREADY IN THIS WEEK\'S PLAN (do NOT suggest similar meals):\n' + otherMeals.map(function(m){return '- '+m;}).join('\n') + '\n' : '') +
+      '\nRyan is ' + (ryanHome ? 'HOME (no beef)' : 'AWAY (beef OK)') + ' this day.\n' +
+      'Adventure level: ' + STATE.adventure + '\n\n' +
+      'Family rules:\n' +
+      '- Hard NO: ' + PREFS.hardNo.join(', ') + '\n' +
+      '- Jenn doesn\'t eat (needs sub): ' + PREFS.jennNo.join(', ') + '\n' +
+      '- ' + PREFS.limited.join('; ') + '\n' +
+      '- Every meal needs protein + veg, no slow cooker, quick prep preferred, no BBQ sauce\n' +
+      '- Avoid pasta and GF pasta (family is currently avoiding pasta)\n' +
+      '- Avoid highly processed GF substitutes\n' +
+      formatDinnerHistoryForPrompt(dinnerHistory) +
+      '\n\nIMPORTANT: Each suggestion must be DISTINCTLY DIFFERENT from both the current meal AND the other meals in this week\'s plan. Vary the protein, cuisine style, and cooking method across all 3 suggestions.\n\n' +
+      'Return ONLY valid JSON:\n{\n  "options": [\n    {\n      "mealName": "...",\n      "protein": "Chicken",\n      "gf": true,\n      "isStarch": false,\n      "desc": "Brief one-line description",\n      "pairing": "what it\'s served with",\n      "jennVegSub": "substitute if needed or empty string",\n      "ingredients": [{"name": "...", "qty": "..."}],\n      "butcherItems": [{"cut": "...", "qty": "..."}],\n      "steps": ["Step 1", "Step 2"]\n    }\n  ]\n}';
 
-Return ONLY valid JSON:
-{
-  "options": [
-    {
-      "mealName": "...",
-      "protein": "Chicken",
-      "gf": true,
-      "isStarch": false,
-      "desc": "Brief one-line description",
-      "pairing": "what it's served with",
-      "jennVegSub": "substitute if needed or empty string",
-      "ingredients": [{"name": "...", "qty": "..."}],
-      "butcherItems": [{"cut": "...", "qty": "..."}],
-      "steps": ["Step 1", "Step 2"]
-    }
-  ]
-}`;
-
-    const responseText=await callClaudeAPI(swapPrompt);
-    let jsonText=responseText.trim();
-    const match=jsonText.match(/```(?:json)?\s*([\s\S]*?)```/);
-    if(match) jsonText=match[1].trim();
-    const parsed=JSON.parse(jsonText);
-
-    loader.classList.remove('vis');
-    const opts=parsed.options||[];
-    const list=opts.map((r,n)=>`${n+1}. ${r.mealName}\n   ${r.desc}${r.pairing?' — '+r.pairing:''}`).join('\n\n');
-    const choice=prompt(`Fresh alternatives for ${STATE.plan[i].dayName}:\n\n${list}\n\nEnter 1, 2, or 3:`);
-    const idx=parseInt(choice)-1;
-    if(idx>=0&&idx<opts.length){
-      const picked=opts[idx];
-      const rid=3000+i+Math.floor(Math.random()*100);
-      DYNAMIC_RECIPES[rid]={id:rid,...picked,beef:(picked.protein||'').toLowerCase()==='beef',tags:picked.isStarch?['starch']:[]};
-      STATE.plan[i]={...STATE.plan[i],recipeId:rid,mealName:picked.mealName,desc:picked.desc,pairing:picked.pairing,jennVegSub:picked.jennVegSub||'',tags:buildTagsFrom(DYNAMIC_RECIPES[rid])};
-      renderPlan();
-    }
+    const responseText = await callClaudeAPI(swapPrompt);
+    let jsonText = responseText.trim();
+    const match = jsonText.match(/```(?:json)?\s*([\s\S]*?)```/);
+    if(match) jsonText = match[1].trim();
+    const parsed = JSON.parse(jsonText);
+    swapState.options = parsed.options || [];
+    renderSwapOptions();
   } catch(err){
-    loader.classList.remove('vis');
-    alert('Could not get swap suggestions: '+err.message);
+    content.innerHTML = '<div class="swap-error">Could not get suggestions: ' + err.message + '</div>';
+    actions.style.display = 'flex';
+    document.getElementById('btn-swap-confirm').disabled = true;
   }
 }
+
+function renderSwapOptions(){
+  const content = document.getElementById('swap-content');
+  const actions = document.getElementById('swap-actions');
+  content.innerHTML = '<div class="swap-options">' +
+    swapState.options.map(function(opt, idx){
+      return '<div class="swap-option' + (swapState.selectedIdx === idx ? ' selected' : '') + '" onclick="selectSwapOption(' + idx + ')">' +
+        '<div class="swap-option-name">' + opt.mealName + '</div>' +
+        '<div class="swap-option-desc">' + (opt.desc || '') + '</div>' +
+        (opt.pairing ? '<div class="swap-option-pairing">Served with: ' + opt.pairing + '</div>' : '') +
+        '</div>';
+    }).join('') + '</div>';
+  actions.style.display = 'flex';
+  document.getElementById('btn-swap-confirm').disabled = (swapState.selectedIdx < 0);
+}
+
+function selectSwapOption(idx){
+  swapState.selectedIdx = idx;
+  renderSwapOptions();
+}
+
+function confirmSwap(){
+  const i = swapState.dayIndex;
+  const picked = swapState.options[swapState.selectedIdx];
+  if(!picked) return;
+
+  if(picked._fallbackId){
+    const p = FALLBACK_RECIPES.find(function(r){return r.id === picked._fallbackId;});
+    if(p){
+      DYNAMIC_RECIPES[p.id] = p;
+      STATE.plan[i] = Object.assign({}, STATE.plan[i], {recipeId: p.id, mealName: p.name, desc: p.desc, pairing: p.pairing, jennVegSub: '', tags: buildTagsFrom(p)});
+    }
+  } else {
+    const rid = 3000 + i + Math.floor(Math.random() * 900);
+    DYNAMIC_RECIPES[rid] = Object.assign({id: rid}, picked, {
+      beef: (picked.protein || '').toLowerCase() === 'beef',
+      tags: picked.isStarch ? ['starch'] : []
+    });
+    STATE.plan[i] = Object.assign({}, STATE.plan[i], {
+      recipeId: rid, mealName: picked.mealName,
+      desc: picked.desc, pairing: picked.pairing,
+      jennVegSub: picked.jennVegSub || '',
+      tags: buildTagsFrom(DYNAMIC_RECIPES[rid])
+    });
+  }
+  closeSwapPanel();
+  renderPlan();
+}
+
+async function swapMeal(i){
+  openSwapPanel(i);
+}
+
 
 function toggleRecipePanel(i){
   const p=document.getElementById(`recipe-panel-${i}`);
