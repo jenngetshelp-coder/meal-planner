@@ -3,7 +3,10 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Maund Family Meal Planner</title>
+<meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
+<meta http-equiv="Pragma" content="no-cache">
+<meta http-equiv="Expires" content="0">
+<title>Maund Family Meal Planner — v2026-03-27</title>
 <style>
 *{box-sizing:border-box;margin:0;padding:0}
 body{font-family:'Segoe UI',system-ui,-apple-system,sans-serif;background:#F9F8F5;color:#3a3a3a;min-height:100vh}
@@ -134,6 +137,8 @@ body{font-family:'Segoe UI',system-ui,-apple-system,sans-serif;background:#F9F8F
 .btn-print:hover{border-color:#6B82B0;color:#6B82B0;background:#F5F7FB}
 .btn-primary{background:#6B82B0;color:#fff;border:none;padding:9px 20px;border-radius:8px;font-size:14px;font-weight:600;cursor:pointer;transition:all .15s;box-shadow:0 2px 8px rgba(107,130,176,.2)}
 .btn-primary:hover{background:#5A70A0;box-shadow:0 4px 14px rgba(107,130,176,.3);transform:translateY(-1px)}
+.btn-secondary{background:#fff;color:#6B82B0;border:2px solid #6B82B0;padding:7px 18px;border-radius:8px;font-size:13px;font-weight:600;cursor:pointer;transition:all .15s}
+.btn-secondary:hover{background:#F0F4FB;transform:translateY(-1px)}
 
 /* ── WEEK SUMMARY BAR ── */
 .week-bar{background:#fff;border:1px solid #E8E6E1;border-radius:10px;padding:14px 18px;margin-bottom:16px;display:flex;gap:24px;flex-wrap:wrap}
@@ -195,7 +200,8 @@ body{font-family:'Segoe UI',system-ui,-apple-system,sans-serif;background:#F9F8F
 .recipe-notes label{font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:.5px;color:#C09F80;margin-bottom:4px;display:block}
 .recipe-notes textarea{width:100%;padding:8px 12px;border:1.5px solid #D8DFF0;border-radius:8px;font-size:13px;color:#3a3a3a;font-family:inherit;resize:vertical;min-height:40px}
 .recipe-notes textarea:focus{outline:none;border-color:#C09F80}
-/* ââ SWAP PANEL MODAL ââ */
+
+/* ── SWAP PANEL MODAL ── */
 .swap-overlay{position:fixed;inset:0;background:rgba(0,0,0,.4);z-index:998;display:none;backdrop-filter:blur(3px)}
 .swap-overlay.vis{display:block}
 .swap-panel{position:fixed;top:50%;left:50%;transform:translate(-50%,-50%);background:#fff;border-radius:16px;box-shadow:0 20px 60px rgba(0,0,0,.2);z-index:999;width:92%;max-width:560px;max-height:85vh;overflow-y:auto;display:none}
@@ -225,7 +231,6 @@ body{font-family:'Segoe UI',system-ui,-apple-system,sans-serif;background:#F9F8F
 .swap-loading{text-align:center;padding:40px 24px;color:#999;font-size:14px}
 .swap-loading .spinner{margin:0 auto 12px}
 .swap-error{padding:12px 24px;color:#8B3A3A;font-size:13px;background:#FDF0F0;margin:0 24px 12px;border-radius:8px}
-
 
 /* ── GROCERY LIST ── */
 .grocery-section{background:#fff;border-radius:12px;border:1px solid #E8E6E1;margin-bottom:16px;overflow:hidden}
@@ -258,7 +263,7 @@ body{font-family:'Segoe UI',system-ui,-apple-system,sans-serif;background:#F9F8F
 .hf-item:last-child{border-bottom:none}
 .hf-item input[type=checkbox]{accent-color:#6B82B0;width:16px;height:16px;cursor:pointer;flex-shrink:0}
 .hf-item-label{flex:1;font-size:14px;color:#3a3a3a}
-.hf-item-qty{font-size:13px;color:#999;min-width:80px;text-align:right;flex-shrink:0}
+.hf-item-qty{font-size:13px;color:#999;min-width:60px;max-width:80px;text-align:center;flex-shrink:0;border:1px solid #E8E6E1;border-radius:6px;padding:3px 6px;background:#FAF9F6}
 .hf-item.added .hf-item-label{text-decoration:line-through;color:#bbb}
 .hf-item.added .hf-item-qty{color:#ccc}
 
@@ -271,7 +276,7 @@ body{font-family:'Segoe UI',system-ui,-apple-system,sans-serif;background:#F9F8F
 .butcher-item-left{flex:1}
 .butcher-item-name{font-size:14px;font-weight:600;color:#2C2C2C}
 .butcher-item-source{font-size:12px;color:#999;margin-top:2px}
-.butcher-item-qty{font-size:13px;font-weight:700;color:#6B82B0;min-width:80px;text-align:right;flex-shrink:0}
+.butcher-item-qty{font-size:13px;font-weight:700;color:#6B82B0;min-width:80px;max-width:100px;text-align:center;flex-shrink:0;border:1px solid #E8E6E1;border-radius:6px;padding:4px 8px;background:#FAF9F6}
 
 /* ── PREFERENCES PAGE ── */
 .pref-section{background:#fff;border-radius:12px;border:1px solid #E8E6E1;margin-bottom:16px;overflow:hidden}
@@ -481,7 +486,9 @@ body.print-lists .top-nav,.print-lists .plan-toolbar,.print-lists .hf-section,.p
   <div class="plan-toolbar">
     <div class="plan-actions">
       <button class="btn-print" onclick="printLists()">Print Lists</button>
-      <button class="btn-primary" onclick="alert('PC Express cart creation coming soon!')">Create PC Express Cart</button>
+      <button class="btn-secondary" onclick="buildLists()">↺ Refresh List</button>
+      <button class="btn-secondary" onclick="doneShoppingClick()">✓ Done Shopping</button>
+      <button class="btn-primary" onclick="alert('PC Express cart coming soon!')">Create PC Express Cart</button>
     </div>
   </div>
   <div class="grocery-section">
@@ -569,7 +576,6 @@ body.print-lists .top-nav,.print-lists .plan-toolbar,.print-lists .hf-section,.p
 
 
 <!-- ═══════════════════════════════════════════════════════════ -->
-
 <!-- SWAP PANEL MODAL -->
 <div class="swap-overlay" id="swap-overlay" onclick="closeSwapPanel()"></div>
 <div class="swap-panel" id="swap-panel">
@@ -579,7 +585,7 @@ body.print-lists .top-nav,.print-lists .plan-toolbar,.print-lists .hf-section,.p
   </div>
   <div class="swap-subtitle" id="swap-subtitle"></div>
   <div class="swap-feedback">
-    <label>Why are you swapping? <span style="font-weight:400;text-transform:none;color:#bbb">(optional â helps improve future plans)</span></label>
+    <label>Why are you swapping? <span style="font-weight:400;text-transform:none;color:#bbb">(optional — helps improve future plans)</span></label>
     <textarea id="swap-reason" placeholder="e.g. Had chicken twice already, want something lighter, not in the mood for this..."></textarea>
   </div>
   <div id="swap-content"></div>
@@ -588,6 +594,7 @@ body.print-lists .top-nav,.print-lists .plan-toolbar,.print-lists .hf-section,.p
     <button class="btn-swap-pick" id="btn-swap-confirm" onclick="confirmSwap()" disabled>Use This Meal</button>
   </div>
 </div>
+
 <script>
 // ── STATE ──────────────────────────────────────────────────────
 const STATE = {
@@ -605,36 +612,56 @@ const STATE = {
 const DYNAMIC_RECIPES = {};
 
 // Dinner review history endpoint (Google Apps Script Web App)
+// Note: May fail due to CORS — MEAL_HISTORY_DATA is used as fallback
 const DINNER_HISTORY_URL = 'https://script.google.com/macros/s/AKfycbxdF2YSeVC2v8dfrkoojwAFcUnKSvzQpiOuJUYuFgE4M-vms2AZvUQT0IR1oowCRaolDg/exec';
 let cachedDinnerHistory = null;
 
+// ── EMBEDDED DINNER HISTORY ─────────────────────────────────────
+// Updated automatically by the morning-email-processor.
+// This is the fallback used when the live URL is unreachable.
+const MEAL_HISTORY_DATA = [
+  {date:"2026-03-24",meal:"Lemon Pepper Chicken (BBQ) + leftover potatoes + pear salad",rating:3,liked:"Easy, meets all requirements",change:"Tired of chicken+salad rut — wants marinades/sauces for variety",keepOrDrop:"Modify"},
+  {date:"2026-03-25",meal:"Pork tenderloin (seasoned at butcher) + Little Potato Co. roasted baby potatoes + frozen mixed veg",rating:3,liked:"Very low prep — put it in the oven and walk away",change:"Not very flavourful",keepOrDrop:"Modify"},
+  {date:"2026-03-26",meal:"Leftovers",rating:2,liked:"No real cooking, just made a salad and reheated from the meals we had this week",change:"The leftovers would be delicious and people would want to eat them again. Note: This isn't a recipe....this is just usin",keepOrDrop:"One-off"},
+  {date:"2026-03-27",meal:"Leftovers",rating:2,liked:"I didn't have to cook. I made salads and reheated leftovers",change:"The leftovers were from mediocre meals so no one wants to eat it again. Note: Hopefully we have some better meals going ",keepOrDrop:"One-off"},
+]
+
 async function fetchDinnerHistory(){
-  if(!DINNER_HISTORY_URL) return [];
   if(cachedDinnerHistory && Date.now()-cachedDinnerHistory._ts < 300000) return cachedDinnerHistory.data;
+  if(!DINNER_HISTORY_URL) return MEAL_HISTORY_DATA;
   try {
     const resp = await fetch(DINNER_HISTORY_URL);
-    if(!resp.ok) return [];
+    if(!resp.ok) return MEAL_HISTORY_DATA;
     const data = await resp.json();
-    cachedDinnerHistory = { data: data.reviews || [], _ts: Date.now() };
+    const reviews = data.reviews || [];
+    // Merge with embedded data: prefer live data but include embedded for gaps
+    const allReviews = [...reviews];
+    MEAL_HISTORY_DATA.forEach(local => {
+      if(!allReviews.some(r => r.date === local.date && r.meal === local.meal)){
+        allReviews.push(local);
+      }
+    });
+    allReviews.sort((a,b) => b.date.localeCompare(a.date));
+    cachedDinnerHistory = { data: allReviews, _ts: Date.now() };
     return cachedDinnerHistory.data;
   } catch(e){
-    console.warn('Could not fetch dinner history:', e);
-    return [];
+    console.warn('Could not fetch dinner history — using embedded data:', e);
+    return MEAL_HISTORY_DATA;
   }
 }
 
 function formatDinnerHistoryForPrompt(reviews){
   if(!reviews || reviews.length === 0) return '';
   const lines = reviews.slice(0, 60).map(r => {
-    let line = '- ' + r.date + ': ' + r.meal;
-    if(r.rating) line += ' (' + r.rating + '/5)';
-    if(r.liked) line += ' â Liked: ' + r.liked;
-    if(r.change) line += ' â Would change: ' + r.change;
-    if(r.keepOrDrop && r.keepOrDrop.toLowerCase().includes('drop')) line += ' [DROP]';
-    if(r.notes) line += ' â ' + r.notes;
+    let line = `- ${r.date}: ${r.meal}`;
+    if(r.rating) line += ` (${r.rating}/5)`;
+    if(r.liked) line += ` — Liked: ${r.liked}`;
+    if(r.change) line += ` — Would change: ${r.change}`;
+    if(r.keepOrDrop && r.keepOrDrop.toLowerCase().includes('drop')) line += ` [DROP]`;
+    if(r.notes) line += ` — ${r.notes}`;
     return line;
   });
-  return '\n\nDINNER HISTORY (recent meals and family feedback â use this to learn patterns, avoid repeats, and improve suggestions):\n' + lines.join('\n');
+  return `\n\nDINNER HISTORY (recent meals and family feedback — use this to learn patterns, avoid repeats, and improve suggestions):\n${lines.join('\n')}`;
 }
 
 const WEEK_DAYS = ['Saturday','Sunday','Monday','Tuesday','Wednesday','Thursday','Friday'];
@@ -672,36 +699,83 @@ const GOALS = [
 
 // ── STATIC GROCERY DATA ───────────────────────────────────────
 const STAPLE_ITEMS = [
-  {name:"2% Milk", qty:"1 jug"},
-  {name:"Mint (fresh)", qty:"1 bunch"},
-  {name:"Celery Stalks", qty:"1 bunch"},
-  {name:"English Cucumber", qty:"2-3"},
-  {name:"Mango", qty:"2-3"},
+  // Every-week items — always appears on grocery list
+  // Note: Mint, Celery, Red Grapes live in the Waldorf Lunch section below
+  {name:"Mango", qty:"2–3"},
   {name:"Green Seedless Grapes", qty:"1 bag"},
-  {name:"Red Seedless Grapes", qty:"1 bag"},
-  {name:"Mandarin Oranges (2 lb bag)", qty:"1 bag"},
+  {name:"Blueberries", qty:"4 containers"},
   {name:"Pepperettes (European Sausage Sticks)", qty:"1 pkg"},
-  {name:"Green Giant Mixed Vegetables (frozen)", qty:"1-2 bags"},
-  {name:"Blueberries", qty:"1 pkg"},
-  {name:"Raspberries", qty:"1 pkg"},
+  {name:"Passion Fruit", qty:"2–4"},
+  {name:"English Cucumber", qty:"2–3"},
+  {name:"Green Giant Mixed Vegetables (frozen)", qty:"1–2 bags"},
+  {name:"2% Milk", qty:"1 jug"},
+  {name:"Kiwis", qty:"1 bag"},
+  {name:"Mandarin Oranges (2 lb bag)", qty:"1 bag"},
+  {name:"Raspberries", qty:"1–2 half pints"},
 ];
 
 const WALDORF_GROCERY = [
-  {name:"Walnuts", qty:"1 bag"},
-  {name:"Mayonnaise", qty:"1 jar"},
+  // All weekly Waldorf ingredients — appear under "Jenn's Lunch" section
+  {name:"Green Apples (Granny Smith)", qty:"4"},
+  {name:"Celery Stalks", qty:"1 bunch"},
+  {name:"Red Seedless Grapes", qty:"1 bag"},
+  {name:"Mint (fresh)", qty:"1 bunch"},
+];
+
+const WALDORF_OCCASIONAL = [
+  // Every few weeks — check if you need these and tick to add
+  {name:"Walnuts (for Waldorf)", qty:"1 bag"},
+  {name:"Chosen Foods Avocado Oil Mayo", qty:"1 jar"},
+  {name:"Lemons (for Waldorf)", qty:"3–5"},
 ];
 
 const HIGH_FREQ_EXTRAS = [
-  {name:"Strawberries", qty:"1 pkg"},
-  {name:"Avocados", qty:"3-4"},
-  {name:"Lemons", qty:"3-4"},
-  {name:"Limes", qty:"2-3"},
-  {name:"Cherry Tomatoes", qty:"1 pint"},
-  {name:"Greek Yogurt", qty:"1 tub"},
-  {name:"Cheddar Cheese", qty:"1 block"},
-  {name:"Sour Cream", qty:"1 tub"},
-  {name:"Parmesan Cheese", qty:"1 wedge"},
-  {name:"Bread (GF or regular)", qty:"1 loaf"},
+  // Tick the ones you need this week
+  {name:"Baby Arugula / Field Greens", qty:"1 pkg"},
+  {name:"Yellow Potatoes", qty:"1 bag"},
+  {name:"Cherry Tomatoes", qty:"1 pkg"},
+  {name:"Shredded Cheddar Cheese", qty:"1 pkg"},
+  {name:"Squeeze Applesauce (8-pack)", qty:"1 pkg"},
+  {name:"Avocados", qty:"2–3"},
+  {name:"Lemons", qty:"3–5"},
+  {name:"Limes", qty:"1 bag"},
+  {name:"Olives (Stuffed with Garlic)", qty:"1–2 jars"},
+  {name:"Lime & Black Pepper Kettle Chips", qty:"1–2 bags"},
+  {name:"Energy Bars (Chocolate Brownie 12-pk)", qty:"1 box"},
+  {name:"Hummus", qty:"1–2 tubs"},
+];
+
+// Items emailed by Jenn — added automatically by the morning processor.
+// These appear directly on the grocery list, no action needed.
+
+// Common pantry staples — these appear in a "Check Your Pantry" section
+// rather than the main grocery list since they're almost always on hand.
+const PANTRY_STAPLES = new Set([
+  'olive oil','vegetable oil','canola oil','cooking oil','oil',
+  'salt','pepper','black pepper','sea salt','kosher salt',
+  'garlic powder','onion powder','garlic cloves','garlic',
+  'paprika','smoked paprika','cayenne','cayenne pepper','cumin',
+  'oregano','thyme','rosemary','basil','bay leaves',
+  'chili powder','italian seasoning','mixed herbs',
+  'flour','all-purpose flour','cornstarch',
+  'soy sauce','worcestershire sauce',
+  'balsamic vinegar','white vinegar','apple cider vinegar','vinegar',
+  'dijon mustard','yellow mustard','mustard',
+  'honey','maple syrup',
+  'tomato paste','tomato sauce',
+  'chicken broth','beef broth','vegetable broth','broth','stock',
+  'lemon juice','lime juice',
+  'ketchup','hot sauce',
+  'cooking spray','non-stick spray',
+]);
+
+// Clear items from this list once your order is placed.
+const EMAILED_GROCERY_ITEMS = [
+  {name:"Olive Oil", qty:"", added:"2026-03-24"},
+  {name:"Balsamic Vinegar", qty:"", added:"2026-03-24"},
+  {name:"Honey", qty:"", added:"2026-03-24"},
+  {name:"Basmati Rice", qty:"", added:"2026-03-22"},
+  {name:"Walnuts (chopped)", qty:"1 kg bag", added:"2026-03-26"},
 ];
 
 const BUTCHER_KEYWORDS = ["chicken","turkey","beef","pork","steak","lamb","egg","butter","bacon","sausage","ground","breast","thigh","supreme","flank","tenderloin","brisket","ribs","chop","mince"];
@@ -848,6 +922,43 @@ function toggleNotes(idx){
   el.previousElementSibling.textContent=el.classList.contains('vis')?'- hide note':'+ add a note for this night';
 }
 
+// ── PLAN PERSISTENCE ──────────────────────────────────────────
+function savePlanToStorage(){
+  try {
+    const snapshot = {
+      plan: STATE.plan,
+      weekOffset: STATE.weekOffset,
+      ryanStatus: STATE.ryanStatus,
+      ryanAwayDays: STATE.ryanAwayDays,
+      adventure: STATE.adventure,
+      dynamicRecipes: DYNAMIC_RECIPES,
+      savedAt: Date.now(),
+    };
+    localStorage.setItem('maund_saved_plan', JSON.stringify(snapshot));
+  } catch(e){ console.warn('Could not save plan:', e); }
+}
+
+function loadPlanFromStorage(){
+  try {
+    const raw = localStorage.getItem('maund_saved_plan');
+    if(!raw) return false;
+    const data = JSON.parse(raw);
+    if(!data.plan || !Array.isArray(data.plan) || data.plan.length === 0) return false;
+    // Don't load plans older than 8 days
+    if(Date.now() - (data.savedAt||0) > 8*24*60*60*1000) return false;
+    STATE.plan = data.plan;
+    STATE.weekOffset = data.weekOffset || 0;
+    STATE.ryanStatus = data.ryanStatus || null;
+    STATE.ryanAwayDays = data.ryanAwayDays || [];
+    STATE.adventure = data.adventure || 'comfort';
+    Object.assign(DYNAMIC_RECIPES, data.dynamicRecipes || {});
+    return true;
+  } catch(e){
+    console.warn('Could not restore plan:', e);
+    return false;
+  }
+}
+
 // ── GENERATE PLAN ─────────────────────────────────────────────
 async function generatePlan(){
   const errorBanner=document.getElementById('error-banner');
@@ -867,6 +978,7 @@ async function generatePlan(){
       await new Promise(r=>setTimeout(r,1500));
       buildFallbackPlan();
     }
+    savePlanToStorage();
     renderPlan();
     showScreen('plan');
   } catch(err){
@@ -1060,6 +1172,8 @@ const FALLBACK_RECIPES = [
   {id:5,name:"Spaghetti with Turkey Meat Sauce",protein:"Turkey",gf:false,beef:false,tags:["starch"],isCompleteMeal:true,desc:"Rich turkey bolognese over spaghetti with a side salad.",pairing:"Spaghetti + side salad",jennVegSub:"",ingredients:[{name:"Spaghetti",qty:"1 lb"},{name:"Canned crushed tomatoes",qty:"2 cans"},{name:"Onion",qty:"1 large"},{name:"Parmesan cheese",qty:"1 wedge"},{name:"Mixed greens",qty:"1 bag"},{name:"Balsamic vinegar",qty:"small bottle"}],butcherItems:[{cut:"Ground Turkey",qty:"1 lb"}],steps:["Sauté onion, brown turkey, add tomatoes. Simmer 30 min.","Cook spaghetti. Toss greens with balsamic.","Serve sauce over pasta. Salad on the side."]},
   {id:6,name:"Turkey and Rice Soup",protein:"Turkey",gf:true,beef:false,tags:["soup"],isCompleteMeal:true,desc:"Hearty turkey rice soup — a complete meal in a bowl.",pairing:"Complete meal — crusty bread optional",jennVegSub:"",ingredients:[{name:"Long grain rice",qty:"1 cup"},{name:"Carrots",qty:"3"},{name:"Celery stalks",qty:"3"},{name:"Onion",qty:"1 large"},{name:"Chicken broth",qty:"8 cups"},{name:"Crusty bread",qty:"1 loaf"}],butcherItems:[{cut:"Ground Turkey",qty:"1 lb"}],steps:["Sauté onion, carrots, celery. Brown turkey.","Add broth, rice, thyme. Simmer 30 min.","Serve with crusty bread."]},
   {id:7,name:"Mango Black Bean Salad with Grilled Chicken",protein:"Chicken",gf:true,beef:false,tags:["quick"],isCompleteMeal:true,desc:"Bright summer salad with grilled chicken, mango, and avocado.",pairing:"Complete meal",jennVegSub:"",ingredients:[{name:"Mangos",qty:"2"},{name:"Canned black beans",qty:"1 can"},{name:"Red bell pepper",qty:"1"},{name:"Red onion",qty:"½ small"},{name:"Limes",qty:"2"},{name:"Avocados",qty:"2"},{name:"Mixed greens",qty:"1 bag"}],butcherItems:[{cut:"Chicken Breasts",qty:"3 breasts"}],steps:["Grill chicken and slice.","Dice mango, pepper, onion.","Toss with lime juice, black beans, cilantro.","Serve over greens with avocado."]}
+,
+  {id:10,name:"Oven Pork Tenderloin",protein:"Pork",gf:true,beef:false,tags:["low-prep","oven"],isCompleteMeal:true,desc:"Pre-seasoned pork tenderloin roasted in the oven — rated 3/5 plain, 4/5+ with a marinade. Three options: honey dijon garlic, balsamic herb, or herb butter finish.",pairing:"Little Potato Co. roasted baby potatoes + frozen mixed veg",jennVegSub:"",ingredients:[{name:"Honey",qty:"2 tbsp"},{name:"Dijon mustard",qty:"3 tbsp"},{name:"Garlic",qty:"3 cloves"},{name:"Olive oil",qty:"2 tbsp"},{name:"Fresh thyme or rosemary",qty:"1 tsp"},{name:"Little Potato Co. baby potatoes",qty:"1 bag"},{name:"Frozen mixed vegetables",qty:"1 bag"}],butcherItems:[{cut:"Pork Tenderloin (pre-seasoned)",qty:"1.5–2 lbs"}],steps:["Mix marinade: 3 tbsp dijon + 2 tbsp honey + 3 cloves garlic minced + 2 tbsp olive oil + 1 tsp thyme. Pour over tenderloin, rest 30 min.","Preheat oven to 425°F. Toss potatoes with olive oil on a sheet pan. Put in oven.","After 10 min, add tenderloin to oven. Roast 20–25 min to 145°F internal temp.","Rest 5 min tented with foil. Microwave veg during rest.","Slice on an angle and serve."]}
 ];
 
 function buildFallbackPlan(){
@@ -1153,13 +1267,13 @@ function renderPlan(){
 
 function toggleApprove(i){STATE.plan[i].approved=!STATE.plan[i].approved;renderPlan();}
 
-// ââ SWAP PANEL STATE ââââââââââââââââââââââââââââââââââââââââââ
+// ── SWAP PANEL STATE ──────────────────────────────────────────
 let swapState = { dayIndex: -1, options: [], selectedIdx: -1 };
 
 function openSwapPanel(i){
   swapState = { dayIndex: i, options: [], selectedIdx: -1 };
-  document.getElementById('swap-title').textContent = 'Swap ' + STATE.plan[i].dayName + "'s Meal";
-  document.getElementById('swap-subtitle').textContent = 'Currently: ' + STATE.plan[i].mealName;
+  document.getElementById('swap-title').textContent = `Swap ${STATE.plan[i].dayName}'s Meal`;
+  document.getElementById('swap-subtitle').textContent = `Currently: ${STATE.plan[i].mealName}`;
   document.getElementById('swap-reason').value = '';
   document.getElementById('swap-actions').style.display = 'none';
   document.getElementById('swap-content').innerHTML = '';
@@ -1173,7 +1287,9 @@ function closeSwapPanel(){
   document.getElementById('swap-panel').classList.remove('vis');
 }
 
-function retrySwap(){ loadSwapOptions(); }
+function retrySwap(){
+  loadSwapOptions();
+}
 
 async function loadSwapOptions(){
   const i = swapState.dayIndex;
@@ -1183,11 +1299,12 @@ async function loadSwapOptions(){
   swapState.selectedIdx = -1;
 
   if(!STATE.apiKey || !STATE.apiKey.startsWith('sk-ant')){
+    // Fallback: show fallback recipes
     const ryanHome = isRyanHomeOnDay(i);
     const cur = STATE.plan[i].recipeId;
     const opts = FALLBACK_RECIPES.filter(r => r.id !== cur && !(ryanHome && r.beef) && r.isCompleteMeal).slice(0,3);
     swapState.options = opts.map(r => ({
-      mealName: r.name, protein: r.protein, gf: r.gf, isStarch: r.tags && r.tags.includes('starch'),
+      mealName: r.name, protein: r.protein, gf: r.gf, isStarch: r.tags?.includes('starch'),
       desc: r.desc, pairing: r.pairing, jennVegSub: '', ingredients: r.ingredients,
       butcherItems: r.butcherItems, steps: r.steps, _fallbackId: r.id
     }));
@@ -1203,26 +1320,48 @@ async function loadSwapOptions(){
     const reason = document.getElementById('swap-reason').value.trim();
     const dinnerHistory = await fetchDinnerHistory();
 
+    // Build list of ALL other meals this week to avoid duplicates
     const otherMeals = STATE.plan
-      .filter(function(_,idx){ return idx !== i && _.mealName && _.type === 'claude'; })
-      .map(function(p){ return p.mealName; });
+      .filter((_,idx) => idx !== i && _.mealName && _.type === 'claude')
+      .map(p => p.mealName);
 
-    const swapPrompt = 'Suggest 3 dinner alternatives for ' + STATE.plan[i].dayName + ' for the Maund family.\n\n' +
-      'Current meal being replaced: ' + currentMeal + '\n' +
-      (reason ? 'Reason for swapping: ' + reason + '\n' : '') +
-      (otherMeals.length ? 'OTHER MEALS ALREADY IN THIS WEEK\'S PLAN (do NOT suggest similar meals):\n' + otherMeals.map(function(m){return '- '+m;}).join('\n') + '\n' : '') +
-      '\nRyan is ' + (ryanHome ? 'HOME (no beef)' : 'AWAY (beef OK)') + ' this day.\n' +
-      'Adventure level: ' + STATE.adventure + '\n\n' +
-      'Family rules:\n' +
-      '- Hard NO: ' + PREFS.hardNo.join(', ') + '\n' +
-      '- Jenn doesn\'t eat (needs sub): ' + PREFS.jennNo.join(', ') + '\n' +
-      '- ' + PREFS.limited.join('; ') + '\n' +
-      '- Every meal needs protein + veg, no slow cooker, quick prep preferred, no BBQ sauce\n' +
-      '- Avoid pasta and GF pasta (family is currently avoiding pasta)\n' +
-      '- Avoid highly processed GF substitutes\n' +
-      formatDinnerHistoryForPrompt(dinnerHistory) +
-      '\n\nIMPORTANT: Each suggestion must be DISTINCTLY DIFFERENT from both the current meal AND the other meals in this week\'s plan. Vary the protein, cuisine style, and cooking method across all 3 suggestions.\n\n' +
-      'Return ONLY valid JSON:\n{\n  "options": [\n    {\n      "mealName": "...",\n      "protein": "Chicken",\n      "gf": true,\n      "isStarch": false,\n      "desc": "Brief one-line description",\n      "pairing": "what it\'s served with",\n      "jennVegSub": "substitute if needed or empty string",\n      "ingredients": [{"name": "...", "qty": "..."}],\n      "butcherItems": [{"cut": "...", "qty": "..."}],\n      "steps": ["Step 1", "Step 2"]\n    }\n  ]\n}';
+    const swapPrompt = `Suggest 3 dinner alternatives for ${STATE.plan[i].dayName} for the Maund family.
+
+Current meal being replaced: ${currentMeal}
+${reason ? `Reason for swapping: ${reason}` : ''}
+${otherMeals.length ? `OTHER MEALS ALREADY IN THIS WEEK'S PLAN (do NOT suggest similar meals):\n${otherMeals.map(m => '- ' + m).join('\n')}` : ''}
+
+Ryan is ${ryanHome ? 'HOME (no beef)' : 'AWAY (beef OK)'} this day.
+Adventure level: ${STATE.adventure}
+
+Family rules:
+- Hard NO: ${PREFS.hardNo.join(', ')}
+- Jenn doesn't eat (needs sub): ${PREFS.jennNo.join(', ')}
+- ${PREFS.limited.join('; ')}
+- Every meal needs protein + veg, no slow cooker, quick prep preferred, no BBQ sauce
+- Avoid pasta and GF pasta (family is currently avoiding pasta)
+- Avoid highly processed GF substitutes
+${formatDinnerHistoryForPrompt(dinnerHistory)}
+
+IMPORTANT: Each suggestion must be DISTINCTLY DIFFERENT from both the current meal AND the other meals in this week's plan. Vary the protein, cuisine style, and cooking method across all 3 suggestions.
+
+Return ONLY valid JSON:
+{
+  "options": [
+    {
+      "mealName": "...",
+      "protein": "Chicken",
+      "gf": true,
+      "isStarch": false,
+      "desc": "Brief one-line description",
+      "pairing": "what it's served with",
+      "jennVegSub": "substitute if needed or empty string",
+      "ingredients": [{"name": "...", "qty": "..."}],
+      "butcherItems": [{"cut": "...", "qty": "..."}],
+      "steps": ["Step 1", "Step 2"]
+    }
+  ]
+}`;
 
     const responseText = await callClaudeAPI(swapPrompt);
     let jsonText = responseText.trim();
@@ -1232,7 +1371,7 @@ async function loadSwapOptions(){
     swapState.options = parsed.options || [];
     renderSwapOptions();
   } catch(err){
-    content.innerHTML = '<div class="swap-error">Could not get suggestions: ' + err.message + '</div>';
+    content.innerHTML = `<div class="swap-error">Could not get suggestions: ${err.message}</div>`;
     actions.style.display = 'flex';
     document.getElementById('btn-swap-confirm').disabled = true;
   }
@@ -1242,20 +1381,113 @@ function renderSwapOptions(){
   const content = document.getElementById('swap-content');
   const actions = document.getElementById('swap-actions');
   content.innerHTML = '<div class="swap-options">' +
-    swapState.options.map(function(opt, idx){
-      return '<div class="swap-option' + (swapState.selectedIdx === idx ? ' selected' : '') + '" onclick="selectSwapOption(' + idx + ')">' +
-        '<div class="swap-option-name">' + opt.mealName + '</div>' +
-        '<div class="swap-option-desc">' + (opt.desc || '') + '</div>' +
-        (opt.pairing ? '<div class="swap-option-pairing">Served with: ' + opt.pairing + '</div>' : '') +
-        '</div>';
-    }).join('') + '</div>';
+    swapState.options.map((opt, idx) => `
+      <div class="swap-option${swapState.selectedIdx === idx ? ' selected' : ''}" onclick="selectSwapOption(${idx})">
+        <div class="swap-option-name">${opt.mealName}</div>
+        <div class="swap-option-desc">${opt.desc || ''}</div>
+        ${opt.pairing ? `<div class="swap-option-pairing">Served with: ${opt.pairing}</div>` : ''}
+      </div>
+    `).join('') + `</div>
+    <div style="border-top:1px solid #F0EDE8;margin:8px 24px 0;padding:14px 0 4px">
+      <div style="font-size:11px;font-weight:700;color:#C09F80;text-transform:uppercase;letter-spacing:.5px;margin-bottom:8px">Or enter your own meal</div>
+      <div style="display:flex;gap:8px">
+        <input type="text" id="swap-own-input" placeholder="Type a meal name..." style="flex:1;padding:9px 12px;border:1.5px solid #E0DDD7;border-radius:8px;font-size:13px;font-family:inherit;color:#3a3a3a" onkeydown="if(event.key==='Enter')useOwnMeal()">
+        <button onclick="useOwnMeal()" style="background:#C09F80;color:#fff;border:none;padding:9px 16px;border-radius:8px;font-size:13px;font-weight:600;cursor:pointer;white-space:nowrap">Use This</button>
+      </div>
+      <div id="swap-own-status" style="font-size:12px;color:#999;margin-top:6px;font-style:italic"></div>
+    </div>`;
   actions.style.display = 'flex';
   document.getElementById('btn-swap-confirm').disabled = (swapState.selectedIdx < 0);
 }
 
 function selectSwapOption(idx){
   swapState.selectedIdx = idx;
+  swapState.ownMeal = null;
   renderSwapOptions();
+}
+
+async function useOwnMeal(){
+  const input = document.getElementById('swap-own-input');
+  const mealName = (input ? input.value : '').trim();
+  if(!mealName) return;
+  const status = document.getElementById('swap-own-status');
+  const i = swapState.dayIndex;
+
+  // Check if it already exists in known recipes
+  const allRecipes = [...FALLBACK_RECIPES, ...Object.values(DYNAMIC_RECIPES)];
+  const match = allRecipes.find(r => r.name && r.name.toLowerCase() === mealName.toLowerCase());
+  if(match){
+    // Known recipe — apply directly
+    DYNAMIC_RECIPES[match.id] = match;
+    STATE.plan[i] = {...STATE.plan[i], recipeId: match.id, mealName: match.name, desc: match.desc||'', pairing: match.pairing||'', jennVegSub: match.jennVegSub||'', tags: buildTagsFrom(match), type:'chosen', approved:false};
+    savePlanToStorage();
+    closeSwapPanel();
+    renderPlan();
+    return;
+  }
+
+  // Not in library — ask Claude for ingredients if API key is set
+  if(!STATE.apiKey || !STATE.apiKey.startsWith('sk-ant')){
+    // No API — apply as a bare chosen meal with no recipe
+    STATE.plan[i] = {...STATE.plan[i], recipeId: null, mealName, desc:'', pairing:'', jennVegSub:'', tags:[], type:'chosen', approved:false};
+    savePlanToStorage();
+    closeSwapPanel();
+    renderPlan();
+    return;
+  }
+
+  if(status) status.textContent = '🔍 Looking up ingredients for this meal…';
+  const confirmBtn = document.getElementById('btn-swap-confirm');
+  if(confirmBtn) confirmBtn.disabled = true;
+
+  try {
+    const ryanHome = isRyanHomeOnDay(i);
+    const groceryPrompt = `The Maund family wants to make "${mealName}" for dinner. I need to know what groceries to buy.
+
+Family rules:
+- No fish/seafood, quinoa, chia seeds, sweet potatoes, cabbage, or BBQ sauce
+- Jenn doesn't eat: broccoli, cauliflower, mushrooms, zucchini (suggest a veggie sub if recipe uses these)
+- Jenn's preferred veggie subs: carrots, cucumbers, peas, green beans, celery, salad greens
+- Ryan is ${ryanHome ? 'home (no beef)' : 'away (beef OK)'}
+- Gluten-free preferred if possible
+
+Return ONLY valid JSON:
+{
+  "mealName": "${mealName}",
+  "protein": "Chicken",
+  "gf": true,
+  "isStarch": false,
+  "desc": "One sentence description",
+  "pairing": "what it's served with",
+  "jennVegSub": "substitute if needed, or empty string",
+  "ingredients": [{"name":"...", "qty":"..."}],
+  "butcherItems": [{"cut":"...", "qty":"..."}],
+  "steps": ["Step 1", "Step 2"]
+}`;
+
+    const responseText = await callClaudeAPI(groceryPrompt);
+    let jsonText = responseText.trim();
+    const m = jsonText.match(/```(?:json)?\s*([\s\S]*?)```/);
+    if(m) jsonText = m[1].trim();
+    const parsed = JSON.parse(jsonText);
+
+    const rid = 4000 + i + Math.floor(Math.random()*900);
+    DYNAMIC_RECIPES[rid] = { id:rid, ...parsed, beef:(parsed.protein||'').toLowerCase()==='beef', tags:parsed.isStarch?['starch']:[] };
+    STATE.plan[i] = {
+      ...STATE.plan[i], recipeId:rid, mealName:parsed.mealName||mealName,
+      desc:parsed.desc||'', pairing:parsed.pairing||'', jennVegSub:parsed.jennVegSub||'',
+      tags:buildTagsFrom(DYNAMIC_RECIPES[rid]), type:'chosen', approved:false
+    };
+    savePlanToStorage();
+    closeSwapPanel();
+    renderPlan();
+  } catch(err){
+    if(status) status.textContent = `Couldn't look up groceries: ${err.message}. Meal added without recipe details.`;
+    // Still apply the meal, just without recipe details
+    STATE.plan[i] = {...STATE.plan[i], recipeId:null, mealName, desc:'', pairing:'', jennVegSub:'', tags:[], type:'chosen', approved:false};
+    savePlanToStorage();
+    setTimeout(()=>{ closeSwapPanel(); renderPlan(); }, 2000);
+  }
 }
 
 function confirmSwap(){
@@ -1264,24 +1496,26 @@ function confirmSwap(){
   if(!picked) return;
 
   if(picked._fallbackId){
-    const p = FALLBACK_RECIPES.find(function(r){return r.id === picked._fallbackId;});
+    const p = FALLBACK_RECIPES.find(r => r.id === picked._fallbackId);
     if(p){
       DYNAMIC_RECIPES[p.id] = p;
-      STATE.plan[i] = Object.assign({}, STATE.plan[i], {recipeId: p.id, mealName: p.name, desc: p.desc, pairing: p.pairing, jennVegSub: '', tags: buildTagsFrom(p)});
+      STATE.plan[i] = {...STATE.plan[i], recipeId: p.id, mealName: p.name, desc: p.desc, pairing: p.pairing, jennVegSub: '', tags: buildTagsFrom(p)};
     }
   } else {
     const rid = 3000 + i + Math.floor(Math.random() * 900);
-    DYNAMIC_RECIPES[rid] = Object.assign({id: rid}, picked, {
+    DYNAMIC_RECIPES[rid] = {
+      id: rid, ...picked,
       beef: (picked.protein || '').toLowerCase() === 'beef',
       tags: picked.isStarch ? ['starch'] : []
-    });
-    STATE.plan[i] = Object.assign({}, STATE.plan[i], {
-      recipeId: rid, mealName: picked.mealName,
+    };
+    STATE.plan[i] = {
+      ...STATE.plan[i], recipeId: rid, mealName: picked.mealName,
       desc: picked.desc, pairing: picked.pairing,
       jennVegSub: picked.jennVegSub || '',
       tags: buildTagsFrom(DYNAMIC_RECIPES[rid])
-    });
+    };
   }
+  savePlanToStorage();
   closeSwapPanel();
   renderPlan();
 }
@@ -1289,7 +1523,6 @@ function confirmSwap(){
 async function swapMeal(i){
   openSwapPanel(i);
 }
-
 
 function toggleRecipePanel(i){
   const p=document.getElementById(`recipe-panel-${i}`);
@@ -1316,23 +1549,77 @@ function buildLists(){
   showScreen('lists');
 }
 
+
+// Try to add two quantity strings (e.g. "2 lemons" + "3 lemons" = "5 lemons")
+function tryAddQtys(q1, q2){
+  if(!q1 || !q2) return q1||q2||'';
+  function parseQ(q){ const m=q.match(/^(\d+(?:\.\d+)?)(?:\s*[-–]\s*(\d+(?:\.\d+)?))?(.*)$/); if(!m)return null; return{n:m[2]?parseFloat(m[2]):parseFloat(m[1]),unit:(m[3]||'').trim()}; }
+  const a=parseQ(q1), b=parseQ(q2);
+  if(a&&b&&a.unit.toLowerCase()===b.unit.toLowerCase()){ const sum=a.n+b.n; return sum+(a.unit?(' '+a.unit):''); }
+  return q1+' + '+q2;
+}
+
 function renderGroceryList(ryanLunches,jennLunch){
   const gb=document.getElementById('grocery-body');
   gb.innerHTML='';
+
+  // Build a set of names already covered by staples/waldorf/emails so dinner
+  // section doesn't repeat them.
+  const alreadyCovered=new Set();
+  STAPLE_ITEMS.forEach(i=>alreadyCovered.add(i.name.toLowerCase()));
+  if(jennLunch.toLowerCase().includes('waldorf')){
+    WALDORF_GROCERY.forEach(i=>alreadyCovered.add(i.name.toLowerCase()));
+    WALDORF_OCCASIONAL.forEach(i=>alreadyCovered.add(i.name.toLowerCase()));
+  }
+  EMAILED_GROCERY_ITEMS.forEach(i=>alreadyCovered.add(i.name.toLowerCase()));
+
+  // --- Weekly Staples ---
   addCat(gb,'Weekly Staples');
   STAPLE_ITEMS.forEach(item=>addItem(gb,item.name,'',item.qty));
+
+  // --- Emailed items (filtered by last-shopped date) ---
+  const lastShopped=parseInt(localStorage.getItem('maund_last_shopped')||'0');
+  const freshEmailed=(EMAILED_GROCERY_ITEMS||[]).filter(item=>{
+    if(!lastShopped) return true;
+    // item.added is "YYYY-MM-DD", compare as date
+    const addedMs=new Date(item.added+'T00:00:00').getTime();
+    return addedMs>=lastShopped;
+  });
+  if(freshEmailed.length>0){
+    addCat(gb,'✉️ From Your Emails');
+    freshEmailed.forEach(item=>addItem(gb,item.name,'emailed '+item.added,item.qty));
+  }
+
+  // --- Ryan's Lunches ---
   if(ryanLunches>0){
     addCat(gb,"Ryan's Lunches");
-    addItem(gb,'Bagged Salad Kits (variety)',`${ryanLunches} lunches`,`${ryanLunches}`);
+    addItem(gb,'Bagged Salad Kits (variety)',`${ryanLunches} lunches`,`${ryanLunches} kits`);
   }
+
+  // --- Jenn's Lunch: Waldorf Salad ---
   if(jennLunch.toLowerCase().includes('waldorf')){
-    addCat(gb,"Jenn's Waldorf Salad");
+    addCat(gb,"🥗 Jenn's Lunch — Waldorf Salad (Weekly)");
     WALDORF_GROCERY.forEach(item=>addItem(gb,item.name,'weekly',item.qty));
+    // Occasional items — checkboxes to tick when restocking
+    addCat(gb,"🥗 Jenn's Lunch — Waldorf Restock (Check if Needed)");
+    const waldorfOccDiv=document.createElement('div');
+    waldorfOccDiv.style.cssText='font-size:12px;color:#aaa;margin-bottom:8px;padding:0 2px';
+    waldorfOccDiv.textContent='Tick to add to list:';
+    gb.appendChild(waldorfOccDiv);
+    WALDORF_OCCASIONAL.forEach((item,idx)=>{
+      const row=document.createElement('div');
+      row.className='grocery-item';
+      const cbId='woc-'+idx;
+      row.innerHTML=`<input type="checkbox" id="${cbId}" onchange="if(this.checked){addItem(document.getElementById('added-items-container'),'${item.name}','Waldorf — restock','${item.qty}')}"><label for="${cbId}" class="grocery-item-label" style="color:#aaa">${item.name}</label><input class="grocery-item-qty" type="text" value="${item.qty}" placeholder="qty" style="opacity:.65">`;
+      gb.appendChild(row);
+    });
   }
+
+  // --- Dinner Ingredients (with qty aggregation, cross-dedup, pantry split) ---
   const meals=STATE.plan.filter(p=>p.recipeId&&(p.type==='claude'||p.type==='chosen'));
   if(meals.length>0){
-    addCat(gb,'Dinner Ingredients');
     const agg=new Map();
+    const pantryNeeded=new Map();
     meals.forEach(meal=>{
       const recipe=DYNAMIC_RECIPES[meal.recipeId];
       if(!recipe) return;
@@ -1340,15 +1627,39 @@ function renderGroceryList(ryanLunches,jennLunch){
         const n=ing.name||ing;
         const q=ing.qty||'';
         if(isButcherIngredient(n)) return;
-        if(agg.has(n)) agg.get(n).sources.push(recipe.name);
-        else agg.set(n,{qty:q,sources:[recipe.name]});
+        const nl=n.toLowerCase();
+        // Check if it's a pantry staple
+        if(PANTRY_STAPLES.has(nl)){
+          if(pantryNeeded.has(nl)) pantryNeeded.get(nl).sources.push(recipe.name);
+          else pantryNeeded.set(nl,{name:n,qty:q,sources:[recipe.name]});
+          return;
+        }
+        // Skip if already in staples/waldorf/emails
+        if(alreadyCovered.has(nl)) return;
+        // Aggregate quantities
+        if(agg.has(nl)){
+          const ex=agg.get(nl);
+          ex.sources.push(recipe.name);
+          ex.qty=tryAddQtys(ex.qty,q);
+        } else agg.set(nl,{name:n,qty:q,sources:[recipe.name]});
       });
     });
-    agg.forEach((data,name)=>{
-      const src=data.sources.length>1?data.sources.join(', '):data.sources[0];
-      addItem(gb,name,src,data.qty);
-    });
+    if(agg.size>0){
+      addCat(gb,'Dinner Ingredients');
+      agg.forEach((data)=>{
+        const src=data.sources.length>1?data.sources.join(', '):data.sources[0];
+        addItem(gb,data.name,src,data.qty);
+      });
+    }
+    if(pantryNeeded.size>0){
+      addCat(gb,'🧂 Check Your Pantry');
+      pantryNeeded.forEach((data)=>{
+        addItem(gb,data.name,'pantry — check stock',data.qty);
+      });
+    }
   }
+
+  // --- Added Items (manual) ---
   addCat(gb,'Added Items');
   const addedContainer=document.createElement('div');
   addedContainer.id='added-items-container';
@@ -1379,6 +1690,18 @@ function addGroceryManual(){
   if(!val) return;
   addItem(document.getElementById('added-items-container'),val,'','');
   input.value='';
+}
+
+
+function doneShoppingClick(){
+  if(confirm("Mark shopping as done? Emailed grocery items added before today will be hidden from the list.")){
+    localStorage.setItem('maund_last_shopped', Date.now().toString());
+    // Rebuild the list to reflect the cleared state
+    const ryanLunches=parseInt(document.getElementById('ryan-lunches').value)||0;
+    const jennLunch=document.getElementById('jenn-lunch').value||'Waldorf Salad';
+    renderGroceryList(ryanLunches,jennLunch);
+    alert('Done! Old emailed items hidden. Your list is reset for next week.');
+  }
 }
 
 function renderButcherList(ryanLunches,jennLunch){
@@ -1433,7 +1756,7 @@ function addButcherCatHdr(c,label,total){
 function addButcherItem(c,name,source,qty){
   const el=document.createElement('div');
   el.className='butcher-item';
-  el.innerHTML=`<div class="butcher-item-left"><div class="butcher-item-name">${name}</div>${source?`<div class="butcher-item-source">${source}</div>`:''}</div><div class="butcher-item-qty">${qty}</div>`;
+  el.innerHTML=`<div class="butcher-item-left"><div class="butcher-item-name">${name}</div>${source?`<div class="butcher-item-source">${source}</div>`:''}</div><input class="butcher-item-qty" type="text" value="${qty}" placeholder="qty">`;
   c.appendChild(el);
 }
 
@@ -1444,7 +1767,7 @@ function renderHighFreqItems(){
   HIGH_FREQ_EXTRAS.forEach((item,idx)=>{
     const row=document.createElement('div');
     row.className='hf-item';row.id=`hf-${idx}`;
-    row.innerHTML=`<input type="checkbox" onchange="moveHFToGrocery(${idx},this)"><span class="hf-item-label">${item.name}</span><span class="hf-item-qty">${item.qty}</span>`;
+    row.innerHTML=`<input type="checkbox" onchange="moveHFToGrocery(${idx},this)"><span class="hf-item-label">${item.name}</span><input class="hf-item-qty" type="text" value="${item.qty}" placeholder="qty">`;
     c.appendChild(row);
   });
 }
@@ -1453,7 +1776,10 @@ function moveHFToGrocery(idx,cb){
   document.getElementById(`hf-${idx}`).classList.toggle('added',cb.checked);
   if(cb.checked){
     const ac=document.getElementById('added-items-container');
-    if(ac) addItem(ac,item.name,'quick-add',item.qty);
+    // Read the current qty from the editable input (user may have changed it)
+    const qtyInput=document.querySelector(`#hf-${idx} .hf-item-qty`);
+    const liveQty=qtyInput?qtyInput.value:item.qty;
+    if(ac) addItem(ac,item.name,'quick-add',liveQty);
   }
 }
 
@@ -1469,13 +1795,30 @@ function renderPreferences(){
 function renderPrefList(id,arr,cls,key){
   document.getElementById(id).innerHTML=arr.map((f,i)=>`<li class="pref-chip ${cls}">${f}<button class="chip-remove" onclick="removePrefItem('${key}',${i})">&times;</button></li>`).join('');
 }
+function savePrefs(){
+  try{ localStorage.setItem('maund_prefs', JSON.stringify(PREFS)); } catch(e){ console.warn('Could not save prefs:', e); }
+}
+function loadPrefs(){
+  try{
+    const saved=localStorage.getItem('maund_prefs');
+    if(!saved) return false;
+    const parsed=JSON.parse(saved);
+    // Merge saved prefs into PREFS (only known keys)
+    ['hardNo','jennNo','jennLikes','limited'].forEach(k=>{ if(parsed[k]) PREFS[k]=parsed[k]; });
+    return true;
+  } catch(e){ console.warn('Could not load prefs:', e); return false; }
+}
 function addPrefItem(key,inputId){
   const input=document.getElementById(inputId);
   const val=input.value.trim();
   if(!val) return;
   PREFS[key].push(val);input.value='';renderPreferences();
+  savePrefs();
+  // Show a small "Saved" confirmation
+  const btn=input.nextElementSibling;
+  if(btn){ const orig=btn.textContent; btn.textContent='Saved ✓'; setTimeout(()=>btn.textContent=orig, 1200); }
 }
-function removePrefItem(key,idx){PREFS[key].splice(idx,1);renderPreferences();}
+function removePrefItem(key,idx){PREFS[key].splice(idx,1);renderPreferences();savePrefs();}
 
 // ── NAV ───────────────────────────────────────────────────────
 function showScreen(name){
@@ -1484,19 +1827,47 @@ function showScreen(name){
   document.querySelectorAll('.nav-tab').forEach(t=>t.classList.remove('active'));
   document.getElementById(name==='prefs'?'tab-prefs':`tab-${name}`).classList.add('active');
   window.scrollTo(0,0);
-  if(name==='lists') renderHighFreqItems();
+  if(name==='lists'){
+    renderHighFreqItems();
+    // Auto-build the list if it's empty (first time opening the tab)
+    const gb=document.getElementById('grocery-body');
+    if(!gb||gb.innerHTML.trim()===''){
+      const ryanLunches=parseInt(document.getElementById('ryan-lunches').value)||0;
+      const jennLunch=document.getElementById('jenn-lunch').value||'Waldorf Salad';
+      renderGroceryList(ryanLunches,jennLunch);
+      renderButcherList(ryanLunches,jennLunch);
+      const d=getWeekDates(STATE.weekOffset);
+      document.getElementById('lists-week-label').textContent=`${fmtDate(d[0])} - ${fmtDate(d[6])}`;
+    }
+  }
 }
 
 // ── INIT ──────────────────────────────────────────────────────
 function init(){
+  loadPrefs(); // restore saved preference edits before rendering
   updateWeekLabel();buildDayRows();renderPreferences();
-  // Load API key after DOM is fully ready
   setTimeout(()=>{
+    // Restore API key
     const savedKey=localStorage.getItem('maund_api_key');
     if(savedKey){
       document.getElementById('api-key-input').value=savedKey;
       STATE.apiKey=savedKey;
       updateApiKeyStatus();
+    }
+    // Restore saved plan — show a banner so Jenn knows it's loaded
+    const restored = loadPlanFromStorage();
+    if(restored && STATE.plan.length > 0){
+      updateWeekLabel();
+      // Show a non-intrusive notice on the plan tab
+      const notice = document.createElement('div');
+      notice.id = 'restored-notice';
+      notice.style.cssText = 'background:#E8F5E9;border:1px solid #A8D5AB;border-radius:8px;padding:10px 16px;margin-bottom:14px;font-size:13px;color:#2E6B3E;display:flex;justify-content:space-between;align-items:center;';
+      notice.innerHTML = '<span>✅ Your saved meal plan has been restored.</span><button onclick="document.getElementById(\'restored-notice\').remove()" style="background:none;border:none;color:#2E6B3E;font-size:18px;cursor:pointer;padding:0 4px">×</button>';
+      const planContent = document.querySelector('#screen-plan .content');
+      if(planContent) planContent.insertBefore(notice, planContent.firstChild);
+      renderPlan();
+      // Switch to plan tab
+      showScreen('plan');
     }
   },100);
 }
