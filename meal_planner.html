@@ -1018,7 +1018,7 @@ async function generatePlanWithAI(){
     if(item.type==='skip'){
       if(day.mode==='leftovers') return{...day,mealName:'Leftovers',tags:[],type:'leftovers',approved:false,recipeId:null};
       if(day.mode==='out')       return{...day,mealName:'Eating Out',tags:[],type:'out',approved:false,recipeId:null};
-      return{...day,mealName:day.chosenMeal||'(to be confirmed)',tags:[],type:'chosen',approved:false,recipeId:null};
+      return resolveChosenMeal(day,i);
     }
 
     // Store as a dynamic recipe
@@ -1189,15 +1189,68 @@ const FALLBACK_RECIPES = [
   {id:21,name:"Chicken Cacciatore",protein:"Chicken",gf:true,beef:false,tags:["one-pan","sauce"],isCompleteMeal:true,desc:"Classic Italian hunter-style chicken. Chicken thighs braised in a rich rustic tomato sauce with bell peppers and herbs until meltingly tender. No mushrooms, no olives cooked in — olives served on the side at the table for family members who want them. Deeply satisfying and totally GF.",pairing:"GF pasta, polenta, or crusty GF bread",jennVegSub:"No mushrooms — extra bell peppers instead. Olives on the side only — never cooked in.",ingredients:[{name:"Bone-in skin-on chicken thighs",qty:"6-8 pieces"},{name:"Canned crushed tomatoes",qty:"1 can (400ml)"},{name:"Red bell pepper",qty:"2, sliced"},{name:"Yellow bell pepper",qty:"1, sliced"},{name:"Onion",qty:"1 large, diced"},{name:"Garlic",qty:"5 cloves, minced"},{name:"Chicken broth",qty:"0.5 cup"},{name:"Dried oregano",qty:"1.5 tsp"},{name:"Dried thyme",qty:"1 tsp"},{name:"Bay leaves",qty:"2"},{name:"Olive oil",qty:"3 tbsp"},{name:"Salt and pepper",qty:"to taste"},{name:"Green olives (pitted) — serve on side",qty:"0.5 cup"},{name:"GF pasta or polenta",qty:"1 lb pasta or 1 tube polenta"}],butcherItems:[{cut:"Bone-in Skin-on Chicken Thighs",qty:"6-8 pieces"}],steps:["Season chicken generously with salt and pepper. Heat olive oil in a large oven-safe skillet on medium-high.","Sear chicken skin-side down 5 min until deep golden. Flip and sear 2 min more. Remove and set aside.","In same pan, sauté onion and bell peppers 5 min. Add garlic and cook 1 min.","Add crushed tomatoes, chicken broth, oregano, thyme, and bay leaves. Stir well and bring to a simmer.","Nestle chicken skin-side up into the sauce — NO olives in the pot.","Cover and simmer on low heat 30-35 min until chicken is fall-apart tender and sauce is thick and rich.","Remove bay leaves. Taste and adjust salt. Serve over GF pasta or polenta. Put olives in a small bowl on the table for family members to add to their own plate."]},
   {id:22,name:"Chimichurri Chicken Thighs",protein:"Chicken",gf:true,beef:false,tags:["quick","sauce"],isCompleteMeal:true,desc:"Bright, herbaceous, completely different from every other chicken recipe. Chicken thighs grilled or pan-seared and drowned in a vibrant Argentine chimichurri sauce — fresh parsley, garlic, red wine vinegar, olive oil. The sauce is the star. Can BBQ in summer or use a grill pan. GF, dairy-free, incredibly fresh tasting.",pairing:"Roasted baby potatoes + simple green salad or steamed green beans",jennVegSub:"",ingredients:[{name:"Boneless skin-on chicken thighs",qty:"8 thighs"},{name:"Fresh flat-leaf parsley",qty:"1 large bunch"},{name:"Fresh cilantro (optional)",qty:"0.5 cup"},{name:"Garlic",qty:"5 cloves"},{name:"Red wine vinegar",qty:"3 tbsp"},{name:"Olive oil",qty:"0.5 cup + 2 tbsp for cooking"},{name:"Red pepper flakes",qty:"0.5 tsp"},{name:"Dried oregano",qty:"1 tsp"},{name:"Salt",qty:"to taste"},{name:"Baby potatoes",qty:"1 bag (Little Potato Co.)"},{name:"Green beans or side salad",qty:"as needed"}],butcherItems:[{cut:"Boneless Skin-on Chicken Thighs",qty:"8 thighs"}],steps:["Make chimichurri: blitz parsley, cilantro, garlic, red wine vinegar, olive oil, red pepper flakes, oregano, and salt in a blender or food processor. Taste and adjust. Set aside — it gets better as it sits.","Season chicken thighs with salt, pepper, and a drizzle of olive oil.","Grill on BBQ 5-6 min per side until cooked through and skin is crispy, OR pan-sear in a hot skillet 5 min per side.","Internal temp should hit 165F. Rest 3 min.","Serve chicken with chimichurri spooned generously over top — don't be shy with it.","Roast baby potatoes: halved, olive oil, salt, 425F for 25 min. Steam or sauté green beans alongside."]},
   {id:23,name:"Schwarties Hash Brown Potatoes",protein:"None",gf:false,beef:false,tags:["side","oven","holiday"],isCompleteMeal:false,desc:"The beloved Best of Bridge cheesy hash brown casserole — a Canadian holiday and potluck classic. Made with cream of CHICKEN (not mushroom). Creamy, cheesy, comforting. Serves 8-10, perfect for Easter or Christmas alongside a roast. NOTE: cream of chicken soup contains gluten — not GF.",pairing:"Side dish — serve alongside a holiday roast or ham",jennVegSub:"",ingredients:[{name:"Frozen hash brown potatoes",qty:"2 lbs (1 kg), thawed slightly"},{name:"Sour cream",qty:"2 cups (500ml)"},{name:"Cream of CHICKEN soup (NOT mushroom)",qty:"2 cans (10 oz / 284ml each)"},{name:"Butter (melted)",qty:"0.5 cup"},{name:"Onion (grated)",qty:"to taste"},{name:"Salt",qty:"to taste"},{name:"Cheddar cheese (grated)",qty:"2 cups"},{name:"Parmesan cheese (grated)",qty:"2 tbsp"}],butcherItems:[],steps:["Thaw hash brown potatoes slightly.","Mix potatoes, sour cream, cream of chicken soup, melted butter, grated onion, salt, and cheddar cheese together in a 9x13 inch baking dish.","Sprinkle parmesan cheese evenly over the top.","Bake at 350F for 1 hour until golden and bubbling.","Serves 8-10. Great made ahead and reheated."]},
+  {id:25,name:"Carrot Ginger Soup",protein:"None",gf:true,beef:false,tags:["side","soup","holiday"],isCompleteMeal:false,desc:"The Maund family's own carrot soup recipe — a keeper since 2012. Sautéed carrots, onion, celery, and ginger simmered in chicken broth then blended silky smooth. The secret: lime zest and juice stirred in at the very end for a bright, fresh finish. GF, dairy-free.",pairing:"Holiday starter or side — serve with crusty bread or rolls",jennVegSub:"",ingredients:[{name:"Carrots",qty:"1 lb, chopped"},{name:"Onion",qty:"1 medium, chopped"},{name:"Celery",qty:"1 stalk, peeled and chopped"},{name:"Fresh ginger",qty:"1 tsp, chopped or grated"},{name:"Butter",qty:"3 tbsp (or olive oil, or half each)"},{name:"Chicken broth (or vegetable broth for vegetarian)",qty:"5 cups"},{name:"Lime zest",qty:"zest of half a lime"},{name:"Lime juice",qty:"juice of 1 lime"},{name:"Salt",qty:"small pinch"}],butcherItems:[],steps:["Heat butter or olive oil in a large soup pot over medium-low.","Add onion, carrots, celery, and a pinch of salt. Sauté until onions and carrots are soft, about 10-12 min.","Add ginger. Cook 1-2 min more. (If using chopped ginger instead of grated, add it earlier with the vegetables.)","Add broth. Cook at a low boil for 5-10 min.","Use an immersion blender (or transfer to a blender in batches) and purée until completely smooth.","Stir in lime zest and lime juice. Taste and adjust salt.","Serve warm, or chill and serve cold. Can be made 1-2 days ahead."]},
+  {id:26,name:"Green Beans with Almonds",protein:"None",gf:true,beef:false,tags:["side","quick","holiday"],isCompleteMeal:false,desc:"Elegant yet simple holiday side — crisp-tender green beans tossed in browned butter with toasted slivered almonds. Ready in 10 minutes. A classic for a reason.",pairing:"Holiday side — pairs with ham, roast chicken, or any protein",jennVegSub:"",ingredients:[{name:"Green beans (fresh)",qty:"1.5 lbs, trimmed"},{name:"Slivered almonds",qty:"0.5 cup"},{name:"Butter",qty:"3 tbsp"},{name:"Garlic",qty:"2 cloves, minced"},{name:"Salt and pepper",qty:"to taste"},{name:"Lemon juice (optional)",qty:"1 tbsp"}],butcherItems:[],steps:["Blanch green beans in boiling salted water 3-4 min until bright green and just tender. Drain and set aside.","In a large skillet on medium heat, toast slivered almonds 2-3 min until golden. Watch carefully — they burn fast. Remove and set aside.","In the same skillet, melt butter over medium heat. Add garlic and cook 1 min until fragrant.","Add green beans to the pan and toss in the garlic butter for 1-2 min.","Remove from heat. Toss with toasted almonds. Season with salt, pepper, and a squeeze of lemon if desired. Serve immediately."]},
   {id:24,name:"Easter Glazed Ham",protein:"Pork",gf:true,beef:false,tags:["holiday","oven","low-prep"],isCompleteMeal:false,desc:"A showstopper bone-in half ham with a sweet-savoury honey, brown sugar, and Dijon mustard glaze. Slow-roasted covered to stay juicy, then blasted uncovered to caramelise the glaze. Naturally GF. Half ham (5-8 lbs) feeds 6-8 people — perfect for Easter alongside Schwarties hash browns. NOTE: if spiral-sliced, skip scoring and reduce covered roasting time slightly.",pairing:"Holiday side dishes — Schwarties hash browns, roasted carrots, green beans",jennVegSub:"",ingredients:[{name:"Bone-in half ham (fully cooked, pre-cured)",qty:"5-8 lbs"},{name:"Honey",qty:"0.33 cup"},{name:"Brown sugar (packed)",qty:"0.33 cup"},{name:"Dijon mustard",qty:"2 tbsp"},{name:"Apple cider vinegar",qty:"1 tbsp"},{name:"Ground cinnamon",qty:"0.25 tsp"},{name:"Ground cloves",qty:"pinch"},{name:"Apple juice or water",qty:"1 cup (for the pan)"}],butcherItems:[{cut:"Bone-in Half Ham (fully cooked)",qty:"5-8 lbs"}],steps:["Take ham out of fridge 1 hour before cooking. Preheat oven to 325F.","If not spiral-sliced: score the surface in a diamond pattern, cuts about 1/4 inch deep. If spiral-sliced: skip this step.","Place ham cut-side down in a roasting pan. Pour apple juice or water into the bottom. Cover tightly with foil.","Roast covered at 325F — 15-18 min per pound. A 6 lb half ham = about 1.5 hours covered. A 8 lb half ham = about 2 hours covered.","Make the glaze: combine honey, brown sugar, Dijon, apple cider vinegar, cinnamon, and cloves in a small saucepan. Stir on medium heat until sugar dissolves, about 2 min.","When ham reaches 120F internal temp, remove foil. Brush all over generously with glaze.","Increase oven to 400F. Roast uncovered 20-30 min, brushing with more glaze every 10 min, until deep golden and internal temp reaches 140F.","Rest 15 min tented with foil before carving. TIMING TIP: Schwarties hash browns go in at 350F while ham rests — timing lines up perfectly."]}
 ];
+
+// Fuzzy-match a typed meal name (or comma-separated list) against FALLBACK_RECIPES.
+// Returns a fully-populated plan day object with recipeId set if found.
+// Supports multi-dish days like "Ham, Schwarties Potatoes" — merges ingredients.
+function resolveChosenMeal(day, dayIdx){
+  const rawName=(day.chosenMeal||'').trim();
+  if(!rawName) return{...day,mealName:'(to be confirmed)',tags:[],type:'chosen',approved:false,recipeId:null};
+
+  const parts=rawName.split(',').map(s=>s.trim()).filter(Boolean);
+  const matched=[];
+  parts.forEach(part=>{
+    const pl=part.toLowerCase();
+    const r=FALLBACK_RECIPES.find(rec=>
+      rec.name.toLowerCase()===pl ||
+      rec.name.toLowerCase().includes(pl) ||
+      pl.includes(rec.name.toLowerCase())
+    );
+    if(r && !matched.find(m=>m.id===r.id)) matched.push(r);
+  });
+
+  if(matched.length===0) return{...day,mealName:rawName,tags:[],type:'chosen',approved:false,recipeId:null};
+
+  // Merge ingredients from all matched recipes into one virtual entry
+  const rid='chosen_'+dayIdx;
+  DYNAMIC_RECIPES[rid]={
+    id:rid,
+    name:rawName,
+    protein:matched[0].protein,
+    gf:matched.every(r=>r.gf),
+    beef:matched.some(r=>r.beef),
+    tags:matched[0].tags||[],
+    isCompleteMeal:matched[0].isCompleteMeal,
+    desc:matched.map(r=>r.name).join(' + '),
+    pairing:matched[0].pairing||'',
+    jennVegSub:matched.map(r=>r.jennVegSub).filter(Boolean).join('; ')||'',
+    ingredients:matched.flatMap(r=>r.ingredients||[]),
+    butcherItems:matched.flatMap(r=>r.butcherItems||[]),
+    steps:matched[0].steps||[]
+  };
+  return{
+    ...day,
+    recipeId:rid,
+    mealName:rawName,
+    desc:matched.map(r=>r.name).join(' + '),
+    pairing:matched[0].pairing||'',
+    jennVegSub:matched.map(r=>r.jennVegSub).filter(Boolean).join('; ')||'',
+    tags:buildTagsFrom(matched[0]),
+    type:'chosen',
+    approved:false
+  };
+}
 
 function buildFallbackPlan(){
   let used=new Set(),starch=0;
   STATE.plan=STATE.days.map((day,i)=>{
     if(day.mode==='leftovers') return{...day,mealName:'Leftovers',tags:[],type:'leftovers',approved:false,recipeId:null};
     if(day.mode==='out')       return{...day,mealName:'Eating Out',tags:[],type:'out',approved:false,recipeId:null};
-    if(day.mode==='choose')    return{...day,mealName:day.chosenMeal||'(to be confirmed)',tags:[],type:'chosen',approved:false,recipeId:null};
+    if(day.mode==='choose')    return resolveChosenMeal(day,i);
     const ryanHome=isRyanHomeOnDay(i);
     const eligible=FALLBACK_RECIPES.filter(r=>!used.has(r.id)&&!(ryanHome&&r.beef)&&!(r.tags.includes('starch')&&starch>=3)&&r.isCompleteMeal);
     let pick=eligible[0]||(FALLBACK_RECIPES.filter(r=>!(ryanHome&&r.beef))[i%FALLBACK_RECIPES.length]);
