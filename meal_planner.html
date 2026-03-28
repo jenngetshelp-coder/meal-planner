@@ -619,13 +619,22 @@ let cachedDinnerHistory = null;
 // ── EMBEDDED DINNER HISTORY ─────────────────────────────────────
 // Updated automatically by the morning-email-processor.
 // This is the fallback used when the live URL is unreachable.
-const MEAL_HISTORY_DATA = [
+const MEAL_HISTORY_DATA = [ // BEGIN_MEAL_HISTORY
   {date:"2026-03-24",meal:"Lemon Pepper Chicken (BBQ) + leftover potatoes + pear salad",rating:3,liked:"Easy, meets all requirements",change:"Tired of chicken+salad rut — wants marinades/sauces for variety",keepOrDrop:"Modify"},
   {date:"2026-03-25",meal:"Pork tenderloin (seasoned at butcher) + Little Potato Co. roasted baby potatoes + frozen mixed veg",rating:3,liked:"Very low prep — put it in the oven and walk away",change:"Not very flavourful",keepOrDrop:"Modify"},
   {date:"2026-03-26",meal:"Leftovers",rating:2,liked:"No real cooking, just made a salad and reheated from the meals we had this week",change:"The leftovers would be delicious and people would want to eat them again. Note: ",keepOrDrop:"One-off"},
   {date:"2026-03-27",meal:"Leftovers",rating:2,liked:"I didn't have to cook. I made salads and reheated leftovers",change:"The leftovers were from mediocre meals so no one wants to eat it again. Note: Ho",keepOrDrop:"One-off"},
   {date:"2026-03-27",meal:"Honey garlic chicken with frozen beans and rice",rating:1,liked:"Nothing",change:"The chicken was super bland and looks gross coming out of the oven.",keepOrDrop:"Remove"},
-]
+]; // END_MEAL_HISTORY
+
+async function fetchDinnerHistory(){
+  if(cachedDinnerHistory && Date.now()-cachedDinnerHistory._ts < 300000) return cachedDinnerHistory.data;
+  if(!DINNER_HISTORY_URL) return MEAL_HISTORY_DATA;
+  try {
+    const resp = await fetch(DINNER_HISTORY_URL);
+    if(!resp.ok) return MEAL_HISTORY_DATA;
+    const data = await resp.json();
+    const reviews = data.reviews || [];
     // Merge with embedded data: prefer live data but include embedded for gaps
     const allReviews = [...reviews];
     MEAL_HISTORY_DATA.forEach(local => {
