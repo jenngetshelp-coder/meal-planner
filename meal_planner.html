@@ -130,6 +130,13 @@ body{font-family:'Segoe UI',system-ui,-apple-system,sans-serif;background:#F9F8F
 .error-banner{background:#FDF0F0;border:1px solid #E8C4C4;border-radius:10px;padding:12px 16px;margin-bottom:16px;font-size:13px;color:#8B3A3A;display:none}
 .error-banner.vis{display:block}
 
+/* ── PLAN SOURCE BADGE ── */
+.plan-source-badge{display:none;font-size:12px;font-weight:600;padding:5px 12px;border-radius:20px;align-items:center;gap:5px}
+.plan-source-badge.vis{display:inline-flex}
+.plan-source-badge.ai{background:#EEF2F8;color:#4A5E80;border:1px solid #C5D0E8}
+.plan-source-badge.library{background:#FFF8E1;color:#8D6E1F;border:1px solid #E8D87A}
+.plan-source-badge.fallback-warn{background:#FDF0F0;color:#8B3A3A;border:1px solid #E8C4C4}
+
 /* ── PLAN TOOLBAR ── */
 .plan-toolbar{display:flex;justify-content:flex-end;align-items:center;margin-bottom:18px;flex-wrap:wrap;gap:8px}
 .plan-actions{display:flex;gap:8px;flex-wrap:wrap}
@@ -314,10 +321,15 @@ body{font-family:'Segoe UI',system-ui,-apple-system,sans-serif;background:#F9F8F
   body{background:#fff!important}
   .top-nav,.plan-toolbar,.plan-btns,.btn-generate,.loading,.hf-section,
   .add-item-row,.print-hide,.notes-toggle,.day-notes,.recipe-notes,
-  .pref-add-row,.chip-remove,.api-key-bar,.error-banner{display:none!important}
+  .pref-add-row,.chip-remove,.api-key-bar,.error-banner,.plan-source-badge{display:none!important}
   .screen{display:none!important}
   #screen-plan{display:block!important}
+  .content{padding:8px 12px 20px!important}
+  .page-title{font-size:16px!important;margin-bottom:2px!important}
+  .page-subtitle{margin-bottom:8px!important}
+  .week-bar{padding:8px 12px!important;margin-bottom:8px!important}
   .plan-card{box-shadow:none;border:1px solid #ddd;page-break-inside:avoid}
+  .plan-grid{page-break-before:avoid}
   .recipe-panel{display:none!important}
 }
 body.print-with-recipes .recipe-panel.has-content{display:block!important}
@@ -469,7 +481,8 @@ body.print-lists .top-nav,.print-lists .plan-toolbar,.print-lists .hf-section,.p
 <div class="content">
   <div class="page-title">Your Meal Plan</div>
   <div class="page-subtitle" id="plan-week-label"></div>
-  <div class="plan-toolbar">
+  <div class="plan-toolbar" style="justify-content:space-between;align-items:center">
+    <span class="plan-source-badge" id="plan-source-badge"></span>
     <div class="plan-actions">
       <button class="btn-print" onclick="printPlan(false)">Print Plan</button>
       <button class="btn-print" onclick="printPlan(true)">Print Plan + Recipes</button>
@@ -763,22 +776,46 @@ const HIGH_FREQ_EXTRAS = [
 // Common pantry staples — these appear in a "Check Your Pantry" section
 // rather than the main grocery list since they're almost always on hand.
 const PANTRY_STAPLES = new Set([
-  'olive oil','vegetable oil','canola oil','cooking oil','oil',
-  'salt','pepper','black pepper','sea salt','kosher salt',
-  'garlic powder','onion powder','garlic cloves','garlic',
-  'paprika','smoked paprika','cayenne','cayenne pepper','cumin',
-  'oregano','thyme','rosemary','basil','bay leaves',
-  'chili powder','italian seasoning','mixed herbs',
-  'flour','all-purpose flour','cornstarch',
-  'soy sauce','worcestershire sauce',
-  'balsamic vinegar','white vinegar','apple cider vinegar','vinegar',
+  // Oils
+  'olive oil','vegetable oil','canola oil','cooking oil','oil','avocado oil','sesame oil','coconut oil',
+  // Salt & pepper
+  'salt','pepper','black pepper','sea salt','kosher salt','salt and pepper','salt & pepper',
+  // Garlic & onion
+  'garlic powder','onion powder','garlic cloves','garlic','fresh garlic','minced garlic',
+  // Herbs — fresh and dried
+  'oregano','dried oregano','thyme','dried thyme','rosemary','dried rosemary',
+  'basil','dried basil','bay leaves','parsley','dried parsley','cilantro',
+  'mixed herbs','italian seasoning','herbes de provence',
+  // Spices — whole and ground
+  'paprika','smoked paprika','sweet paprika',
+  'cumin','ground cumin','cumin (ground)',
+  'coriander','ground coriander','coriander (ground)',
+  'turmeric','ground turmeric',
+  'cinnamon','ground cinnamon',
+  'cloves','ground cloves',
+  'ginger','ground ginger','ginger powder',
+  'garam masala','curry powder','chili powder',
+  'cayenne','cayenne pepper','red pepper flakes','chili flakes',
+  'nutmeg','allspice','cardamom',
+  // Sauces & condiments
+  'soy sauce','tamari','coconut aminos','worcestershire sauce',
+  'fish sauce','oyster sauce','hoisin sauce',
+  'sriracha','chili garlic sauce','hot sauce','ketchup',
   'dijon mustard','yellow mustard','mustard',
-  'honey','maple syrup',
-  'tomato paste','tomato sauce',
-  'chicken broth','beef broth','vegetable broth','broth','stock',
-  'lemon juice','lime juice',
-  'ketchup','hot sauce',
+  // Vinegars
+  'balsamic vinegar','white vinegar','apple cider vinegar','vinegar','rice vinegar',
+  // Sweeteners
+  'honey','maple syrup','brown sugar','sugar','white sugar',
+  // Baking
+  'flour','all-purpose flour','cornstarch','baking powder','baking soda','vanilla extract',
+  // Oils & fats (pantry)
   'cooking spray','non-stick spray',
+  // Acids
+  'lemon juice','lime juice',
+  // Broths & bases
+  'chicken broth','beef broth','vegetable broth','broth','stock','chicken stock','beef stock',
+  // Tomato
+  'tomato paste','tomato sauce',
 ]);
 
 // Clear items from this list once your order is placed.
@@ -980,20 +1017,50 @@ async function generatePlan(){
   const loader=document.getElementById('loading');
   loader.classList.add('vis');
 
+  let planSource='library'; // 'ai', 'library', or 'ai-failed'
   try {
     if(STATE.apiKey && STATE.apiKey.startsWith('sk-ant')){
       document.getElementById('loading-txt').textContent='Claude is thinking...';
       document.getElementById('loading-sub').textContent='Crafting a fresh meal plan for your family — this takes about 10-15 seconds';
-      await generatePlanWithAI();
+      try {
+        await generatePlanWithAI();
+        planSource='ai';
+      } catch(apiErr){
+        // API failed — fall back to library so you still get a plan
+        console.warn('AI generation failed, falling back to library:', apiErr);
+        document.getElementById('loading-txt').textContent='AI unavailable — using your recipe library...';
+        document.getElementById('loading-sub').textContent='Could not reach Claude. Building a plan from your saved recipes instead.';
+        await new Promise(r=>setTimeout(r,1200));
+        buildFallbackPlan();
+        planSource='ai-failed';
+        // Show the error banner as a soft warning (not a blocker)
+        errorBanner.textContent=`⚠️ AI generation failed: ${apiErr.message}. Your plan was built from your recipe library instead. Check your API key if this keeps happening.`;
+        errorBanner.classList.add('vis');
+      }
     } else {
       document.getElementById('loading-txt').textContent='Building your plan...';
       document.getElementById('loading-sub').textContent='Add your Claude API key to enable AI-generated meal suggestions';
       await new Promise(r=>setTimeout(r,1500));
       buildFallbackPlan();
+      planSource='library';
     }
     savePlanToStorage();
     assignAutoSides();
     renderPlan();
+    // Show plan source badge
+    const badge=document.getElementById('plan-source-badge');
+    if(badge){
+      if(planSource==='ai'){
+        badge.textContent='✨ AI-generated plan';
+        badge.className='plan-source-badge ai vis';
+      } else if(planSource==='ai-failed'){
+        badge.textContent='⚠️ AI unavailable — recipe library used';
+        badge.className='plan-source-badge fallback-warn vis';
+      } else {
+        badge.textContent='📚 From your recipe library';
+        badge.className='plan-source-badge library vis';
+      }
+    }
     showScreen('plan');
   } catch(err){
     loader.classList.remove('vis');
@@ -1128,9 +1195,9 @@ PERMANENTLY REMOVED — never suggest these again under any name or variation:
 
 DINNER RULES:
 - Every dinner MUST have a protein (chicken, turkey, pork, or beef when Ryan is away)
-- Every dinner MUST have vegetables — VARY them each night (do not repeat the same veg two nights in a row)
+- Every dinner MUST have vegetables — VARY them across the whole week. Before finalizing your plan, review ALL meals and ensure no single vegetable appears in more than 2 meals total, and NEVER on back-to-back nights. Bell peppers, corn, and green beans are easy defaults — actively resist using them in multiple meals. A good week uses a genuinely different vegetable most nights.
 - Claire (child) does NOT like cooked carrots — do not serve roasted/cooked carrots as a side dish
-- Valid vegetable options: snap peas, bell peppers, corn, green beans (occasionally), frozen mixed veg, steamed broccoli. Do NOT suggest standalone salad nights — the app automatically pairs a side salad with dinners that need one.
+- Valid vegetable options (use a MIX across the week, not the same 2-3 repeatedly): snap peas, bell peppers, corn, green beans, frozen mixed veg, steamed broccoli, asparagus, spinach, cherry tomatoes, cucumbers, celery. Do NOT suggest standalone salad nights — the app automatically pairs a side salad with dinners that need one.
 - MAX 2-3 starch-based meals this week (rice dishes, enchiladas, tortillas)
 - NO beef when Ryan is HOME
 - NO slow cooker — all meals cooked at dinner time, quick prep preferred
@@ -1159,7 +1226,7 @@ TASTE PROFILE (meals they enjoy — suggest similar styles AND new ideas beyond 
 - Turkey meat sauce spaghetti with side salad
 - Turkey and rice soup (hearty, complete meal)
 - Mango black bean salad with grilled chicken
-New ideas they haven't tried but would likely enjoy: pork tenderloin, Thai-inspired dishes (no fish sauce), Mediterranean chicken, lettuce wraps, stir fries, braised dishes, glazed proteins
+New ideas they haven't tried but would likely enjoy: pork tenderloin, Thai-inspired dishes (no fish sauce), Mediterranean chicken, lettuce wraps, stir fries, braised dishes, glazed proteins, sheet pan meals (use occasionally — max once per week, varied seasonings — bone-in cuts are fine for sheet pan roasting)
 
 INGREDIENT RULES (CRITICAL):
 - ALWAYS list the protein (meat) as the FIRST item in the ingredients array, with quantity in lbs or number of pieces — e.g. "4 chicken breasts" or "1.5 lbs chicken thighs" or "8 chicken drumsticks"
@@ -1348,10 +1415,14 @@ function renderPlan(){
   document.getElementById('plan-week-label').textContent=`${fmtDate(dates[0])} - ${fmtDate(dates[6])}`;
   const ryanLunches=document.getElementById('ryan-lunches').value;
   const statusLabel=STATE.ryanStatus==='home'?'Home All Week':STATE.ryanStatus==='away'?'Away All Week':`Away: ${STATE.ryanAwayDays.join(', ')||'none'}`;
+  const ryderLunch=(document.getElementById('ryder-lunch')?.value||'').trim()||'—';
+  const claireLunch=(document.getElementById('claire-lunch')?.value||'').trim()||'—';
   document.getElementById('plan-summary-bar').innerHTML=`
     <div class="week-bar-item"><strong>Ryan:</strong> ${statusLabel}</div>
     <div class="week-bar-item"><strong>Ryan's Lunches:</strong> ${ryanLunches}</div>
     <div class="week-bar-item"><strong>Jenn's Lunch:</strong> ${document.getElementById('jenn-lunch').value||'Waldorf Salad'}</div>
+    <div class="week-bar-item"><strong>Ryder's Lunch:</strong> ${ryderLunch}</div>
+    <div class="week-bar-item"><strong>Claire's Lunch:</strong> ${claireLunch}</div>
     <div class="week-bar-item"><strong>Adventure:</strong> ${STATE.adventure==='comfort'?'Comfort Zone':STATE.adventure==='medium'?'Mix It Up':'Wild Card'}</div>
   `;
   const grid=document.getElementById('plan-grid');
@@ -1461,7 +1532,14 @@ function renderPlan(){
   });
 }
 
-function toggleApprove(i){STATE.plan[i].approved=!STATE.plan[i].approved;assignAutoSides();renderPlan();}
+function toggleApprove(i){
+  STATE.plan[i].approved=!STATE.plan[i].approved;
+  // Close recipe and side panels when approving
+  STATE.openPanels.delete(i);
+  STATE.openPanels.delete('s'+i);
+  assignAutoSides();
+  renderPlan();
+}
 
 // ── SWAP PANEL STATE ──────────────────────────────────────────
 let swapState = { dayIndex: -1, options: [], selectedIdx: -1 };
@@ -1673,7 +1751,7 @@ Return ONLY valid JSON:
     const parsed = JSON.parse(jsonText);
 
     const rid = 4000 + i + Math.floor(Math.random()*900);
-    DYNAMIC_RECIPES[rid] = { id:rid, ...parsed, beef:(parsed.protein||'').toLowerCase()==='beef', tags:parsed.isStarch?['starch']:[] };
+    DYNAMIC_RECIPES[rid] = { id:rid, name:parsed.mealName||mealName, ...parsed, beef:(parsed.protein||'').toLowerCase()==='beef', tags:parsed.isStarch?['starch']:[] };
     STATE.plan[i] = {
       ...STATE.plan[i], recipeId:rid, mealName:parsed.mealName||mealName,
       desc:parsed.desc||'', pairing:parsed.pairing||'', jennVegSub:parsed.jennVegSub||'',
@@ -1707,7 +1785,7 @@ function confirmSwap(){
   } else {
     const rid = 3000 + i + Math.floor(Math.random() * 900);
     DYNAMIC_RECIPES[rid] = {
-      id: rid, ...picked,
+      id: rid, name: picked.mealName, ...picked,
       beef: (picked.protein || '').toLowerCase() === 'beef',
       tags: picked.isStarch ? ['starch'] : []
     };
@@ -1787,9 +1865,27 @@ function updateNoteBadge(i){
 
 // ── PRINT ──────────────────────────────────────────────────────
 function printPlan(withRecipes){
-  if(withRecipes){document.querySelectorAll('.recipe-panel.has-content').forEach(p=>p.classList.add('vis'));document.body.classList.add('print-with-recipes');}
-  else{document.body.classList.remove('print-with-recipes');document.querySelectorAll('.recipe-panel').forEach(p=>p.classList.remove('vis'));}
-  setTimeout(()=>window.print(),100);
+  if(withRecipes){
+    document.querySelectorAll('.recipe-panel.has-content').forEach(p=>p.classList.add('vis'));
+    document.body.classList.add('print-with-recipes');
+  } else {
+    document.body.classList.remove('print-with-recipes');
+    document.querySelectorAll('.recipe-panel').forEach(p=>p.classList.remove('vis'));
+  }
+  setTimeout(()=>{
+    window.print();
+    // Clean up after print dialog closes
+    setTimeout(()=>{
+      document.body.classList.remove('print-with-recipes');
+      // Restore only the panels that were open before printing
+      document.querySelectorAll('.recipe-panel').forEach(p=>p.classList.remove('vis'));
+      STATE.openPanels.forEach(key=>{
+        const id=typeof key==='string'&&key.startsWith('s')?`side-panel-${key.slice(1)}`:`recipe-panel-${key}`;
+        const el=document.getElementById(id);
+        if(el) el.classList.add('vis');
+      });
+    },500);
+  },100);
 }
 function printLists(){document.body.classList.add('print-lists');setTimeout(()=>{window.print();document.body.classList.remove('print-lists');},100);}
 
@@ -1805,6 +1901,36 @@ function buildLists(){
   showScreen('lists');
 }
 
+
+// Normalize ingredient names so variants merge into one grocery list entry
+// e.g. "English cucumber" and "cucumber, sliced" both become key "cucumber"
+const INGREDIENT_ALIASES = {
+  'english cucumber':'cucumber',
+  'english cucumbers':'cucumber',
+  'cucumber (sliced)':'cucumber',
+  'cucumber, sliced':'cucumber',
+  'cherry tomatoes':'cherry tomatoes',
+  'grape tomatoes':'cherry tomatoes',
+  'green onions':'green onions',
+  'green onion':'green onions',
+  'scallions':'green onions',
+  'spring onions':'green onions',
+  'fresh ginger':'ginger',
+  'fresh ginger (grated)':'ginger',
+  'ginger (grated)':'ginger',
+  'mixed greens':'mixed greens',
+  'salad greens':'mixed greens',
+  'baby spinach':'spinach',
+  'heavy cream':'cream',
+  'heavy whipping cream':'cream',
+  'coconut cream':'coconut cream',
+  'jasmine rice':'jasmine rice',
+  'basmati rice':'basmati rice',
+};
+function normalizeIngredientKey(name){
+  const l=name.toLowerCase().trim();
+  return INGREDIENT_ALIASES[l]||l;
+}
 
 // Try to add two quantity strings (e.g. "2 lemons" + "3 lemons" = "5 lemons")
 function tryAddQtys(q1, q2){
@@ -1990,20 +2116,21 @@ function renderGroceryList(ryanLunches,jennLunch){
         // Apply notes exclusions
         if(ingMatchesExclusion(n,exclusions)) return;
         const nl=n.toLowerCase();
+        const nk=normalizeIngredientKey(n);
         // Check if it's a pantry staple
-        if(PANTRY_STAPLES.has(nl)){
-          if(pantryNeeded.has(nl)) pantryNeeded.get(nl).sources.push(recipe.name);
-          else pantryNeeded.set(nl,{name:n,qty:q,sources:[recipe.name]});
+        if(PANTRY_STAPLES.has(nl)||PANTRY_STAPLES.has(nk)){
+          if(pantryNeeded.has(nk)) pantryNeeded.get(nk).sources.push(recipe.name);
+          else pantryNeeded.set(nk,{name:n,qty:q,sources:[recipe.name]});
           return;
         }
         // Skip if already in staples/waldorf/emails
-        if(alreadyCovered.has(nl)) return;
-        // Aggregate quantities
-        if(agg.has(nl)){
-          const ex=agg.get(nl);
+        if(alreadyCovered.has(nl)||alreadyCovered.has(nk)) return;
+        // Aggregate quantities (use normalized key, display name from first occurrence)
+        if(agg.has(nk)){
+          const ex=agg.get(nk);
           ex.sources.push(recipe.name);
           ex.qty=tryAddQtys(ex.qty,q);
-        } else agg.set(nl,{name:n,qty:q,sources:[recipe.name]});
+        } else agg.set(nk,{name:n,qty:q,sources:[recipe.name]});
       });
     });
     // Also include auto-assigned veggie sides
@@ -2018,10 +2145,11 @@ function renderGroceryList(ryanLunches,jennLunch){
         const n=ing.name||ing;
         const q=ing.qty||'';
         const nl=n.toLowerCase();
-        if(PANTRY_STAPLES.has(nl)) return;
-        if(alreadyCovered.has(nl)) return;
-        if(agg.has(nl)){const ex=agg.get(nl);ex.sources.push('Side: '+side.name);}
-        else agg.set(nl,{name:n,qty:q,sources:['Side: '+side.name]});
+        const nk=normalizeIngredientKey(n);
+        if(PANTRY_STAPLES.has(nl)||PANTRY_STAPLES.has(nk)) return;
+        if(alreadyCovered.has(nl)||alreadyCovered.has(nk)) return;
+        if(agg.has(nk)){const ex=agg.get(nk);ex.sources.push('Side: '+side.name);}
+        else agg.set(nk,{name:n,qty:q,sources:['Side: '+side.name]});
       });
     });
     if(agg.size>0){
