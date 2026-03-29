@@ -1069,6 +1069,7 @@ async function callClaudeAPI(prompt){
     body:JSON.stringify({
       model:'claude-sonnet-4-6',
       max_tokens:8192,
+      temperature:1,
       system:'You are a meal planning assistant for a Canadian family. Respond only with valid JSON matching the requested format. No other text.',
       messages:[{role:'user',content:prompt}]
     })
@@ -1123,6 +1124,7 @@ PERMANENTLY REMOVED — never suggest these again under any name or variation:
 - Honey garlic chicken (rated 1/5 — "actually the worst", super bland)
 - Honey garlic pork / honey garlic pork tenderloin (same flavour profile, same issue)
 - Any "honey garlic" flavoured protein dish — this entire flavour combination is a hard no for this family
+- Taco bowls / taco salad / any taco-style meal — family is tired of them, removing for now
 
 DINNER RULES:
 - Every dinner MUST have a protein (chicken, turkey, pork, or beef when Ryan is away)
@@ -1139,9 +1141,12 @@ DINNER RULES:
 - Scale all recipes for a family of 4 with some leftovers (use 6-8 chicken pieces or 1.5 lbs protein as baseline)
 - Meals should create leftovers when possible
 - Prefer saucy or mixed-in chicken dishes to avoid "chicken again" fatigue (think: butter chicken, cacciatore, curry, chimichurri, shawarma bowls)
+- For chicken shawarma: ALWAYS make it as a BOWL — boneless skinless chicken (thighs or breasts), served over rice with diced cucumber, cherry tomatoes, and hummus. NEVER bone-in, NEVER sheet pan style with roasted peppers/snap peas on the side
 
 ADVENTURE: ${adventureDesc}
 ${weekNotes?`SPECIAL NOTES THIS WEEK: ${weekNotes}`:''}
+
+VARIETY (CRITICAL): Study the dinner history below and deliberately suggest meals that have NOT appeared recently. Every week should feel different. Do not repeat any meal from the last 3 weeks of history. If the history shows the same meals being suggested repeatedly, that is a problem — choose something genuinely different.
 
 DAYS (only suggest for lines marked SUGGEST):
 ${dayLines}
@@ -1154,7 +1159,7 @@ TASTE PROFILE (meals they enjoy — suggest similar styles AND new ideas beyond 
 - Turkey meat sauce spaghetti with side salad
 - Turkey and rice soup (hearty, complete meal)
 - Mango black bean salad with grilled chicken
-New ideas they haven't tried but would likely enjoy: pork tenderloin, Thai-inspired dishes (no fish sauce), Mediterranean chicken, sheet pan meals, lettuce wraps, stir fries
+New ideas they haven't tried but would likely enjoy: pork tenderloin, Thai-inspired dishes (no fish sauce), Mediterranean chicken, lettuce wraps, stir fries, braised dishes, glazed proteins
 
 INGREDIENT RULES (CRITICAL):
 - ALWAYS list the protein (meat) as the FIRST item in the ingredients array, with quantity in lbs or number of pieces — e.g. "4 chicken breasts" or "1.5 lbs chicken thighs" or "8 chicken drumsticks"
@@ -1314,7 +1319,9 @@ function buildFallbackPlan(){
     if(day.mode==='choose')    return resolveChosenMeal(day,i);
     const ryanHome=isRyanHomeOnDay(i);
     const eligible=FALLBACK_RECIPES.filter(r=>!used.has(r.id)&&!(ryanHome&&r.beef)&&!(r.tags.includes('starch')&&starch>=3)&&r.isCompleteMeal);
-    let pick=eligible[0]||(FALLBACK_RECIPES.filter(r=>!(ryanHome&&r.beef))[i%FALLBACK_RECIPES.length]);
+    // Shuffle eligible so the fallback plan varies each time
+    const shuffled=[...eligible].sort(()=>Math.random()-0.5);
+    let pick=shuffled[0]||(FALLBACK_RECIPES.filter(r=>!(ryanHome&&r.beef))[Math.floor(Math.random()*FALLBACK_RECIPES.length)]);
     used.add(pick.id);
     if(pick.tags.includes('starch')) starch++;
     DYNAMIC_RECIPES[pick.id]=pick;
@@ -1400,24 +1407,6 @@ function renderPlan(){
             <ol>${(recipe.steps||[]).map(s=>`<li>${s}</li>`).join('')}</ol>
           </div></div>
         </div>`}
-        ${(()=>{
-          const sideId=STATE.autoSides[i];
-          if(!sideId) return '';
-          const side=FALLBACK_RECIPES.find(r=>r.id===sideId);
-          if(!side) return '';
-          return `<div style="margin-top:16px;border-top:2px dashed #B8DFB8;padding-top:14px;">
-            <div style="font-size:13px;font-weight:700;color:#5A8A5A;margin-bottom:10px;">🥗 Suggested Side: ${side.name}</div>
-            <div style="font-size:12px;color:#888;margin-bottom:8px;font-style:italic">${side.desc||''}</div>
-            <div class="recipe-cols">
-              <div><div class="recipe-section"><div class="recipe-section-title">Side Ingredients</div>
-                <ul>${(side.ingredients||[]).map(ing=>`<li>${ing.qty?ing.qty+' — ':''} ${ing.name||ing}</li>`).join('')}</ul>
-              </div></div>
-              <div><div class="recipe-section"><div class="recipe-section-title">How to Make</div>
-                <ol>${(side.steps||[]).map(s=>`<li>${s}</li>`).join('')}</ol>
-              </div></div>
-            </div>
-          </div>`;
-        })()}
         <div class="recipe-notes print-hide">
           <label>My Notes for This Recipe</label>
           <div class="notes-hint">Ingredient changes are applied to your grocery list — e.g. "skip the olives", "not using spinach", "no mushrooms"</div>
@@ -1425,12 +1414,49 @@ function renderPlan(){
           <textarea placeholder="e.g. Double the sauce, skip the olives, not using spinach..." oninput="STATE.smartNotes[${i}]=this.value;updateNoteBadge(${i})">${STATE.smartNotes[i]||''}</textarea>
         </div>
       </div>`:''}
+      ${(()=>{
+        const sideId=STATE.autoSides[i];
+        if(!sideId) return '';
+        const side=FALLBACK_RECIPES.find(r=>r.id===sideId);
+        if(!side) return '';
+        return `
+      <div class="plan-card type-chosen" id="side-card-${i}" style="border-left-color:#5A8A5A;background:#F5FAF5;margin-top:6px;">
+        <div class="plan-day-info" style="min-width:60px">
+          <div class="plan-day-nm" style="font-size:11px;color:#5A8A5A">SIDE</div>
+          <div class="plan-day-dt" style="font-size:10px;color:#aaa">Salad</div>
+        </div>
+        <div class="plan-meal">
+          <div class="plan-meal-name" style="font-size:14px">🥗 ${side.name}</div>
+          <div class="plan-meal-note" style="color:#7AAA7A">${side.desc?side.desc.split('.')[0]+'.':''}</div>
+        </div>
+        <div class="plan-btns print-hide">
+          <button class="btn-recipe" onclick="toggleSidePanel(${i})" style="border-color:#5A8A5A;color:#5A8A5A">Recipe</button>
+        </div>
+      </div>
+      <div class="recipe-panel has-content" id="side-panel-${i}" style="border-color:#B8DFB8">
+        <div class="recipe-panel-title" style="color:#3A6B3A">${side.name}
+          <button class="recipe-panel-close print-hide" onclick="toggleSidePanel(${i})">&#x2715;</button>
+        </div>
+        <div class="recipe-cols">
+          <div><div class="recipe-section"><div class="recipe-section-title">Ingredients</div>
+            <ul>${(side.ingredients||[]).map(ing=>`<li>${ing.qty?ing.qty+' — ':''} ${ing.name||ing}</li>`).join('')}</ul>
+          </div></div>
+          <div><div class="recipe-section"><div class="recipe-section-title">How to Make</div>
+            <ol>${(side.steps||[]).map(s=>`<li>${s}</li>`).join('')}</ol>
+          </div></div>
+        </div>
+      </div>`;
+      })()}
     `;
     grid.appendChild(w);
     // Restore open panel state after re-render
     if(STATE.openPanels.has(i)){
       const rp=document.getElementById(`recipe-panel-${i}`);
       if(rp) rp.classList.add('vis');
+    }
+    if(STATE.openPanels.has('s'+i)){
+      const sp=document.getElementById(`side-panel-${i}`);
+      if(sp) sp.classList.add('vis');
     }
   });
 }
@@ -1743,6 +1769,14 @@ function toggleRecipePanel(i){
     const nowOpen=!p.classList.contains('vis');
     p.classList.toggle('vis');
     if(nowOpen) STATE.openPanels.add(i); else STATE.openPanels.delete(i);
+  }
+}
+function toggleSidePanel(i){
+  const p=document.getElementById(`side-panel-${i}`);
+  if(p){
+    const nowOpen=!p.classList.contains('vis');
+    p.classList.toggle('vis');
+    if(nowOpen) STATE.openPanels.add('s'+i); else STATE.openPanels.delete('s'+i);
   }
 }
 function updateNoteBadge(i){
