@@ -867,7 +867,7 @@ function getSaturdayOfWeek(offset=0){
   d.setHours(0,0,0,0);
   return d;
 }
-function fmtDate(d){return d.toLocaleDateString('en-CA',{month:'short',day:'numeric'});}
+function fmtDate(d){const dt=(d instanceof Date)?d:new Date(d);return dt.toLocaleDateString('en-CA',{month:'short',day:'numeric'});}
 function getWeekDates(offset){
   const sat=getSaturdayOfWeek(offset);
   return Array.from({length:7},(_,i)=>{const dd=new Date(sat);dd.setDate(sat.getDate()+i);return dd;});
@@ -997,7 +997,8 @@ function loadPlanFromStorage(){
     if(!data.plan || !Array.isArray(data.plan) || data.plan.length === 0) return false;
     // Don't load plans older than 8 days
     if(Date.now() - (data.savedAt||0) > 8*24*60*60*1000) return false;
-    STATE.plan = data.plan;
+    // Re-hydrate date strings back into Date objects (JSON serialization converts them to strings)
+    STATE.plan = data.plan.map(day=>({...day, date: day.date ? new Date(day.date) : day.date}));
     STATE.weekOffset = data.weekOffset || 0;
     STATE.ryanStatus = data.ryanStatus || null;
     STATE.ryanAwayDays = data.ryanAwayDays || [];
