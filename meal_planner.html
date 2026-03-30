@@ -1948,6 +1948,15 @@ const INGREDIENT_ALIASES = {
   'coconut cream':'coconut cream',
   'jasmine rice':'jasmine rice',
   'basmati rice':'basmati rice',
+  'celery stalks':'celery',
+  'celery stalk':'celery',
+  'celery (sliced)':'celery',
+  'green beans (fresh)':'green beans',
+  'green beans, trimmed':'green beans',
+  'green beans (trimmed)':'green beans',
+  'lemons (for waldorf)':'lemon',
+  'lemon (juice and zest)':'lemon',
+  'lemon juice (optional)':'lemon juice',
 };
 function normalizeIngredientKey(name){
   const l=name.toLowerCase().trim();
@@ -2014,12 +2023,13 @@ function renderGroceryList(ryanLunches,jennLunch){
   // Build a set of names already covered by staples/waldorf/emails so dinner
   // section doesn't repeat them.
   const alreadyCovered=new Set();
-  STAPLE_ITEMS.forEach(i=>alreadyCovered.add(i.name.toLowerCase()));
+  const addCovered=(i)=>{ alreadyCovered.add(i.name.toLowerCase()); alreadyCovered.add(normalizeIngredientKey(i.name)); };
+  STAPLE_ITEMS.forEach(addCovered);
   if(jennLunch.toLowerCase().includes('waldorf')){
-    WALDORF_GROCERY.forEach(i=>alreadyCovered.add(i.name.toLowerCase()));
-    WALDORF_OCCASIONAL.forEach(i=>alreadyCovered.add(i.name.toLowerCase()));
+    WALDORF_GROCERY.forEach(addCovered);
+    WALDORF_OCCASIONAL.forEach(addCovered);
   }
-  EMAILED_GROCERY_ITEMS.forEach(i=>alreadyCovered.add(i.name.toLowerCase()));
+  EMAILED_GROCERY_ITEMS.forEach(addCovered);
 
   // --- Weekly Staples ---
   addCat(gb,'Weekly Staples');
@@ -2128,6 +2138,8 @@ function renderGroceryList(ryanLunches,jennLunch){
       if(STATE.premadeRecipes[meal._planIdx]) return;
       const recipe=DYNAMIC_RECIPES[meal.recipeId];
       if(!recipe) return;
+      // AI recipes store the name as 'mealName'; fallback recipes use 'name'
+      if(!recipe.name && recipe.mealName) recipe.name = recipe.mealName;
       // Parse notes for this recipe to find ingredient exclusions
       const noteText=STATE.smartNotes[meal._planIdx]||'';
       const exclusions=parseNoteExclusions(noteText);
