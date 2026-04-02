@@ -6,7 +6,7 @@
 <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
 <meta http-equiv="Pragma" content="no-cache">
 <meta http-equiv="Expires" content="0">
-<title>Maund Family Meal Planner — v2026-03-27</title>
+<title>Maund Family Meal Planner — v2026-03-30</title>
 <style>
 *{box-sizing:border-box;margin:0;padding:0}
 body{font-family:'Segoe UI',system-ui,-apple-system,sans-serif;background:#F9F8F5;color:#3a3a3a;min-height:100vh}
@@ -452,9 +452,27 @@ body.print-lists .top-nav,.print-lists .plan-toolbar,.print-lists .hf-section,.p
         </div>
       </div>
 
+      <div style="margin-top:16px">
+        <div class="field">
+          <label>How Busy Is This Week?</label>
+          <div class="btn-group">
+            <button class="btn-toggle" onclick="setWeekEnergy('light',this)">Light Week</button>
+            <button class="btn-toggle sel" onclick="setWeekEnergy('normal',this)">Normal</button>
+            <button class="btn-toggle" onclick="setWeekEnergy('heavy',this)">Heavy Week</button>
+          </div>
+          <div class="auto-note" id="energy-note">Claude will balance cook nights, easy nights, and leftovers across the week.</div>
+        </div>
+      </div>
+
       <div class="field" style="margin-top:16px">
         <label>Anything Else for Claude to Know?</label>
         <textarea id="week-notes" rows="2" placeholder="Busy nights, guests coming, ingredients on hand, things to avoid this week..." style="resize:vertical"></textarea>
+        <div class="auto-note">These notes help Claude plan meals — they don't add items to your shopping list.</div>
+      </div>
+      <div class="field" style="margin-top:16px">
+        <label>Extra Items to Add to Shopping List</label>
+        <textarea id="extra-grocery-items" rows="2" placeholder="e.g. apple juice, vanilla ice cream, chocolate chips (one per line or comma-separated)" style="resize:vertical"></textarea>
+        <div class="auto-note">These items will appear on your grocery list under "Extra Items."</div>
       </div>
     </div>
   </div>
@@ -507,7 +525,7 @@ body.print-lists .top-nav,.print-lists .plan-toolbar,.print-lists .hf-section,.p
       <button class="btn-secondary" onclick="buildLists()">↺ Refresh List</button>
       <button class="btn-secondary" onclick="emailButcherList()">📧 Email Butcher List</button>
       <button class="btn-secondary" onclick="doneShoppingClick()">✓ Done Shopping</button>
-      <button class="btn-primary" onclick="alert('PC Express cart coming soon!')">Create PC Express Cart</button>
+      <button class="btn-primary" onclick="createPCExpressCart()">🛒 Create PC Express Cart</button>
     </div>
   </div>
   <div class="grocery-section">
@@ -621,6 +639,7 @@ const STATE = {
   ryanStatus: null,
   ryanAwayDays: [],
   adventure: 'comfort',
+  weekEnergy: 'normal',
   days: [],
   plan: [],
   smartNotes: {},
@@ -650,6 +669,9 @@ const MEAL_HISTORY_DATA = [ // BEGIN_MEAL_HISTORY
   {date:"2026-03-27",meal:"Honey garlic chicken with frozen beans and rice",rating:1,liked:"Nothing",change:"The chicken was super bland and looks gross coming out of the oven.",keepOrDrop:"Remove"},
   {date:"2026-03-29",meal:"Honey Garlic Pork Tenderloin",rating:0,liked:"",change:"Not made — removed before cooking. Same honey garlic flavour profile as the chicken that rated 1/5. Family does not enjoy honey garlic dishes.",keepOrDrop:"Remove"},
   {date:"2026-03-28",meal:"Fried rice",rating:3,liked:"It was different than just eating chicken",change:"It wasn't very flavourful",keepOrDrop:"Modify"},
+  {date:"2026-03-29",meal:"Turkey Tornados",rating:4,liked:"Family enjoyed the meal",change:"Long prep — searing bacon first then oven. Good flavour overall.",keepOrDrop:"Keep"},
+  {date:"2026-03-30",meal:"Chimichurri Chicken Drumsticks",rating:3,liked:"Good flavour, family liked the chimichurri sauce",change:"Family didn't love eating drumsticks. Overnight marinade + very long cook. Switch to thighs or breasts.",keepOrDrop:"Modify"},
+  {date:"2026-03-31",meal:"BBQ Italian Sausage with Salad",rating:3,liked:"Very easy to cook, low prep time",change:"Feels like chicken and salad — not very exciting. Use occasionally for easy nights only.",keepOrDrop:"Keep occasionally"},
 ]; // END_MEAL_HISTORY
 
 async function fetchDinnerHistory(){
@@ -678,16 +700,88 @@ async function fetchDinnerHistory(){
 
 function formatDinnerHistoryForPrompt(reviews){
   if(!reviews || reviews.length === 0) return '';
+
+  // ── RAW HISTORY (last 60 entries) ──
   const lines = reviews.slice(0, 60).map(r => {
     let line = `- ${r.date}: ${r.meal}`;
     if(r.rating) line += ` (${r.rating}/5)`;
     if(r.liked) line += ` — Liked: ${r.liked}`;
     if(r.change) line += ` — Would change: ${r.change}`;
     if(r.keepOrDrop && r.keepOrDrop.toLowerCase().includes('drop')) line += ` [DROP]`;
+    if(r.keepOrDrop && r.keepOrDrop.toLowerCase().includes('modify')) line += ` [MODIFY — suggest an improved variant]`;
     if(r.notes) line += ` — ${r.notes}`;
     return line;
   });
-  return `\n\nDINNER HISTORY (recent meals and family feedback — use this to learn patterns, avoid repeats, and improve suggestions):\n${lines.join('\n')}`;
+
+  // ── PATTERN ANALYSIS (real learning) ──
+  const rated = reviews.filter(r => r.rating && r.meal && !r.meal.toLowerCase().includes('leftover'));
+  const winners = rated.filter(r => r.rating >= 4);
+  const decent = rated.filter(r => r.rating === 3);
+  const losers = rated.filter(r => r.rating <= 2);
+  const removed = rated.filter(r => r.keepOrDrop && (r.keepOrDrop.toLowerCase().includes('drop') || r.keepOrDrop.toLowerCase().includes('remove')));
+  const toModify = rated.filter(r => r.keepOrDrop && r.keepOrDrop.toLowerCase().includes('modify'));
+
+  // Extract what the family actually likes from positive feedback
+  const likedThemes = winners.map(r => r.liked).filter(Boolean);
+  const changeRequests = [...decent, ...losers].map(r => r.change).filter(Boolean);
+  const avgRating = rated.length ? (rated.reduce((s,r) => s + r.rating, 0) / rated.length).toFixed(1) : 'N/A';
+
+  let analysis = `\n\n══════════════════════════════════════════
+DINNER HISTORY & LEARNING ANALYSIS
+══════════════════════════════════════════
+
+AVERAGE RATING: ${avgRating}/5 across ${rated.length} rated meals
+
+`;
+
+  if(winners.length > 0){
+    analysis += `WINNERS (4-5/5) — suggest meals with SIMILAR characteristics:\n`;
+    winners.forEach(r => { analysis += `  ✓ ${r.meal} (${r.rating}/5)${r.liked ? ' — Why: '+r.liked : ''}\n`; });
+    analysis += '\n';
+  }
+
+  if(toModify.length > 0){
+    analysis += `MODIFY THESE — suggest IMPROVED VARIANTS with the requested changes:\n`;
+    toModify.forEach(r => { analysis += `  ↻ ${r.meal} (${r.rating}/5) — Change requested: ${r.change || 'more flavour'}\n`; });
+    analysis += '\n';
+  }
+
+  if(losers.length > 0){
+    analysis += `FAILURES (1-2/5) — AVOID these styles/flavour profiles:\n`;
+    losers.forEach(r => { analysis += `  ✗ ${r.meal} (${r.rating}/5)${r.change ? ' — Problem: '+r.change : ''}\n`; });
+    analysis += '\n';
+  }
+
+  if(removed.length > 0){
+    analysis += `PERMANENTLY BANNED (from ratings):\n`;
+    removed.forEach(r => { analysis += `  🚫 ${r.meal}\n`; });
+    analysis += '\n';
+  }
+
+  // Synthesize what the family actually wants
+  analysis += `KEY LEARNING — what this family needs:\n`;
+  if(changeRequests.some(c => /flavour|bland|boring/i.test(c)))
+    analysis += `  • FLAVOUR IS THE #1 ISSUE — meals must be well-seasoned, saucy, or have bold flavours. Plain/bland protein is the fastest way to a low rating.\n`;
+  if(changeRequests.some(c => /marinade|sauce|glaze/i.test(c)))
+    analysis += `  • Family specifically asks for marinades, sauces, and glazes on proteins. Dry-rubbed or plain-roasted protein disappoints.\n`;
+  if(likedThemes.some(t => /easy|simple|low prep|quick/i.test(t)))
+    analysis += `  • Easy prep is valued highly — "put it in the oven and walk away" is a winning formula.\n`;
+  if(likedThemes.some(t => /different|variety|not chicken/i.test(t)))
+    analysis += `  • Variety matters — the family notices when meals feel repetitive.\n`;
+  if(changeRequests.some(c => /chicken.*rut|same|tired|repetitive/i.test(c)))
+    analysis += `  • WARNING: chicken fatigue detected. Use chicken max 2-3x/week and always with a DIFFERENT preparation/sauce.\n`;
+
+  analysis += `\nFULL HISTORY (use to avoid repeats AND to learn preferences):\n${lines.join('\n')}`;
+
+  analysis += `\n\nINSTRUCTIONS FOR USING THIS DATA:
+1. Meals rated 4-5/5: suggest similar flavour profiles and cooking styles
+2. Meals marked MODIFY: suggest the SAME meal but with the specific improvement noted (e.g. "add sauce" → suggest the meal with a new sauce)
+3. Meals rated 1-2/5: avoid similar flavour profiles entirely (not just the name — the whole style)
+4. Do NOT repeat any meal name from the last 3 weeks
+5. If the average rating is below 3.5/5, you are NOT suggesting well enough — be bolder with flavours, try new cuisines
+6. Each week should feel DIFFERENT from the last — vary proteins, cuisines, cooking methods`;
+
+  return analysis;
 }
 
 const WEEK_DAYS = ['Saturday','Sunday','Monday','Tuesday','Wednesday','Thursday','Friday'];
@@ -738,6 +832,7 @@ const STAPLE_ITEMS = [
   {name:"Kiwis", qty:"1 bag"},
   {name:"Mandarin Oranges (2 lb bag)", qty:"1 bag"},
   {name:"Raspberries", qty:"1–2 half pints"},
+  {name:"Large Oranges", qty:"6"},
 ];
 
 const WALDORF_GROCERY = [
@@ -773,6 +868,86 @@ const HIGH_FREQ_EXTRAS = [
 
 // Items emailed by Jenn — added automatically by the morning processor.
 // These appear directly on the grocery list, no action needed.
+
+// ── PC EXPRESS PRODUCT MAP ────────────────────────────────────
+// Maps grocery list items to Loblaws product paths for reliable cart filling.
+// When filling the cart, Cowork Claude looks up items here FIRST.
+// If found, navigate directly to the product page (no search needed).
+// If not found, fall back to search.
+// Format: { searchAliases: [...], product: '/en/path/p/ID', name: 'Product Name', defaultQty: 1, notes: '' }
+const PC_EXPRESS_MAP = [
+  // ── WEEKLY STAPLES ──
+  {searchAliases:['mango','mangoes'], product:'/en/mango/p/20174535_EA', name:'Mango', defaultQty:3},
+  {searchAliases:['green seedless grapes','green grapes'], product:'/en/green-seedless-grapes/p/20828963_EA', name:'Green Seedless Grapes', defaultQty:1},
+  {searchAliases:['blueberries'], product:'/en/blueberries-half-pint/p/20086498_EA', name:'Blueberries Half Pint', defaultQty:4},
+  {searchAliases:['pepperettes','european sausage sticks'], product:'/en/original-european-sausage-sticks/p/20843072_EA', name:'Pepperettes', defaultQty:1},
+  {searchAliases:['passion fruit'], product:'/en/passion-fruit/p/20653723_EA', name:'Passion Fruit', defaultQty:4},
+  {searchAliases:['english cucumber'], product:'/en/english-cucumber/p/20828954_EA', name:'English Cucumber', defaultQty:2},
+  {searchAliases:['green giant mixed vegetables','frozen mixed veg'], product:'/en/mixed-vegetables/p/20131033_EA', name:'Green Giant Mixed Vegetables', defaultQty:1},
+  {searchAliases:['2% milk','milk'], product:'/en/2-partly-skimmed-milk/p/20066992_EA', name:'No Name 2% Milk', defaultQty:1},
+  {searchAliases:['kiwi','kiwis'], product:'/en/kiwi-2lb/p/21307375_EA', name:'Kiwi 2LB', defaultQty:1},
+  {searchAliases:['mandarin oranges','mandarins'], product:'/en/mandarin-oranges-2-lb-bag/p/20176052_EA', name:'Mandarin Oranges 2 lb bag', defaultQty:1},
+  {searchAliases:['raspberries'], product:'/en/raspberries-half-pint/p/20086504_EA', name:'Raspberries Half Pint', defaultQty:2},
+
+  // ── WALDORF INGREDIENTS ──
+  {searchAliases:['green apples','granny smith'], product:'/en/green-apples-granny-smith/p/20176045_EA', name:'Granny Smith Apples', defaultQty:4},
+  {searchAliases:['celery','celery stalks'], product:'/en/celery-stalks/p/20828942_EA', name:'Celery Stalks', defaultQty:1},
+  {searchAliases:['red seedless grapes','red grapes'], product:'/en/red-seedless-grapes/p/20828966_EA', name:'Red Seedless Grapes', defaultQty:1},
+  {searchAliases:['fresh mint','mint'], product:'/en/mint/p/20828980_EA', name:'Mint', defaultQty:1},
+
+  // ── COMMON RECIPE INGREDIENTS ──
+  {searchAliases:['olive oil','extra virgin olive oil','evoo'], product:'/en/olive-oil-extra-virgin/p/20809898_EA', name:'Gallo EVOO', defaultQty:1},
+  {searchAliases:['balsamic vinegar'], product:'/en/1-leaf-balsamic-vinegar-of-modena/p/21071539_EA', name:'PC 1 Leaf Balsamic Vinegar', defaultQty:1},
+  {searchAliases:['honey'], product:'/en/liquid-squeeze-pure-natural-honey/p/20777574_EA', name:'McCormicks Honey', defaultQty:1},
+  {searchAliases:['basmati rice'], product:'/en/basmati-rice/p/20057437_EA', name:'Dainty Basmati Rice', defaultQty:1},
+  {searchAliases:['walnuts','walnut pieces','chopped walnuts'], product:'/en/walnut-pieces-club-size/p/21027765_EA', name:'No Name Walnut Pieces 1kg', defaultQty:1},
+  {searchAliases:['sesame oil'], product:'/en/pure-sesame-oil/p/20158001_EA', name:'Foreway Sesame Oil', defaultQty:1},
+  {searchAliases:['sour cream'], product:'/en/sour-cream-14/p/20638723_EA', name:'No Name Sour Cream 14%', defaultQty:1},
+  {searchAliases:['cheddar','shredded cheddar','cheddar cheese'], product:'/en/shredded-medium-cheddar/p/20303413_EA', name:'No Name Shredded Medium Cheddar', defaultQty:1},
+  {searchAliases:['parmesan','parmesan cheese','shredded parmesan'], product:'/en/parmesan-shredded-cheese/p/21166891_EA', name:'PC Parmesan Shredded', defaultQty:1},
+  {searchAliases:['carrots','carrots 3 lb'], product:'/en/carrots-3-lb-bag/p/20828940_EA', name:"Farmer's Market Carrots 3lb", defaultQty:1},
+  {searchAliases:['onions','yellow onions','onion'], product:'/en/yellow-onions-3-lb-bag/p/20828950_EA', name:"Farmer's Market Yellow Onions 3lb", defaultQty:1},
+  {searchAliases:['limes','lime','lime zest'], product:'/en/limes/p/20174519_EA', name:'Limes', defaultQty:4},
+  {searchAliases:['green beans','fresh green beans'], product:'/en/green-beans/p/20828967_EA', name:'Green Beans', defaultQty:2, notes:'380g bags; 2 bags = ~1.5 lbs'},
+  {searchAliases:['slivered almonds','almonds'], product:'/en/slivered-almonds/p/20059735_EA', name:'No Name Slivered Almonds', defaultQty:1},
+  {searchAliases:['jasmine rice'], product:'/en/thai-hom-mali-scented-jasmine-rice/p/20364503_EA', name:'Rooster Jasmine Rice 2kg', defaultQty:1},
+  {searchAliases:['cherry tomatoes'], product:'/en/axiany-cherry-tomatoes/p/21221437_EA', name:'Axiany Cherry Tomatoes', defaultQty:1},
+  {searchAliases:['hummus'], product:'/en/hummus-chickpea-dip-and-spread/p/20963735_EA', name:'PC Hummus 454g', defaultQty:1},
+  {searchAliases:['whipping cream','heavy cream','cream'], product:'/en/35-whipping-cream/p/20060329_EA', name:'Neilson 35% Whipping Cream', defaultQty:1},
+  {searchAliases:['crushed tomatoes','canned tomatoes'], product:'/en/crushed-tomatoes/p/20066980_EA', name:'No Name Crushed Tomatoes 796ml', defaultQty:1},
+  {searchAliases:['greek yogurt','plain yogurt','yogurt'], product:'/en/plain-greek-yogurt-2/p/21086028_EA', name:'PC Greek Yogurt 2%', defaultQty:1},
+  {searchAliases:['cilantro','fresh cilantro'], product:'/en/cilantro/p/20828978_EA', name:'Cilantro', defaultQty:1},
+  {searchAliases:['ginger','fresh ginger'], product:'/en/ginger/p/20828990_EA', name:'Ginger', defaultQty:1},
+  {searchAliases:['garlic','garlic bulbs','fresh garlic'], product:'/en/garlic-bulbs-3-count/p/20828991_EA', name:'Garlic Bulbs 3-count', defaultQty:1},
+  {searchAliases:['applesauce','gogo squeeze','squeeze applesauce'], product:'/en/squeeze-applesauce-apple-banana/p/20968363_EA', name:'GoGo Squeeze Applesauce 4-pack', defaultQty:2, notes:'Only 4-packs available; order 2 for 8 pouches'},
+  {searchAliases:['stuffed olives','olives','garlic olives'], product:'/en/olives-stuffed-with-garlic/p/20901362_EA', name:'PC Garlic Stuffed Olives', defaultQty:1},
+  {searchAliases:['apple juice'], product:'/en/100-apple-juice/p/20055547_EA', name:'PC 100% Apple Juice 1.89L', defaultQty:1},
+  {searchAliases:['hash brown patties','hashbrown patties'], product:'/en/club-pack-classic-hash-brown-patties/p/21134782_EA', name:'Cavendish Club Pack Hash Brown Patties', defaultQty:1},
+  {searchAliases:['diced hashbrowns','frozen hash brown','hash browns'], product:'/en/diced-hashbrowns/p/20096261_EA', name:'McCain Diced Hashbrowns', defaultQty:1},
+  {searchAliases:['bacon'], product:'/en/bacon/p/20152629_EA', name:"PC Bacon 500g", defaultQty:1},
+  {searchAliases:['vanilla ice cream','ice cream'], product:'/en/cream-first-vanilla-bean-premium-ice-cream/p/21199559_EA', name:'PC Vanilla Bean Ice Cream 1.5L', defaultQty:1},
+  {searchAliases:['chocolate chips','semi-sweet chocolate chips'], product:'/en/the-decadent-semi-sweet-chocolate-chips/p/21297044_EA', name:'PC Decadent Semi-Sweet Chocolate Chips', defaultQty:1},
+  {searchAliases:['chocolate sauce','chocolate syrup'], product:'/en/syrup-genuine-chocolate-flavour/p/20055095_EA', name:"Hershey's Chocolate Syrup", defaultQty:1},
+  {searchAliases:['maraschino cherries'], product:'/en/maraschino-cherries/p/20050959_EA', name:'No Name Maraschino Cherries', defaultQty:1},
+  {searchAliases:['crescents','pillsbury crescents','flaky rolls','pillsbury buns'], product:'/en/crescents-flaky-rolls/p/20055045_EA', name:'Pillsbury Crescents Flaky Rolls', defaultQty:1},
+
+  // ── SALAD KITS (Ryan's lunches — MUST be different varieties, NEVER Caesar) ──
+  {searchAliases:['salad kit','bagged salad'], product:null, name:'Salad Kits (variety)', defaultQty:1,
+   notes:'SPECIAL: Order as separate varieties. Search individually.',
+   varieties:[
+     {search:'everything chopped salad kit', product:'/en/everything-chopped-salad-kit/p/21245689_EA', name:'Everything Chopped Salad Kit'},
+     {search:'sweet kale chopped salad kit', product:null, name:'Sweet Kale Chopped Salad Kit'},
+     {search:'asian chopped salad kit', product:null, name:'Asian Chopped Salad Kit'},
+     {search:'southwest chopped salad kit', product:null, name:'Southwest Chopped Salad Kit'},
+     {search:'avocado ranch chopped salad kit', product:null, name:'Avocado Ranch Chopped Salad Kit'},
+   ]},
+
+  // ── COMMON PRODUCE ──
+  {searchAliases:['avocados','avocado'], product:'/en/avocado/p/20174500_EA', name:'Avocado', defaultQty:3},
+  {searchAliases:['lemons','lemon'], product:'/en/lemons/p/20174518_EA', name:'Lemons', defaultQty:4},
+  {searchAliases:['baby arugula','arugula','field greens'], product:'/en/baby-arugula/p/20886757_EA', name:'Baby Arugula', defaultQty:1},
+  {searchAliases:['potatoes','yellow potatoes'], product:'/en/yellow-potatoes/p/20828937_EA', name:'Yellow Potatoes', defaultQty:1},
+];
 
 // Common pantry staples — these appear in a "Check Your Pantry" section
 // rather than the main grocery list since they're almost always on hand.
@@ -827,6 +1002,8 @@ const EMAILED_GROCERY_ITEMS = [
   {name:"Basmati Rice", qty:"", added:"2026-03-22"},
   {name:"Walnuts (chopped)", qty:"1 kg bag", added:"2026-03-26"},
   {name:"Sesame oil", qty:"", added:"2026-03-29"},
+  {name:"Oregano", qty:"", added:"2026-03-29"},
+  {name:"Microwave Popcorn", qty:"", added:"2026-03-31"},
 ];
 
 const BUTCHER_KEYWORDS = ["chicken","turkey","beef","pork","steak","lamb","egg","butter","bacon","sausage","ground","breast","thigh","supreme","flank","tenderloin","brisket","ribs","chop","mince"];
@@ -910,6 +1087,17 @@ function setAdventure(level,btn){
   const e=document.getElementById('adv-extra');
   level!=='comfort'?e.classList.add('vis'):e.classList.remove('vis');
 }
+function setWeekEnergy(level,btn){
+  STATE.weekEnergy=level;
+  btn.closest('.btn-group').querySelectorAll('.btn-toggle').forEach(b=>b.classList.remove('sel'));
+  btn.classList.add('sel');
+  const notes={
+    light:'Relaxed week — Claude can include more cook nights and ambitious recipes.',
+    normal:'Claude will balance cook nights, easy nights, and leftovers across the week.',
+    heavy:'Busy week — Claude will load up on BBQ nights, planned leftovers, and easy wins.'
+  };
+  document.getElementById('energy-note').textContent=notes[level];
+}
 function isRyanHomeOnDay(i){
   if(STATE.ryanStatus==='home') return true;
   if(STATE.ryanStatus==='away') return false;
@@ -982,6 +1170,7 @@ function savePlanToStorage(){
       ryanStatus: STATE.ryanStatus,
       ryanAwayDays: STATE.ryanAwayDays,
       adventure: STATE.adventure,
+      weekEnergy: STATE.weekEnergy,
       dynamicRecipes: DYNAMIC_RECIPES,
       savedAt: Date.now(),
     };
@@ -1003,6 +1192,7 @@ function loadPlanFromStorage(){
     STATE.ryanStatus = data.ryanStatus || null;
     STATE.ryanAwayDays = data.ryanAwayDays || [];
     STATE.adventure = data.adventure || 'comfort';
+    STATE.weekEnergy = data.weekEnergy || 'normal';
     Object.assign(DYNAMIC_RECIPES, data.dynamicRecipes || {});
     return true;
   } catch(e){
@@ -1175,6 +1365,40 @@ function buildPrompt(dinnerHistory){
     wild:`Be adventurous — up to ${advCount} creative or new meals are welcome`
   }[STATE.adventure];
 
+  const weekEnergy=STATE.weekEnergy||'normal';
+  const weekStructureDesc={
+    light:{label:'Light Week',cook:3,easy:2,leftover:1,desc:'Relaxed week — include up to 3 proper cook nights.'},
+    normal:{label:'Normal Week',cook:2,easy:2,leftover:2,desc:'Typical week — balance cook nights with easy nights and planned leftovers.'},
+    heavy:{label:'Heavy/Busy Week',cook:1,easy:3,leftover:2,desc:'Busy week — maximize easy wins. Only 1 true cook night. Load up on BBQ, quick protein nights, and planned leftovers.'}
+  }[weekEnergy];
+  const weekStructurePrompt=`
+WEEK ENERGY: ${weekStructureDesc.label} — ${weekStructureDesc.desc}
+
+REQUIRED WEEK STRUCTURE (non-negotiable — count your nights before finalizing):
+- Cook nights (30+ min, full recipe): ${weekStructureDesc.cook} max
+- Easy nights (BBQ/quick/20 min or less): at least ${weekStructureDesc.easy}
+- Planned leftover nights: at least ${weekStructureDesc.leftover}
+
+WHAT COUNTS AS AN EASY NIGHT for this family:
+- BBQ chicken with a rub/marinade + salad or frozen veg — the grill does the work
+- BBQ sausages, pork chops, or marinated lamb chops + salad
+- A genuinely quick protein: pan-seared chicken breast with a 2-ingredient sauce (e.g. lemon butter, garlic herb), done in 20 min
+- A night that uses leftover protein from a previous meal (Chicken Fried Rice counts)
+- DO NOT count a 45-minute oven roast as an "easy night" just because it's hands-off
+
+PLANNED LEFTOVERS strategy (this family needs built-in breathing room):
+- When you plan a meal that produces good leftovers (curries, stews, soups, one-pots, roasted meats), set makeDouble:true
+- The NEXT night or a nearby night should use those leftovers — plan it as type "leftovers"
+- Best meals for double-batching: Butter Chicken, Coconut Curry, Cacciatore, Turkey Soup, Arroz con Pollo, Turkey Meatballs, Pork Tenderloin
+- Be explicit in makeDoubleNote: "Make 1.5x — leftovers become Wednesday's easy night"
+
+DIFFICULTY label (include in every planned meal entry):
+- "cook" = full recipe, 30+ min active prep
+- "medium" = 20–30 min, moderate prep
+- "easy" = BBQ, quick sear, or assembly — under 20 min active time
+- "leftovers" = reheating/repurposing — no real cooking`;
+
+
   return `Plan dinners for the Maund family, week of ${fmtDate(dates[0])} to ${fmtDate(dates[6])}.
 
 FAMILY: Jenn, Ryan (travels for work), Ryder (child), Claire (child). Based in Canada.
@@ -1213,14 +1437,26 @@ DINNER RULES:
 - For chicken shawarma: ALWAYS make it as a BOWL — boneless skinless chicken (thighs or breasts), served over rice with diced cucumber, cherry tomatoes, and hummus. NEVER bone-in, NEVER sheet pan style with roasted peppers/snap peas on the side
 
 ADVENTURE: ${adventureDesc}
+${weekStructurePrompt}
 ${weekNotes?`SPECIAL NOTES THIS WEEK: ${weekNotes}`:''}
 
-VARIETY (CRITICAL): Study the dinner history below and deliberately suggest meals that have NOT appeared recently. Every week should feel different. Do not repeat any meal from the last 3 weeks of history. If the history shows the same meals being suggested repeatedly, that is a problem — choose something genuinely different.
+LEARNING & VARIETY (CRITICAL):
+Study the DINNER HISTORY & LEARNING ANALYSIS section at the end of this prompt. It contains:
+- Pattern analysis of what this family actually enjoys (winners, losers, trends)
+- Specific modification requests for meals that were "okay but could be better"
+- Synthesized insights about flavour preferences, prep style, and variety needs
+
+You MUST:
+1. Suggest meals that match the FLAVOUR PROFILE of highly-rated meals (not just avoid low-rated ones)
+2. For meals marked [MODIFY], suggest an improved variant that addresses the specific feedback
+3. NEVER repeat a meal name from the last 3 weeks of history
+4. Vary proteins, cuisines, and cooking methods across the week
+5. If the family's average rating is below 3.5/5, be BOLDER — the current suggestions aren't exciting enough
 
 DAYS (only suggest for lines marked SUGGEST):
 ${dayLines}
 
-TASTE PROFILE (meals they enjoy — suggest similar styles AND new ideas beyond this list):
+TASTE PROFILE (proven favourites — suggest similar styles AND genuinely new ideas):
 - Grilled lemon pepper chicken with side salad
 - Roasted chicken thighs with dilled orzo and green beans
 - Chicken enchiladas (lighter, fresh toppings)
@@ -1228,7 +1464,10 @@ TASTE PROFILE (meals they enjoy — suggest similar styles AND new ideas beyond 
 - Turkey meat sauce spaghetti with side salad
 - Turkey and rice soup (hearty, complete meal)
 - Mango black bean salad with grilled chicken
-New ideas they haven't tried but would likely enjoy: pork tenderloin, Thai-inspired dishes (no fish sauce), Mediterranean chicken, lettuce wraps, stir fries, braised dishes, glazed proteins, sheet pan meals (use occasionally — max once per week, varied seasonings — bone-in cuts are fine for sheet pan roasting)
+
+KEY FLAVOUR INSIGHT: This family consistently rates BOLD, SAUCY, WELL-SEASONED meals higher. Plain roasted or dry-rubbed proteins bore them. Think: butter chicken, chimichurri, teriyaki glaze, Thai peanut, shawarma spice, lemon herb sauce — meals where the protein is coated in or swimming in flavour.
+
+New directions to explore: Thai-inspired dishes (no fish sauce), Mediterranean chicken, lettuce wraps, stir fries, braised dishes, glazed proteins, sheet pan meals (max 1x/week with varied seasonings — bone-in cuts fine for roasting), pork tenderloin with bold marinades
 
 INGREDIENT RULES (CRITICAL):
 - ALWAYS list the protein (meat) as the FIRST item in the ingredients array, with quantity in lbs or number of pieces — e.g. "4 chicken breasts" or "1.5 lbs chicken thighs" or "8 chicken drumsticks"
@@ -1237,6 +1476,16 @@ INGREDIENT RULES (CRITICAL):
 - NEVER include Pillsbury buns, dinner rolls, or commercial bread in ingredients or steps
 - Use jasmine rice or polenta — NEVER pasta or GF pasta
 - Be specific with quantities for a family of 4 with leftovers
+
+SHOPPING QUANTITIES (CRITICAL — ingredients must use PURCHASABLE units, not recipe units):
+- Write "1 can (796ml) crushed tomatoes" NOT "2 cups crushed tomatoes"
+- Write "1 bag frozen mixed veg" NOT "2 cups mixed vegetables"
+- Write "1 bunch cilantro" NOT "handful cilantro"
+- Write "4 limes" NOT "zest of 4 limes" (they buy the whole fruit)
+- Write "1 container cherry tomatoes" NOT "1 pint cherry tomatoes"
+- Write "3 onions" NOT "1 cup diced onion"
+- Write "1 head garlic" NOT "4 cloves garlic" (they buy whole heads)
+- DO NOT list pantry staples (olive oil, salt, pepper, garlic powder, honey, soy sauce, vinegar, spices, flour, sugar, etc.) — these are already in the pantry and tracked separately
 
 Return ONLY valid JSON in this exact format:
 {
@@ -1250,6 +1499,9 @@ Return ONLY valid JSON in this exact format:
       "isStarch": false,
       "desc": "One sentence description of the meal",
       "pairing": "What it is served with (e.g. 'jasmine rice + steamed green beans')",
+      "difficulty": "cook|medium|easy|leftovers",
+      "makeDouble": false,
+      "makeDoubleNote": "e.g. Make 1.5x — leftovers cover Thursday night",
       "jennVegSub": "Substitute veggie suggestion for Jenn if recipe has broccoli/cauliflower/mushrooms/zucchini — otherwise empty string",
       "ingredients": [
         {"name": "Chicken breasts", "qty": "4 breasts"},
@@ -1282,7 +1534,7 @@ const FALLBACK_RECIPES = [
 ,
   {id:9,name:"Chicken Fried Rice",protein:"Chicken",gf:true,beef:false,tags:["quick","leftover"],isCompleteMeal:true,needsSide:false,desc:"Quick 10-minute fried rice using leftover chicken and rice from the night before. GF with tamari. A completely different feel from the previous night's dinner.",pairing:"Complete meal",jennVegSub:"",ingredients:[{name:"Cooked chicken breasts (leftover or rotisserie, diced)",qty:"2 breasts"},{name:"Day-old cooked jasmine rice",qty:"3 cups (leftover)"},{name:"Tamari (GF soy sauce)",qty:"3 tbsp"},{name:"Sesame oil",qty:"1 tbsp"},{name:"Garlic",qty:"2 cloves"},{name:"Carrots",qty:"2 medium, diced small"},{name:"Frozen peas",qty:"½ cup"},{name:"Green onions",qty:"3 stalks"},{name:"Eggs",qty:"3"},{name:"Avocado oil or olive oil",qty:"2 tbsp"}],butcherItems:[{cut:"Cooked Chicken Breasts (leftover, diced)",qty:"2 breasts"}],steps:["Dice leftover chicken into small pieces. Have cold rice ready — day-old works best.","Heat oil in a large pan or wok on high. Add carrots and garlic, stir fry 2 min.","Push everything to the side, crack in eggs and scramble until just set, then mix together.","Add cold rice, breaking up any clumps. Stir fry 2–3 min until heated through.","Add chicken, peas, tamari, and sesame oil. Toss everything together 1 min.","Top with sliced green onions and serve."]},
   {id:10,name:"Oven Pork Tenderloin",protein:"Pork",gf:true,beef:false,tags:["low-prep","oven"],isCompleteMeal:true,needsSide:false,desc:"Pre-seasoned pork tenderloin roasted in the oven — rated 3/5 plain, 4/5+ with a marinade. Three options: honey dijon garlic, balsamic herb, or herb butter finish.",pairing:"Little Potato Co. roasted baby potatoes + frozen mixed veg",jennVegSub:"",ingredients:[{name:"Pork tenderloin",qty:"1.5-2 lbs"},{name:"Honey",qty:"2 tbsp"},{name:"Dijon mustard",qty:"3 tbsp"},{name:"Garlic",qty:"3 cloves"},{name:"Olive oil",qty:"2 tbsp"},{name:"Fresh thyme or rosemary",qty:"1 tsp"},{name:"Little Potato Co. baby potatoes",qty:"1 bag"},{name:"Frozen mixed vegetables",qty:"1 bag"}],butcherItems:[{cut:"Pork Tenderloin (pre-seasoned)",qty:"1.5–2 lbs"}],steps:["Mix marinade: 3 tbsp dijon + 2 tbsp honey + 3 cloves garlic minced + 2 tbsp olive oil + 1 tsp thyme. Pour over tenderloin, rest 30 min.","Preheat oven to 425°F. Toss potatoes with olive oil on a sheet pan. Put in oven.","After 10 min, add tenderloin to oven. Roast 20–25 min to 145°F internal temp.","Rest 5 min tented with foil. Microwave veg during rest.","Slice on an angle and serve."]},
-  {id:11,name:"Butter Chicken",protein:"Chicken",gf:true,beef:false,tags:["one-pan","sauce"],isCompleteMeal:true,needsSide:true,sideProfile:"asian",desc:"The gold standard of saucy chicken. Boneless, skinless chicken thighs (or breasts) simmered in a rich, warmly-spiced tomato-cream sauce. The chicken completely disappears into the sauce — no one thinks 'chicken again.' GF, can be made dairy-free with coconut cream. Universally loved by kids and adults.",pairing:"Basmati rice + naan (GF naan optional for adults)",jennVegSub:"",ingredients:[{name:"Boneless skinless chicken thighs (cubed)",qty:"1.5 lbs"},{name:"Butter or coconut oil",qty:"3 tbsp"},{name:"Onion",qty:"1 large, diced"},{name:"Garlic",qty:"5 cloves, minced"},{name:"Fresh ginger",qty:"1 tbsp, grated"},{name:"Garam masala",qty:"2 tsp"},{name:"Cumin (ground)",qty:"1 tsp"},{name:"Coriander (ground)",qty:"1 tsp"},{name:"Turmeric",qty:"0.5 tsp"},{name:"Smoked paprika",qty:"1 tsp"},{name:"Tomato passata (puréed tomatoes)",qty:"1 can (400ml)"},{name:"Heavy cream or coconut cream",qty:"0.5 cup"},{name:"Salt",qty:"to taste"},{name:"Basmati rice",qty:"2 cups"}],butcherItems:[{cut:"Boneless Skinless Chicken Thighs",qty:"1.5 lbs"}],steps:["Cut chicken into 2-inch chunks. Season with salt, 1 tsp garam masala, and 0.5 tsp cumin.","Melt butter in a large pan on medium-high. Sear chicken 2-3 min per side until golden. Remove and set aside.","In the same pan, sauté onion 5 min until soft. Add garlic and ginger, cook 1 min until fragrant.","Add remaining spices. Stir 30 seconds to bloom them. Pour in the passata and stir well — passata is already puréed so the sauce will be silky smooth with no tomato chunks.","Return chicken to the pan. Simmer 15-18 min on medium-low until sauce thickens and chicken is cooked through.","Stir in cream or coconut cream. Taste and adjust salt. Simmer 2 more min.","Serve over basmati rice. Optional: garnish with cilantro."]},
+  {id:11,name:"Butter Chicken (Jenn's Version)",protein:"Chicken",gf:true,beef:false,tags:["sauce","cook-night","90min","leftovers-well"],isCompleteMeal:true,needsSide:false,desc:"Rich, restaurant-style butter chicken — Jenn's rescued version. Makes 6–8 servings with great leftovers. ⚠️ Plan for 90+ min total. Key: spices bloom into the sauce (not just on the chicken), and three cans of coconut milk is what makes it restaurant-quality.",pairing:"Jasmine rice + steamed snap peas",jennVegSub:"",ingredients:[{name:"Boneless skinless chicken thighs",qty:"4 lbs"},{name:"Butter",qty:"6 tbsp"},{name:"Garlic",qty:"8 cloves, minced"},{name:"Fresh ginger",qty:"2 tbsp, grated"},{name:"Tomato paste",qty:"6 tbsp"},{name:"Crushed tomatoes",qty:"2 cans (796ml each)"},{name:"Coconut milk, full fat",qty:"3 cans (400ml each)"},{name:"Heavy cream",qty:"½ cup"},{name:"Garam masala",qty:"4 tsp, divided"},{name:"Cumin",qty:"3 tsp, divided"},{name:"Smoked paprika",qty:"2 tsp, divided"},{name:"Turmeric",qty:"1 tsp, divided"},{name:"Salt",qty:"3 tsp, plus more to taste"},{name:"Sugar",qty:"1 tsp, or to taste"},{name:"Olive oil",qty:"4 tbsp"},{name:"Jasmine rice",qty:"5 cups dry"},{name:"Snap peas",qty:"6 cups, trimmed"},{name:"Fresh cilantro (optional)",qty:"1 small bunch"}],butcherItems:[{cut:"Boneless Skinless Chicken Thighs",qty:"4 lbs"}],steps:["Season chicken: Cut thighs into large bite-sized chunks. Season with 3 tsp salt, half the garam masala (2 tsp), half the cumin (1.5 tsp), half the turmeric (0.5 tsp), and half the smoked paprika (1 tsp).","Sear chicken: Heat 4 tbsp olive oil in a large Dutch oven over medium-high heat. Sear chicken 3–4 min per side until golden. Work in batches — don't crowd the pan. Remove and set aside.","Sauté aromatics: Reduce heat to medium. Add 6 tbsp butter. Sauté garlic and ginger for 1–2 min until fragrant.","Bloom spices: Stir in tomato paste and remaining spices (2 tsp garam masala, 1.5 tsp cumin, 1 tsp smoked paprika, 0.5 tsp turmeric). Cook 1 min, stirring constantly — this is the flavour foundation.","Add tomatoes and coconut milk: Pour in both cans of crushed tomatoes and all 3 cans of coconut milk. Stir well and bring to a gentle simmer.","Add cream and balance: Stir in heavy cream. Add 1 tsp sugar and taste — adjust salt and sugar to balance the acidity of the tomatoes.","Simmer with chicken: Return chicken to the pot. Simmer uncovered 18–20 min, stirring occasionally, until sauce thickens and chicken is fully cooked through.","Cook rice and snap peas: Cook jasmine rice per package directions. Steam snap peas 3–4 min until tender-crisp.","Serve: Taste sauce one final time, adjust salt. Serve over rice with snap peas alongside. Garnish with cilantro if desired.","NOTE: This makes a large batch — refrigerates well for 3 days, freezes beautifully. Always plan this as a leftover night the next day."]},
   {id:12,name:"Coconut Curry Chicken",protein:"Chicken",gf:true,beef:false,tags:["quick","one-pan"],isCompleteMeal:true,needsSide:false,desc:"Chicken thighs simmered in a creamy coconut milk curry sauce. Rich, warm, and comforting. Ready in 30 minutes in one pan. GF and dairy-free.",pairing:"Jasmine rice",jennVegSub:"Use carrots and green beans instead of any zucchini or cauliflower",ingredients:[{name:"Coconut milk (full fat)",qty:"1 can (400ml)"},{name:"Curry powder",qty:"2 tbsp"},{name:"Garlic",qty:"4 cloves, minced"},{name:"Fresh ginger",qty:"1 tsp, grated"},{name:"Onion",qty:"1, diced"},{name:"Cherry tomatoes",qty:"1 cup"},{name:"Carrots",qty:"2, sliced"},{name:"Chicken broth",qty:"0.5 cup"},{name:"Olive oil",qty:"2 tbsp"},{name:"Salt",qty:"to taste"},{name:"Jasmine rice",qty:"2 cups"}],butcherItems:[{cut:"Boneless Skinless Chicken Thighs",qty:"8 thighs"}],steps:["Season chicken with salt. Heat oil in large pan on medium-high. Sear chicken 3 min per side until golden. Remove and set aside.","In same pan, saute onion 3 min. Add garlic, ginger, curry powder — cook 1 min until fragrant.","Add coconut milk, chicken broth, carrots, and cherry tomatoes. Stir to combine.","Return chicken to pan. Simmer 15-20 min until chicken is cooked through and sauce thickens.","Taste and adjust salt. Serve over jasmine rice."]},
   {id:13,name:"Thai Peanut Chicken",protein:"Chicken",gf:true,beef:false,tags:["quick","sheet-pan"],isCompleteMeal:true,needsSide:false,desc:"Chicken baked in a rich peanut-ginger-lime sauce. No fish sauce needed — GF with coconut aminos or tamari. One of the most searched family chicken recipes. Control the spice to taste.",pairing:"Jasmine rice + steamed green beans or snap peas",jennVegSub:"",ingredients:[{name:"Boneless skinless chicken breasts or thighs",qty:"4 pieces"},{name:"Peanut butter (natural)",qty:"0.25 cup"},{name:"Tamari or coconut aminos",qty:"3 tbsp"},{name:"Lime juice",qty:"2 tbsp"},{name:"Honey",qty:"1 tbsp"},{name:"Fresh ginger (grated)",qty:"1 tsp"},{name:"Garlic",qty:"3 cloves, minced"},{name:"Sriracha (optional)",qty:"1 tsp"},{name:"Water",qty:"2 tbsp (to thin sauce)"},{name:"Jasmine rice",qty:"2 cups"},{name:"Green beans or snap peas",qty:"2 cups"}],butcherItems:[{cut:"Boneless Skinless Chicken Breasts or Thighs",qty:"4 pieces"}],steps:["Preheat oven to 400F. Whisk together peanut butter, tamari, lime juice, honey, ginger, garlic, and water until smooth.","Place chicken in baking dish. Pour peanut sauce over top and coat well.","Bake 25-30 min until internal temp reaches 165F, basting once halfway.","Steam green beans or snap peas on stovetop or microwave.","Serve chicken over rice with veggies. Drizzle any extra sauce from the pan on top."]},
   {id:14,name:"Chicken Shawarma Bowls",protein:"Chicken",gf:true,beef:false,tags:["oven","meal-prep"],isCompleteMeal:true,needsSide:false,desc:"Restaurant-quality shawarma spiced chicken thighs served over rice with fresh cucumber, cherry tomatoes, and hummus. Deeply flavoured, high protein, totally GF.",pairing:"Jasmine rice + cucumber + cherry tomatoes + hummus",jennVegSub:"",ingredients:[{name:"Boneless skinless chicken thighs",qty:"8 thighs"},{name:"Cumin",qty:"2 tsp"},{name:"Turmeric",qty:"1 tsp"},{name:"Paprika (smoked)",qty:"1 tsp"},{name:"Coriander (ground)",qty:"1 tsp"},{name:"Garlic",qty:"4 cloves, minced"},{name:"Lemon juice",qty:"3 tbsp"},{name:"Olive oil",qty:"3 tbsp"},{name:"Salt and pepper",qty:"to taste"},{name:"Jasmine rice",qty:"2 cups"},{name:"English cucumber",qty:"1, diced"},{name:"Cherry tomatoes",qty:"1 cup, halved"},{name:"Hummus",qty:"1 container"}],butcherItems:[{cut:"Boneless Skinless Chicken Thighs",qty:"8 thighs"}],steps:["Mix cumin, turmeric, paprika, coriander, garlic, lemon juice, olive oil, salt and pepper in a bowl.","Coat chicken thighs in marinade. Rest at least 20 min (or overnight in fridge).","Preheat oven to 425F. Bake chicken 30-35 min until edges caramelise and internal temp is 165F.","Cook jasmine rice. Dice cucumber, halve tomatoes.","Slice chicken and build bowls: rice base, chicken, cucumber, tomatoes, big spoonful of hummus."]},
@@ -1439,6 +1691,8 @@ function renderPlan(){
         <div class="plan-day-info"><div class="plan-day-nm">${day.dayName}</div><div class="plan-day-dt">${fmtDate(day.date)}</div></div>
         <div class="plan-meal">
           <div class="plan-meal-name">${day.mealName}</div>
+          ${(()=>{const d=day.difficulty;if(!d||d==='leftovers')return '';const cfg={cook:{emoji:'🔴',label:'Cook night'},medium:{emoji:'🟡',label:'30 min'},easy:{emoji:'🟢',label:'Easy night'}};const c=cfg[d];return c?`<span style="font-size:11px;font-weight:600;letter-spacing:.3px;opacity:.8">${c.emoji} ${c.label}</span>`:'';})()}
+          ${day.makeDouble?`<div style="font-size:11px;color:#3A6B9F;font-style:italic;margin-top:2px">↗ ${day.makeDoubleNote||'Make extra — use for leftovers night'}</div>`:''}
           ${day.pairing?`<div class="plan-meal-note">Served with: ${day.pairing}</div>`:''}
           ${day.jennVegSub?`<div class="plan-meal-jenn">Jenn's veggie: ${day.jennVegSub}</div>`:''}
           ${tagsHtml?`<div class="plan-tags">${tagsHtml}</div>`:''}
@@ -1450,7 +1704,11 @@ function renderPlan(){
             ${day.type==='claude'?`<button class="btn-swap" onclick="swapMeal(${i})">Swap</button>`:day.type==='chosen'?`<button class="btn-swap" onclick="swapMeal(${i})">Switch to Claude</button>`:''}
             ${recipe?`<button class="btn-recipe" onclick="toggleRecipePanel(${i})">Recipe</button>`:''}
             ${recipe?`<button class="btn-premade${STATE.premadeRecipes[i]?' active':''}" onclick="togglePremade(${i})" title="Toggle to skip individual ingredients and add this as a premade butcher item">${STATE.premadeRecipes[i]?'✓ Buying Premade':'Buying Premade'}</button>`:''}
-          `:day.type==='leftovers'||day.type==='out'?`<span style="font-size:12px;color:#bbb;font-style:italic">No shopping needed</span>`:''}
+          `:day.type==='leftovers'?`
+            <span style="font-size:12px;color:#bbb;font-style:italic;margin-right:8px">No shopping needed</span>
+            <button class="btn-swap" onclick="changeDayFromPlan(${i},'claude')">Claude Suggests</button>
+            <button class="btn-swap" onclick="changeDayFromPlan(${i},'choose')">I'll Pick</button>
+          `:day.type==='out'?`<span style="font-size:12px;color:#bbb;font-style:italic">No shopping needed</span>`:''}
         </div>
       </div>
       ${recipe?`
@@ -1809,6 +2067,45 @@ async function swapMeal(i){
   openSwapPanel(i);
 }
 
+// Switch a leftovers/out night to a new mode directly from the plan view
+function changeDayFromPlan(i, newMode){
+  STATE.days[i].mode = newMode;
+  // Re-build the plan entry for this day
+  const dates = getWeekDates(STATE.weekOffset);
+  if(newMode === 'claude'){
+    // Trigger a single-day suggestion if API key available, otherwise use fallback
+    const apiKey = (document.getElementById('api-key-input')?.value||'').trim();
+    if(apiKey){
+      STATE.plan[i] = {date:dates[i],dayName:WEEK_DAYS[i],mode:'claude',mealName:'Generating...',tags:[],type:'claude',approved:false,recipeId:null,notes:STATE.days[i].notes||''};
+      renderPlan();
+      // Request a single swap to fill this slot
+      openSwapPanel(i);
+    } else {
+      const ryanHome = isRyanHomeOnDay(i);
+      const opts = FALLBACK_RECIPES.filter(r=>!(ryanHome&&r.beef)&&r.isCompleteMeal);
+      const pick = opts[Math.floor(Math.random()*opts.length)];
+      if(pick){
+        const tags = buildTagsFrom(pick);
+        STATE.plan[i] = {date:dates[i],dayName:WEEK_DAYS[i],mode:'claude',mealName:pick.name,protein:pick.protein,gf:pick.gf,tags,type:'claude',approved:false,recipeId:pick.id,desc:pick.desc,pairing:pick.pairing,jennVegSub:pick.jennVegSub||'',ingredients:pick.ingredients||[],butcherItems:pick.butcherItems||[],steps:pick.steps||[],notes:STATE.days[i].notes||''};
+      }
+      savePlanToStorage();
+      renderPlan();
+    }
+  } else if(newMode === 'choose'){
+    STATE.plan[i] = {date:dates[i],dayName:WEEK_DAYS[i],mode:'choose',mealName:'',tags:[],type:'chosen',approved:false,recipeId:null,notes:STATE.days[i].notes||''};
+    savePlanToStorage();
+    renderPlan();
+    // Prompt for meal name
+    const name = prompt(`What would you like to have on ${WEEK_DAYS[i]}?`);
+    if(name && name.trim()){
+      STATE.days[i].chosenMeal = name.trim();
+      const resolved = resolveChosenMeal(STATE.days[i], i);
+      STATE.plan[i] = resolved;
+      savePlanToStorage();
+      renderPlan();
+    }
+  }
+}
 
 // ── VEGGIE SIDE AUTO-PAIRING ──────────────────────────────────
 // Picks an appropriate side salad/veggie from the library for recipes
@@ -1906,9 +2203,21 @@ function emailButcherList(){
     return;
   }
   const weekLabel = document.getElementById('lists-week-label')?.textContent || '';
+  const bodyText = `Butcher List${weekLabel?' — '+weekLabel:''}\n\n${lines.join('\n')}\n\n— Maund Meal Planner`;
+  // Copy to clipboard for easy pasting
+  if(navigator.clipboard){
+    navigator.clipboard.writeText(bodyText).catch(()=>{});
+  }
+  // Open Gmail compose — use anchor click to bypass popup blockers
   const subject = encodeURIComponent(`Butcher List — ${weekLabel}`);
-  const body = encodeURIComponent(`Butcher List${weekLabel?' — '+weekLabel:''}\n\n${lines.join('\n')}\n\n— Maund Meal Planner`);
-  window.location.href = `mailto:jenngetshelp@gmail.com?subject=${subject}&body=${body}`;
+  const body = encodeURIComponent(bodyText);
+  const a = document.createElement('a');
+  a.href = `https://mail.google.com/mail/?view=cm&fs=1&to=jenngetshelp%40gmail.com&su=${subject}&body=${body}`;
+  a.target = '_blank';
+  a.rel = 'noopener';
+  document.body.appendChild(a);
+  a.click();
+  document.body.removeChild(a);
 }
 
 // ── BUILD LISTS ───────────────────────────────────────────────
@@ -2201,11 +2510,17 @@ function renderGroceryList(ryanLunches,jennLunch){
     }
   }
 
-  // --- Added Items (manual) ---
+  // --- Added Items (manual + extra from setup) ---
   addCat(gb,'Added Items');
   const addedContainer=document.createElement('div');
   addedContainer.id='added-items-container';
   gb.appendChild(addedContainer);
+  // Pre-populate from the "Extra Items" setup field
+  const extraRaw=(document.getElementById('extra-grocery-items')?.value||'').trim();
+  if(extraRaw){
+    const extraItems=extraRaw.split(/[\n,]+/).map(s=>s.trim()).filter(Boolean);
+    extraItems.forEach(name=>addItem(addedContainer,name,'extra item',''));
+  }
   const addRow=document.createElement('div');
   addRow.className='add-item-row';
   addRow.innerHTML=`<input type="text" class="add-item-input" id="add-grocery-input" placeholder="Add an item..." onkeydown="if(event.key==='Enter')addGroceryManual()"><button class="add-item-btn" onclick="addGroceryManual()">Add</button>`;
@@ -2216,12 +2531,37 @@ function addCat(c,label){
   const el=document.createElement('div');
   el.className='grocery-cat';el.textContent=label;c.appendChild(el);
 }
+// Items that last more than 1 week once purchased — don't need to rebuy weekly
+const LONG_LIFE_ITEMS = new Set([
+  'olive oil','extra virgin olive oil','balsamic vinegar','sesame oil','coconut oil','avocado oil',
+  'honey','maple syrup','soy sauce','rice vinegar','worcestershire sauce','sriracha','hot sauce','ketchup','mustard','dijon mustard',
+  'basmati rice','jasmine rice','rice','walnut pieces','walnuts','slivered almonds','almonds',
+  'flour','cornstarch','baking powder','baking soda','vanilla extract',
+  'sugar','brown sugar','white sugar','cooking spray',
+  'chocolate chips','chocolate syrup','maraschino cherries',
+]);
+
+function getRecentPurchases(){
+  try {
+    const hist = JSON.parse(localStorage.getItem('maund_shop_history') || '[]');
+    const twoWeeksAgo = new Date(); twoWeeksAgo.setDate(twoWeeksAgo.getDate() - 14);
+    const recent = new Set();
+    hist.filter(h => new Date(h.date) >= twoWeeksAgo).forEach(h => {
+      h.items.forEach(item => recent.add(item.name.toLowerCase()));
+    });
+    return recent;
+  } catch(e) { return new Set(); }
+}
+
 function addItem(c,name,source,qty){
   const row=document.createElement('div');
   row.className='grocery-item';
+  const nl = name.toLowerCase();
+  const recentlyBought = LONG_LIFE_ITEMS.has(nl) && getRecentPurchases().has(nl);
+  const recentBadge = recentlyBought ? '<span style="font-size:10px;color:#C09F80;margin-left:6px;font-weight:600">🔄 bought recently</span>' : '';
   row.innerHTML=`
-    <input type="checkbox" onchange="this.parentElement.querySelector('.grocery-item-label').classList.toggle('checked',this.checked)">
-    <span class="grocery-item-label">${name}${source?`<span class="grocery-item-source">(${source})</span>`:''}</span>
+    <input type="checkbox" ${recentlyBought?'checked':''} onchange="this.parentElement.querySelector('.grocery-item-label').classList.toggle('checked',this.checked)">
+    <span class="grocery-item-label${recentlyBought?' checked':''}">${name}${recentBadge}${source?`<span class="grocery-item-source">(${source})</span>`:''}</span>
     <input class="grocery-item-qty" type="text" value="${qty||''}" placeholder="qty">
   `;
   c.appendChild(row);
@@ -2234,6 +2574,113 @@ function addGroceryManual(){
   input.value='';
 }
 
+
+function createPCExpressCart(){
+  // Extract all grocery items from the current rendered list
+  // Skip items whose checkbox is checked (already have them)
+  // Skip the "Waldorf Restock" optional checkbox items (they are opt-in only)
+  const items = [];
+  const rows = document.querySelectorAll('#grocery-body .grocery-item');
+  rows.forEach(row => {
+    const cb = row.querySelector('input[type="checkbox"]');
+    // Skip if the item is already checked off
+    if (cb && cb.checked) return;
+    // Skip Waldorf restock rows (they have a label with grey color — identified by opacity style or unchecked opt-in)
+    // These rows have a label with style="color:#aaa" — they are optional tick-to-add items
+    const label = row.querySelector('.grocery-item-label');
+    if (!label) return;
+    if (label.style && label.style.color === 'rgb(170, 170, 170)') return; // color:#aaa = optional restock row
+    // Get name: strip the source span text
+    const sourceSpan = label.querySelector('.grocery-item-source');
+    let name = label.textContent || '';
+    if (sourceSpan) name = name.replace(sourceSpan.textContent, '').trim();
+    name = name.trim();
+    if (!name) return;
+    // Get qty
+    const qtyInput = row.querySelector('.grocery-item-qty');
+    const qty = qtyInput ? (qtyInput.value || '').trim() : '';
+    items.push({ name, qty });
+  });
+
+  // Also grab any manually-added items from the "added-items-container"
+  const addedRows = document.querySelectorAll('#added-items-container .grocery-item');
+  addedRows.forEach(row => {
+    const cb = row.querySelector('input[type="checkbox"]');
+    if (cb && cb.checked) return;
+    const label = row.querySelector('.grocery-item-label');
+    if (!label) return;
+    const sourceSpan = label.querySelector('.grocery-item-source');
+    let name = label.textContent || '';
+    if (sourceSpan) name = name.replace(sourceSpan.textContent, '').trim();
+    name = name.trim();
+    if (!name) return;
+    const qtyInput = row.querySelector('.grocery-item-qty');
+    const qty = qtyInput ? (qtyInput.value || '').trim() : '';
+    items.push({ name, qty });
+  });
+
+  if (items.length === 0) {
+    alert('No grocery items found. Make sure you have built your grocery list first.');
+    return;
+  }
+
+  // ── Enrich items with PC Express product map ──
+  const enriched = items.map(item => {
+    const nl = item.name.toLowerCase();
+    // Find matching product in the map
+    const match = PC_EXPRESS_MAP.find(p =>
+      p.searchAliases.some(alias => nl.includes(alias) || alias.includes(nl))
+    );
+    if(match){
+      return {
+        ...item,
+        pcProduct: match.product,
+        pcName: match.name,
+        pcDefaultQty: match.defaultQty,
+        pcNotes: match.notes || '',
+        pcVarieties: match.varieties || null
+      };
+    }
+    return item; // no match — Cowork Claude will search manually
+  });
+
+  const matched = enriched.filter(i => i.pcProduct || i.pcVarieties);
+  const unmatched = enriched.filter(i => !i.pcProduct && !i.pcVarieties);
+
+  // Save to localStorage so Claude can retrieve it
+  const cartData = {
+    createdAt: new Date().toISOString(),
+    itemCount: enriched.length,
+    matchedCount: matched.length,
+    unmatchedCount: unmatched.length,
+    items: enriched
+  };
+  localStorage.setItem('maund_pcexpress_cart', JSON.stringify(cartData));
+
+  // Also save the shopping history for inventory tracking
+  const shopHistory = JSON.parse(localStorage.getItem('maund_shop_history') || '[]');
+  shopHistory.push({
+    date: new Date().toISOString().slice(0,10),
+    items: enriched.map(i => ({name: i.name, qty: i.qty}))
+  });
+  // Keep last 8 weeks
+  if(shopHistory.length > 8) shopHistory.shift();
+  localStorage.setItem('maund_shop_history', JSON.stringify(shopHistory));
+
+  // Show a confirmation modal
+  const summary = enriched.slice(0, 8).map(i => {
+    const mapped = i.pcProduct ? '✓' : i.pcVarieties ? '⚡' : '?';
+    return `${mapped} ${i.name}${i.qty ? ' — ' + i.qty : ''}`;
+  }).join('\n');
+  const more = enriched.length > 8 ? `\n…and ${enriched.length - 8} more items` : '';
+  alert(
+    `✅ ${enriched.length} items saved for PC Express!\n` +
+    `✓ ${matched.length} pre-mapped (instant add)\n` +
+    `? ${unmatched.length} need search\n\n` +
+    summary + more +
+    `\n\n👉 Switch to Cowork and say:\n"Fill my PC Express cart"\n\nClaude will add everything to your Loblaws cart.`
+  );
+}
 
 function doneShoppingClick(){
   if(confirm("Mark shopping as done? Emailed grocery items added before today will be hidden from the list.")){
