@@ -672,6 +672,7 @@ const MEAL_HISTORY_DATA = [ // BEGIN_MEAL_HISTORY
   {date:"2026-03-29",meal:"Turkey Tornados",rating:4,liked:"Family enjoyed the meal",change:"Long prep — searing bacon first then oven. Good flavour overall.",keepOrDrop:"Keep"},
   {date:"2026-03-30",meal:"Chimichurri Chicken Drumsticks",rating:3,liked:"Good flavour, family liked the chimichurri sauce",change:"Family didn't love eating drumsticks. Overnight marinade + very long cook. Switch to thighs or breasts.",keepOrDrop:"Modify"},
   {date:"2026-03-31",meal:"BBQ Italian Sausage with Salad",rating:3,liked:"Very easy to cook, low prep time",change:"Feels like chicken and salad — not very exciting. Use occasionally for easy nights only.",keepOrDrop:"Keep occasionally"},
+  {date:"2026-04-01",meal:"Butter Chicken (Jenn's Version) + jasmine rice + snap peas",rating:5,liked:"Everyone loved it. Restaurant-quality sauce. 3 cans coconut milk + heavy cream = the secret. Whole family asked for it again.",change:"Takes 90+ min — plan only on lighter nights. Always make double, leftovers excellent.",keepOrDrop:"Keep"},
 ]; // END_MEAL_HISTORY
 
 async function fetchDinnerHistory(){
@@ -941,6 +942,13 @@ const PC_EXPRESS_MAP = [
      {search:'southwest chopped salad kit', product:null, name:'Southwest Chopped Salad Kit'},
      {search:'avocado ranch chopped salad kit', product:null, name:'Avocado Ranch Chopped Salad Kit'},
    ]},
+
+  // ── FREQUENTLY USED NEW ITEMS ──
+  {searchAliases:['coconut milk','canned coconut milk'], product:'/en/coconut-milk/p/20057411_EA', name:'PC Coconut Milk 400ml', defaultQty:3, notes:'Butter Chicken needs 3 cans; always buy in multiples'},
+  {searchAliases:['sun-dried tomatoes','sundried tomatoes','sun dried tomatoes'], product:'/en/sun-dried-tomatoes/p/20064060_EA', name:'PC Sun-Dried Tomatoes', defaultQty:1},
+  {searchAliases:['peanut butter','natural peanut butter'], product:'/en/natural-peanut-butter-smooth/p/20055163_EA', name:'Kraft Natural Peanut Butter Smooth', defaultQty:1},
+  {searchAliases:['microwave popcorn','popcorn'], product:'/en/butter-lovers-microwave-popcorn/p/20055136_EA', name:'Orville Redenbacher Butter Lovers Microwave Popcorn', defaultQty:1},
+  {searchAliases:['large oranges','navel oranges','oranges'], product:'/en/navel-oranges/p/20174509_EA', name:'Navel Oranges', defaultQty:6},
 
   // ── COMMON PRODUCE ──
   {searchAliases:['avocados','avocado'], product:'/en/avocado/p/20174500_EA', name:'Avocado', defaultQty:3},
@@ -1465,7 +1473,7 @@ TASTE PROFILE (proven favourites — suggest similar styles AND genuinely new id
 - Turkey and rice soup (hearty, complete meal)
 - Mango black bean salad with grilled chicken
 
-KEY FLAVOUR INSIGHT: This family consistently rates BOLD, SAUCY, WELL-SEASONED meals higher. Plain roasted or dry-rubbed proteins bore them. Think: butter chicken, chimichurri, teriyaki glaze, Thai peanut, shawarma spice, lemon herb sauce — meals where the protein is coated in or swimming in flavour.
+KEY FLAVOUR INSIGHT: This family consistently rates BOLD, SAUCY, WELL-SEASONED meals higher. Plain roasted or dry-rubbed proteins bore them. Think: butter chicken, chimichurri, Thai peanut, shawarma spice, lemon herb sauce, coconut curry — meals where the protein is coated in or swimming in flavour. NOTE: Teriyaki is a BANNED flavour — do not suggest it.
 
 New directions to explore: Thai-inspired dishes (no fish sauce), Mediterranean chicken, lettuce wraps, stir fries, braised dishes, glazed proteins, sheet pan meals (max 1x/week with varied seasonings — bone-in cuts fine for roasting), pork tenderloin with bold marinades
 
@@ -2539,6 +2547,7 @@ const LONG_LIFE_ITEMS = new Set([
   'flour','cornstarch','baking powder','baking soda','vanilla extract',
   'sugar','brown sugar','white sugar','cooking spray',
   'chocolate chips','chocolate syrup','maraschino cherries',
+  'coconut milk','canned coconut milk',
 ]);
 
 function getRecentPurchases(){
