@@ -6,14 +6,14 @@
 <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
 <meta http-equiv="Pragma" content="no-cache">
 <meta http-equiv="Expires" content="0">
-<title>Maund Family Meal Planner â v2026-03-30</title>
+<title>Maund Family Meal Planner — v2026-03-30</title>
 <style>
 *{box-sizing:border-box;margin:0;padding:0}
 body{font-family:'Segoe UI',system-ui,-apple-system,sans-serif;background:#F9F8F5;color:#3a3a3a;min-height:100vh}
 
-/* ââ PALETTE: dusty slate blue + warm sand ââ */
+/* ── PALETTE: dusty slate blue + warm sand ── */
 
-/* ââ TOP NAV ââ */
+/* ── TOP NAV ── */
 .top-nav{background:#fff;border-bottom:1px solid #E8E6E1;padding:0 24px;display:flex;align-items:center;justify-content:space-between;height:56px;position:sticky;top:0;z-index:100;box-shadow:0 1px 4px rgba(0,0,0,.03)}
 .nav-brand{font-size:18px;font-weight:700;color:#3a3a3a;letter-spacing:-.3px}
 .nav-brand span{color:#6B82B0}
@@ -23,14 +23,14 @@ body{font-family:'Segoe UI',system-ui,-apple-system,sans-serif;background:#F9F8F
 .nav-tab.active{color:#6B82B0;border-bottom-color:#6B82B0;font-weight:600}
 .nav-tab .tab-icon{font-size:15px}
 
-/* ââ LAYOUT ââ */
+/* ── LAYOUT ── */
 .screen{display:none}
 .screen.active{display:block}
 .content{max-width:900px;margin:0 auto;padding:28px 20px 60px}
 .page-title{font-size:22px;font-weight:700;color:#2C2C2C;margin-bottom:4px}
 .page-subtitle{font-size:14px;color:#999;margin-bottom:24px}
 
-/* ââ CARDS ââ */
+/* ── CARDS ── */
 .card{background:#fff;border-radius:12px;border:1px solid #E8E6E1;margin-bottom:20px;overflow:hidden;transition:box-shadow .15s}
 .card:hover{box-shadow:0 2px 12px rgba(0,0,0,.04)}
 .card-header{padding:14px 20px;font-size:13px;font-weight:700;text-transform:uppercase;letter-spacing:.7px;display:flex;align-items:center;gap:8px;border-bottom:1px solid #F0EDE8;color:#666}
@@ -38,7 +38,7 @@ body{font-family:'Segoe UI',system-ui,-apple-system,sans-serif;background:#F9F8F
 .dot-blue{background:#6B82B0}.dot-sand{background:#C09F80}.dot-green{background:#7BAE7F}.dot-warm{background:#D4A56A}.dot-rose{background:#C07070}
 .card-body{padding:20px}
 
-/* ââ API KEY PANEL ââ */
+/* ── API KEY PANEL ── */
 .api-key-bar{background:#F5F7FB;border:1px solid #D8DFF0;border-radius:10px;padding:12px 16px;margin-bottom:20px;display:flex;align-items:center;gap:12px;flex-wrap:wrap}
 .api-key-label{font-size:12px;font-weight:700;color:#6B82B0;text-transform:uppercase;letter-spacing:.5px;white-space:nowrap}
 .api-key-input{flex:1;min-width:200px;padding:7px 12px;border:1.5px solid #D8DFF0;border-radius:8px;font-size:13px;font-family:monospace;color:#3a3a3a;background:#fff}
@@ -47,7 +47,7 @@ body{font-family:'Segoe UI',system-ui,-apple-system,sans-serif;background:#F9F8F
 .api-status.ok{color:#7BAE7F}
 .api-status.missing{color:#bbb}
 
-/* ââ WEEK PICKER ââ */
+/* ── WEEK PICKER ── */
 .week-picker{background:#fff;border:1px solid #E8E6E1;border-radius:12px;padding:16px 20px;margin-bottom:20px;display:flex;align-items:center;justify-content:space-between}
 .week-picker-label{font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:.6px;color:#999}
 .week-picker-dates{font-size:16px;font-weight:600;color:#2C2C2C}
@@ -55,13 +55,13 @@ body{font-family:'Segoe UI',system-ui,-apple-system,sans-serif;background:#F9F8F
 .btn-wk{background:#F5F4F0;border:1px solid #E0DDD7;color:#666;width:32px;height:32px;border-radius:8px;cursor:pointer;font-size:16px;display:flex;align-items:center;justify-content:center;transition:all .12s}
 .btn-wk:hover{background:#ECEAE4;color:#444}
 
-/* ââ TOGGLE BUTTONS ââ */
+/* ── TOGGLE BUTTONS ── */
 .btn-group{display:flex;gap:8px;flex-wrap:wrap}
 .btn-toggle{background:#EEF2F9;border:1.5px solid #C8D3E8;color:#6B82B0;padding:8px 16px;border-radius:8px;cursor:pointer;font-size:13px;font-weight:500;transition:all .15s;white-space:nowrap}
 .btn-toggle:hover{border-color:#6B82B0;color:#4D6499;background:#E0E8F4}
 .btn-toggle.sel{background:#6B82B0;border-color:#6B82B0;color:#fff;box-shadow:0 2px 8px rgba(107,130,176,.25)}
 
-/* ââ FORM FIELDS ââ */
+/* ── FORM FIELDS ── */
 .field{margin-bottom:16px}
 .field:last-child{margin-bottom:0}
 .field label{display:block;font-size:11px;font-weight:700;color:#999;text-transform:uppercase;letter-spacing:.5px;margin-bottom:6px}
@@ -72,11 +72,11 @@ body{font-family:'Segoe UI',system-ui,-apple-system,sans-serif;background:#F9F8F
 .inline-row{display:flex;align-items:center;gap:12px}
 .inline-row label{margin-bottom:0;white-space:nowrap}
 
-/* ââ SETUP GRID ââ */
+/* ── SETUP GRID ── */
 .setup-grid{display:grid;grid-template-columns:1fr 1fr;gap:24px}
 @media(max-width:700px){.setup-grid{grid-template-columns:1fr}}
 
-/* ââ DAYS AWAY / ADVENTURE ââ */
+/* ── DAYS AWAY / ADVENTURE ── */
 .days-away{display:none;margin-top:10px;padding:12px 14px;background:#F5F7FB;border-radius:8px;border:1px solid #D8DFF0}
 .days-away.vis{display:block}
 .days-away>label{font-size:11px;font-weight:700;color:#6B82B0;text-transform:uppercase;letter-spacing:.5px;margin-bottom:8px;display:block}
@@ -89,7 +89,7 @@ body{font-family:'Segoe UI',system-ui,-apple-system,sans-serif;background:#F9F8F
 .adv-extra input[type=range]{flex:1;accent-color:#6B82B0}
 .adv-count{font-size:15px;font-weight:700;color:#6B82B0;min-width:24px;text-align:center}
 
-/* ââ DAY ROWS ââ */
+/* ── DAY ROWS ── */
 .day-row{border-bottom:1px solid #F0EDE8;padding:14px 0}
 .day-row:last-child{border-bottom:none;padding-bottom:0}
 .day-row-top{display:flex;align-items:center;gap:10px;flex-wrap:wrap}
@@ -112,13 +112,13 @@ body{font-family:'Segoe UI',system-ui,-apple-system,sans-serif;background:#F9F8F
 .day-notes input{width:100%;padding:7px 12px;border:1.5px solid #E0DDD7;border-radius:8px;font-size:12px;color:#999;font-family:inherit}
 .day-notes input:focus{outline:none;border-color:#6B82B0}
 
-/* ââ GENERATE BUTTON ââ */
+/* ── GENERATE BUTTON ── */
 .btn-generate{background:#6B82B0;color:#fff;border:none;width:100%;padding:16px;border-radius:12px;font-size:16px;font-weight:700;cursor:pointer;letter-spacing:.3px;transition:all .2s;box-shadow:0 4px 14px rgba(107,130,176,.25);margin-top:8px}
 .btn-generate:hover{background:#5A70A0;transform:translateY(-1px);box-shadow:0 6px 20px rgba(107,130,176,.35)}
 .btn-generate:active{transform:translateY(0)}
 .btn-generate:disabled{background:#B0BAC8;cursor:not-allowed;transform:none;box-shadow:none}
 
-/* ââ LOADING ââ */
+/* ── LOADING ── */
 .loading{position:fixed;inset:0;background:rgba(249,248,245,.96);display:none;flex-direction:column;align-items:center;justify-content:center;z-index:999;backdrop-filter:blur(6px)}
 .loading.vis{display:flex}
 .spinner{width:48px;height:48px;border:3px solid #E8E6E1;border-top-color:#6B82B0;border-radius:50%;animation:spin .8s linear infinite}
@@ -126,18 +126,18 @@ body{font-family:'Segoe UI',system-ui,-apple-system,sans-serif;background:#F9F8F
 .loading-txt{color:#2C2C2C;font-size:18px;font-weight:600;margin-top:18px}
 .loading-sub{color:#999;font-size:14px;margin-top:6px;text-align:center;max-width:320px;line-height:1.5}
 
-/* ââ ERROR BANNER ââ */
+/* ── ERROR BANNER ── */
 .error-banner{background:#FDF0F0;border:1px solid #E8C4C4;border-radius:10px;padding:12px 16px;margin-bottom:16px;font-size:13px;color:#8B3A3A;display:none}
 .error-banner.vis{display:block}
 
-/* ââ PLAN SOURCE BADGE ââ */
+/* ── PLAN SOURCE BADGE ── */
 .plan-source-badge{display:none;font-size:12px;font-weight:600;padding:5px 12px;border-radius:20px;align-items:center;gap:5px}
 .plan-source-badge.vis{display:inline-flex}
 .plan-source-badge.ai{background:#EEF2F8;color:#4A5E80;border:1px solid #C5D0E8}
 .plan-source-badge.library{background:#FFF8E1;color:#8D6E1F;border:1px solid #E8D87A}
 .plan-source-badge.fallback-warn{background:#FDF0F0;color:#8B3A3A;border:1px solid #E8C4C4}
 
-/* ââ PLAN TOOLBAR ââ */
+/* ── PLAN TOOLBAR ── */
 .plan-toolbar{display:flex;justify-content:flex-end;align-items:center;margin-bottom:18px;flex-wrap:wrap;gap:8px}
 .plan-actions{display:flex;gap:8px;flex-wrap:wrap}
 .btn-print{background:#fff;border:1.5px solid #E0DDD7;color:#666;padding:8px 16px;border-radius:8px;font-size:13px;font-weight:500;cursor:pointer;transition:all .15s}
@@ -147,12 +147,12 @@ body{font-family:'Segoe UI',system-ui,-apple-system,sans-serif;background:#F9F8F
 .btn-secondary{background:#fff;color:#6B82B0;border:2px solid #6B82B0;padding:7px 18px;border-radius:8px;font-size:13px;font-weight:600;cursor:pointer;transition:all .15s}
 .btn-secondary:hover{background:#F0F4FB;transform:translateY(-1px)}
 
-/* ââ WEEK SUMMARY BAR ââ */
+/* ── WEEK SUMMARY BAR ── */
 .week-bar{background:#fff;border:1px solid #E8E6E1;border-radius:10px;padding:14px 18px;margin-bottom:16px;display:flex;gap:24px;flex-wrap:wrap}
 .week-bar-item{font-size:13px;color:#777}
 .week-bar-item strong{font-weight:600;color:#444}
 
-/* ââ PLAN CARDS ââ */
+/* ── PLAN CARDS ── */
 .plan-grid{display:flex;flex-direction:column;gap:10px}
 .plan-card{background:#fff;border-radius:12px;border:1px solid #E8E6E1;padding:16px 20px;display:flex;align-items:center;gap:16px;flex-wrap:wrap;border-left:3px solid #E0DDD7;transition:all .15s}
 .plan-card.type-claude{border-left-color:#6B82B0}
@@ -191,7 +191,7 @@ body{font-family:'Segoe UI',system-ui,-apple-system,sans-serif;background:#F9F8F
 .notes-hint{font-size:11px;color:#9aaa9a;font-style:italic;margin-top:2px;margin-bottom:6px}
 .note-excl-badge{display:inline-block;background:#FEF0D0;color:#8D6020;border:1px solid #D4A820;border-radius:6px;font-size:11px;padding:2px 8px;margin-bottom:8px}
 
-/* ââ INLINE RECIPE PANEL ââ */
+/* ── INLINE RECIPE PANEL ── */
 .recipe-panel{display:none;background:#F7F9FC;border:1px solid #D8DFF0;border-radius:10px;padding:20px;margin-top:10px;animation:slideDown .2s ease}
 .recipe-panel.vis{display:block}
 @keyframes slideDown{from{opacity:0;transform:translateY(-8px)}to{opacity:1;transform:translateY(0)}}
@@ -213,7 +213,7 @@ body{font-family:'Segoe UI',system-ui,-apple-system,sans-serif;background:#F9F8F
 .recipe-notes textarea{width:100%;padding:8px 12px;border:1.5px solid #D8DFF0;border-radius:8px;font-size:13px;color:#3a3a3a;font-family:inherit;resize:vertical;min-height:40px}
 .recipe-notes textarea:focus{outline:none;border-color:#C09F80}
 
-/* ââ SWAP PANEL MODAL ââ */
+/* ── SWAP PANEL MODAL ── */
 .swap-overlay{position:fixed;inset:0;background:rgba(0,0,0,.4);z-index:998;display:none;backdrop-filter:blur(3px)}
 .swap-overlay.vis{display:block}
 .swap-panel{position:fixed;top:50%;left:50%;transform:translate(-50%,-50%);background:#fff;border-radius:16px;box-shadow:0 20px 60px rgba(0,0,0,.2);z-index:999;width:92%;max-width:560px;max-height:85vh;overflow-y:auto;display:none}
@@ -244,7 +244,7 @@ body{font-family:'Segoe UI',system-ui,-apple-system,sans-serif;background:#F9F8F
 .swap-loading .spinner{margin:0 auto 12px}
 .swap-error{padding:12px 24px;color:#8B3A3A;font-size:13px;background:#FDF0F0;margin:0 24px 12px;border-radius:8px}
 
-/* ââ GROCERY LIST ââ */
+/* ── GROCERY LIST ── */
 .grocery-section{background:#fff;border-radius:12px;border:1px solid #E8E6E1;margin-bottom:16px;overflow:hidden}
 .grocery-header{padding:14px 20px;font-size:13px;font-weight:700;text-transform:uppercase;letter-spacing:.7px;display:flex;align-items:center;gap:8px;border-bottom:1px solid #F0EDE8;color:#666}
 .grocery-body{padding:16px 20px}
@@ -259,14 +259,14 @@ body{font-family:'Segoe UI',system-ui,-apple-system,sans-serif;background:#F9F8F
 .grocery-item-qty{font-size:13px;color:#555;background:#FAF9F6;padding:4px 10px;border-radius:6px;min-width:80px;max-width:120px;text-align:center;border:1px solid #E8E6E1;flex-shrink:0}
 .grocery-item-qty:focus{outline:none;border-color:#6B82B0;background:#fff}
 
-/* ââ ADD ITEM ROW ââ */
+/* ── ADD ITEM ROW ── */
 .add-item-row{display:flex;gap:8px;padding:12px 0;border-top:1px solid #F0EDE8;margin-top:8px}
 .add-item-input{flex:1;padding:8px 12px;border:1.5px solid #E0DDD7;border-radius:8px;font-size:13px;font-family:inherit}
 .add-item-input:focus{outline:none;border-color:#6B82B0}
 .add-item-btn{background:#6B82B0;color:#fff;border:none;padding:8px 16px;border-radius:8px;font-size:13px;font-weight:600;cursor:pointer}
 .add-item-btn:hover{background:#5A70A0}
 
-/* ââ HIGH FREQUENCY ITEMS ââ */
+/* ── HIGH FREQUENCY ITEMS ── */
 .hf-section{background:#fff;border-radius:12px;border:1px solid #E8E6E1;margin-top:16px;overflow:hidden}
 .hf-header{padding:14px 20px;font-size:13px;font-weight:700;text-transform:uppercase;letter-spacing:.7px;display:flex;align-items:center;gap:8px;border-bottom:1px solid #F0EDE8;color:#666}
 .hf-body{padding:16px 20px}
@@ -279,7 +279,7 @@ body{font-family:'Segoe UI',system-ui,-apple-system,sans-serif;background:#F9F8F
 .hf-item.added .hf-item-label{text-decoration:line-through;color:#bbb}
 .hf-item.added .hf-item-qty{color:#ccc}
 
-/* ââ BUTCHER LIST ââ */
+/* ── BUTCHER LIST ── */
 .butcher-cat-header{font-size:12px;font-weight:700;color:#C09F80;text-transform:uppercase;letter-spacing:.5px;padding:10px 0 6px;border-bottom:1px solid #F0EDE8;margin-bottom:4px;display:flex;justify-content:space-between;align-items:baseline}
 .butcher-cat-header:first-child{padding-top:0}
 .butcher-cat-total{font-size:13px;font-weight:700;color:#3a3a3a;text-transform:none;letter-spacing:0}
@@ -290,7 +290,7 @@ body{font-family:'Segoe UI',system-ui,-apple-system,sans-serif;background:#F9F8F
 .butcher-item-source{font-size:12px;color:#999;margin-top:2px}
 .butcher-item-qty{font-size:13px;font-weight:700;color:#6B82B0;min-width:80px;max-width:100px;text-align:center;flex-shrink:0;border:1px solid #E8E6E1;border-radius:6px;padding:4px 8px;background:#FAF9F6}
 
-/* ââ PREFERENCES PAGE ââ */
+/* ── PREFERENCES PAGE ── */
 .pref-section{background:#fff;border-radius:12px;border:1px solid #E8E6E1;margin-bottom:16px;overflow:hidden}
 .pref-header{padding:14px 20px;font-size:13px;font-weight:700;text-transform:uppercase;letter-spacing:.7px;display:flex;align-items:center;gap:8px;border-bottom:1px solid #F0EDE8}
 .pref-header.red{color:#C07070}
@@ -316,7 +316,7 @@ body{font-family:'Segoe UI',system-ui,-apple-system,sans-serif;background:#F9F8F
 .pref-rule:last-child{border-bottom:none}
 .pref-rule strong{color:#2C2C2C}
 
-/* ââ PRINT ââ */
+/* ── PRINT ── */
 @media print{
   body{background:#fff!important}
   .top-nav,.plan-toolbar,.plan-btns,.btn-generate,.loading,.hf-section,
@@ -358,9 +358,9 @@ body.print-lists .top-nav,.print-lists .plan-toolbar,.print-lists .hf-section,.p
   <div class="loading-sub" id="loading-sub">Crafting a fresh meal plan for your family based on your preferences and this week's setup</div>
 </div>
 
-<!-- ââââââââââââââââââââââââââââââââââââââââââââââââââ -->
+<!-- ══════════════════════════════════════════════════ -->
 <!-- SCREEN: PLANNING                                   -->
-<!-- ââââââââââââââââââââââââââââââââââââââââââââââââââ -->
+<!-- ══════════════════════════════════════════════════ -->
 <div class="screen active" id="screen-planning">
 <div class="content">
 
@@ -417,7 +417,7 @@ body.print-lists .top-nav,.print-lists .plan-toolbar,.print-lists .hf-section,.p
           <div class="field">
             <label>Jenn's Lunch This Week</label>
             <input type="text" id="jenn-lunch" value="Waldorf Salad" placeholder="Waldorf Salad">
-            <div class="auto-note">Auto-filled with your usual â change if having something different</div>
+            <div class="auto-note">Auto-filled with your usual — change if having something different</div>
           </div>
         </div>
         <div>
@@ -467,7 +467,7 @@ body.print-lists .top-nav,.print-lists .plan-toolbar,.print-lists .hf-section,.p
       <div class="field" style="margin-top:16px">
         <label>Anything Else for Claude to Know?</label>
         <textarea id="week-notes" rows="2" placeholder="Busy nights, guests coming, ingredients on hand, things to avoid this week..." style="resize:vertical"></textarea>
-        <div class="auto-note">These notes help Claude plan meals â they don't add items to your shopping list.</div>
+        <div class="auto-note">These notes help Claude plan meals — they don't add items to your shopping list.</div>
       </div>
       <div class="field" style="margin-top:16px">
         <label>Extra Items to Add to Shopping List</label>
@@ -492,9 +492,9 @@ body.print-lists .top-nav,.print-lists .plan-toolbar,.print-lists .hf-section,.p
 </div><!-- /screen-planning -->
 
 
-<!-- ââââââââââââââââââââââââââââââââââââââââââââââââââ -->
+<!-- ══════════════════════════════════════════════════ -->
 <!-- SCREEN: MEAL PLAN                                  -->
-<!-- ââââââââââââââââââââââââââââââââââââââââââââââââââ -->
+<!-- ══════════════════════════════════════════════════ -->
 <div class="screen" id="screen-plan">
 <div class="content">
   <div class="page-title">Your Meal Plan</div>
@@ -512,9 +512,9 @@ body.print-lists .top-nav,.print-lists .plan-toolbar,.print-lists .hf-section,.p
 </div>
 </div>
 
-<!-- ââââââââââââââââââââââââââââââââââââââââââââââââââ -->
+<!-- ══════════════════════════════════════════════════ -->
 <!-- SCREEN: GROCERY + BUTCHER                          -->
-<!-- ââââââââââââââââââââââââââââââââââââââââââââââââââ -->
+<!-- ══════════════════════════════════════════════════ -->
 <div class="screen" id="screen-lists">
 <div class="content">
   <div class="page-title">Grocery & Butcher Lists</div>
@@ -522,10 +522,10 @@ body.print-lists .top-nav,.print-lists .plan-toolbar,.print-lists .hf-section,.p
   <div class="plan-toolbar">
     <div class="plan-actions">
       <button class="btn-print" onclick="printLists()">Print Lists</button>
-      <button class="btn-secondary" onclick="buildLists()">âº Refresh List</button>
-      <button class="btn-secondary" onclick="emailButcherList()">ð§ Email Butcher List</button>
-      <button class="btn-secondary" onclick="doneShoppingClick()">â Done Shopping</button>
-      <button class="btn-primary" onclick="createPCExpressCart()">ð Create PC Express Cart</button>
+      <button class="btn-secondary" onclick="buildLists()">↺ Refresh List</button>
+      <button class="btn-secondary" onclick="emailButcherList()">📧 Email Butcher List</button>
+      <button class="btn-secondary" onclick="doneShoppingClick()">✓ Done Shopping</button>
+      <button class="btn-primary" onclick="createPCExpressCart()">🛒 Create PC Express Cart</button>
     </div>
   </div>
   <div class="grocery-section">
@@ -546,9 +546,9 @@ body.print-lists .top-nav,.print-lists .plan-toolbar,.print-lists .hf-section,.p
 </div>
 </div>
 
-<!-- ââââââââââââââââââââââââââââââââââââââââââââââââââ -->
+<!-- ══════════════════════════════════════════════════ -->
 <!-- SCREEN: PREFERENCES                                -->
-<!-- ââââââââââââââââââââââââââââââââââââââââââââââââââ -->
+<!-- ══════════════════════════════════════════════════ -->
 <div class="screen" id="screen-prefs">
 <div class="content">
   <div class="page-title">Family Preferences</div>
@@ -568,7 +568,7 @@ body.print-lists .top-nav,.print-lists .plan-toolbar,.print-lists .hf-section,.p
   <div class="pref-section">
     <div class="pref-header sand"><span class="accent-dot dot-sand"></span> Jenn Doesn't Eat (Family Does)</div>
     <div class="pref-body">
-      <p style="font-size:13px;color:#999;margin-bottom:10px">Meals can include these â Claude will suggest a substitute veggie for Jenn.</p>
+      <p style="font-size:13px;color:#999;margin-bottom:10px">Meals can include these — Claude will suggest a substitute veggie for Jenn.</p>
       <ul class="pref-list" id="pref-jenn-foods"></ul>
       <div class="pref-add-row">
         <input type="text" class="pref-add-input" id="add-jenn-food" placeholder="Add a food..." onkeydown="if(event.key==='Enter')addPrefItem('jennNo','add-jenn-food')">
@@ -612,7 +612,7 @@ body.print-lists .top-nav,.print-lists .plan-toolbar,.print-lists .hf-section,.p
 </div>
 
 
-<!-- âââââââââââââââââââââââââââââââââââââââââââââââââââââââââââ -->
+<!-- ═══════════════════════════════════════════════════════════ -->
 <!-- SWAP PANEL MODAL -->
 <div class="swap-overlay" id="swap-overlay" onclick="closeSwapPanel()"></div>
 <div class="swap-panel" id="swap-panel">
@@ -622,7 +622,7 @@ body.print-lists .top-nav,.print-lists .plan-toolbar,.print-lists .hf-section,.p
   </div>
   <div class="swap-subtitle" id="swap-subtitle"></div>
   <div class="swap-feedback">
-    <label>Why are you swapping? <span style="font-weight:400;text-transform:none;color:#bbb">(optional â helps improve future plans)</span></label>
+    <label>Why are you swapping? <span style="font-weight:400;text-transform:none;color:#bbb">(optional — helps improve future plans)</span></label>
     <textarea id="swap-reason" placeholder="e.g. Had chicken twice already, want something lighter, not in the mood for this..."></textarea>
   </div>
   <div id="swap-content"></div>
@@ -633,7 +633,7 @@ body.print-lists .top-nav,.print-lists .plan-toolbar,.print-lists .hf-section,.p
 </div>
 
 <script>
-// ââ STATE ââââââââââââââââââââââââââââââââââââââââââââââââââââââ
+// ── STATE ──────────────────────────────────────────────────────
 const STATE = {
   weekOffset: 0,
   ryanStatus: null,
@@ -662,25 +662,25 @@ let sheetsDataCache = null;
 
 
 // Dinner review history endpoint (Google Apps Script Web App)
-// Note: May fail due to CORS â MEAL_HISTORY_DATA is used as fallback
+// Note: May fail due to CORS — MEAL_HISTORY_DATA is used as fallback
 const DINNER_HISTORY_URL = 'https://script.google.com/macros/s/AKfycbxdF2YSeVC2v8dfrkoojwAFcUnKSvzQpiOuJUYuFgE4M-vms2AZvUQT0IR1oowCRaolDg/exec';
 let cachedDinnerHistory = null;
 
-// ââ EMBEDDED DINNER HISTORY âââââââââââââââââââââââââââââââââââââ
+// ── EMBEDDED DINNER HISTORY ─────────────────────────────────────
 // Updated automatically by the morning-email-processor.
 // This is the fallback used when the live URL is unreachable.
 const MEAL_HISTORY_DATA = [ // BEGIN_MEAL_HISTORY
-  {date:"2026-03-24",meal:"Lemon Pepper Chicken (BBQ) + leftover potatoes + pear salad",rating:3,liked:"Easy, meets all requirements",change:"Tired of chicken+salad rut â wants marinades/sauces for variety",keepOrDrop:"Modify"},
-  {date:"2026-03-25",meal:"Pork tenderloin (seasoned at butcher) + Little Potato Co. roasted baby potatoes + frozen mixed veg",rating:3,liked:"Very low prep â put it in the oven and walk away",change:"Not very flavourful",keepOrDrop:"Modify"},
+  {date:"2026-03-24",meal:"Lemon Pepper Chicken (BBQ) + leftover potatoes + pear salad",rating:3,liked:"Easy, meets all requirements",change:"Tired of chicken+salad rut — wants marinades/sauces for variety",keepOrDrop:"Modify"},
+  {date:"2026-03-25",meal:"Pork tenderloin (seasoned at butcher) + Little Potato Co. roasted baby potatoes + frozen mixed veg",rating:3,liked:"Very low prep — put it in the oven and walk away",change:"Not very flavourful",keepOrDrop:"Modify"},
   {date:"2026-03-26",meal:"Leftovers",rating:2,liked:"No real cooking, just made a salad and reheated from the meals we had this week",change:"The leftovers would be delicious and people would want to eat them again. Note: ",keepOrDrop:"One-off"},
   {date:"2026-03-27",meal:"Leftovers",rating:2,liked:"I didn't have to cook. I made salads and reheated leftovers",change:"The leftovers were from mediocre meals so no one wants to eat it again. Note: Ho",keepOrDrop:"One-off"},
   {date:"2026-03-27",meal:"Honey garlic chicken with frozen beans and rice",rating:1,liked:"Nothing",change:"The chicken was super bland and looks gross coming out of the oven.",keepOrDrop:"Remove"},
-  {date:"2026-03-29",meal:"Honey Garlic Pork Tenderloin",rating:0,liked:"",change:"Not made â removed before cooking. Same honey garlic flavour profile as the chicken that rated 1/5. Family does not enjoy honey garlic dishes.",keepOrDrop:"Remove"},
+  {date:"2026-03-29",meal:"Honey Garlic Pork Tenderloin",rating:0,liked:"",change:"Not made — removed before cooking. Same honey garlic flavour profile as the chicken that rated 1/5. Family does not enjoy honey garlic dishes.",keepOrDrop:"Remove"},
   {date:"2026-03-28",meal:"Fried rice",rating:3,liked:"It was different than just eating chicken",change:"It wasn't very flavourful",keepOrDrop:"Modify"},
-  {date:"2026-03-29",meal:"Turkey Tornados",rating:4,liked:"Family enjoyed the meal",change:"Long prep â searing bacon first then oven. Good flavour overall.",keepOrDrop:"Keep"},
+  {date:"2026-03-29",meal:"Turkey Tornados",rating:4,liked:"Family enjoyed the meal",change:"Long prep — searing bacon first then oven. Good flavour overall.",keepOrDrop:"Keep"},
   {date:"2026-03-30",meal:"Chimichurri Chicken Drumsticks",rating:3,liked:"Good flavour, family liked the chimichurri sauce",change:"Family didn't love eating drumsticks. Overnight marinade + very long cook. Switch to thighs or breasts.",keepOrDrop:"Modify"},
-  {date:"2026-03-31",meal:"BBQ Italian Sausage with Salad",rating:3,liked:"Very easy to cook, low prep time",change:"Feels like chicken and salad â not very exciting. Use occasionally for easy nights only.",keepOrDrop:"Keep occasionally"},
-  {date:"2026-04-01",meal:"Butter Chicken (Jenn's Version) + jasmine rice + snap peas",rating:5,liked:"Everyone loved it. Restaurant-quality sauce. 3 cans coconut milk + heavy cream = the secret. Whole family asked for it again.",change:"Takes 90+ min â plan only on lighter nights. Always make double, leftovers excellent.",keepOrDrop:"Keep"},
+  {date:"2026-03-31",meal:"BBQ Italian Sausage with Salad",rating:3,liked:"Very easy to cook, low prep time",change:"Feels like chicken and salad — not very exciting. Use occasionally for easy nights only.",keepOrDrop:"Keep occasionally"},
+  {date:"2026-04-01",meal:"Butter Chicken (Jenn's Version) + jasmine rice + snap peas",rating:5,liked:"Everyone loved it. Restaurant-quality sauce. 3 cans coconut milk + heavy cream = the secret. Whole family asked for it again.",change:"Takes 90+ min — plan only on lighter nights. Always make double, leftovers excellent.",keepOrDrop:"Keep"},
 ]; // END_MEAL_HISTORY
 
 async function fetchDinnerHistory(){
@@ -710,7 +710,7 @@ async function fetchDinnerHistory(){
     cachedDinnerHistory = { data: allReviews, _ts: Date.now() };
     return cachedDinnerHistory.data;
   } catch(e){
-    console.warn('Could not fetch dinner history â using embedded data:', e);
+    console.warn('Could not fetch dinner history — using embedded data:', e);
     return MEAL_HISTORY_DATA;
   }
 }
@@ -718,19 +718,19 @@ async function fetchDinnerHistory(){
 function formatDinnerHistoryForPrompt(reviews){
   if(!reviews || reviews.length === 0) return '';
 
-  // ââ RAW HISTORY (last 60 entries) ââ
+  // ── RAW HISTORY (last 60 entries) ──
   const lines = reviews.slice(0, 60).map(r => {
     let line = `- ${r.date}: ${r.meal}`;
     if(r.rating) line += ` (${r.rating}/5)`;
-    if(r.liked) line += ` â Liked: ${r.liked}`;
-    if(r.change) line += ` â Would change: ${r.change}`;
+    if(r.liked) line += ` — Liked: ${r.liked}`;
+    if(r.change) line += ` — Would change: ${r.change}`;
     if(r.keepOrDrop && r.keepOrDrop.toLowerCase().includes('drop')) line += ` [DROP]`;
-    if(r.keepOrDrop && r.keepOrDrop.toLowerCase().includes('modify')) line += ` [MODIFY â suggest an improved variant]`;
-    if(r.notes) line += ` â ${r.notes}`;
+    if(r.keepOrDrop && r.keepOrDrop.toLowerCase().includes('modify')) line += ` [MODIFY — suggest an improved variant]`;
+    if(r.notes) line += ` — ${r.notes}`;
     return line;
   });
 
-  // ââ PATTERN ANALYSIS (real learning) ââ
+  // ── PATTERN ANALYSIS (real learning) ──
   const rated = reviews.filter(r => r.rating && r.meal && !r.meal.toLowerCase().includes('leftover'));
   const winners = rated.filter(r => r.rating >= 4);
   const decent = rated.filter(r => r.rating === 3);
@@ -743,60 +743,60 @@ function formatDinnerHistoryForPrompt(reviews){
   const changeRequests = [...decent, ...losers].map(r => r.change).filter(Boolean);
   const avgRating = rated.length ? (rated.reduce((s,r) => s + r.rating, 0) / rated.length).toFixed(1) : 'N/A';
 
-  let analysis = `\n\nââââââââââââââââââââââââââââââââââââââââââ
+  let analysis = `\n\n══════════════════════════════════════════
 DINNER HISTORY & LEARNING ANALYSIS
-ââââââââââââââââââââââââââââââââââââââââââ
+══════════════════════════════════════════
 
 AVERAGE RATING: ${avgRating}/5 across ${rated.length} rated meals
 
 `;
 
   if(winners.length > 0){
-    analysis += `WINNERS (4-5/5) â suggest meals with SIMILAR characteristics:\n`;
-    winners.forEach(r => { analysis += `  â ${r.meal} (${r.rating}/5)${r.liked ? ' â Why: '+r.liked : ''}\n`; });
+    analysis += `WINNERS (4-5/5) — suggest meals with SIMILAR characteristics:\n`;
+    winners.forEach(r => { analysis += `  ✓ ${r.meal} (${r.rating}/5)${r.liked ? ' — Why: '+r.liked : ''}\n`; });
     analysis += '\n';
   }
 
   if(toModify.length > 0){
-    analysis += `MODIFY THESE â suggest IMPROVED VARIANTS with the requested changes:\n`;
-    toModify.forEach(r => { analysis += `  â» ${r.meal} (${r.rating}/5) â Change requested: ${r.change || 'more flavour'}\n`; });
+    analysis += `MODIFY THESE — suggest IMPROVED VARIANTS with the requested changes:\n`;
+    toModify.forEach(r => { analysis += `  ↻ ${r.meal} (${r.rating}/5) — Change requested: ${r.change || 'more flavour'}\n`; });
     analysis += '\n';
   }
 
   if(losers.length > 0){
-    analysis += `FAILURES (1-2/5) â AVOID these styles/flavour profiles:\n`;
-    losers.forEach(r => { analysis += `  â ${r.meal} (${r.rating}/5)${r.change ? ' â Problem: '+r.change : ''}\n`; });
+    analysis += `FAILURES (1-2/5) — AVOID these styles/flavour profiles:\n`;
+    losers.forEach(r => { analysis += `  ✗ ${r.meal} (${r.rating}/5)${r.change ? ' — Problem: '+r.change : ''}\n`; });
     analysis += '\n';
   }
 
   if(removed.length > 0){
     analysis += `PERMANENTLY BANNED (from ratings):\n`;
-    removed.forEach(r => { analysis += `  ð« ${r.meal}\n`; });
+    removed.forEach(r => { analysis += `  🚫 ${r.meal}\n`; });
     analysis += '\n';
   }
 
   // Synthesize what the family actually wants
-  analysis += `KEY LEARNING â what this family needs:\n`;
+  analysis += `KEY LEARNING — what this family needs:\n`;
   if(changeRequests.some(c => /flavour|bland|boring/i.test(c)))
-    analysis += `  â¢ FLAVOUR IS THE #1 ISSUE â meals must be well-seasoned, saucy, or have bold flavours. Plain/bland protein is the fastest way to a low rating.\n`;
+    analysis += `  • FLAVOUR IS THE #1 ISSUE — meals must be well-seasoned, saucy, or have bold flavours. Plain/bland protein is the fastest way to a low rating.\n`;
   if(changeRequests.some(c => /marinade|sauce|glaze/i.test(c)))
-    analysis += `  â¢ Family specifically asks for marinades, sauces, and glazes on proteins. Dry-rubbed or plain-roasted protein disappoints.\n`;
+    analysis += `  • Family specifically asks for marinades, sauces, and glazes on proteins. Dry-rubbed or plain-roasted protein disappoints.\n`;
   if(likedThemes.some(t => /easy|simple|low prep|quick/i.test(t)))
-    analysis += `  â¢ Easy prep is valued highly â "put it in the oven and walk away" is a winning formula.\n`;
+    analysis += `  • Easy prep is valued highly — "put it in the oven and walk away" is a winning formula.\n`;
   if(likedThemes.some(t => /different|variety|not chicken/i.test(t)))
-    analysis += `  â¢ Variety matters â the family notices when meals feel repetitive.\n`;
+    analysis += `  • Variety matters — the family notices when meals feel repetitive.\n`;
   if(changeRequests.some(c => /chicken.*rut|same|tired|repetitive/i.test(c)))
-    analysis += `  â¢ WARNING: chicken fatigue detected. Use chicken max 2-3x/week and always with a DIFFERENT preparation/sauce.\n`;
+    analysis += `  • WARNING: chicken fatigue detected. Use chicken max 2-3x/week and always with a DIFFERENT preparation/sauce.\n`;
 
   analysis += `\nFULL HISTORY (use to avoid repeats AND to learn preferences):\n${lines.join('\n')}`;
 
   analysis += `\n\nINSTRUCTIONS FOR USING THIS DATA:
 1. Meals rated 4-5/5: suggest similar flavour profiles and cooking styles
-2. Meals marked MODIFY: suggest the SAME meal but with the specific improvement noted (e.g. "add sauce" â suggest the meal with a new sauce)
-3. Meals rated 1-2/5: avoid similar flavour profiles entirely (not just the name â the whole style)
+2. Meals marked MODIFY: suggest the SAME meal but with the specific improvement noted (e.g. "add sauce" → suggest the meal with a new sauce)
+3. Meals rated 1-2/5: avoid similar flavour profiles entirely (not just the name — the whole style)
 4. Do NOT repeat any meal name from the last 3 weeks
-5. If the average rating is below 3.5/5, you are NOT suggesting well enough â be bolder with flavours, try new cuisines
-6. Each week should feel DIFFERENT from the last â vary proteins, cuisines, cooking methods`;
+5. If the average rating is below 3.5/5, you are NOT suggesting well enough — be bolder with flavours, try new cuisines
+6. Each week should feel DIFFERENT from the last — vary proteins, cuisines, cooking methods`;
 
   return analysis;
 }
@@ -972,12 +972,12 @@ async function fetchAllData(){
 const WEEK_DAYS = ['Saturday','Sunday','Monday','Tuesday','Wednesday','Thursday','Friday'];
 const SHORT_WEEK = ['Sat','Sun','Mon','Tue','Wed','Thu','Fri'];
 
-// ââ PREFERENCES âââââââââââââââââââââââââââââââââââââââââââââââ
+// ── PREFERENCES ───────────────────────────────────────────────
 const PREFS = {
   hardNo: ["Fish / Seafood","Quinoa","Chia seeds","Sweet potatoes","Cabbage","BBQ sauce"],
   jennNo: ["Broccoli","Cauliflower","Mushrooms","Zucchini"],
   jennLikes: ["Carrots","Cucumbers","Peas (small amounts)","Green beans","Celery","Salad greens"],
-  limited: ["Beef â only when Ryan is away","Highly processed GF substitutes","Pork â max 1x/week (family experimenting)","Potatoes â Ryder doesn't love them","Gluten â avoiding as much as possible"],
+  limited: ["Beef — only when Ryan is away","Highly processed GF substitutes","Pork — max 1x/week (family experimenting)","Potatoes — Ryder doesn't love them","Gluten — avoiding as much as possible"],
 };
 
 const DINNER_RULES = [
@@ -987,10 +987,10 @@ const DINNER_RULES = [
   {rule:"No beef when Ryan is home", detail:"Beef meals only on days Ryan is confirmed away."},
   {rule:"Potatoes max 1-2 times per week", detail:"Ryder doesn't like potatoes."},
   {rule:"No slow cooker meals", detail:"All meals prepared at dinner time."},
-  {rule:"Quick + low prep preferred", detail:"Simple weeknight meals â done at dinner time."},
+  {rule:"Quick + low prep preferred", detail:"Simple weeknight meals — done at dinner time."},
   {rule:"Meals should create leftovers", detail:"Helps with next-day lunches."},
   {rule:"BBQ = grilled, not BBQ sauce", detail:"Family loves BBQ-grilled chicken. They do NOT like BBQ sauce."},
-  {rule:"Pork max once per week", detail:"Family is experimenting â welcome but limited."},
+  {rule:"Pork max once per week", detail:"Family is experimenting — welcome but limited."},
 ];
 
 const GOALS = [
@@ -1002,26 +1002,26 @@ const GOALS = [
   "Avoid decision fatigue at dinner time",
 ];
 
-// ââ STATIC GROCERY DATA âââââââââââââââââââââââââââââââââââââââ
+// ── STATIC GROCERY DATA ───────────────────────────────────────
 const STAPLE_ITEMS = [
-  // Every-week items â always appears on grocery list
+  // Every-week items — always appears on grocery list
   // Note: Mint, Celery, Red Grapes live in the Waldorf Lunch section below
-  {name:"Mango", qty:"2â3"},
+  {name:"Mango", qty:"2–3"},
   {name:"Green Seedless Grapes", qty:"1 bag"},
   {name:"Blueberries", qty:"4 containers"},
   {name:"Pepperettes (European Sausage Sticks)", qty:"1 pkg"},
-  {name:"Passion Fruit", qty:"2â4"},
-  {name:"English Cucumber", qty:"2â3"},
-  {name:"Green Giant Mixed Vegetables (frozen)", qty:"1â2 bags"},
+  {name:"Passion Fruit", qty:"2–4"},
+  {name:"English Cucumber", qty:"2–3"},
+  {name:"Green Giant Mixed Vegetables (frozen)", qty:"1–2 bags"},
   {name:"2% Milk", qty:"1 jug"},
   {name:"Kiwis", qty:"1 bag"},
   {name:"Mandarin Oranges (2 lb bag)", qty:"1 bag"},
-  {name:"Raspberries", qty:"1â2 half pints"},
+  {name:"Raspberries", qty:"1–2 half pints"},
   {name:"Large Oranges", qty:"6"},
 ];
 
 const WALDORF_GROCERY = [
-  // All weekly Waldorf ingredients â appear under "Jenn's Lunch" section
+  // All weekly Waldorf ingredients — appear under "Jenn's Lunch" section
   {name:"Green Apples (Granny Smith)", qty:"4"},
   {name:"Celery Stalks", qty:"1 bunch"},
   {name:"Red Seedless Grapes", qty:"1 bag"},
@@ -1029,10 +1029,10 @@ const WALDORF_GROCERY = [
 ];
 
 const WALDORF_OCCASIONAL = [
-  // Every few weeks â check if you need these and tick to add
+  // Every few weeks — check if you need these and tick to add
   {name:"Walnuts (for Waldorf)", qty:"1 bag"},
   {name:"Chosen Foods Avocado Oil Mayo", qty:"1 jar"},
-  {name:"Lemons (for Waldorf)", qty:"3â5"},
+  {name:"Lemons (for Waldorf)", qty:"3–5"},
 ];
 
 const HIGH_FREQ_EXTRAS = [
@@ -1042,26 +1042,26 @@ const HIGH_FREQ_EXTRAS = [
   {name:"Cherry Tomatoes", qty:"1 pkg"},
   {name:"Shredded Cheddar Cheese", qty:"1 pkg"},
   {name:"Squeeze Applesauce (8-pack)", qty:"1 pkg"},
-  {name:"Avocados", qty:"2â3"},
-  {name:"Lemons", qty:"3â5"},
+  {name:"Avocados", qty:"2–3"},
+  {name:"Lemons", qty:"3–5"},
   {name:"Limes", qty:"1 bag"},
-  {name:"Olives (Stuffed with Garlic)", qty:"1â2 jars"},
-  {name:"Lime & Black Pepper Kettle Chips", qty:"1â2 bags"},
+  {name:"Olives (Stuffed with Garlic)", qty:"1–2 jars"},
+  {name:"Lime & Black Pepper Kettle Chips", qty:"1–2 bags"},
   {name:"Energy Bars (Chocolate Brownie 12-pk)", qty:"1 box"},
-  {name:"Hummus", qty:"1â2 tubs"},
+  {name:"Hummus", qty:"1–2 tubs"},
 ];
 
-// Items emailed by Jenn â added automatically by the morning processor.
+// Items emailed by Jenn — added automatically by the morning processor.
 // These appear directly on the grocery list, no action needed.
 
-// ââ PC EXPRESS PRODUCT MAP ââââââââââââââââââââââââââââââââââââ
+// ── PC EXPRESS PRODUCT MAP ────────────────────────────────────
 // Maps grocery list items to Loblaws product paths for reliable cart filling.
 // When filling the cart, Cowork Claude looks up items here FIRST.
 // If found, navigate directly to the product page (no search needed).
 // If not found, fall back to search.
 // Format: { searchAliases: [...], product: '/en/path/p/ID', name: 'Product Name', defaultQty: 1, notes: '' }
 const PC_EXPRESS_MAP = [
-  // ââ WEEKLY STAPLES ââ
+  // ── WEEKLY STAPLES ──
   {searchAliases:['mango','mangoes'], product:'/en/mango/p/20174535_EA', name:'Mango', defaultQty:3},
   {searchAliases:['green seedless grapes','green grapes'], product:'/en/green-seedless-grapes/p/20828963_EA', name:'Green Seedless Grapes', defaultQty:1},
   {searchAliases:['blueberries'], product:'/en/blueberries-half-pint/p/20086498_EA', name:'Blueberries Half Pint', defaultQty:4},
@@ -1074,13 +1074,13 @@ const PC_EXPRESS_MAP = [
   {searchAliases:['mandarin oranges','mandarins'], product:'/en/mandarin-oranges-2-lb-bag/p/20176052_EA', name:'Mandarin Oranges 2 lb bag', defaultQty:1},
   {searchAliases:['raspberries'], product:'/en/raspberries-half-pint/p/20086504_EA', name:'Raspberries Half Pint', defaultQty:2},
 
-  // ââ WALDORF INGREDIENTS ââ
+  // ── WALDORF INGREDIENTS ──
   {searchAliases:['green apples','granny smith'], product:'/en/green-apples-granny-smith/p/20176045_EA', name:'Granny Smith Apples', defaultQty:4},
   {searchAliases:['celery','celery stalks'], product:'/en/celery-stalks/p/20828942_EA', name:'Celery Stalks', defaultQty:1},
   {searchAliases:['red seedless grapes','red grapes'], product:'/en/red-seedless-grapes/p/20828966_EA', name:'Red Seedless Grapes', defaultQty:1},
   {searchAliases:['fresh mint','mint'], product:'/en/mint/p/20828980_EA', name:'Mint', defaultQty:1},
 
-  // ââ COMMON RECIPE INGREDIENTS ââ
+  // ── COMMON RECIPE INGREDIENTS ──
   {searchAliases:['olive oil','extra virgin olive oil','evoo'], product:'/en/olive-oil-extra-virgin/p/20809898_EA', name:'Gallo EVOO', defaultQty:1},
   {searchAliases:['balsamic vinegar'], product:'/en/1-leaf-balsamic-vinegar-of-modena/p/21071539_EA', name:'PC 1 Leaf Balsamic Vinegar', defaultQty:1},
   {searchAliases:['honey'], product:'/en/liquid-squeeze-pure-natural-honey/p/20777574_EA', name:'McCormicks Honey', defaultQty:1},
@@ -1116,7 +1116,7 @@ const PC_EXPRESS_MAP = [
   {searchAliases:['maraschino cherries'], product:'/en/maraschino-cherries/p/20050959_EA', name:'No Name Maraschino Cherries', defaultQty:1},
   {searchAliases:['crescents','pillsbury crescents','flaky rolls','pillsbury buns'], product:'/en/crescents-flaky-rolls/p/20055045_EA', name:'Pillsbury Crescents Flaky Rolls', defaultQty:1},
 
-  // ââ SALAD KITS (Ryan's lunches â MUST be different varieties, NEVER Caesar) ââ
+  // ── SALAD KITS (Ryan's lunches — MUST be different varieties, NEVER Caesar) ──
   {searchAliases:['salad kit','bagged salad'], product:null, name:'Salad Kits (variety)', defaultQty:1,
    notes:'SPECIAL: Order as separate varieties. Search individually.',
    varieties:[
@@ -1127,21 +1127,21 @@ const PC_EXPRESS_MAP = [
      {search:'avocado ranch chopped salad kit', product:null, name:'Avocado Ranch Chopped Salad Kit'},
    ]},
 
-  // ââ FREQUENTLY USED NEW ITEMS ââ
+  // ── FREQUENTLY USED NEW ITEMS ──
   {searchAliases:['coconut milk','canned coconut milk'], product:'/en/coconut-milk/p/20057411_EA', name:'PC Coconut Milk 400ml', defaultQty:3, notes:'Butter Chicken needs 3 cans; always buy in multiples'},
   {searchAliases:['sun-dried tomatoes','sundried tomatoes','sun dried tomatoes'], product:'/en/sun-dried-tomatoes/p/20064060_EA', name:'PC Sun-Dried Tomatoes', defaultQty:1},
   {searchAliases:['peanut butter','natural peanut butter'], product:'/en/natural-peanut-butter-smooth/p/20055163_EA', name:'Kraft Natural Peanut Butter Smooth', defaultQty:1},
   {searchAliases:['microwave popcorn','popcorn'], product:'/en/butter-lovers-microwave-popcorn/p/20055136_EA', name:'Orville Redenbacher Butter Lovers Microwave Popcorn', defaultQty:1},
   {searchAliases:['large oranges','navel oranges','oranges'], product:'/en/navel-oranges/p/20174509_EA', name:'Navel Oranges', defaultQty:6},
 
-  // ââ COMMON PRODUCE ââ
+  // ── COMMON PRODUCE ──
   {searchAliases:['avocados','avocado'], product:'/en/avocado/p/20174500_EA', name:'Avocado', defaultQty:3},
   {searchAliases:['lemons','lemon'], product:'/en/lemons/p/20174518_EA', name:'Lemons', defaultQty:4},
   {searchAliases:['baby arugula','arugula','field greens'], product:'/en/baby-arugula/p/20886757_EA', name:'Baby Arugula', defaultQty:1},
   {searchAliases:['potatoes','yellow potatoes'], product:'/en/yellow-potatoes/p/20828937_EA', name:'Yellow Potatoes', defaultQty:1},
 ];
 
-// Common pantry staples â these appear in a "Check Your Pantry" section
+// Common pantry staples — these appear in a "Check Your Pantry" section
 // rather than the main grocery list since they're almost always on hand.
 const PANTRY_STAPLES = new Set([
   // Oils
@@ -1150,11 +1150,11 @@ const PANTRY_STAPLES = new Set([
   'salt','pepper','black pepper','sea salt','kosher salt','salt and pepper','salt & pepper',
   // Garlic & onion
   'garlic powder','onion powder','garlic cloves','garlic','fresh garlic','minced garlic',
-  // Herbs â fresh and dried
+  // Herbs — fresh and dried
   'oregano','dried oregano','thyme','dried thyme','rosemary','dried rosemary',
   'basil','dried basil','bay leaves','parsley','dried parsley','cilantro',
   'mixed herbs','italian seasoning','herbes de provence',
-  // Spices â whole and ground
+  // Spices — whole and ground
   'paprika','smoked paprika','sweet paprika',
   'cumin','ground cumin','cumin (ground)',
   'coriander','ground coriander','coriander (ground)',
@@ -1204,7 +1204,7 @@ function isButcherIngredient(name){
   return BUTCHER_KEYWORDS.some(k=>l.includes(k));
 }
 
-// ââ API KEY âââââââââââââââââââââââââââââââââââââââââââââââââââ
+// ── API KEY ───────────────────────────────────────────────────
 function updateApiKeyStatus(){
   const key=document.getElementById('api-key-input').value.trim();
   STATE.apiKey=key;
@@ -1212,22 +1212,22 @@ function updateApiKeyStatus(){
   const statusEl=document.getElementById('api-status');
   const btn=document.getElementById('btn-generate');
   if(key.startsWith('sk-ant')){
-    statusEl.textContent='â Connected';
+    statusEl.textContent='✓ Connected';
     statusEl.className='api-status ok';
     btn.disabled=false;
-    btn.textContent='â¨ Generate My Meal Plan';
+    btn.textContent='✨ Generate My Meal Plan';
   } else if(key.length>0){
-    statusEl.textContent='â Key format looks off â should start with sk-ant';
+    statusEl.textContent='● Key format looks off — should start with sk-ant';
     statusEl.className='api-status missing';
     btn.disabled=false;
   } else {
-    statusEl.textContent='â Enter your key to enable AI generation';
+    statusEl.textContent='● Enter your key to enable AI generation';
     statusEl.className='api-status missing';
     btn.disabled=false; // still allow fallback
   }
 }
 
-// ââ WEEK UTILITIES ââââââââââââââââââââââââââââââââââââââââââââ
+// ── WEEK UTILITIES ────────────────────────────────────────────
 function getSaturdayOfWeek(offset=0){
   const d=new Date();
   const day=d.getDay();
@@ -1250,7 +1250,7 @@ function changeWeek(dir){
   updateWeekLabel(); buildDayRows();
 }
 
-// ââ RYAN HELPERS ââââââââââââââââââââââââââââââââââââââââââââââ
+// ── RYAN HELPERS ──────────────────────────────────────────────
 function setRyan(status,btn){
   STATE.ryanStatus=status;
   btn.closest('.btn-group').querySelectorAll('.btn-toggle').forEach(b=>b.classList.remove('sel'));
@@ -1284,9 +1284,9 @@ function setWeekEnergy(level,btn){
   btn.closest('.btn-group').querySelectorAll('.btn-toggle').forEach(b=>b.classList.remove('sel'));
   btn.classList.add('sel');
   const notes={
-    light:'Relaxed week â Claude can include more cook nights and ambitious recipes.',
+    light:'Relaxed week — Claude can include more cook nights and ambitious recipes.',
     normal:'Claude will balance cook nights, easy nights, and leftovers across the week.',
-    heavy:'Busy week â Claude will load up on BBQ nights, planned leftovers, and easy wins.'
+    heavy:'Busy week — Claude will load up on BBQ nights, planned leftovers, and easy wins.'
   };
   document.getElementById('energy-note').textContent=notes[level];
 }
@@ -1353,7 +1353,7 @@ function toggleNotes(idx){
   el.previousElementSibling.textContent=el.classList.contains('vis')?'- hide note':'+ add a note for this night';
 }
 
-// ââ PLAN PERSISTENCE ââââââââââââââââââââââââââââââââââââââââââ
+// ── PLAN PERSISTENCE ──────────────────────────────────────────
 function savePlanToStorage(){
   try {
     const snapshot = {
@@ -1393,7 +1393,7 @@ function loadPlanFromStorage(){
   }
 }
 
-// ââ GENERATE PLAN âââââââââââââââââââââââââââââââââââââââââââââ
+// ── GENERATE PLAN ─────────────────────────────────────────────
 async function generatePlan(){
   const errorBanner=document.getElementById('error-banner');
   errorBanner.classList.remove('vis');
@@ -1405,20 +1405,20 @@ async function generatePlan(){
   try {
     if(STATE.apiKey && STATE.apiKey.startsWith('sk-ant')){
       document.getElementById('loading-txt').textContent='Claude is thinking...';
-      document.getElementById('loading-sub').textContent='Crafting a fresh meal plan for your family â this takes about 10-15 seconds';
+      document.getElementById('loading-sub').textContent='Crafting a fresh meal plan for your family — this takes about 10-15 seconds';
       try {
         await generatePlanWithAI();
         planSource='ai';
       } catch(apiErr){
-        // API failed â fall back to library so you still get a plan
+        // API failed — fall back to library so you still get a plan
         console.warn('AI generation failed, falling back to library:', apiErr);
-        document.getElementById('loading-txt').textContent='AI unavailable â using your recipe library...';
+        document.getElementById('loading-txt').textContent='AI unavailable — using your recipe library...';
         document.getElementById('loading-sub').textContent='Could not reach Claude. Building a plan from your saved recipes instead.';
         await new Promise(r=>setTimeout(r,1200));
         buildFallbackPlan();
         planSource='ai-failed';
         // Show the error banner as a soft warning (not a blocker)
-        errorBanner.textContent=`â ï¸ AI generation failed: ${apiErr.message}. Your plan was built from your recipe library instead. Check your API key if this keeps happening.`;
+        errorBanner.textContent=`⚠️ AI generation failed: ${apiErr.message}. Your plan was built from your recipe library instead. Check your API key if this keeps happening.`;
         errorBanner.classList.add('vis');
       }
     } else {
@@ -1436,13 +1436,13 @@ async function generatePlan(){
     const badge=document.getElementById('plan-source-badge');
     if(badge){
       if(planSource==='ai'){
-        badge.textContent='â¨ AI-generated plan';
+        badge.textContent='✨ AI-generated plan';
         badge.className='plan-source-badge ai vis';
       } else if(planSource==='ai-failed'){
-        badge.textContent='â ï¸ AI unavailable â recipe library used';
+        badge.textContent='⚠️ AI unavailable — recipe library used';
         badge.className='plan-source-badge fallback-warn vis';
       } else {
-        badge.textContent='ð From your recipe library';
+        badge.textContent='📚 From your recipe library';
         badge.className='plan-source-badge library vis';
       }
     }
@@ -1457,7 +1457,7 @@ async function generatePlan(){
   }
 }
 
-// ââ AI GENERATION âââââââââââââââââââââââââââââââââââââââââââââ
+// ── AI GENERATION ─────────────────────────────────────────────
 async function generatePlanWithAI(){
   const dinnerHistory = await fetchDinnerHistory();
   const prompt=buildPrompt(dinnerHistory);
@@ -1546,34 +1546,34 @@ function buildPrompt(dinnerHistory){
 
   const dayLines=STATE.days.map((day,i)=>{
     const ryanHome=isRyanHomeOnDay(i);
-    if(day.mode==='leftovers') return `${day.dayName} ${fmtDate(day.date)}: LEFTOVERS â skip`;
-    if(day.mode==='out')       return `${day.dayName} ${fmtDate(day.date)}: EATING OUT â skip`;
-    if(day.mode==='choose')    return `${day.dayName} ${fmtDate(day.date)}: CHOSEN â "${day.chosenMeal||'TBD'}" â skip`;
-    return `${day.dayName} ${fmtDate(day.date)}: SUGGEST â Ryan ${ryanHome?'HOME (no beef)':'AWAY (beef OK)'}${day.notes?' â Note: '+day.notes:''}`;
+    if(day.mode==='leftovers') return `${day.dayName} ${fmtDate(day.date)}: LEFTOVERS — skip`;
+    if(day.mode==='out')       return `${day.dayName} ${fmtDate(day.date)}: EATING OUT — skip`;
+    if(day.mode==='choose')    return `${day.dayName} ${fmtDate(day.date)}: CHOSEN — "${day.chosenMeal||'TBD'}" — skip`;
+    return `${day.dayName} ${fmtDate(day.date)}: SUGGEST — Ryan ${ryanHome?'HOME (no beef)':'AWAY (beef OK)'}${day.notes?' — Note: '+day.notes:''}`;
   }).join('\n');
 
   const adventureDesc={
-    comfort:'Stick to comforting, familiar-style meals â no surprises',
-    medium:`Mix it up â include about ${advCount} new or more adventurous meal${advCount>1?'s':''} alongside family favourites`,
-    wild:`Be adventurous â up to ${advCount} creative or new meals are welcome`
+    comfort:'Stick to comforting, familiar-style meals — no surprises',
+    medium:`Mix it up — include about ${advCount} new or more adventurous meal${advCount>1?'s':''} alongside family favourites`,
+    wild:`Be adventurous — up to ${advCount} creative or new meals are welcome`
   }[STATE.adventure];
 
   const weekEnergy=STATE.weekEnergy||'normal';
   const weekStructureDesc={
-    light:{label:'Light Week',cook:3,easy:2,leftover:1,desc:'Relaxed week â include up to 3 proper cook nights.'},
-    normal:{label:'Normal Week',cook:2,easy:2,leftover:2,desc:'Typical week â balance cook nights with easy nights and planned leftovers.'},
-    heavy:{label:'Heavy/Busy Week',cook:1,easy:3,leftover:2,desc:'Busy week â maximize easy wins. Only 1 true cook night. Load up on BBQ, quick protein nights, and planned leftovers.'}
+    light:{label:'Light Week',cook:3,easy:2,leftover:1,desc:'Relaxed week — include up to 3 proper cook nights.'},
+    normal:{label:'Normal Week',cook:2,easy:2,leftover:2,desc:'Typical week — balance cook nights with easy nights and planned leftovers.'},
+    heavy:{label:'Heavy/Busy Week',cook:1,easy:3,leftover:2,desc:'Busy week — maximize easy wins. Only 1 true cook night. Load up on BBQ, quick protein nights, and planned leftovers.'}
   }[weekEnergy];
   const weekStructurePrompt=`
-WEEK ENERGY: ${weekStructureDesc.label} â ${weekStructureDesc.desc}
+WEEK ENERGY: ${weekStructureDesc.label} — ${weekStructureDesc.desc}
 
-REQUIRED WEEK STRUCTURE (non-negotiable â count your nights before finalizing):
+REQUIRED WEEK STRUCTURE (non-negotiable — count your nights before finalizing):
 - Cook nights (30+ min, full recipe): ${weekStructureDesc.cook} max
 - Easy nights (BBQ/quick/20 min or less): at least ${weekStructureDesc.easy}
 - Planned leftover nights: at least ${weekStructureDesc.leftover}
 
 WHAT COUNTS AS AN EASY NIGHT for this family:
-- BBQ chicken with a rub/marinade + salad or frozen veg â the grill does the work
+- BBQ chicken with a rub/marinade + salad or frozen veg — the grill does the work
 - BBQ sausages, pork chops, or marinated lamb chops + salad
 - A genuinely quick protein: pan-seared chicken breast with a 2-ingredient sauce (e.g. lemon butter, garlic herb), done in 20 min
 - A night that uses leftover protein from a previous meal (Chicken Fried Rice counts)
@@ -1581,53 +1581,53 @@ WHAT COUNTS AS AN EASY NIGHT for this family:
 
 PLANNED LEFTOVERS strategy (this family needs built-in breathing room):
 - When you plan a meal that produces good leftovers (curries, stews, soups, one-pots, roasted meats), set makeDouble:true
-- The NEXT night or a nearby night should use those leftovers â plan it as type "leftovers"
+- The NEXT night or a nearby night should use those leftovers — plan it as type "leftovers"
 - Best meals for double-batching: Butter Chicken, Coconut Curry, Cacciatore, Turkey Soup, Arroz con Pollo, Turkey Meatballs, Pork Tenderloin
-- Be explicit in makeDoubleNote: "Make 1.5x â leftovers become Wednesday's easy night"
+- Be explicit in makeDoubleNote: "Make 1.5x — leftovers become Wednesday's easy night"
 
 DIFFICULTY label (include in every planned meal entry):
 - "cook" = full recipe, 30+ min active prep
-- "medium" = 20â30 min, moderate prep
-- "easy" = BBQ, quick sear, or assembly â under 20 min active time
-- "leftovers" = reheating/repurposing â no real cooking`;
+- "medium" = 20–30 min, moderate prep
+- "easy" = BBQ, quick sear, or assembly — under 20 min active time
+- "leftovers" = reheating/repurposing — no real cooking`;
 
 
   return `Plan dinners for the Maund family, week of ${fmtDate(dates[0])} to ${fmtDate(dates[6])}.
 
 FAMILY: Jenn, Ryan (travels for work), Ryder (child), Claire (child). Based in Canada.
 
-HARD NO â never suggest these:
+HARD NO — never suggest these:
 ${PREFS.hardNo.join(', ')}
 
-JENN DOESN'T EAT (but family does) â if a recipe uses these, note a substitute veggie for Jenn:
+JENN DOESN'T EAT (but family does) — if a recipe uses these, note a substitute veggie for Jenn:
 ${PREFS.jennNo.join(', ')}
 Jenn's preferred veggies for substitutions: ${PREFS.jennLikes.join(', ')}
 
 AVOID / LIMIT:
 ${PREFS.limited.join('\n')}
 
-PERMANENTLY REMOVED â never suggest these again under any name or variation:
-- Honey garlic chicken (rated 1/5 â "actually the worst", super bland)
+PERMANENTLY REMOVED — never suggest these again under any name or variation:
+- Honey garlic chicken (rated 1/5 — "actually the worst", super bland)
 - Honey garlic pork / honey garlic pork tenderloin (same flavour profile, same issue)
-- Any "honey garlic" flavoured protein dish â this entire flavour combination is a hard no for this family
-- Taco bowls / taco salad / any taco-style meal â family is tired of them, removing for now
+- Any "honey garlic" flavoured protein dish — this entire flavour combination is a hard no for this family
+- Taco bowls / taco salad / any taco-style meal — family is tired of them, removing for now
 
 DINNER RULES:
 - Every dinner MUST have a protein (chicken, turkey, pork, or beef when Ryan is away)
-- Every dinner MUST have vegetables â VARY them across the whole week. Before finalizing your plan, review ALL meals and ensure no single vegetable appears in more than 2 meals total, and NEVER on back-to-back nights. Bell peppers, corn, and green beans are easy defaults â actively resist using them in multiple meals. A good week uses a genuinely different vegetable most nights.
-- Claire (child) does NOT like cooked carrots â do not serve roasted/cooked carrots as a side dish
-- Valid vegetable options (use a MIX across the week, not the same 2-3 repeatedly): snap peas, bell peppers, corn, green beans, frozen mixed veg, steamed broccoli, asparagus, spinach, cherry tomatoes, cucumbers, celery. Do NOT suggest standalone salad nights â the app automatically pairs a side salad with dinners that need one.
+- Every dinner MUST have vegetables — VARY them across the whole week. Before finalizing your plan, review ALL meals and ensure no single vegetable appears in more than 2 meals total, and NEVER on back-to-back nights. Bell peppers, corn, and green beans are easy defaults — actively resist using them in multiple meals. A good week uses a genuinely different vegetable most nights.
+- Claire (child) does NOT like cooked carrots — do not serve roasted/cooked carrots as a side dish
+- Valid vegetable options (use a MIX across the week, not the same 2-3 repeatedly): snap peas, bell peppers, corn, green beans, frozen mixed veg, steamed broccoli, asparagus, spinach, cherry tomatoes, cucumbers, celery. Do NOT suggest standalone salad nights — the app automatically pairs a side salad with dinners that need one.
 - MAX 2-3 starch-based meals this week (rice dishes, enchiladas, tortillas)
 - NO beef when Ryan is HOME
-- NO slow cooker â all meals cooked at dinner time, quick prep preferred
-- NO BBQ sauce â "BBQ" means grilled on a BBQ, not BBQ sauce flavour
-- NO pasta of any kind (regular or GF) â use jasmine rice, basmati rice, or polenta instead
-- NO GF pasta substitutes â the family is avoiding highly processed GF products
+- NO slow cooker — all meals cooked at dinner time, quick prep preferred
+- NO BBQ sauce — "BBQ" means grilled on a BBQ, not BBQ sauce flavour
+- NO pasta of any kind (regular or GF) — use jasmine rice, basmati rice, or polenta instead
+- NO GF pasta substitutes — the family is avoiding highly processed GF products
 - NEVER include Pillsbury buns, store-bought dinner rolls, or any commercial bread product in a recipe
 - Scale all recipes for a family of 4 with some leftovers (use 6-8 chicken pieces or 1.5 lbs protein as baseline)
 - Meals should create leftovers when possible
 - Prefer saucy or mixed-in chicken dishes to avoid "chicken again" fatigue (think: butter chicken, cacciatore, curry, chimichurri, shawarma bowls)
-- For chicken shawarma: ALWAYS make it as a BOWL â boneless skinless chicken (thighs or breasts), served over rice with diced cucumber, cherry tomatoes, and hummus. NEVER bone-in, NEVER sheet pan style with roasted peppers/snap peas on the side
+- For chicken shawarma: ALWAYS make it as a BOWL — boneless skinless chicken (thighs or breasts), served over rice with diced cucumber, cherry tomatoes, and hummus. NEVER bone-in, NEVER sheet pan style with roasted peppers/snap peas on the side
 
 ADVENTURE: ${adventureDesc}
 ${weekStructurePrompt}
@@ -1644,12 +1644,12 @@ You MUST:
 2. For meals marked [MODIFY], suggest an improved variant that addresses the specific feedback
 3. NEVER repeat a meal name from the last 3 weeks of history
 4. Vary proteins, cuisines, and cooking methods across the week
-5. If the family's average rating is below 3.5/5, be BOLDER â the current suggestions aren't exciting enough
+5. If the family's average rating is below 3.5/5, be BOLDER — the current suggestions aren't exciting enough
 
 DAYS (only suggest for lines marked SUGGEST):
 ${dayLines}
 
-TASTE PROFILE (proven favourites â suggest similar styles AND genuinely new ideas):
+TASTE PROFILE (proven favourites — suggest similar styles AND genuinely new ideas):
 - Grilled lemon pepper chicken with side salad
 - Roasted chicken thighs with dilled orzo and green beans
 - Chicken enchiladas (lighter, fresh toppings)
@@ -1658,19 +1658,19 @@ TASTE PROFILE (proven favourites â suggest similar styles AND genuinely new
 - Turkey and rice soup (hearty, complete meal)
 - Mango black bean salad with grilled chicken
 
-KEY FLAVOUR INSIGHT: This family consistently rates BOLD, SAUCY, WELL-SEASONED meals higher. Plain roasted or dry-rubbed proteins bore them. Think: butter chicken, chimichurri, Thai peanut, shawarma spice, lemon herb sauce, coconut curry â meals where the protein is coated in or swimming in flavour. NOTE: Teriyaki is a BANNED flavour â do not suggest it.
+KEY FLAVOUR INSIGHT: This family consistently rates BOLD, SAUCY, WELL-SEASONED meals higher. Plain roasted or dry-rubbed proteins bore them. Think: butter chicken, chimichurri, Thai peanut, shawarma spice, lemon herb sauce, coconut curry — meals where the protein is coated in or swimming in flavour. NOTE: Teriyaki is a BANNED flavour — do not suggest it.
 
-New directions to explore: Thai-inspired dishes (no fish sauce), Mediterranean chicken, lettuce wraps, stir fries, braised dishes, glazed proteins, sheet pan meals (max 1x/week with varied seasonings â bone-in cuts fine for roasting), pork tenderloin with bold marinades
+New directions to explore: Thai-inspired dishes (no fish sauce), Mediterranean chicken, lettuce wraps, stir fries, braised dishes, glazed proteins, sheet pan meals (max 1x/week with varied seasonings — bone-in cuts fine for roasting), pork tenderloin with bold marinades
 
 INGREDIENT RULES (CRITICAL):
-- ALWAYS list the protein (meat) as the FIRST item in the ingredients array, with quantity in lbs or number of pieces â e.g. "4 chicken breasts" or "1.5 lbs chicken thighs" or "8 chicken drumsticks"
+- ALWAYS list the protein (meat) as the FIRST item in the ingredients array, with quantity in lbs or number of pieces — e.g. "4 chicken breasts" or "1.5 lbs chicken thighs" or "8 chicken drumsticks"
 - Eggs, butter, and pantry items also belong in ingredients (not just butcherItems)
-- butcherItems is a SEPARATE list for what the butcher/meat counter needs â include the protein there too with cut name
+- butcherItems is a SEPARATE list for what the butcher/meat counter needs — include the protein there too with cut name
 - NEVER include Pillsbury buns, dinner rolls, or commercial bread in ingredients or steps
-- Use jasmine rice or polenta â NEVER pasta or GF pasta
+- Use jasmine rice or polenta — NEVER pasta or GF pasta
 - Be specific with quantities for a family of 4 with leftovers
 
-SHOPPING QUANTITIES (CRITICAL â ingredients must use PURCHASABLE units, not recipe units):
+SHOPPING QUANTITIES (CRITICAL — ingredients must use PURCHASABLE units, not recipe units):
 - Write "1 can (796ml) crushed tomatoes" NOT "2 cups crushed tomatoes"
 - Write "1 bag frozen mixed veg" NOT "2 cups mixed vegetables"
 - Write "1 bunch cilantro" NOT "handful cilantro"
@@ -1678,7 +1678,7 @@ SHOPPING QUANTITIES (CRITICAL â ingredients must use PURCHASABLE units, not
 - Write "1 container cherry tomatoes" NOT "1 pint cherry tomatoes"
 - Write "3 onions" NOT "1 cup diced onion"
 - Write "1 head garlic" NOT "4 cloves garlic" (they buy whole heads)
-- DO NOT list pantry staples (olive oil, salt, pepper, garlic powder, honey, soy sauce, vinegar, spices, flour, sugar, etc.) â these are already in the pantry and tracked separately
+- DO NOT list pantry staples (olive oil, salt, pepper, garlic powder, honey, soy sauce, vinegar, spices, flour, sugar, etc.) — these are already in the pantry and tracked separately
 
 Return ONLY valid JSON in this exact format:
 {
@@ -1694,8 +1694,8 @@ Return ONLY valid JSON in this exact format:
       "pairing": "What it is served with (e.g. 'jasmine rice + steamed green beans')",
       "difficulty": "cook|medium|easy|leftovers",
       "makeDouble": false,
-      "makeDoubleNote": "e.g. Make 1.5x â leftovers cover Thursday night",
-      "jennVegSub": "Substitute veggie suggestion for Jenn if recipe has broccoli/cauliflower/mushrooms/zucchini â otherwise empty string",
+      "makeDoubleNote": "e.g. Make 1.5x — leftovers cover Thursday night",
+      "jennVegSub": "Substitute veggie suggestion for Jenn if recipe has broccoli/cauliflower/mushrooms/zucchini — otherwise empty string",
       "ingredients": [
         {"name": "Chicken breasts", "qty": "4 breasts"},
         {"name": "Mixed greens", "qty": "1 bag"},
@@ -1715,44 +1715,44 @@ Return ONLY valid JSON in this exact format:
 Include all 7 days. For days marked LEFTOVERS, EATING OUT, or CHOSEN, use type "skip" and only include dayName and type fields.${formatDinnerHistoryForPrompt(dinnerHistory||[])}`;
 }
 
-// ââ FALLBACK PLAN (no API key) ââââââââââââââââââââââââââââââââ
+// ── FALLBACK PLAN (no API key) ────────────────────────────────
 const FALLBACK_RECIPES = [
   {id:1,name:"Lemon Pepper Chicken",protein:"Chicken",gf:true,beef:false,tags:["quick"],isCompleteMeal:true,desc:"Grilled chicken with lemon pepper, served with a side salad.",pairing:"Side salad",jennVegSub:"",ingredients:[{name:"Chicken breasts",qty:"4 breasts"},{name:"Mixed greens",qty:"1 bag"},{name:"Cherry tomatoes",qty:"1 pint"},{name:"English cucumber",qty:"1"},{name:"Lemons",qty:"2"}],butcherItems:[{cut:"Chicken Breasts",qty:"4 breasts"}],steps:["Season chicken with lemon pepper.","Grill 6-7 min per side.","Toss salad and serve alongside."]},
-  {id:2,name:"Lemon Roasted Chicken Thighs with Dilled Orzo",protein:"Chicken",gf:false,beef:false,tags:["starch"],isCompleteMeal:false,/* ON ICE: pasta/gluten â reactivate when gluten returns */desc:"Roasted chicken thighs over dilled orzo with green beans.",pairing:"Dilled orzo + steamed green beans",jennVegSub:"",ingredients:[{name:"Orzo pasta",qty:"1Â½ cups"},{name:"Fresh dill",qty:"1 bunch"},{name:"Lemons",qty:"2"},{name:"Green beans",qty:"1 lb"},{name:"Chicken broth",qty:"2 cups"}],butcherItems:[{cut:"Chicken Thighs",qty:"8 thighs"}],steps:["Preheat oven 425F. Roast thighs 35-40 min.","Cook orzo in broth with dill and lemon.","Steam green beans. Serve."]},
+  {id:2,name:"Lemon Roasted Chicken Thighs with Dilled Orzo",protein:"Chicken",gf:false,beef:false,tags:["starch"],isCompleteMeal:false,/* ON ICE: pasta/gluten — reactivate when gluten returns */desc:"Roasted chicken thighs over dilled orzo with green beans.",pairing:"Dilled orzo + steamed green beans",jennVegSub:"",ingredients:[{name:"Orzo pasta",qty:"1½ cups"},{name:"Fresh dill",qty:"1 bunch"},{name:"Lemons",qty:"2"},{name:"Green beans",qty:"1 lb"},{name:"Chicken broth",qty:"2 cups"}],butcherItems:[{cut:"Chicken Thighs",qty:"8 thighs"}],steps:["Preheat oven 425F. Roast thighs 35-40 min.","Cook orzo in broth with dill and lemon.","Steam green beans. Serve."]},
   {id:3,name:"Healthy Chicken Enchiladas",protein:"Chicken",gf:false,beef:false,tags:["starch"],isCompleteMeal:true,needsSide:false,sideProfile:"western",desc:"Lighter enchiladas with shredded chicken and a side salad.",pairing:"Side salad",jennVegSub:"",ingredients:[{name:"Chicken breasts (for shredding)",qty:"3 breasts"},{name:"Flour tortillas",qty:"1 pack"},{name:"Enchilada sauce",qty:"2 cans"},{name:"Cheddar cheese",qty:"1 block"},{name:"Sour cream",qty:"1 tub"},{name:"Avocados",qty:"2"},{name:"Romaine lettuce",qty:"1 head"},{name:"Roma tomatoes",qty:"2"}],butcherItems:[{cut:"Chicken Breasts (for shredding)",qty:"3 breasts"}],steps:["Cook and shred chicken.","Roll in tortillas with sauce and cheese. Bake 20 min.","Top with sour cream, avocado. Serve with salad."]},
-  {id:4,name:"Korean Beef Satay (Whole30)",protein:"Beef",gf:true,beef:true,tags:["quick"],isCompleteMeal:true,needsSide:false,desc:"Glazed beef skewers with rice and steamed veggies.",pairing:"Jasmine rice + snap peas and carrots",jennVegSub:"",ingredients:[{name:"Flank steak",qty:"1.5 lbs"},{name:"Coconut aminos",qty:"Â¼ cup"},{name:"Sesame oil",qty:"2 tbsp"},{name:"Green onions",qty:"1 bunch"},{name:"Jasmine rice",qty:"2 cups"},{name:"Snap peas",qty:"2 cups"},{name:"Carrots",qty:"3 large"}],butcherItems:[{cut:"Flank Steak",qty:"1.5 lbs"}],steps:["Marinate steak in coconut aminos and sesame oil 30 min.","Thread on skewers, grill 2-3 min per side.","Serve over rice with sautÃ©ed snap peas and carrots."]},
-  {id:5,name:"Spaghetti with Turkey Meat Sauce",protein:"Turkey",gf:false,beef:false,tags:["starch"],isCompleteMeal:false,/* ON ICE: pasta/gluten â reactivate when gluten returns */desc:"Rich turkey bolognese over spaghetti with a side salad.",pairing:"Spaghetti + side salad",jennVegSub:"",ingredients:[{name:"Ground turkey",qty:"1 lb"},{name:"Spaghetti",qty:"1 lb"},{name:"Canned crushed tomatoes",qty:"2 cans"},{name:"Onion",qty:"1 large"},{name:"Parmesan cheese",qty:"1 wedge"},{name:"Mixed greens",qty:"1 bag"},{name:"Balsamic vinegar",qty:"small bottle"}],butcherItems:[{cut:"Ground Turkey",qty:"1 lb"}],steps:["SautÃ© onion, brown turkey, add tomatoes. Simmer 30 min.","Cook spaghetti. Toss greens with balsamic.","Serve sauce over pasta. Salad on the side."]},
-  {id:6,name:"Turkey and Rice Soup",protein:"Turkey",gf:true,beef:false,tags:["soup"],isCompleteMeal:true,needsSide:false,desc:"Hearty turkey rice soup â a complete meal in a bowl.",pairing:"Complete meal â crusty bread optional",jennVegSub:"",ingredients:[{name:"Long grain rice",qty:"1 cup"},{name:"Carrots",qty:"3"},{name:"Celery stalks",qty:"3"},{name:"Onion",qty:"1 large"},{name:"Chicken broth",qty:"8 cups"},{name:"Crusty bread",qty:"1 loaf"}],butcherItems:[{cut:"Ground Turkey",qty:"1 lb"}],steps:["SautÃ© onion, carrots, celery. Brown turkey.","Add broth, rice, thyme. Simmer 30 min.","Serve with crusty bread."]},
-  {id:7,name:"Mango Black Bean Salad with Grilled Chicken",protein:"Chicken",gf:true,beef:false,tags:["quick"],isCompleteMeal:true,needsSide:false,desc:"Bright summer salad with grilled chicken, mango, and avocado.",pairing:"Complete meal",jennVegSub:"",ingredients:[{name:"Chicken breasts",qty:"3 breasts"},{name:"Mangos",qty:"2"},{name:"Canned black beans",qty:"1 can"},{name:"Red bell pepper",qty:"1"},{name:"Red onion",qty:"Â½ small"},{name:"Limes",qty:"2"},{name:"Avocados",qty:"2"},{name:"Mixed greens",qty:"1 bag"}],butcherItems:[{cut:"Chicken Breasts",qty:"3 breasts"}],steps:["Grill chicken and slice.","Dice mango, pepper, onion.","Toss with lime juice, black beans, cilantro.","Serve over greens with avocado."]}
+  {id:4,name:"Korean Beef Satay (Whole30)",protein:"Beef",gf:true,beef:true,tags:["quick"],isCompleteMeal:true,needsSide:false,desc:"Glazed beef skewers with rice and steamed veggies.",pairing:"Jasmine rice + snap peas and carrots",jennVegSub:"",ingredients:[{name:"Flank steak",qty:"1.5 lbs"},{name:"Coconut aminos",qty:"¼ cup"},{name:"Sesame oil",qty:"2 tbsp"},{name:"Green onions",qty:"1 bunch"},{name:"Jasmine rice",qty:"2 cups"},{name:"Snap peas",qty:"2 cups"},{name:"Carrots",qty:"3 large"}],butcherItems:[{cut:"Flank Steak",qty:"1.5 lbs"}],steps:["Marinate steak in coconut aminos and sesame oil 30 min.","Thread on skewers, grill 2-3 min per side.","Serve over rice with sautéed snap peas and carrots."]},
+  {id:5,name:"Spaghetti with Turkey Meat Sauce",protein:"Turkey",gf:false,beef:false,tags:["starch"],isCompleteMeal:false,/* ON ICE: pasta/gluten — reactivate when gluten returns */desc:"Rich turkey bolognese over spaghetti with a side salad.",pairing:"Spaghetti + side salad",jennVegSub:"",ingredients:[{name:"Ground turkey",qty:"1 lb"},{name:"Spaghetti",qty:"1 lb"},{name:"Canned crushed tomatoes",qty:"2 cans"},{name:"Onion",qty:"1 large"},{name:"Parmesan cheese",qty:"1 wedge"},{name:"Mixed greens",qty:"1 bag"},{name:"Balsamic vinegar",qty:"small bottle"}],butcherItems:[{cut:"Ground Turkey",qty:"1 lb"}],steps:["Sauté onion, brown turkey, add tomatoes. Simmer 30 min.","Cook spaghetti. Toss greens with balsamic.","Serve sauce over pasta. Salad on the side."]},
+  {id:6,name:"Turkey and Rice Soup",protein:"Turkey",gf:true,beef:false,tags:["soup"],isCompleteMeal:true,needsSide:false,desc:"Hearty turkey rice soup — a complete meal in a bowl.",pairing:"Complete meal — crusty bread optional",jennVegSub:"",ingredients:[{name:"Long grain rice",qty:"1 cup"},{name:"Carrots",qty:"3"},{name:"Celery stalks",qty:"3"},{name:"Onion",qty:"1 large"},{name:"Chicken broth",qty:"8 cups"},{name:"Crusty bread",qty:"1 loaf"}],butcherItems:[{cut:"Ground Turkey",qty:"1 lb"}],steps:["Sauté onion, carrots, celery. Brown turkey.","Add broth, rice, thyme. Simmer 30 min.","Serve with crusty bread."]},
+  {id:7,name:"Mango Black Bean Salad with Grilled Chicken",protein:"Chicken",gf:true,beef:false,tags:["quick"],isCompleteMeal:true,needsSide:false,desc:"Bright summer salad with grilled chicken, mango, and avocado.",pairing:"Complete meal",jennVegSub:"",ingredients:[{name:"Chicken breasts",qty:"3 breasts"},{name:"Mangos",qty:"2"},{name:"Canned black beans",qty:"1 can"},{name:"Red bell pepper",qty:"1"},{name:"Red onion",qty:"½ small"},{name:"Limes",qty:"2"},{name:"Avocados",qty:"2"},{name:"Mixed greens",qty:"1 bag"}],butcherItems:[{cut:"Chicken Breasts",qty:"3 breasts"}],steps:["Grill chicken and slice.","Dice mango, pepper, onion.","Toss with lime juice, black beans, cilantro.","Serve over greens with avocado."]}
 ,
-  {id:9,name:"Chicken Fried Rice",protein:"Chicken",gf:true,beef:false,tags:["quick","leftover"],isCompleteMeal:true,needsSide:false,desc:"Quick 10-minute fried rice using leftover chicken and rice from the night before. GF with tamari. A completely different feel from the previous night's dinner.",pairing:"Complete meal",jennVegSub:"",ingredients:[{name:"Cooked chicken breasts (leftover or rotisserie, diced)",qty:"2 breasts"},{name:"Day-old cooked jasmine rice",qty:"3 cups (leftover)"},{name:"Tamari (GF soy sauce)",qty:"3 tbsp"},{name:"Sesame oil",qty:"1 tbsp"},{name:"Garlic",qty:"2 cloves"},{name:"Carrots",qty:"2 medium, diced small"},{name:"Frozen peas",qty:"Â½ cup"},{name:"Green onions",qty:"3 stalks"},{name:"Eggs",qty:"3"},{name:"Avocado oil or olive oil",qty:"2 tbsp"}],butcherItems:[{cut:"Cooked Chicken Breasts (leftover, diced)",qty:"2 breasts"}],steps:["Dice leftover chicken into small pieces. Have cold rice ready â day-old works best.","Heat oil in a large pan or wok on high. Add carrots and garlic, stir fry 2 min.","Push everything to the side, crack in eggs and scramble until just set, then mix together.","Add cold rice, breaking up any clumps. Stir fry 2â3 min until heated through.","Add chicken, peas, tamari, and sesame oil. Toss everything together 1 min.","Top with sliced green onions and serve."]},
-  {id:10,name:"Oven Pork Tenderloin",protein:"Pork",gf:true,beef:false,tags:["low-prep","oven"],isCompleteMeal:true,needsSide:false,desc:"Pre-seasoned pork tenderloin roasted in the oven â rated 3/5 plain, 4/5+ with a marinade. Three options: honey dijon garlic, balsamic herb, or herb butter finish.",pairing:"Little Potato Co. roasted baby potatoes + frozen mixed veg",jennVegSub:"",ingredients:[{name:"Pork tenderloin",qty:"1.5-2 lbs"},{name:"Honey",qty:"2 tbsp"},{name:"Dijon mustard",qty:"3 tbsp"},{name:"Garlic",qty:"3 cloves"},{name:"Olive oil",qty:"2 tbsp"},{name:"Fresh thyme or rosemary",qty:"1 tsp"},{name:"Little Potato Co. baby potatoes",qty:"1 bag"},{name:"Frozen mixed vegetables",qty:"1 bag"}],butcherItems:[{cut:"Pork Tenderloin (pre-seasoned)",qty:"1.5â2 lbs"}],steps:["Mix marinade: 3 tbsp dijon + 2 tbsp honey + 3 cloves garlic minced + 2 tbsp olive oil + 1 tsp thyme. Pour over tenderloin, rest 30 min.","Preheat oven to 425Â°F. Toss potatoes with olive oil on a sheet pan. Put in oven.","After 10 min, add tenderloin to oven. Roast 20â25 min to 145Â°F internal temp.","Rest 5 min tented with foil. Microwave veg during rest.","Slice on an angle and serve."]},
-  {id:11,name:"Butter Chicken (Jenn's Version)",protein:"Chicken",gf:true,beef:false,tags:["sauce","cook-night","90min","leftovers-well"],isCompleteMeal:true,needsSide:false,desc:"Rich, restaurant-style butter chicken â Jenn's rescued version. Makes 6â8 servings with great leftovers. â ï¸ Plan for 90+ min total. Key: spices bloom into the sauce (not just on the chicken), and three cans of coconut milk is what makes it restaurant-quality.",pairing:"Jasmine rice + steamed snap peas",jennVegSub:"",ingredients:[{name:"Boneless skinless chicken thighs",qty:"4 lbs"},{name:"Butter",qty:"6 tbsp"},{name:"Garlic",qty:"8 cloves, minced"},{name:"Fresh ginger",qty:"2 tbsp, grated"},{name:"Tomato paste",qty:"6 tbsp"},{name:"Crushed tomatoes",qty:"2 cans (796ml each)"},{name:"Coconut milk, full fat",qty:"3 cans (400ml each)"},{name:"Heavy cream",qty:"Â½ cup"},{name:"Garam masala",qty:"4 tsp, divided"},{name:"Cumin",qty:"3 tsp, divided"},{name:"Smoked paprika",qty:"2 tsp, divided"},{name:"Turmeric",qty:"1 tsp, divided"},{name:"Salt",qty:"3 tsp, plus more to taste"},{name:"Sugar",qty:"1 tsp, or to taste"},{name:"Olive oil",qty:"4 tbsp"},{name:"Jasmine rice",qty:"5 cups dry"},{name:"Snap peas",qty:"6 cups, trimmed"},{name:"Fresh cilantro (optional)",qty:"1 small bunch"}],butcherItems:[{cut:"Boneless Skinless Chicken Thighs",qty:"4 lbs"}],steps:["Season chicken: Cut thighs into large bite-sized chunks. Season with 3 tsp salt, half the garam masala (2 tsp), half the cumin (1.5 tsp), half the turmeric (0.5 tsp), and half the smoked paprika (1 tsp).","Sear chicken: Heat 4 tbsp olive oil in a large Dutch oven over medium-high heat. Sear chicken 3â4 min per side until golden. Work in batches â don't crowd the pan. Remove and set aside.","SautÃ© aromatics: Reduce heat to medium. Add 6 tbsp butter. SautÃ© garlic and ginger for 1â2 min until fragrant.","Bloom spices: Stir in tomato paste and remaining spices (2 tsp garam masala, 1.5 tsp cumin, 1 tsp smoked paprika, 0.5 tsp turmeric). Cook 1 min, stirring constantly â this is the flavour foundation.","Add tomatoes and coconut milk: Pour in both cans of crushed tomatoes and all 3 cans of coconut milk. Stir well and bring to a gentle simmer.","Add cream and balance: Stir in heavy cream. Add 1 tsp sugar and taste â adjust salt and sugar to balance the acidity of the tomatoes.","Simmer with chicken: Return chicken to the pot. Simmer uncovered 18â20 min, stirring occasionally, until sauce thickens and chicken is fully cooked through.","Cook rice and snap peas: Cook jasmine rice per package directions. Steam snap peas 3â4 min until tender-crisp.","Serve: Taste sauce one final time, adjust salt. Serve over rice with snap peas alongside. Garnish with cilantro if desired.","NOTE: This makes a large batch â refrigerates well for 3 days, freezes beautifully. Always plan this as a leftover night the next day."]},
-  {id:12,name:"Coconut Curry Chicken",protein:"Chicken",gf:true,beef:false,tags:["quick","one-pan"],isCompleteMeal:true,needsSide:false,desc:"Chicken thighs simmered in a creamy coconut milk curry sauce. Rich, warm, and comforting. Ready in 30 minutes in one pan. GF and dairy-free.",pairing:"Jasmine rice",jennVegSub:"Use carrots and green beans instead of any zucchini or cauliflower",ingredients:[{name:"Coconut milk (full fat)",qty:"1 can (400ml)"},{name:"Curry powder",qty:"2 tbsp"},{name:"Garlic",qty:"4 cloves, minced"},{name:"Fresh ginger",qty:"1 tsp, grated"},{name:"Onion",qty:"1, diced"},{name:"Cherry tomatoes",qty:"1 cup"},{name:"Carrots",qty:"2, sliced"},{name:"Chicken broth",qty:"0.5 cup"},{name:"Olive oil",qty:"2 tbsp"},{name:"Salt",qty:"to taste"},{name:"Jasmine rice",qty:"2 cups"}],butcherItems:[{cut:"Boneless Skinless Chicken Thighs",qty:"8 thighs"}],steps:["Season chicken with salt. Heat oil in large pan on medium-high. Sear chicken 3 min per side until golden. Remove and set aside.","In same pan, saute onion 3 min. Add garlic, ginger, curry powder â cook 1 min until fragrant.","Add coconut milk, chicken broth, carrots, and cherry tomatoes. Stir to combine.","Return chicken to pan. Simmer 15-20 min until chicken is cooked through and sauce thickens.","Taste and adjust salt. Serve over jasmine rice."]},
-  {id:13,name:"Thai Peanut Chicken",protein:"Chicken",gf:true,beef:false,tags:["quick","sheet-pan"],isCompleteMeal:true,needsSide:false,desc:"Chicken baked in a rich peanut-ginger-lime sauce. No fish sauce needed â GF with coconut aminos or tamari. One of the most searched family chicken recipes. Control the spice to taste.",pairing:"Jasmine rice + steamed green beans or snap peas",jennVegSub:"",ingredients:[{name:"Boneless skinless chicken breasts or thighs",qty:"4 pieces"},{name:"Peanut butter (natural)",qty:"0.25 cup"},{name:"Tamari or coconut aminos",qty:"3 tbsp"},{name:"Lime juice",qty:"2 tbsp"},{name:"Honey",qty:"1 tbsp"},{name:"Fresh ginger (grated)",qty:"1 tsp"},{name:"Garlic",qty:"3 cloves, minced"},{name:"Sriracha (optional)",qty:"1 tsp"},{name:"Water",qty:"2 tbsp (to thin sauce)"},{name:"Jasmine rice",qty:"2 cups"},{name:"Green beans or snap peas",qty:"2 cups"}],butcherItems:[{cut:"Boneless Skinless Chicken Breasts or Thighs",qty:"4 pieces"}],steps:["Preheat oven to 400F. Whisk together peanut butter, tamari, lime juice, honey, ginger, garlic, and water until smooth.","Place chicken in baking dish. Pour peanut sauce over top and coat well.","Bake 25-30 min until internal temp reaches 165F, basting once halfway.","Steam green beans or snap peas on stovetop or microwave.","Serve chicken over rice with veggies. Drizzle any extra sauce from the pan on top."]},
+  {id:9,name:"Chicken Fried Rice",protein:"Chicken",gf:true,beef:false,tags:["quick","leftover"],isCompleteMeal:true,needsSide:false,desc:"Quick 10-minute fried rice using leftover chicken and rice from the night before. GF with tamari. A completely different feel from the previous night's dinner.",pairing:"Complete meal",jennVegSub:"",ingredients:[{name:"Cooked chicken breasts (leftover or rotisserie, diced)",qty:"2 breasts"},{name:"Day-old cooked jasmine rice",qty:"3 cups (leftover)"},{name:"Tamari (GF soy sauce)",qty:"3 tbsp"},{name:"Sesame oil",qty:"1 tbsp"},{name:"Garlic",qty:"2 cloves"},{name:"Carrots",qty:"2 medium, diced small"},{name:"Frozen peas",qty:"½ cup"},{name:"Green onions",qty:"3 stalks"},{name:"Eggs",qty:"3"},{name:"Avocado oil or olive oil",qty:"2 tbsp"}],butcherItems:[{cut:"Cooked Chicken Breasts (leftover, diced)",qty:"2 breasts"}],steps:["Dice leftover chicken into small pieces. Have cold rice ready — day-old works best.","Heat oil in a large pan or wok on high. Add carrots and garlic, stir fry 2 min.","Push everything to the side, crack in eggs and scramble until just set, then mix together.","Add cold rice, breaking up any clumps. Stir fry 2–3 min until heated through.","Add chicken, peas, tamari, and sesame oil. Toss everything together 1 min.","Top with sliced green onions and serve."]},
+  {id:10,name:"Oven Pork Tenderloin",protein:"Pork",gf:true,beef:false,tags:["low-prep","oven"],isCompleteMeal:true,needsSide:false,desc:"Pre-seasoned pork tenderloin roasted in the oven — rated 3/5 plain, 4/5+ with a marinade. Three options: honey dijon garlic, balsamic herb, or herb butter finish.",pairing:"Little Potato Co. roasted baby potatoes + frozen mixed veg",jennVegSub:"",ingredients:[{name:"Pork tenderloin",qty:"1.5-2 lbs"},{name:"Honey",qty:"2 tbsp"},{name:"Dijon mustard",qty:"3 tbsp"},{name:"Garlic",qty:"3 cloves"},{name:"Olive oil",qty:"2 tbsp"},{name:"Fresh thyme or rosemary",qty:"1 tsp"},{name:"Little Potato Co. baby potatoes",qty:"1 bag"},{name:"Frozen mixed vegetables",qty:"1 bag"}],butcherItems:[{cut:"Pork Tenderloin (pre-seasoned)",qty:"1.5–2 lbs"}],steps:["Mix marinade: 3 tbsp dijon + 2 tbsp honey + 3 cloves garlic minced + 2 tbsp olive oil + 1 tsp thyme. Pour over tenderloin, rest 30 min.","Preheat oven to 425°F. Toss potatoes with olive oil on a sheet pan. Put in oven.","After 10 min, add tenderloin to oven. Roast 20–25 min to 145°F internal temp.","Rest 5 min tented with foil. Microwave veg during rest.","Slice on an angle and serve."]},
+  {id:11,name:"Butter Chicken (Jenn's Version)",protein:"Chicken",gf:true,beef:false,tags:["sauce","cook-night","90min","leftovers-well"],isCompleteMeal:true,needsSide:false,desc:"Rich, restaurant-style butter chicken — Jenn's rescued version. Makes 6–8 servings with great leftovers. ⚠️ Plan for 90+ min total. Key: spices bloom into the sauce (not just on the chicken), and three cans of coconut milk is what makes it restaurant-quality.",pairing:"Jasmine rice + steamed snap peas",jennVegSub:"",ingredients:[{name:"Boneless skinless chicken thighs",qty:"4 lbs"},{name:"Butter",qty:"6 tbsp"},{name:"Garlic",qty:"8 cloves, minced"},{name:"Fresh ginger",qty:"2 tbsp, grated"},{name:"Tomato paste",qty:"6 tbsp"},{name:"Crushed tomatoes",qty:"2 cans (796ml each)"},{name:"Coconut milk, full fat",qty:"3 cans (400ml each)"},{name:"Heavy cream",qty:"½ cup"},{name:"Garam masala",qty:"4 tsp, divided"},{name:"Cumin",qty:"3 tsp, divided"},{name:"Smoked paprika",qty:"2 tsp, divided"},{name:"Turmeric",qty:"1 tsp, divided"},{name:"Salt",qty:"3 tsp, plus more to taste"},{name:"Sugar",qty:"1 tsp, or to taste"},{name:"Olive oil",qty:"4 tbsp"},{name:"Jasmine rice",qty:"5 cups dry"},{name:"Snap peas",qty:"6 cups, trimmed"},{name:"Fresh cilantro (optional)",qty:"1 small bunch"}],butcherItems:[{cut:"Boneless Skinless Chicken Thighs",qty:"4 lbs"}],steps:["Season chicken: Cut thighs into large bite-sized chunks. Season with 3 tsp salt, half the garam masala (2 tsp), half the cumin (1.5 tsp), half the turmeric (0.5 tsp), and half the smoked paprika (1 tsp).","Sear chicken: Heat 4 tbsp olive oil in a large Dutch oven over medium-high heat. Sear chicken 3–4 min per side until golden. Work in batches — don't crowd the pan. Remove and set aside.","Sauté aromatics: Reduce heat to medium. Add 6 tbsp butter. Sauté garlic and ginger for 1–2 min until fragrant.","Bloom spices: Stir in tomato paste and remaining spices (2 tsp garam masala, 1.5 tsp cumin, 1 tsp smoked paprika, 0.5 tsp turmeric). Cook 1 min, stirring constantly — this is the flavour foundation.","Add tomatoes and coconut milk: Pour in both cans of crushed tomatoes and all 3 cans of coconut milk. Stir well and bring to a gentle simmer.","Add cream and balance: Stir in heavy cream. Add 1 tsp sugar and taste — adjust salt and sugar to balance the acidity of the tomatoes.","Simmer with chicken: Return chicken to the pot. Simmer uncovered 18–20 min, stirring occasionally, until sauce thickens and chicken is fully cooked through.","Cook rice and snap peas: Cook jasmine rice per package directions. Steam snap peas 3–4 min until tender-crisp.","Serve: Taste sauce one final time, adjust salt. Serve over rice with snap peas alongside. Garnish with cilantro if desired.","NOTE: This makes a large batch — refrigerates well for 3 days, freezes beautifully. Always plan this as a leftover night the next day."]},
+  {id:12,name:"Coconut Curry Chicken",protein:"Chicken",gf:true,beef:false,tags:["quick","one-pan"],isCompleteMeal:true,needsSide:false,desc:"Chicken thighs simmered in a creamy coconut milk curry sauce. Rich, warm, and comforting. Ready in 30 minutes in one pan. GF and dairy-free.",pairing:"Jasmine rice",jennVegSub:"Use carrots and green beans instead of any zucchini or cauliflower",ingredients:[{name:"Coconut milk (full fat)",qty:"1 can (400ml)"},{name:"Curry powder",qty:"2 tbsp"},{name:"Garlic",qty:"4 cloves, minced"},{name:"Fresh ginger",qty:"1 tsp, grated"},{name:"Onion",qty:"1, diced"},{name:"Cherry tomatoes",qty:"1 cup"},{name:"Carrots",qty:"2, sliced"},{name:"Chicken broth",qty:"0.5 cup"},{name:"Olive oil",qty:"2 tbsp"},{name:"Salt",qty:"to taste"},{name:"Jasmine rice",qty:"2 cups"}],butcherItems:[{cut:"Boneless Skinless Chicken Thighs",qty:"8 thighs"}],steps:["Season chicken with salt. Heat oil in large pan on medium-high. Sear chicken 3 min per side until golden. Remove and set aside.","In same pan, saute onion 3 min. Add garlic, ginger, curry powder — cook 1 min until fragrant.","Add coconut milk, chicken broth, carrots, and cherry tomatoes. Stir to combine.","Return chicken to pan. Simmer 15-20 min until chicken is cooked through and sauce thickens.","Taste and adjust salt. Serve over jasmine rice."]},
+  {id:13,name:"Thai Peanut Chicken",protein:"Chicken",gf:true,beef:false,tags:["quick","sheet-pan"],isCompleteMeal:true,needsSide:false,desc:"Chicken baked in a rich peanut-ginger-lime sauce. No fish sauce needed — GF with coconut aminos or tamari. One of the most searched family chicken recipes. Control the spice to taste.",pairing:"Jasmine rice + steamed green beans or snap peas",jennVegSub:"",ingredients:[{name:"Boneless skinless chicken breasts or thighs",qty:"4 pieces"},{name:"Peanut butter (natural)",qty:"0.25 cup"},{name:"Tamari or coconut aminos",qty:"3 tbsp"},{name:"Lime juice",qty:"2 tbsp"},{name:"Honey",qty:"1 tbsp"},{name:"Fresh ginger (grated)",qty:"1 tsp"},{name:"Garlic",qty:"3 cloves, minced"},{name:"Sriracha (optional)",qty:"1 tsp"},{name:"Water",qty:"2 tbsp (to thin sauce)"},{name:"Jasmine rice",qty:"2 cups"},{name:"Green beans or snap peas",qty:"2 cups"}],butcherItems:[{cut:"Boneless Skinless Chicken Breasts or Thighs",qty:"4 pieces"}],steps:["Preheat oven to 400F. Whisk together peanut butter, tamari, lime juice, honey, ginger, garlic, and water until smooth.","Place chicken in baking dish. Pour peanut sauce over top and coat well.","Bake 25-30 min until internal temp reaches 165F, basting once halfway.","Steam green beans or snap peas on stovetop or microwave.","Serve chicken over rice with veggies. Drizzle any extra sauce from the pan on top."]},
   {id:14,name:"Chicken Shawarma Bowls",protein:"Chicken",gf:true,beef:false,tags:["oven","meal-prep"],isCompleteMeal:true,needsSide:false,desc:"Restaurant-quality shawarma spiced chicken thighs served over rice with fresh cucumber, cherry tomatoes, and hummus. Deeply flavoured, high protein, totally GF.",pairing:"Jasmine rice + cucumber + cherry tomatoes + hummus",jennVegSub:"",ingredients:[{name:"Boneless skinless chicken thighs",qty:"8 thighs"},{name:"Cumin",qty:"2 tsp"},{name:"Turmeric",qty:"1 tsp"},{name:"Paprika (smoked)",qty:"1 tsp"},{name:"Coriander (ground)",qty:"1 tsp"},{name:"Garlic",qty:"4 cloves, minced"},{name:"Lemon juice",qty:"3 tbsp"},{name:"Olive oil",qty:"3 tbsp"},{name:"Salt and pepper",qty:"to taste"},{name:"Jasmine rice",qty:"2 cups"},{name:"English cucumber",qty:"1, diced"},{name:"Cherry tomatoes",qty:"1 cup, halved"},{name:"Hummus",qty:"1 container"}],butcherItems:[{cut:"Boneless Skinless Chicken Thighs",qty:"8 thighs"}],steps:["Mix cumin, turmeric, paprika, coriander, garlic, lemon juice, olive oil, salt and pepper in a bowl.","Coat chicken thighs in marinade. Rest at least 20 min (or overnight in fridge).","Preheat oven to 425F. Bake chicken 30-35 min until edges caramelise and internal temp is 165F.","Cook jasmine rice. Dice cucumber, halve tomatoes.","Slice chicken and build bowls: rice base, chicken, cucumber, tomatoes, big spoonful of hummus."]},
-  {id:15,name:"Baked Turkey Meatballs",protein:"Turkey",gf:true,beef:false,tags:["oven","meal-prep"],isCompleteMeal:true,needsSide:true,sideProfile:"western",desc:"Juicy Italian-style turkey meatballs baked in the oven using almond flour instead of breadcrumbs â completely GF. Kid-approved and freezer-friendly. Serve over jasmine rice with tomato sauce.",pairing:"Jasmine rice + jarred tomato sauce",jennVegSub:"",ingredients:[{name:"Ground turkey",qty:"1.5 lbs"},{name:"Almond flour",qty:"0.25 cup"},{name:"Egg",qty:"1 large"},{name:"Garlic",qty:"3 cloves, minced"},{name:"Parmesan cheese (grated)",qty:"0.25 cup"},{name:"Fresh parsley (or dried)",qty:"2 tbsp"},{name:"Dried oregano",qty:"1 tsp"},{name:"Salt and pepper",qty:"to taste"},{name:"Jasmine rice",qty:"2 cups"},{name:"Jarred tomato sauce (GF)",qty:"1 large jar"}],butcherItems:[{cut:"Ground Turkey",qty:"1.5 lbs"}],steps:["Preheat oven to 400F. Line a baking sheet with parchment.","Mix ground turkey, almond flour, egg, garlic, parmesan, parsley, oregano, salt and pepper. Don't overmix.","Roll into golf-ball sized meatballs (about 20). Place on baking sheet.","Bake 20-22 min until cooked through and lightly browned on the outside.","Cook pasta or rice. Warm tomato sauce in a pan. Serve meatballs over pasta or rice with sauce.","Tip: Double the batch and freeze half for a future no-cook night."]},
-  {id:16,name:"Lemon Herb Roasted Chicken Thighs",protein:"Chicken",gf:true,beef:false,tags:["oven","low-prep"],isCompleteMeal:true,needsSide:false,desc:"Bone-in chicken thighs marinated in lemon, garlic, rosemary and thyme then roasted until caramelised and deeply flavoured. Totally different from plain lemon pepper â the marinade and roasting method make all the difference.",pairing:"Jasmine rice + roasted cherry tomatoes (from the pan)",jennVegSub:"",ingredients:[{name:"Bone-in skin-on chicken thighs",qty:"8 thighs"},{name:"Lemon (zest and juice)",qty:"2 lemons"},{name:"Garlic",qty:"5 cloves, minced"},{name:"Fresh rosemary",qty:"2 sprigs (or 1 tsp dried)"},{name:"Fresh thyme",qty:"3 sprigs (or 1 tsp dried)"},{name:"Olive oil",qty:"3 tbsp"},{name:"Salt and pepper",qty:"to taste"},{name:"Cherry tomatoes",qty:"1 cup"},{name:"Jasmine rice",qty:"2 cups"}],butcherItems:[{cut:"Bone-in Skin-on Chicken Thighs",qty:"8 thighs"}],steps:["Mix lemon zest, lemon juice, garlic, rosemary, thyme, olive oil, salt and pepper. Pour over chicken thighs.","Marinate at least 30 min at room temp or up to overnight in the fridge.","Preheat oven to 425F. Place chicken skin-side up in a roasting pan. Scatter cherry tomatoes around.","Roast 40-45 min until skin is deep golden and internal temp is 165F.","Rest 5 min. Serve over rice with the roasted tomatoes and pan juices spooned on top."]},
-  {id:17,name:"Turkey Tornados",protein:"Turkey",gf:true,beef:false,tags:["oven","quick"],isCompleteMeal:true,needsSide:false,desc:"Juicy turkey breast chunks wrapped in bacon, pan-seared then oven-finished with a garlic herb butter baste. The partial pre-cooking of the bacon is key â it crisps perfectly without overcooking the turkey. Big flavour, impressive presentation.",pairing:"Roasted baby potatoes + sautÃ©ed garlic green beans",jennVegSub:"",ingredients:[{name:"Turkey breast chunks (2-inch pieces)",qty:"1.5 lbs"},{name:"Bacon strips",qty:"8-10 strips"},{name:"Smoked paprika",qty:"1 tsp"},{name:"Garlic powder",qty:"1 tsp"},{name:"Dried thyme",qty:"0.5 tsp"},{name:"Dried rosemary",qty:"0.5 tsp"},{name:"Salt and pepper",qty:"to taste"},{name:"Olive oil",qty:"2 tbsp"},{name:"Butter",qty:"2 tbsp"},{name:"Garlic",qty:"2 cloves, minced"},{name:"Toothpicks",qty:"for securing"},{name:"Baby potatoes",qty:"1 bag (Little Potato Co.)"},{name:"Green beans",qty:"1 lb"}],butcherItems:[{cut:"Turkey Breast (cut into 2-inch chunks)",qty:"1.5 lbs"}],steps:["Preheat oven to 400F. Season turkey chunks with smoked paprika, garlic powder, thyme, rosemary, salt and pepper.","Microwave bacon strips 90 seconds until partially cooked and pliable but not crispy. This is the key step.","Wrap a bacon strip around each turkey chunk and secure with a toothpick.","Heat olive oil in an oven-safe skillet on medium-high. Sear tornados 2-3 min per side until golden brown.","Transfer pan to oven. Roast 18-22 min until internal temp reaches 165F.","Last 5 min: mix butter and minced garlic, drop small pats on top of each tornado to baste.","Rest 5-8 min â essential with turkey or it will be dry. Remove toothpicks before serving.","Meanwhile: halve potatoes, toss with olive oil, garlic, rosemary, 425F for 25 min. SautÃ© green beans in butter with garlic 5 min."]},
-  {id:18,name:"Mediterranean Chicken Drumsticks",protein:"Chicken",gf:true,beef:false,tags:["oven","low-prep"],isCompleteMeal:true,needsSide:false,desc:"Crispy-skinned drumsticks marinated in lemon, smoked paprika, cumin and oregano, baked at high heat on a wire rack. Marinating overnight is what takes these from good to great. Serve with chimichurri sauce on the side to make it feel saucy and bold rather than plain. Sheet pan carrots and potatoes cook alongside.",pairing:"Sheet pan roasted potatoes and carrots + chimichurri drizzle",jennVegSub:"",ingredients:[{name:"Chicken drumsticks",qty:"8-10 pieces"},{name:"Olive oil",qty:"3 tbsp"},{name:"Lemon (juice and zest)",qty:"1 large"},{name:"Smoked paprika",qty:"1 tsp"},{name:"Garlic powder",qty:"1 tsp"},{name:"Cumin (ground)",qty:"0.5 tsp"},{name:"Coriander (ground)",qty:"0.5 tsp"},{name:"Dried oregano",qty:"1 tsp"},{name:"Salt and pepper",qty:"generously"},{name:"Baby potatoes",qty:"1 lb, halved"},{name:"Carrots",qty:"3 large, chunked"},{name:"Garlic",qty:"3 cloves"},{name:"Fresh parsley",qty:"1 cup (for chimichurri)"},{name:"Red wine vinegar",qty:"2 tbsp (for chimichurri)"},{name:"Red pepper flakes",qty:"pinch (for chimichurri)"}],butcherItems:[{cut:"Chicken Drumsticks (skin-on)",qty:"8-10 pieces"}],steps:["Night before: mix olive oil, lemon juice and zest, paprika, garlic powder, cumin, coriander, oregano, salt and pepper in a zip-lock bag. Add drumsticks, coat well, refrigerate overnight.","When ready to cook, preheat oven to 425F. Set a wire rack on a baking sheet â this is what gets you crispy skin.","Place drumsticks on the wire rack. Toss potatoes and carrots with olive oil, paprika, salt and garlic on a second sheet pan.","Put both pans in oven. Drumsticks: flip once at 25 min, total 40-45 min until internal temp 165F and skin is deep golden.","Quick chimichurri: blend or finely chop 1 cup parsley + 3 garlic cloves + 2 tbsp red wine vinegar + 0.25 cup olive oil + pinch of red pepper flakes + salt. Ready in 3 minutes.","Potatoes and carrots: roast 40 min, toss once halfway.","Serve drumsticks over the roasted veg with chimichurri drizzled over top."]},
-  {id:19,name:"Tuscan Sun-Dried Tomato Chicken",protein:"Chicken",gf:true,beef:false,tags:["one-pan","sauce","quick"],isCompleteMeal:true,needsSide:false,desc:"One pan, 30 minutes, restaurant-quality. Chicken simmered in a rich creamy sun-dried tomato sauce with garlic and spinach. The sauce is SO good people forget there's chicken in it. Also called 'Marry Me Chicken' because it's that impressive. GF with coconut cream.",pairing:"Jasmine rice (to soak up the sauce)",jennVegSub:"Skip spinach if needed â add cherry tomatoes or baby kale instead",ingredients:[{name:"Boneless skinless chicken breasts or thighs",qty:"1.5 lbs"},{name:"Sun-dried tomatoes (in oil, drained)",qty:"0.5 cup, roughly chopped"},{name:"Garlic",qty:"5 cloves, minced"},{name:"Heavy cream or coconut cream",qty:"1 cup"},{name:"Chicken broth",qty:"0.5 cup"},{name:"Baby spinach",qty:"2 cups"},{name:"Italian seasoning",qty:"1.5 tsp"},{name:"Smoked paprika",qty:"0.5 tsp"},{name:"Parmesan cheese (grated, optional)",qty:"0.25 cup"},{name:"Olive oil",qty:"2 tbsp"},{name:"Salt and pepper",qty:"to taste"},{name:"Jasmine rice",qty:"2 cups"}],butcherItems:[{cut:"Boneless Skinless Chicken Breasts or Thighs",qty:"1.5 lbs"}],steps:["Season chicken generously with salt, pepper, paprika, and Italian seasoning.","Heat olive oil in a large skillet on medium-high. Sear chicken 4-5 min per side until golden. Remove and set aside.","In the same pan, sautÃ© garlic 30 seconds. Add sun-dried tomatoes and cook 1 min.","Pour in chicken broth, scraping up any browned bits. Add cream and stir to combine.","Return chicken to the pan. Simmer 10-12 min on medium-low until cooked through and sauce thickens.","Stir in spinach and parmesan. Cook 1-2 min until spinach wilts.","Serve over pasta or rice with lots of sauce spooned over top."]},
-  {id:20,name:"Arroz con Pollo",protein:"Chicken",gf:true,beef:false,tags:["one-pot","starch"],isCompleteMeal:true,needsSide:false,desc:"The ultimate 'chicken disguised' dish â chicken thighs cooked directly IN seasoned yellow rice so every grain absorbs the flavour. Latin-inspired with cumin, paprika, and chicken broth. One pot, deeply satisfying, and the kids never notice it's 'chicken night.' Completely GF.",pairing:"Complete one-pot meal â garnish with fresh cilantro and lime wedges",jennVegSub:"",ingredients:[{name:"Bone-in skin-on chicken thighs",qty:"6-8 pieces"},{name:"Long grain white rice",qty:"2 cups"},{name:"Chicken broth",qty:"3 cups"},{name:"Onion",qty:"1 large, diced"},{name:"Red bell pepper",qty:"1, diced"},{name:"Garlic",qty:"5 cloves, minced"},{name:"Canned diced tomatoes",qty:"1 can (400ml)"},{name:"Cumin (ground)",qty:"1.5 tsp"},{name:"Smoked paprika",qty:"1.5 tsp"},{name:"Turmeric or saffron",qty:"0.5 tsp (for colour)"},{name:"Dried oregano",qty:"1 tsp"},{name:"Olive oil",qty:"2 tbsp"},{name:"Salt and pepper",qty:"to taste"},{name:"Frozen peas",qty:"0.5 cup"},{name:"Limes",qty:"2 (to serve)"},{name:"Fresh cilantro (optional)",qty:"small bunch"}],butcherItems:[{cut:"Bone-in Skin-on Chicken Thighs",qty:"6-8 pieces"}],steps:["Season chicken thighs generously with salt, pepper, paprika, and cumin.","Heat olive oil in a large deep skillet or Dutch oven on medium-high. Sear chicken skin-side down 4-5 min until golden. Flip, sear 2 min more. Remove and set aside.","In same pan, sautÃ© onion and bell pepper 4 min. Add garlic, cook 1 min.","Add rice and stir to coat in the oil for 1-2 min (this toasts the rice = big flavour). Add cumin, paprika, turmeric, oregano.","Pour in diced tomatoes and chicken broth. Stir well and bring to a simmer.","Nestle chicken pieces skin-side up into the rice. Cover tightly, reduce heat to low.","Cook 25-30 min without lifting the lid until rice is tender and chicken is cooked through (165F).","Scatter frozen peas on top, cover 2 min to heat through. Serve with lime wedges."]},
-  {id:21,name:"Chicken Cacciatore",protein:"Chicken",gf:true,beef:false,tags:["one-pan","sauce"],isCompleteMeal:true,needsSide:false,desc:"Classic Italian hunter-style chicken. Chicken thighs braised in a rich rustic tomato sauce with bell peppers and herbs until meltingly tender. No mushrooms, no olives cooked in â olives served on the side at the table for family members who want them. Deeply satisfying and totally GF.",pairing:"Polenta or jasmine rice",jennVegSub:"No mushrooms â extra bell peppers instead. Olives on the side only â never cooked in.",ingredients:[{name:"Bone-in skin-on chicken thighs",qty:"6-8 pieces"},{name:"Tomato passata (purÃ©ed tomatoes)",qty:"1 can (400ml)"},{name:"Red bell pepper",qty:"2, sliced"},{name:"Yellow bell pepper",qty:"1, sliced"},{name:"Onion",qty:"1 large, diced"},{name:"Garlic",qty:"5 cloves, minced"},{name:"Chicken broth",qty:"0.5 cup"},{name:"Dried oregano",qty:"1.5 tsp"},{name:"Dried thyme",qty:"1 tsp"},{name:"Bay leaves",qty:"2"},{name:"Olive oil",qty:"3 tbsp"},{name:"Salt and pepper",qty:"to taste"},{name:"Green olives (pitted) â serve on side",qty:"0.5 cup"},{name:"Polenta (tube or instant)",qty:"1 tube"}],butcherItems:[{cut:"Bone-in Skin-on Chicken Thighs",qty:"6-8 pieces"}],steps:["Season chicken generously with salt and pepper. Heat olive oil in a large oven-safe skillet on medium-high.","Sear chicken skin-side down 5 min until deep golden. Flip and sear 2 min more. Remove and set aside.","In same pan, sautÃ© onion and bell peppers 5 min. Add garlic and cook 1 min.","Add crushed tomatoes, chicken broth, oregano, thyme, and bay leaves. Stir well and bring to a simmer.","Nestle chicken skin-side up into the sauce â NO olives in the pot.","Cover and simmer on low heat 30-35 min until chicken is fall-apart tender and sauce is thick and rich.","Remove bay leaves. Taste and adjust salt. Serve over polenta or jasmine rice. Put olives in a small bowl on the table for family members to add to their own plate."]},
-  {id:22,name:"Chimichurri Chicken Thighs",protein:"Chicken",gf:true,beef:false,tags:["quick","sauce"],isCompleteMeal:true,needsSide:true,sideProfile:"western",desc:"Bright, herbaceous, completely different from every other chicken recipe. Chicken thighs grilled or pan-seared and drowned in a vibrant Argentine chimichurri sauce â fresh parsley, garlic, red wine vinegar, olive oil. The sauce is the star. Can BBQ in summer or use a grill pan. GF, dairy-free, incredibly fresh tasting.",pairing:"Roasted baby potatoes",jennVegSub:"",ingredients:[{name:"Boneless skin-on chicken thighs",qty:"8 thighs"},{name:"Fresh flat-leaf parsley",qty:"1 large bunch"},{name:"Fresh cilantro (optional)",qty:"0.5 cup"},{name:"Garlic",qty:"5 cloves"},{name:"Red wine vinegar",qty:"3 tbsp"},{name:"Olive oil",qty:"0.5 cup + 2 tbsp for cooking"},{name:"Red pepper flakes",qty:"0.5 tsp"},{name:"Dried oregano",qty:"1 tsp"},{name:"Salt",qty:"to taste"},{name:"Baby potatoes",qty:"1 bag (Little Potato Co.)"},],butcherItems:[{cut:"Boneless Skin-on Chicken Thighs",qty:"8 thighs"}],steps:["Make chimichurri: blitz parsley, cilantro, garlic, red wine vinegar, olive oil, red pepper flakes, oregano, and salt in a blender or food processor. Taste and adjust. Set aside â it gets better as it sits.","Season chicken thighs with salt, pepper, and a drizzle of olive oil.","Grill on BBQ 5-6 min per side until cooked through and skin is crispy, OR pan-sear in a hot skillet 5 min per side.","Internal temp should hit 165F. Rest 3 min.","Serve chicken with chimichurri spooned generously over top â don't be shy with it.","Roast baby potatoes: halved, olive oil, salt, 425F for 25 min."]},
-  {id:23,name:"Schwarties Hash Brown Potatoes",protein:"None",gf:false,beef:false,tags:["side","oven","holiday"],isCompleteMeal:false,desc:"The beloved Best of Bridge cheesy hash brown casserole â a Canadian holiday and potluck classic. Made with cream of CHICKEN (not mushroom). Creamy, cheesy, comforting. Serves 8-10, perfect for Easter or Christmas alongside a roast. NOTE: cream of chicken soup contains gluten â not GF.",pairing:"Side dish â serve alongside a holiday roast or ham",jennVegSub:"",ingredients:[{name:"Frozen hash brown potatoes",qty:"2 lbs (1 kg), thawed slightly"},{name:"Sour cream",qty:"2 cups (500ml)"},{name:"Cream of CHICKEN soup (NOT mushroom)",qty:"2 cans (10 oz / 284ml each)"},{name:"Butter (melted)",qty:"0.5 cup"},{name:"Onion (grated)",qty:"to taste"},{name:"Salt",qty:"to taste"},{name:"Cheddar cheese (grated)",qty:"2 cups"},{name:"Parmesan cheese (grated)",qty:"2 tbsp"}],butcherItems:[],steps:["Thaw hash brown potatoes slightly.","Mix potatoes, sour cream, cream of chicken soup, melted butter, grated onion, salt, and cheddar cheese together in a 9x13 inch baking dish.","Sprinkle parmesan cheese evenly over the top.","Bake at 350F for 1 hour until golden and bubbling.","Serves 8-10. Great made ahead and reheated."]},
-  {id:25,name:"Carrot Ginger Soup",protein:"None",gf:true,beef:false,tags:["side","soup","holiday"],isCompleteMeal:false,desc:"The Maund family's own carrot soup recipe â a keeper since 2012. SautÃ©ed carrots, onion, celery, and ginger simmered in chicken broth then blended silky smooth. The secret: lime zest and juice stirred in at the very end for a bright, fresh finish. GF, dairy-free.",pairing:"Holiday starter or side â serve with crusty bread or rolls",jennVegSub:"",ingredients:[{name:"Carrots",qty:"1 lb, chopped"},{name:"Onion",qty:"1 medium, chopped"},{name:"Celery",qty:"1 stalk, peeled and chopped"},{name:"Fresh ginger",qty:"1 tsp, chopped or grated"},{name:"Butter",qty:"3 tbsp (or olive oil, or half each)"},{name:"Chicken broth (or vegetable broth for vegetarian)",qty:"5 cups"},{name:"Lime zest",qty:"zest of half a lime"},{name:"Lime juice",qty:"juice of 1 lime"},{name:"Salt",qty:"small pinch"}],butcherItems:[],steps:["Heat butter or olive oil in a large soup pot over medium-low.","Add onion, carrots, celery, and a pinch of salt. SautÃ© until onions and carrots are soft, about 10-12 min.","Add ginger. Cook 1-2 min more. (If using chopped ginger instead of grated, add it earlier with the vegetables.)","Add broth. Cook at a low boil for 5-10 min.","Use an immersion blender (or transfer to a blender in batches) and purÃ©e until completely smooth.","Stir in lime zest and lime juice. Taste and adjust salt.","Serve warm, or chill and serve cold. Can be made 1-2 days ahead."]},
-  {id:26,name:"Green Beans with Almonds",protein:"None",gf:true,beef:false,tags:["side","quick","holiday"],isCompleteMeal:false,desc:"Elegant yet simple holiday side â crisp-tender green beans tossed in browned butter with toasted slivered almonds. Ready in 10 minutes. A classic for a reason.",pairing:"Holiday side â pairs with ham, roast chicken, or any protein",jennVegSub:"",ingredients:[{name:"Green beans (fresh)",qty:"1.5 lbs, trimmed"},{name:"Slivered almonds",qty:"0.5 cup"},{name:"Butter",qty:"3 tbsp"},{name:"Garlic",qty:"2 cloves, minced"},{name:"Salt and pepper",qty:"to taste"},{name:"Lemon juice (optional)",qty:"1 tbsp"}],butcherItems:[],steps:["Blanch green beans in boiling salted water 3-4 min until bright green and just tender. Drain and set aside.","In a large skillet on medium heat, toast slivered almonds 2-3 min until golden. Watch carefully â they burn fast. Remove and set aside.","In the same skillet, melt butter over medium heat. Add garlic and cook 1 min until fragrant.","Add green beans to the pan and toss in the garlic butter for 1-2 min.","Remove from heat. Toss with toasted almonds. Season with salt, pepper, and a squeeze of lemon if desired. Serve immediately."]},
-  {id:24,name:"Easter Glazed Ham",protein:"Pork",gf:true,beef:false,tags:["holiday","oven","low-prep"],isCompleteMeal:false,desc:"A showstopper bone-in half ham with a sweet-savoury honey, brown sugar, and Dijon mustard glaze. Slow-roasted covered to stay juicy, then blasted uncovered to caramelise the glaze. Naturally GF. Half ham (5-8 lbs) feeds 6-8 people â perfect for Easter alongside Schwarties hash browns. NOTE: if spiral-sliced, skip scoring and reduce covered roasting time slightly.",pairing:"Holiday side dishes â Schwarties hash browns, roasted carrots, green beans",jennVegSub:"",ingredients:[{name:"Bone-in half ham (fully cooked, pre-cured)",qty:"5-8 lbs"},{name:"Honey",qty:"0.33 cup"},{name:"Brown sugar (packed)",qty:"0.33 cup"},{name:"Dijon mustard",qty:"2 tbsp"},{name:"Apple cider vinegar",qty:"1 tbsp"},{name:"Ground cinnamon",qty:"0.25 tsp"},{name:"Ground cloves",qty:"pinch"},{name:"Apple juice or water",qty:"1 cup (for the pan)"}],butcherItems:[{cut:"Bone-in Half Ham (fully cooked)",qty:"5-8 lbs"}],steps:["Take ham out of fridge 1 hour before cooking. Preheat oven to 325F.","If not spiral-sliced: score the surface in a diamond pattern, cuts about 1/4 inch deep. If spiral-sliced: skip this step.","Place ham cut-side down in a roasting pan. Pour apple juice or water into the bottom. Cover tightly with foil.","Roast covered at 325F â 15-18 min per pound. A 6 lb half ham = about 1.5 hours covered. A 8 lb half ham = about 2 hours covered.","Make the glaze: combine honey, brown sugar, Dijon, apple cider vinegar, cinnamon, and cloves in a small saucepan. Stir on medium heat until sugar dissolves, about 2 min.","When ham reaches 120F internal temp, remove foil. Brush all over generously with glaze.","Increase oven to 400F. Roast uncovered 20-30 min, brushing with more glaze every 10 min, until deep golden and internal temp reaches 140F.","Rest 15 min tented with foil before carving. TIMING TIP: Schwarties hash browns go in at 350F while ham rests â timing lines up perfectly."]},
-  {id:27,name:"Pear & Walnut Arugula Salad",protein:"None",gf:true,beef:false,tags:["side","quick","salad"],isCompleteMeal:false,desc:"Peppery arugula with sweet sliced pears, toasted walnuts, shaved parmesan, and a balsamic vinaigrette. 5 minutes. Elegant enough for guests, easy enough for a Tuesday. Pairs beautifully with roasted or herb chicken.",pairing:"Side salad â pairs with roasted chicken, turkey, or pork",jennVegSub:"",ingredients:[{name:"Baby arugula",qty:"4 cups (1 pkg)"},{name:"Ripe pears (Bartlett or Bosc)",qty:"2, thinly sliced"},{name:"Walnuts",qty:"0.5 cup, toasted"},{name:"Parmesan shavings",qty:"0.25 cup"},{name:"Balsamic vinegar",qty:"2 tbsp"},{name:"Olive oil",qty:"3 tbsp"},{name:"Honey",qty:"1 tsp"},{name:"Dijon mustard",qty:"0.5 tsp"},{name:"Salt and pepper",qty:"to taste"}],butcherItems:[],steps:["Toast walnuts in a dry pan over medium heat 3-4 min until fragrant. Set aside to cool.","Whisk together balsamic vinegar, olive oil, honey, dijon, salt and pepper in a small bowl.","Core and thinly slice the pears â no need to peel.","Toss arugula with just enough dressing to lightly coat.","Top with pear slices, toasted walnuts, and parmesan shavings. Serve immediately."]},
-  {id:28,name:"Apple Cranberry Pecan Salad",protein:"None",gf:true,beef:false,tags:["side","quick","salad"],isCompleteMeal:false,desc:"Mixed greens with crisp diced apple, sweet dried cranberries, crunchy pecans, and a simple honey-balsamic dressing. Naturally sweet enough that kids actually eat it. 5 minutes. Great alongside turkey or chicken.",pairing:"Side salad â pairs especially well with turkey, chicken, or pork",jennVegSub:"",ingredients:[{name:"Mixed greens or baby spinach",qty:"4 cups"},{name:"Apple (Granny Smith or Honeycrisp)",qty:"1 large, diced"},{name:"Dried cranberries",qty:"0.25 cup"},{name:"Pecans",qty:"0.33 cup, roughly chopped"},{name:"Balsamic vinegar",qty:"2 tbsp"},{name:"Olive oil",qty:"3 tbsp"},{name:"Honey",qty:"1 tsp"},{name:"Salt and pepper",qty:"to taste"}],butcherItems:[],steps:["Toast pecans in a dry pan 2-3 min until fragrant. Let cool.","Whisk together balsamic vinegar, olive oil, honey, salt and pepper.","Dice the apple into small cubes. Toss with a tiny squeeze of lemon to prevent browning if making ahead.","Combine greens, apple, cranberries, and pecans in a large bowl.","Drizzle with dressing and toss gently. Serve immediately.","Tip: keep dressing separate if making ahead â dress right before serving."]},
-  {id:29,name:"Mango Avocado Salad",protein:"None",gf:true,beef:false,tags:["side","quick","salad"],isCompleteMeal:false,desc:"Fresh mixed greens with juicy mango chunks, creamy avocado, and a bright lime dressing with a hint of chili. 5 minutes. Uses your weekly mango and usual avocado â almost no extra grocery cost. Incredible alongside saucy Asian or spiced dishes.",pairing:"Side salad â pairs brilliantly with Butter Chicken, Thai Peanut Chicken, Coconut Curry, or Chimichurri",jennVegSub:"",ingredients:[{name:"Mixed greens",qty:"4 cups"},{name:"Mango",qty:"1 large, cubed"},{name:"Avocado",qty:"1, cubed"},{name:"Lime juice",qty:"1 lime"},{name:"Olive oil",qty:"2 tbsp"},{name:"Honey",qty:"0.5 tsp"},{name:"Fresh cilantro (optional)",qty:"small handful"},{name:"Chili flakes (optional)",qty:"pinch"}],butcherItems:[],steps:["Cube the mango and avocado into similar-sized pieces.","Whisk together lime juice, olive oil, and honey. Add chili flakes if using.","Combine greens, mango, and avocado in a bowl.","Drizzle with dressing and toss gently â avocado breaks if you are rough.","Garnish with cilantro if using. Serve immediately."]}
+  {id:15,name:"Baked Turkey Meatballs",protein:"Turkey",gf:true,beef:false,tags:["oven","meal-prep"],isCompleteMeal:true,needsSide:true,sideProfile:"western",desc:"Juicy Italian-style turkey meatballs baked in the oven using almond flour instead of breadcrumbs — completely GF. Kid-approved and freezer-friendly. Serve over jasmine rice with tomato sauce.",pairing:"Jasmine rice + jarred tomato sauce",jennVegSub:"",ingredients:[{name:"Ground turkey",qty:"1.5 lbs"},{name:"Almond flour",qty:"0.25 cup"},{name:"Egg",qty:"1 large"},{name:"Garlic",qty:"3 cloves, minced"},{name:"Parmesan cheese (grated)",qty:"0.25 cup"},{name:"Fresh parsley (or dried)",qty:"2 tbsp"},{name:"Dried oregano",qty:"1 tsp"},{name:"Salt and pepper",qty:"to taste"},{name:"Jasmine rice",qty:"2 cups"},{name:"Jarred tomato sauce (GF)",qty:"1 large jar"}],butcherItems:[{cut:"Ground Turkey",qty:"1.5 lbs"}],steps:["Preheat oven to 400F. Line a baking sheet with parchment.","Mix ground turkey, almond flour, egg, garlic, parmesan, parsley, oregano, salt and pepper. Don't overmix.","Roll into golf-ball sized meatballs (about 20). Place on baking sheet.","Bake 20-22 min until cooked through and lightly browned on the outside.","Cook pasta or rice. Warm tomato sauce in a pan. Serve meatballs over pasta or rice with sauce.","Tip: Double the batch and freeze half for a future no-cook night."]},
+  {id:16,name:"Lemon Herb Roasted Chicken Thighs",protein:"Chicken",gf:true,beef:false,tags:["oven","low-prep"],isCompleteMeal:true,needsSide:false,desc:"Bone-in chicken thighs marinated in lemon, garlic, rosemary and thyme then roasted until caramelised and deeply flavoured. Totally different from plain lemon pepper — the marinade and roasting method make all the difference.",pairing:"Jasmine rice + roasted cherry tomatoes (from the pan)",jennVegSub:"",ingredients:[{name:"Bone-in skin-on chicken thighs",qty:"8 thighs"},{name:"Lemon (zest and juice)",qty:"2 lemons"},{name:"Garlic",qty:"5 cloves, minced"},{name:"Fresh rosemary",qty:"2 sprigs (or 1 tsp dried)"},{name:"Fresh thyme",qty:"3 sprigs (or 1 tsp dried)"},{name:"Olive oil",qty:"3 tbsp"},{name:"Salt and pepper",qty:"to taste"},{name:"Cherry tomatoes",qty:"1 cup"},{name:"Jasmine rice",qty:"2 cups"}],butcherItems:[{cut:"Bone-in Skin-on Chicken Thighs",qty:"8 thighs"}],steps:["Mix lemon zest, lemon juice, garlic, rosemary, thyme, olive oil, salt and pepper. Pour over chicken thighs.","Marinate at least 30 min at room temp or up to overnight in the fridge.","Preheat oven to 425F. Place chicken skin-side up in a roasting pan. Scatter cherry tomatoes around.","Roast 40-45 min until skin is deep golden and internal temp is 165F.","Rest 5 min. Serve over rice with the roasted tomatoes and pan juices spooned on top."]},
+  {id:17,name:"Turkey Tornados",protein:"Turkey",gf:true,beef:false,tags:["oven","quick"],isCompleteMeal:true,needsSide:false,desc:"Juicy turkey breast chunks wrapped in bacon, pan-seared then oven-finished with a garlic herb butter baste. The partial pre-cooking of the bacon is key — it crisps perfectly without overcooking the turkey. Big flavour, impressive presentation.",pairing:"Roasted baby potatoes + sautéed garlic green beans",jennVegSub:"",ingredients:[{name:"Turkey breast chunks (2-inch pieces)",qty:"1.5 lbs"},{name:"Bacon strips",qty:"8-10 strips"},{name:"Smoked paprika",qty:"1 tsp"},{name:"Garlic powder",qty:"1 tsp"},{name:"Dried thyme",qty:"0.5 tsp"},{name:"Dried rosemary",qty:"0.5 tsp"},{name:"Salt and pepper",qty:"to taste"},{name:"Olive oil",qty:"2 tbsp"},{name:"Butter",qty:"2 tbsp"},{name:"Garlic",qty:"2 cloves, minced"},{name:"Toothpicks",qty:"for securing"},{name:"Baby potatoes",qty:"1 bag (Little Potato Co.)"},{name:"Green beans",qty:"1 lb"}],butcherItems:[{cut:"Turkey Breast (cut into 2-inch chunks)",qty:"1.5 lbs"}],steps:["Preheat oven to 400F. Season turkey chunks with smoked paprika, garlic powder, thyme, rosemary, salt and pepper.","Microwave bacon strips 90 seconds until partially cooked and pliable but not crispy. This is the key step.","Wrap a bacon strip around each turkey chunk and secure with a toothpick.","Heat olive oil in an oven-safe skillet on medium-high. Sear tornados 2-3 min per side until golden brown.","Transfer pan to oven. Roast 18-22 min until internal temp reaches 165F.","Last 5 min: mix butter and minced garlic, drop small pats on top of each tornado to baste.","Rest 5-8 min — essential with turkey or it will be dry. Remove toothpicks before serving.","Meanwhile: halve potatoes, toss with olive oil, garlic, rosemary, 425F for 25 min. Sauté green beans in butter with garlic 5 min."]},
+  {id:18,name:"Mediterranean Chicken Drumsticks",protein:"Chicken",gf:true,beef:false,tags:["oven","low-prep"],isCompleteMeal:true,needsSide:false,desc:"Crispy-skinned drumsticks marinated in lemon, smoked paprika, cumin and oregano, baked at high heat on a wire rack. Marinating overnight is what takes these from good to great. Serve with chimichurri sauce on the side to make it feel saucy and bold rather than plain. Sheet pan carrots and potatoes cook alongside.",pairing:"Sheet pan roasted potatoes and carrots + chimichurri drizzle",jennVegSub:"",ingredients:[{name:"Chicken drumsticks",qty:"8-10 pieces"},{name:"Olive oil",qty:"3 tbsp"},{name:"Lemon (juice and zest)",qty:"1 large"},{name:"Smoked paprika",qty:"1 tsp"},{name:"Garlic powder",qty:"1 tsp"},{name:"Cumin (ground)",qty:"0.5 tsp"},{name:"Coriander (ground)",qty:"0.5 tsp"},{name:"Dried oregano",qty:"1 tsp"},{name:"Salt and pepper",qty:"generously"},{name:"Baby potatoes",qty:"1 lb, halved"},{name:"Carrots",qty:"3 large, chunked"},{name:"Garlic",qty:"3 cloves"},{name:"Fresh parsley",qty:"1 cup (for chimichurri)"},{name:"Red wine vinegar",qty:"2 tbsp (for chimichurri)"},{name:"Red pepper flakes",qty:"pinch (for chimichurri)"}],butcherItems:[{cut:"Chicken Drumsticks (skin-on)",qty:"8-10 pieces"}],steps:["Night before: mix olive oil, lemon juice and zest, paprika, garlic powder, cumin, coriander, oregano, salt and pepper in a zip-lock bag. Add drumsticks, coat well, refrigerate overnight.","When ready to cook, preheat oven to 425F. Set a wire rack on a baking sheet — this is what gets you crispy skin.","Place drumsticks on the wire rack. Toss potatoes and carrots with olive oil, paprika, salt and garlic on a second sheet pan.","Put both pans in oven. Drumsticks: flip once at 25 min, total 40-45 min until internal temp 165F and skin is deep golden.","Quick chimichurri: blend or finely chop 1 cup parsley + 3 garlic cloves + 2 tbsp red wine vinegar + 0.25 cup olive oil + pinch of red pepper flakes + salt. Ready in 3 minutes.","Potatoes and carrots: roast 40 min, toss once halfway.","Serve drumsticks over the roasted veg with chimichurri drizzled over top."]},
+  {id:19,name:"Tuscan Sun-Dried Tomato Chicken",protein:"Chicken",gf:true,beef:false,tags:["one-pan","sauce","quick"],isCompleteMeal:true,needsSide:false,desc:"One pan, 30 minutes, restaurant-quality. Chicken simmered in a rich creamy sun-dried tomato sauce with garlic and spinach. The sauce is SO good people forget there's chicken in it. Also called 'Marry Me Chicken' because it's that impressive. GF with coconut cream.",pairing:"Jasmine rice (to soak up the sauce)",jennVegSub:"Skip spinach if needed — add cherry tomatoes or baby kale instead",ingredients:[{name:"Boneless skinless chicken breasts or thighs",qty:"1.5 lbs"},{name:"Sun-dried tomatoes (in oil, drained)",qty:"0.5 cup, roughly chopped"},{name:"Garlic",qty:"5 cloves, minced"},{name:"Heavy cream or coconut cream",qty:"1 cup"},{name:"Chicken broth",qty:"0.5 cup"},{name:"Baby spinach",qty:"2 cups"},{name:"Italian seasoning",qty:"1.5 tsp"},{name:"Smoked paprika",qty:"0.5 tsp"},{name:"Parmesan cheese (grated, optional)",qty:"0.25 cup"},{name:"Olive oil",qty:"2 tbsp"},{name:"Salt and pepper",qty:"to taste"},{name:"Jasmine rice",qty:"2 cups"}],butcherItems:[{cut:"Boneless Skinless Chicken Breasts or Thighs",qty:"1.5 lbs"}],steps:["Season chicken generously with salt, pepper, paprika, and Italian seasoning.","Heat olive oil in a large skillet on medium-high. Sear chicken 4-5 min per side until golden. Remove and set aside.","In the same pan, sauté garlic 30 seconds. Add sun-dried tomatoes and cook 1 min.","Pour in chicken broth, scraping up any browned bits. Add cream and stir to combine.","Return chicken to the pan. Simmer 10-12 min on medium-low until cooked through and sauce thickens.","Stir in spinach and parmesan. Cook 1-2 min until spinach wilts.","Serve over pasta or rice with lots of sauce spooned over top."]},
+  {id:20,name:"Arroz con Pollo",protein:"Chicken",gf:true,beef:false,tags:["one-pot","starch"],isCompleteMeal:true,needsSide:false,desc:"The ultimate 'chicken disguised' dish — chicken thighs cooked directly IN seasoned yellow rice so every grain absorbs the flavour. Latin-inspired with cumin, paprika, and chicken broth. One pot, deeply satisfying, and the kids never notice it's 'chicken night.' Completely GF.",pairing:"Complete one-pot meal — garnish with fresh cilantro and lime wedges",jennVegSub:"",ingredients:[{name:"Bone-in skin-on chicken thighs",qty:"6-8 pieces"},{name:"Long grain white rice",qty:"2 cups"},{name:"Chicken broth",qty:"3 cups"},{name:"Onion",qty:"1 large, diced"},{name:"Red bell pepper",qty:"1, diced"},{name:"Garlic",qty:"5 cloves, minced"},{name:"Canned diced tomatoes",qty:"1 can (400ml)"},{name:"Cumin (ground)",qty:"1.5 tsp"},{name:"Smoked paprika",qty:"1.5 tsp"},{name:"Turmeric or saffron",qty:"0.5 tsp (for colour)"},{name:"Dried oregano",qty:"1 tsp"},{name:"Olive oil",qty:"2 tbsp"},{name:"Salt and pepper",qty:"to taste"},{name:"Frozen peas",qty:"0.5 cup"},{name:"Limes",qty:"2 (to serve)"},{name:"Fresh cilantro (optional)",qty:"small bunch"}],butcherItems:[{cut:"Bone-in Skin-on Chicken Thighs",qty:"6-8 pieces"}],steps:["Season chicken thighs generously with salt, pepper, paprika, and cumin.","Heat olive oil in a large deep skillet or Dutch oven on medium-high. Sear chicken skin-side down 4-5 min until golden. Flip, sear 2 min more. Remove and set aside.","In same pan, sauté onion and bell pepper 4 min. Add garlic, cook 1 min.","Add rice and stir to coat in the oil for 1-2 min (this toasts the rice = big flavour). Add cumin, paprika, turmeric, oregano.","Pour in diced tomatoes and chicken broth. Stir well and bring to a simmer.","Nestle chicken pieces skin-side up into the rice. Cover tightly, reduce heat to low.","Cook 25-30 min without lifting the lid until rice is tender and chicken is cooked through (165F).","Scatter frozen peas on top, cover 2 min to heat through. Serve with lime wedges."]},
+  {id:21,name:"Chicken Cacciatore",protein:"Chicken",gf:true,beef:false,tags:["one-pan","sauce"],isCompleteMeal:true,needsSide:false,desc:"Classic Italian hunter-style chicken. Chicken thighs braised in a rich rustic tomato sauce with bell peppers and herbs until meltingly tender. No mushrooms, no olives cooked in — olives served on the side at the table for family members who want them. Deeply satisfying and totally GF.",pairing:"Polenta or jasmine rice",jennVegSub:"No mushrooms — extra bell peppers instead. Olives on the side only — never cooked in.",ingredients:[{name:"Bone-in skin-on chicken thighs",qty:"6-8 pieces"},{name:"Tomato passata (puréed tomatoes)",qty:"1 can (400ml)"},{name:"Red bell pepper",qty:"2, sliced"},{name:"Yellow bell pepper",qty:"1, sliced"},{name:"Onion",qty:"1 large, diced"},{name:"Garlic",qty:"5 cloves, minced"},{name:"Chicken broth",qty:"0.5 cup"},{name:"Dried oregano",qty:"1.5 tsp"},{name:"Dried thyme",qty:"1 tsp"},{name:"Bay leaves",qty:"2"},{name:"Olive oil",qty:"3 tbsp"},{name:"Salt and pepper",qty:"to taste"},{name:"Green olives (pitted) — serve on side",qty:"0.5 cup"},{name:"Polenta (tube or instant)",qty:"1 tube"}],butcherItems:[{cut:"Bone-in Skin-on Chicken Thighs",qty:"6-8 pieces"}],steps:["Season chicken generously with salt and pepper. Heat olive oil in a large oven-safe skillet on medium-high.","Sear chicken skin-side down 5 min until deep golden. Flip and sear 2 min more. Remove and set aside.","In same pan, sauté onion and bell peppers 5 min. Add garlic and cook 1 min.","Add crushed tomatoes, chicken broth, oregano, thyme, and bay leaves. Stir well and bring to a simmer.","Nestle chicken skin-side up into the sauce — NO olives in the pot.","Cover and simmer on low heat 30-35 min until chicken is fall-apart tender and sauce is thick and rich.","Remove bay leaves. Taste and adjust salt. Serve over polenta or jasmine rice. Put olives in a small bowl on the table for family members to add to their own plate."]},
+  {id:22,name:"Chimichurri Chicken Thighs",protein:"Chicken",gf:true,beef:false,tags:["quick","sauce"],isCompleteMeal:true,needsSide:true,sideProfile:"western",desc:"Bright, herbaceous, completely different from every other chicken recipe. Chicken thighs grilled or pan-seared and drowned in a vibrant Argentine chimichurri sauce — fresh parsley, garlic, red wine vinegar, olive oil. The sauce is the star. Can BBQ in summer or use a grill pan. GF, dairy-free, incredibly fresh tasting.",pairing:"Roasted baby potatoes",jennVegSub:"",ingredients:[{name:"Boneless skin-on chicken thighs",qty:"8 thighs"},{name:"Fresh flat-leaf parsley",qty:"1 large bunch"},{name:"Fresh cilantro (optional)",qty:"0.5 cup"},{name:"Garlic",qty:"5 cloves"},{name:"Red wine vinegar",qty:"3 tbsp"},{name:"Olive oil",qty:"0.5 cup + 2 tbsp for cooking"},{name:"Red pepper flakes",qty:"0.5 tsp"},{name:"Dried oregano",qty:"1 tsp"},{name:"Salt",qty:"to taste"},{name:"Baby potatoes",qty:"1 bag (Little Potato Co.)"},],butcherItems:[{cut:"Boneless Skin-on Chicken Thighs",qty:"8 thighs"}],steps:["Make chimichurri: blitz parsley, cilantro, garlic, red wine vinegar, olive oil, red pepper flakes, oregano, and salt in a blender or food processor. Taste and adjust. Set aside — it gets better as it sits.","Season chicken thighs with salt, pepper, and a drizzle of olive oil.","Grill on BBQ 5-6 min per side until cooked through and skin is crispy, OR pan-sear in a hot skillet 5 min per side.","Internal temp should hit 165F. Rest 3 min.","Serve chicken with chimichurri spooned generously over top — don't be shy with it.","Roast baby potatoes: halved, olive oil, salt, 425F for 25 min."]},
+  {id:23,name:"Schwarties Hash Brown Potatoes",protein:"None",gf:false,beef:false,tags:["side","oven","holiday"],isCompleteMeal:false,desc:"The beloved Best of Bridge cheesy hash brown casserole — a Canadian holiday and potluck classic. Made with cream of CHICKEN (not mushroom). Creamy, cheesy, comforting. Serves 8-10, perfect for Easter or Christmas alongside a roast. NOTE: cream of chicken soup contains gluten — not GF.",pairing:"Side dish — serve alongside a holiday roast or ham",jennVegSub:"",ingredients:[{name:"Frozen hash brown potatoes",qty:"2 lbs (1 kg), thawed slightly"},{name:"Sour cream",qty:"2 cups (500ml)"},{name:"Cream of CHICKEN soup (NOT mushroom)",qty:"2 cans (10 oz / 284ml each)"},{name:"Butter (melted)",qty:"0.5 cup"},{name:"Onion (grated)",qty:"to taste"},{name:"Salt",qty:"to taste"},{name:"Cheddar cheese (grated)",qty:"2 cups"},{name:"Parmesan cheese (grated)",qty:"2 tbsp"}],butcherItems:[],steps:["Thaw hash brown potatoes slightly.","Mix potatoes, sour cream, cream of chicken soup, melted butter, grated onion, salt, and cheddar cheese together in a 9x13 inch baking dish.","Sprinkle parmesan cheese evenly over the top.","Bake at 350F for 1 hour until golden and bubbling.","Serves 8-10. Great made ahead and reheated."]},
+  {id:25,name:"Carrot Ginger Soup",protein:"None",gf:true,beef:false,tags:["side","soup","holiday"],isCompleteMeal:false,desc:"The Maund family's own carrot soup recipe — a keeper since 2012. Sautéed carrots, onion, celery, and ginger simmered in chicken broth then blended silky smooth. The secret: lime zest and juice stirred in at the very end for a bright, fresh finish. GF, dairy-free.",pairing:"Holiday starter or side — serve with crusty bread or rolls",jennVegSub:"",ingredients:[{name:"Carrots",qty:"1 lb, chopped"},{name:"Onion",qty:"1 medium, chopped"},{name:"Celery",qty:"1 stalk, peeled and chopped"},{name:"Fresh ginger",qty:"1 tsp, chopped or grated"},{name:"Butter",qty:"3 tbsp (or olive oil, or half each)"},{name:"Chicken broth (or vegetable broth for vegetarian)",qty:"5 cups"},{name:"Lime zest",qty:"zest of half a lime"},{name:"Lime juice",qty:"juice of 1 lime"},{name:"Salt",qty:"small pinch"}],butcherItems:[],steps:["Heat butter or olive oil in a large soup pot over medium-low.","Add onion, carrots, celery, and a pinch of salt. Sauté until onions and carrots are soft, about 10-12 min.","Add ginger. Cook 1-2 min more. (If using chopped ginger instead of grated, add it earlier with the vegetables.)","Add broth. Cook at a low boil for 5-10 min.","Use an immersion blender (or transfer to a blender in batches) and purée until completely smooth.","Stir in lime zest and lime juice. Taste and adjust salt.","Serve warm, or chill and serve cold. Can be made 1-2 days ahead."]},
+  {id:26,name:"Green Beans with Almonds",protein:"None",gf:true,beef:false,tags:["side","quick","holiday"],isCompleteMeal:false,desc:"Elegant yet simple holiday side — crisp-tender green beans tossed in browned butter with toasted slivered almonds. Ready in 10 minutes. A classic for a reason.",pairing:"Holiday side — pairs with ham, roast chicken, or any protein",jennVegSub:"",ingredients:[{name:"Green beans (fresh)",qty:"1.5 lbs, trimmed"},{name:"Slivered almonds",qty:"0.5 cup"},{name:"Butter",qty:"3 tbsp"},{name:"Garlic",qty:"2 cloves, minced"},{name:"Salt and pepper",qty:"to taste"},{name:"Lemon juice (optional)",qty:"1 tbsp"}],butcherItems:[],steps:["Blanch green beans in boiling salted water 3-4 min until bright green and just tender. Drain and set aside.","In a large skillet on medium heat, toast slivered almonds 2-3 min until golden. Watch carefully — they burn fast. Remove and set aside.","In the same skillet, melt butter over medium heat. Add garlic and cook 1 min until fragrant.","Add green beans to the pan and toss in the garlic butter for 1-2 min.","Remove from heat. Toss with toasted almonds. Season with salt, pepper, and a squeeze of lemon if desired. Serve immediately."]},
+  {id:24,name:"Easter Glazed Ham",protein:"Pork",gf:true,beef:false,tags:["holiday","oven","low-prep"],isCompleteMeal:false,desc:"A showstopper bone-in half ham with a sweet-savoury honey, brown sugar, and Dijon mustard glaze. Slow-roasted covered to stay juicy, then blasted uncovered to caramelise the glaze. Naturally GF. Half ham (5-8 lbs) feeds 6-8 people — perfect for Easter alongside Schwarties hash browns. NOTE: if spiral-sliced, skip scoring and reduce covered roasting time slightly.",pairing:"Holiday side dishes — Schwarties hash browns, roasted carrots, green beans",jennVegSub:"",ingredients:[{name:"Bone-in half ham (fully cooked, pre-cured)",qty:"5-8 lbs"},{name:"Honey",qty:"0.33 cup"},{name:"Brown sugar (packed)",qty:"0.33 cup"},{name:"Dijon mustard",qty:"2 tbsp"},{name:"Apple cider vinegar",qty:"1 tbsp"},{name:"Ground cinnamon",qty:"0.25 tsp"},{name:"Ground cloves",qty:"pinch"},{name:"Apple juice or water",qty:"1 cup (for the pan)"}],butcherItems:[{cut:"Bone-in Half Ham (fully cooked)",qty:"5-8 lbs"}],steps:["Take ham out of fridge 1 hour before cooking. Preheat oven to 325F.","If not spiral-sliced: score the surface in a diamond pattern, cuts about 1/4 inch deep. If spiral-sliced: skip this step.","Place ham cut-side down in a roasting pan. Pour apple juice or water into the bottom. Cover tightly with foil.","Roast covered at 325F — 15-18 min per pound. A 6 lb half ham = about 1.5 hours covered. A 8 lb half ham = about 2 hours covered.","Make the glaze: combine honey, brown sugar, Dijon, apple cider vinegar, cinnamon, and cloves in a small saucepan. Stir on medium heat until sugar dissolves, about 2 min.","When ham reaches 120F internal temp, remove foil. Brush all over generously with glaze.","Increase oven to 400F. Roast uncovered 20-30 min, brushing with more glaze every 10 min, until deep golden and internal temp reaches 140F.","Rest 15 min tented with foil before carving. TIMING TIP: Schwarties hash browns go in at 350F while ham rests — timing lines up perfectly."]},
+  {id:27,name:"Pear & Walnut Arugula Salad",protein:"None",gf:true,beef:false,tags:["side","quick","salad"],isCompleteMeal:false,desc:"Peppery arugula with sweet sliced pears, toasted walnuts, shaved parmesan, and a balsamic vinaigrette. 5 minutes. Elegant enough for guests, easy enough for a Tuesday. Pairs beautifully with roasted or herb chicken.",pairing:"Side salad — pairs with roasted chicken, turkey, or pork",jennVegSub:"",ingredients:[{name:"Baby arugula",qty:"4 cups (1 pkg)"},{name:"Ripe pears (Bartlett or Bosc)",qty:"2, thinly sliced"},{name:"Walnuts",qty:"0.5 cup, toasted"},{name:"Parmesan shavings",qty:"0.25 cup"},{name:"Balsamic vinegar",qty:"2 tbsp"},{name:"Olive oil",qty:"3 tbsp"},{name:"Honey",qty:"1 tsp"},{name:"Dijon mustard",qty:"0.5 tsp"},{name:"Salt and pepper",qty:"to taste"}],butcherItems:[],steps:["Toast walnuts in a dry pan over medium heat 3-4 min until fragrant. Set aside to cool.","Whisk together balsamic vinegar, olive oil, honey, dijon, salt and pepper in a small bowl.","Core and thinly slice the pears — no need to peel.","Toss arugula with just enough dressing to lightly coat.","Top with pear slices, toasted walnuts, and parmesan shavings. Serve immediately."]},
+  {id:28,name:"Apple Cranberry Pecan Salad",protein:"None",gf:true,beef:false,tags:["side","quick","salad"],isCompleteMeal:false,desc:"Mixed greens with crisp diced apple, sweet dried cranberries, crunchy pecans, and a simple honey-balsamic dressing. Naturally sweet enough that kids actually eat it. 5 minutes. Great alongside turkey or chicken.",pairing:"Side salad — pairs especially well with turkey, chicken, or pork",jennVegSub:"",ingredients:[{name:"Mixed greens or baby spinach",qty:"4 cups"},{name:"Apple (Granny Smith or Honeycrisp)",qty:"1 large, diced"},{name:"Dried cranberries",qty:"0.25 cup"},{name:"Pecans",qty:"0.33 cup, roughly chopped"},{name:"Balsamic vinegar",qty:"2 tbsp"},{name:"Olive oil",qty:"3 tbsp"},{name:"Honey",qty:"1 tsp"},{name:"Salt and pepper",qty:"to taste"}],butcherItems:[],steps:["Toast pecans in a dry pan 2-3 min until fragrant. Let cool.","Whisk together balsamic vinegar, olive oil, honey, salt and pepper.","Dice the apple into small cubes. Toss with a tiny squeeze of lemon to prevent browning if making ahead.","Combine greens, apple, cranberries, and pecans in a large bowl.","Drizzle with dressing and toss gently. Serve immediately.","Tip: keep dressing separate if making ahead — dress right before serving."]},
+  {id:29,name:"Mango Avocado Salad",protein:"None",gf:true,beef:false,tags:["side","quick","salad"],isCompleteMeal:false,desc:"Fresh mixed greens with juicy mango chunks, creamy avocado, and a bright lime dressing with a hint of chili. 5 minutes. Uses your weekly mango and usual avocado — almost no extra grocery cost. Incredible alongside saucy Asian or spiced dishes.",pairing:"Side salad — pairs brilliantly with Butter Chicken, Thai Peanut Chicken, Coconut Curry, or Chimichurri",jennVegSub:"",ingredients:[{name:"Mixed greens",qty:"4 cups"},{name:"Mango",qty:"1 large, cubed"},{name:"Avocado",qty:"1, cubed"},{name:"Lime juice",qty:"1 lime"},{name:"Olive oil",qty:"2 tbsp"},{name:"Honey",qty:"0.5 tsp"},{name:"Fresh cilantro (optional)",qty:"small handful"},{name:"Chili flakes (optional)",qty:"pinch"}],butcherItems:[],steps:["Cube the mango and avocado into similar-sized pieces.","Whisk together lime juice, olive oil, and honey. Add chili flakes if using.","Combine greens, mango, and avocado in a bowl.","Drizzle with dressing and toss gently — avocado breaks if you are rough.","Garnish with cilantro if using. Serve immediately."]}
 ,
-  {id:30,name:"Ham and Cheese Sandwiches",protein:"Ham",gf:false,beef:false,tags:["lunch","quick","kids"],isCompleteMeal:false,desc:"Classic kids' lunch â sliced deli ham and cheddar cheese on sandwich bread. Scale qty for the number of days needed.",pairing:"Kids' lunch",jennVegSub:"",ingredients:[{name:"Sandwich bread (or GF bread)",qty:"1 loaf"},{name:"Sliced deli ham",qty:"0.5 lb"},{name:"Cheddar cheese slices",qty:"1 pkg"}],butcherItems:[],steps:["Layer ham and cheese on bread.","Cut diagonally. Pack in container."]}
+  {id:30,name:"Ham and Cheese Sandwiches",protein:"Ham",gf:false,beef:false,tags:["lunch","quick","kids"],isCompleteMeal:false,desc:"Classic kids' lunch — sliced deli ham and cheddar cheese on sandwich bread. Scale qty for the number of days needed.",pairing:"Kids' lunch",jennVegSub:"",ingredients:[{name:"Sandwich bread (or GF bread)",qty:"1 loaf"},{name:"Sliced deli ham",qty:"0.5 lb"},{name:"Cheddar cheese slices",qty:"1 pkg"}],butcherItems:[],steps:["Layer ham and cheese on bread.","Cut diagonally. Pack in container."]}
 ];
 
 // Fuzzy-match a typed meal name (or comma-separated list) against FALLBACK_RECIPES.
 // Returns a fully-populated plan day object with recipeId set if found.
-// Supports multi-dish days like "Ham, Schwarties Potatoes" â merges ingredients.
+// Supports multi-dish days like "Ham, Schwarties Potatoes" — merges ingredients.
 function resolveChosenMeal(day, dayIdx){
   const rawName=(day.chosenMeal||'').trim();
   if(!rawName) return{...day,mealName:'(to be confirmed)',tags:[],type:'chosen',approved:false,recipeId:null};
@@ -1780,7 +1780,7 @@ function resolveChosenMeal(day, dayIdx){
       rec.name.toLowerCase().includes(pl) ||
       pl.includes(rec.name.toLowerCase())
     );
-    // Fallback: word-overlap (need â¥50% overlap)
+    // Fallback: word-overlap (need ≥50% overlap)
     if(!r){
       let bestScore=0, bestRec=null;
       FALLBACK_RECIPES.forEach(rec=>{
@@ -1856,14 +1856,14 @@ function buildTagsFrom(r){
   return t;
 }
 
-// ââ RENDER PLAN âââââââââââââââââââââââââââââââââââââââââââââââ
+// ── RENDER PLAN ───────────────────────────────────────────────
 function renderPlan(){
   const dates=getWeekDates(STATE.weekOffset);
   document.getElementById('plan-week-label').textContent=`${fmtDate(dates[0])} - ${fmtDate(dates[6])}`;
   const ryanLunches=document.getElementById('ryan-lunches').value;
   const statusLabel=STATE.ryanStatus==='home'?'Home All Week':STATE.ryanStatus==='away'?'Away All Week':`Away: ${STATE.ryanAwayDays.join(', ')||'none'}`;
-  const ryderLunch=(document.getElementById('ryder-lunch')?.value||'').trim()||'â';
-  const claireLunch=(document.getElementById('claire-lunch')?.value||'').trim()||'â';
+  const ryderLunch=(document.getElementById('ryder-lunch')?.value||'').trim()||'—';
+  const claireLunch=(document.getElementById('claire-lunch')?.value||'').trim()||'—';
   document.getElementById('plan-summary-bar').innerHTML=`
     <div class="week-bar-item"><strong>Ryan:</strong> ${statusLabel}</div>
     <div class="week-bar-item"><strong>Ryan's Lunches:</strong> ${ryanLunches}</div>
@@ -1884,8 +1884,8 @@ function renderPlan(){
         <div class="plan-day-info"><div class="plan-day-nm">${day.dayName}</div><div class="plan-day-dt">${fmtDate(day.date)}</div></div>
         <div class="plan-meal">
           <div class="plan-meal-name">${day.mealName}</div>
-          ${(()=>{const d=day.difficulty;if(!d||d==='leftovers')return '';const cfg={cook:{emoji:'ð´',label:'Cook night'},medium:{emoji:'ð¡',label:'30 min'},easy:{emoji:'ð¢',label:'Easy night'}};const c=cfg[d];return c?`<span style="font-size:11px;font-weight:600;letter-spacing:.3px;opacity:.8">${c.emoji} ${c.label}</span>`:'';})()}
-          ${day.makeDouble?`<div style="font-size:11px;color:#3A6B9F;font-style:italic;margin-top:2px">â ${day.makeDoubleNote||'Make extra â use for leftovers night'}</div>`:''}
+          ${(()=>{const d=day.difficulty;if(!d||d==='leftovers')return '';const cfg={cook:{emoji:'🔴',label:'Cook night'},medium:{emoji:'🟡',label:'30 min'},easy:{emoji:'🟢',label:'Easy night'}};const c=cfg[d];return c?`<span style="font-size:11px;font-weight:600;letter-spacing:.3px;opacity:.8">${c.emoji} ${c.label}</span>`:'';})()}
+          ${day.makeDouble?`<div style="font-size:11px;color:#3A6B9F;font-style:italic;margin-top:2px">↗ ${day.makeDoubleNote||'Make extra — use for leftovers night'}</div>`:''}
           ${day.pairing?`<div class="plan-meal-note">Served with: ${day.pairing}</div>`:''}
           ${day.jennVegSub?`<div class="plan-meal-jenn">Jenn's veggie: ${day.jennVegSub}</div>`:''}
           ${tagsHtml?`<div class="plan-tags">${tagsHtml}</div>`:''}
@@ -1896,7 +1896,7 @@ function renderPlan(){
             <button class="${day.approved?'btn-approved-state':'btn-approve'}" onclick="toggleApprove(${i})">${day.approved?'Approved':'Approve'}</button>
             ${day.type==='claude'?`<button class="btn-swap" onclick="swapMeal(${i})">Swap</button>`:day.type==='chosen'?`<button class="btn-swap" onclick="swapMeal(${i})">Switch to Claude</button>`:''}
             ${recipe?`<button class="btn-recipe" onclick="toggleRecipePanel(${i})">Recipe</button>`:''}
-            ${recipe?`<button class="btn-premade${STATE.premadeRecipes[i]?' active':''}" onclick="togglePremade(${i})" title="Toggle to skip individual ingredients and add this as a premade butcher item">${STATE.premadeRecipes[i]?'â Buying Premade':'Buying Premade'}</button>`:''}
+            ${recipe?`<button class="btn-premade${STATE.premadeRecipes[i]?' active':''}" onclick="togglePremade(${i})" title="Toggle to skip individual ingredients and add this as a premade butcher item">${STATE.premadeRecipes[i]?'✓ Buying Premade':'Buying Premade'}</button>`:''}
           `:day.type==='leftovers'?`
             <span style="font-size:12px;color:#bbb;font-style:italic;margin-right:8px">No shopping needed</span>
             <button class="btn-swap" onclick="changeDayFromPlan(${i},'claude')">Claude Suggests</button>
@@ -1915,7 +1915,7 @@ function renderPlan(){
             <div style="font-size:14px;font-weight:700;color:#3A6B9F;margin-bottom:10px;">${sub.name}</div>
             <div class="recipe-cols">
               <div><div class="recipe-section"><div class="recipe-section-title">Ingredients</div>
-                <ul>${(sub.ingredients||[]).map(ing=>`<li>${ing.qty?ing.qty+' â ':''} ${ing.name||ing}</li>`).join('')}</ul>
+                <ul>${(sub.ingredients||[]).map(ing=>`<li>${ing.qty?ing.qty+' — ':''} ${ing.name||ing}</li>`).join('')}</ul>
               </div></div>
               <div><div class="recipe-section"><div class="recipe-section-title">Instructions</div>
                 <ol>${(sub.steps||[]).map(s=>`<li>${s}</li>`).join('')}</ol>
@@ -1925,7 +1925,7 @@ function renderPlan(){
         :`
         <div class="recipe-cols">
           <div><div class="recipe-section"><div class="recipe-section-title">Ingredients</div>
-            <ul>${(recipe.ingredients||[]).map(ing=>`<li>${ing.qty?ing.qty+' â ':''} ${ing.name||ing}</li>`).join('')}</ul>
+            <ul>${(recipe.ingredients||[]).map(ing=>`<li>${ing.qty?ing.qty+' — ':''} ${ing.name||ing}</li>`).join('')}</ul>
           </div></div>
           <div><div class="recipe-section"><div class="recipe-section-title">Instructions</div>
             <ol>${(recipe.steps||[]).map(s=>`<li>${s}</li>`).join('')}</ol>
@@ -1933,8 +1933,8 @@ function renderPlan(){
         </div>`}
         <div class="recipe-notes print-hide">
           <label>My Notes for This Recipe</label>
-          <div class="notes-hint">Ingredient changes are applied to your grocery list â e.g. "skip the olives", "not using spinach", "no mushrooms"</div>
-          <div id="note-badge-${i}">${(()=>{const excl=parseNoteExclusions(STATE.smartNotes[i]||'');return excl.length?`<div class="note-excl-badge">ð Excluding from grocery list: ${excl.join(', ')}</div>`:''})()}</div>
+          <div class="notes-hint">Ingredient changes are applied to your grocery list — e.g. "skip the olives", "not using spinach", "no mushrooms"</div>
+          <div id="note-badge-${i}">${(()=>{const excl=parseNoteExclusions(STATE.smartNotes[i]||'');return excl.length?`<div class="note-excl-badge">📝 Excluding from grocery list: ${excl.join(', ')}</div>`:''})()}</div>
           <textarea placeholder="e.g. Double the sauce, skip the olives, not using spinach..." oninput="STATE.smartNotes[${i}]=this.value;updateNoteBadge(${i})">${STATE.smartNotes[i]||''}</textarea>
         </div>
       </div>`:''}
@@ -1950,7 +1950,7 @@ function renderPlan(){
           <div class="plan-day-dt" style="font-size:10px;color:#aaa">Salad</div>
         </div>
         <div class="plan-meal">
-          <div class="plan-meal-name" style="font-size:14px">ð¥ ${side.name}</div>
+          <div class="plan-meal-name" style="font-size:14px">🥗 ${side.name}</div>
           <div class="plan-meal-note" style="color:#7AAA7A">${side.desc?side.desc.split('.')[0]+'.':''}</div>
         </div>
         <div class="plan-btns print-hide">
@@ -1963,7 +1963,7 @@ function renderPlan(){
         </div>
         <div class="recipe-cols">
           <div><div class="recipe-section"><div class="recipe-section-title">Ingredients</div>
-            <ul>${(side.ingredients||[]).map(ing=>`<li>${ing.qty?ing.qty+' â ':''} ${ing.name||ing}</li>`).join('')}</ul>
+            <ul>${(side.ingredients||[]).map(ing=>`<li>${ing.qty?ing.qty+' — ':''} ${ing.name||ing}</li>`).join('')}</ul>
           </div></div>
           <div><div class="recipe-section"><div class="recipe-section-title">How to Make</div>
             <ol>${(side.steps||[]).map(s=>`<li>${s}</li>`).join('')}</ol>
@@ -1994,7 +1994,7 @@ function toggleApprove(i){
   renderPlan();
 }
 
-// ââ SWAP PANEL STATE ââââââââââââââââââââââââââââââââââââââââââ
+// ── SWAP PANEL STATE ──────────────────────────────────────────
 let swapState = { dayIndex: -1, options: [], selectedIdx: -1 };
 
 function openSwapPanel(i){
@@ -2066,12 +2066,12 @@ Family rules:
 - Jenn doesn't eat (needs sub): ${PREFS.jennNo.join(', ')}
 - ${PREFS.limited.join('; ')}
 - Every meal needs protein + veg, no slow cooker, quick prep preferred, no BBQ sauce
-- NO pasta or GF pasta (family is avoiding all pasta) â use rice or polenta instead
-- NO GF substitutes â highly processed, family avoids them
+- NO pasta or GF pasta (family is avoiding all pasta) — use rice or polenta instead
+- NO GF substitutes — highly processed, family avoids them
 - NEVER include Pillsbury buns or store-bought rolls in a recipe
-- Claire (child) does not like cooked carrots â vary vegetables
+- Claire (child) does not like cooked carrots — vary vegetables
 - Scale for family of 4 with leftovers
-- Prefer saucy chicken dishes â family gets chicken fatigue; sauce/mixed-in style helps
+- Prefer saucy chicken dishes — family gets chicken fatigue; sauce/mixed-in style helps
 - ALWAYS include the protein as first item in the ingredients list (with qty in lbs or pieces)
 ${formatDinnerHistoryForPrompt(dinnerHistory)}
 
@@ -2149,7 +2149,7 @@ async function useOwnMeal(){
   const allRecipes = [...FALLBACK_RECIPES, ...Object.values(DYNAMIC_RECIPES)];
   const match = allRecipes.find(r => r.name && r.name.toLowerCase() === mealName.toLowerCase());
   if(match){
-    // Known recipe â apply directly
+    // Known recipe — apply directly
     DYNAMIC_RECIPES[match.id] = match;
     STATE.plan[i] = {...STATE.plan[i], recipeId: match.id, mealName: match.name, desc: match.desc||'', pairing: match.pairing||'', jennVegSub: match.jennVegSub||'', tags: buildTagsFrom(match), type:'chosen', approved:false};
     savePlanToStorage();
@@ -2158,9 +2158,9 @@ async function useOwnMeal(){
     return;
   }
 
-  // Not in library â ask Claude for ingredients if API key is set
+  // Not in library — ask Claude for ingredients if API key is set
   if(!STATE.apiKey || !STATE.apiKey.startsWith('sk-ant')){
-    // No API â apply as a bare chosen meal with no recipe
+    // No API — apply as a bare chosen meal with no recipe
     STATE.plan[i] = {...STATE.plan[i], recipeId: null, mealName, desc:'', pairing:'', jennVegSub:'', tags:[], type:'chosen', approved:false};
     savePlanToStorage();
     closeSwapPanel();
@@ -2168,7 +2168,7 @@ async function useOwnMeal(){
     return;
   }
 
-  if(status) status.textContent = 'ð Looking up ingredients for this mealâ¦';
+  if(status) status.textContent = '🔍 Looking up ingredients for this meal…';
   const confirmBtn = document.getElementById('btn-swap-confirm');
   if(confirmBtn) confirmBtn.disabled = true;
 
@@ -2300,7 +2300,7 @@ function changeDayFromPlan(i, newMode){
   }
 }
 
-// ââ VEGGIE SIDE AUTO-PAIRING ââââââââââââââââââââââââââââââââââ
+// ── VEGGIE SIDE AUTO-PAIRING ──────────────────────────────────
 // Picks an appropriate side salad/veggie from the library for recipes
 // that don't have a veggie component built in (needsSide:true).
 // Rotates through sides so we don't have the same salad every night.
@@ -2352,10 +2352,10 @@ function toggleSidePanel(i){
 function updateNoteBadge(i){
   const excl=parseNoteExclusions(STATE.smartNotes[i]||'');
   const c=document.getElementById(`note-badge-${i}`);
-  if(c) c.innerHTML=excl.length?`<div class="note-excl-badge">ð Excluding from grocery list: ${excl.join(', ')}</div>`:'';
+  if(c) c.innerHTML=excl.length?`<div class="note-excl-badge">📝 Excluding from grocery list: ${excl.join(', ')}</div>`:'';
 }
 
-// ââ PRINT ââââââââââââââââââââââââââââââââââââââââââââââââââââââ
+// ── PRINT ──────────────────────────────────────────────────────
 function printPlan(withRecipes){
   if(withRecipes){
     document.querySelectorAll('.recipe-panel.has-content').forEach(p=>p.classList.add('vis'));
@@ -2389,20 +2389,20 @@ function emailButcherList(){
     const qtyEl = item.querySelector('.butcher-item-qty');
     const qty = qtyEl?.value?.trim() || qtyEl?.textContent?.trim() || '';
     const source = item.querySelector('.butcher-item-source')?.textContent?.trim();
-    if(name) lines.push(`â¢ ${name}${qty?' â '+qty:''}${source?' ('+source+')':''}`);
+    if(name) lines.push(`• ${name}${qty?' — '+qty:''}${source?' ('+source+')':''}`);
   });
   if(lines.length===0){
-    alert('No butcher items found â try clicking Refresh List first.');
+    alert('No butcher items found — try clicking Refresh List first.');
     return;
   }
   const weekLabel = document.getElementById('lists-week-label')?.textContent || '';
-  const bodyText = `Butcher List${weekLabel?' â '+weekLabel:''}\n\n${lines.join('\n')}\n\nâ Maund Meal Planner`;
+  const bodyText = `Butcher List${weekLabel?' — '+weekLabel:''}\n\n${lines.join('\n')}\n\n— Maund Meal Planner`;
   // Copy to clipboard for easy pasting
   if(navigator.clipboard){
     navigator.clipboard.writeText(bodyText).catch(()=>{});
   }
-  // Open Gmail compose â use anchor click to bypass popup blockers
-  const subject = encodeURIComponent(`Butcher List â ${weekLabel}`);
+  // Open Gmail compose — use anchor click to bypass popup blockers
+  const subject = encodeURIComponent(`Butcher List — ${weekLabel}`);
   const body = encodeURIComponent(bodyText);
   const a = document.createElement('a');
   a.href = `https://mail.google.com/mail/?view=cm&fs=1&to=jenngetshelp%40gmail.com&su=${subject}&body=${body}`;
@@ -2413,7 +2413,7 @@ function emailButcherList(){
   document.body.removeChild(a);
 }
 
-// ââ BUILD LISTS âââââââââââââââââââââââââââââââââââââââââââââââ
+// ── BUILD LISTS ───────────────────────────────────────────────
 function buildLists(){
   const ryanLunches=parseInt(document.getElementById('ryan-lunches').value)||0;
   const jennLunch=document.getElementById('jenn-lunch').value||'Waldorf Salad';
@@ -2468,13 +2468,13 @@ function normalizeIngredientKey(name){
 // Try to add two quantity strings (e.g. "2 lemons" + "3 lemons" = "5 lemons")
 function tryAddQtys(q1, q2){
   if(!q1 || !q2) return q1||q2||'';
-  function parseQ(q){ const m=q.match(/^(\d+(?:\.\d+)?)(?:\s*[-â]\s*(\d+(?:\.\d+)?))?(.*)$/); if(!m)return null; return{n:m[2]?parseFloat(m[2]):parseFloat(m[1]),unit:(m[3]||'').trim()}; }
+  function parseQ(q){ const m=q.match(/^(\d+(?:\.\d+)?)(?:\s*[-–]\s*(\d+(?:\.\d+)?))?(.*)$/); if(!m)return null; return{n:m[2]?parseFloat(m[2]):parseFloat(m[1]),unit:(m[3]||'').trim()}; }
   const a=parseQ(q1), b=parseQ(q2);
   if(a&&b&&a.unit.toLowerCase()===b.unit.toLowerCase()){ const sum=a.n+b.n; return sum+(a.unit?(' '+a.unit):''); }
   return q1+' + '+q2;
 }
 
-// ââ NOTES INTELLIGENCE ââââââââââââââââââââââââââââââââââââââââââ
+// ── NOTES INTELLIGENCE ──────────────────────────────────────────
 function parseNoteExclusions(noteText){
   if(!noteText) return [];
   const exclusions=[];
@@ -2546,7 +2546,7 @@ function renderGroceryList(ryanLunches,jennLunch){
     return addedMs>=lastShopped;
   });
   if(freshEmailed.length>0){
-    addCat(gb,'âï¸ From Your Emails');
+    addCat(gb,'✉️ From Your Emails');
     freshEmailed.forEach(item=>addItem(gb,item.name,'emailed '+item.added,item.qty));
   }
 
@@ -2558,10 +2558,10 @@ function renderGroceryList(ryanLunches,jennLunch){
 
   // --- Jenn's Lunch: Waldorf Salad ---
   if(jennLunch.toLowerCase().includes('waldorf')){
-    addCat(gb,"ð¥ Jenn's Lunch â Waldorf Salad (Weekly)");
+    addCat(gb,"🥗 Jenn's Lunch — Waldorf Salad (Weekly)");
     WALDORF_GROCERY.forEach(item=>addItem(gb,item.name,'weekly',item.qty));
-    // Occasional items â checkboxes to tick when restocking
-    addCat(gb,"ð¥ Jenn's Lunch â Waldorf Restock (Check if Needed)");
+    // Occasional items — checkboxes to tick when restocking
+    addCat(gb,"🥗 Jenn's Lunch — Waldorf Restock (Check if Needed)");
     const waldorfOccDiv=document.createElement('div');
     waldorfOccDiv.style.cssText='font-size:12px;color:#aaa;margin-bottom:8px;padding:0 2px';
     waldorfOccDiv.textContent='Tick to add to list:';
@@ -2570,7 +2570,7 @@ function renderGroceryList(ryanLunches,jennLunch){
       const row=document.createElement('div');
       row.className='grocery-item';
       const cbId='woc-'+idx;
-      row.innerHTML=`<input type="checkbox" id="${cbId}" onchange="if(this.checked){addItem(document.getElementById('added-items-container'),'${item.name}','Waldorf â restock','${item.qty}')}"><label for="${cbId}" class="grocery-item-label" style="color:#aaa">${item.name}</label><input class="grocery-item-qty" type="text" value="${item.qty}" placeholder="qty" style="opacity:.65">`;
+      row.innerHTML=`<input type="checkbox" id="${cbId}" onchange="if(this.checked){addItem(document.getElementById('added-items-container'),'${item.name}','Waldorf — restock','${item.qty}')}"><label for="${cbId}" class="grocery-item-label" style="color:#aaa">${item.name}</label><input class="grocery-item-qty" type="text" value="${item.qty}" placeholder="qty" style="opacity:.65">`;
       gb.appendChild(row);
     });
   }
@@ -2623,7 +2623,7 @@ function renderGroceryList(ryanLunches,jennLunch){
     });
   });
   if(kidsLunchAgg.size>0){
-    addCat(gb,"ð± Kids' Lunches");
+    addCat(gb,"🍱 Kids' Lunches");
     kidsLunchAgg.forEach(data=>{
       addItem(gb,data.name,data.sources.join(', '),data.qty);
     });
@@ -2696,9 +2696,9 @@ function renderGroceryList(ryanLunches,jennLunch){
       });
     }
     if(pantryNeeded.size>0){
-      addCat(gb,'ð§ Check Your Pantry');
+      addCat(gb,'🧂 Check Your Pantry');
       pantryNeeded.forEach((data)=>{
-        addItem(gb,data.name,'pantry â check stock',data.qty);
+        addItem(gb,data.name,'pantry — check stock',data.qty);
       });
     }
   }
@@ -2724,7 +2724,7 @@ function addCat(c,label){
   const el=document.createElement('div');
   el.className='grocery-cat';el.textContent=label;c.appendChild(el);
 }
-// Items that last more than 1 week once purchased â don't need to rebuy weekly
+// Items that last more than 1 week once purchased — don't need to rebuy weekly
 const LONG_LIFE_ITEMS = new Set([
   'olive oil','extra virgin olive oil','balsamic vinegar','sesame oil','coconut oil','avocado oil',
   'honey','maple syrup','soy sauce','rice vinegar','worcestershire sauce','sriracha','hot sauce','ketchup','mustard','dijon mustard',
@@ -2752,7 +2752,7 @@ function addItem(c,name,source,qty){
   row.className='grocery-item';
   const nl = name.toLowerCase();
   const recentlyBought = LONG_LIFE_ITEMS.has(nl) && getRecentPurchases().has(nl);
-  const recentBadge = recentlyBought ? '<span style="font-size:10px;color:#C09F80;margin-left:6px;font-weight:600">ð bought recently</span>' : '';
+  const recentBadge = recentlyBought ? '<span style="font-size:10px;color:#C09F80;margin-left:6px;font-weight:600">🔄 bought recently</span>' : '';
   row.innerHTML=`
     <input type="checkbox" ${recentlyBought?'checked':''} onchange="this.parentElement.querySelector('.grocery-item-label').classList.toggle('checked',this.checked)">
     <span class="grocery-item-label${recentlyBought?' checked':''}">${name}${recentBadge}${source?`<span class="grocery-item-source">(${source})</span>`:''}</span>
@@ -2779,8 +2779,8 @@ function createPCExpressCart(){
     const cb = row.querySelector('input[type="checkbox"]');
     // Skip if the item is already checked off
     if (cb && cb.checked) return;
-    // Skip Waldorf restock rows (they have a label with grey color â identified by opacity style or unchecked opt-in)
-    // These rows have a label with style="color:#aaa" â they are optional tick-to-add items
+    // Skip Waldorf restock rows (they have a label with grey color — identified by opacity style or unchecked opt-in)
+    // These rows have a label with style="color:#aaa" — they are optional tick-to-add items
     const label = row.querySelector('.grocery-item-label');
     if (!label) return;
     if (label.style && label.style.color === 'rgb(170, 170, 170)') return; // color:#aaa = optional restock row
@@ -2818,7 +2818,7 @@ function createPCExpressCart(){
     return;
   }
 
-  // ââ Enrich items with PC Express product map ââ
+  // ── Enrich items with PC Express product map ──
   const enriched = items.map(item => {
     const nl = item.name.toLowerCase();
     // Find matching product in the map
@@ -2835,7 +2835,7 @@ function createPCExpressCart(){
         pcVarieties: match.varieties || null
       };
     }
-    return item; // no match â Cowork Claude will search manually
+    return item; // no match — Cowork Claude will search manually
   });
 
   const matched = enriched.filter(i => i.pcProduct || i.pcVarieties);
@@ -2866,16 +2866,16 @@ function createPCExpressCart(){
 
   // Show a confirmation modal
   const summary = enriched.slice(0, 8).map(i => {
-    const mapped = i.pcProduct ? 'â' : i.pcVarieties ? 'â¡' : '?';
-    return `${mapped} ${i.name}${i.qty ? ' â ' + i.qty : ''}`;
+    const mapped = i.pcProduct ? '✓' : i.pcVarieties ? '⚡' : '?';
+    return `${mapped} ${i.name}${i.qty ? ' — ' + i.qty : ''}`;
   }).join('\n');
-  const more = enriched.length > 8 ? `\nâ¦and ${enriched.length - 8} more items` : '';
+  const more = enriched.length > 8 ? `\n…and ${enriched.length - 8} more items` : '';
   alert(
-    `â ${enriched.length} items saved for PC Express!\n` +
-    `â ${matched.length} pre-mapped (instant add)\n` +
+    `✅ ${enriched.length} items saved for PC Express!\n` +
+    `✓ ${matched.length} pre-mapped (instant add)\n` +
     `? ${unmatched.length} need search\n\n` +
     summary + more +
-    `\n\nð Switch to Cowork and say:\n"Fill my PC Express cart"\n\nClaude will add everything to your Loblaws cart.`
+    `\n\n👉 Switch to Cowork and say:\n"Fill my PC Express cart"\n\nClaude will add everything to your Loblaws cart.`
   );
 }
 
@@ -2905,7 +2905,7 @@ function renderButcherList(ryanLunches,jennLunch){
     if(!recipe) return;
     // Premade: add single "buy premade" entry instead of individual cuts
     if(STATE.premadeRecipes[meal._planIdx]){
-      other.push({cut:recipe.name+' â buy premade',qty:'',source:'premade'});
+      other.push({cut:recipe.name+' — buy premade',qty:'',source:'premade'});
       return;
     }
     (recipe.butcherItems||[]).forEach(bi=>{
@@ -2975,7 +2975,7 @@ function moveHFToGrocery(idx,cb){
   }
 }
 
-// ââ PREFERENCES âââââââââââââââââââââââââââââââââââââââââââââââ
+// ── PREFERENCES ───────────────────────────────────────────────
 function renderPreferences(){
   renderPrefList('pref-no-foods',PREFS.hardNo,'no','hardNo');
   renderPrefList('pref-jenn-foods',PREFS.jennNo,'jenn','jennNo');
@@ -3008,11 +3008,11 @@ function addPrefItem(key,inputId){
   savePrefs();
   // Show a small "Saved" confirmation
   const btn=input.nextElementSibling;
-  if(btn){ const orig=btn.textContent; btn.textContent='Saved â'; setTimeout(()=>btn.textContent=orig, 1200); }
+  if(btn){ const orig=btn.textContent; btn.textContent='Saved ✓'; setTimeout(()=>btn.textContent=orig, 1200); }
 }
 function removePrefItem(key,idx){PREFS[key].splice(idx,1);renderPreferences();savePrefs();}
 
-// ââ NAV âââââââââââââââââââââââââââââââââââââââââââââââââââââââ
+// ── NAV ───────────────────────────────────────────────────────
 function showScreen(name){
   document.querySelectorAll('.screen').forEach(s=>s.classList.remove('active'));
   document.getElementById(`screen-${name==='prefs'?'prefs':name}`).classList.add('active');
@@ -3034,7 +3034,7 @@ function showScreen(name){
   }
 }
 
-// ââ INIT ââââââââââââââââââââââââââââââââââââââââââââââââââââââ
+// ── INIT ──────────────────────────────────────────────────────
 async function init(){
   loadPrefs(); // restore saved preference edits before rendering
   updateWeekLabel();buildDayRows();renderPreferences();
@@ -3059,7 +3059,7 @@ async function init(){
       STATE.apiKey=savedKey;
       updateApiKeyStatus();
     }
-    // Restore saved plan â show a banner so Jenn knows it's loaded
+    // Restore saved plan — show a banner so Jenn knows it's loaded
     const restored = loadPlanFromStorage();
     if(restored && STATE.plan.length > 0){
       updateWeekLabel();
@@ -3070,7 +3070,7 @@ async function init(){
         console.error('renderPlan failed on restore:', renderErr);
         const errDiv = document.createElement('div');
         errDiv.style.cssText = 'background:#FDF0F0;border:1px solid #E8C4C4;border-radius:8px;padding:12px 16px;margin-bottom:14px;font-size:13px;color:#8B3A3A;';
-        errDiv.textContent = 'â ï¸ Could not display your meal plan: ' + renderErr.message + '. Try generating a new plan.';
+        errDiv.textContent = '⚠️ Could not display your meal plan: ' + renderErr.message + '. Try generating a new plan.';
         const planContent = document.querySelector('#screen-plan .content');
         if(planContent) planContent.insertBefore(errDiv, planContent.firstChild);
       }
@@ -3078,7 +3078,7 @@ async function init(){
       const notice = document.createElement('div');
       notice.id = 'restored-notice';
       notice.style.cssText = 'background:#E8F5E9;border:1px solid #A8D5AB;border-radius:8px;padding:10px 16px;margin-bottom:14px;font-size:13px;color:#2E6B3E;display:flex;justify-content:space-between;align-items:center;';
-      notice.innerHTML = '<span>â Your saved meal plan has been restored.</span><button onclick="document.getElementById(\'restored-notice\').remove()" style="background:none;border:none;color:#2E6B3E;font-size:18px;cursor:pointer;padding:0 4px">Ã</button>';
+      notice.innerHTML = '<span>✅ Your saved meal plan has been restored.</span><button onclick="document.getElementById(\'restored-notice\').remove()" style="background:none;border:none;color:#2E6B3E;font-size:18px;cursor:pointer;padding:0 4px">×</button>';
       const planContent = document.querySelector('#screen-plan .content');
       if(planContent) planContent.insertBefore(notice, planContent.firstChild);
       // Switch to plan tab
