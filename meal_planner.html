@@ -176,6 +176,13 @@ body{font-family:'Segoe UI',system-ui,-apple-system,sans-serif;background:#F9F8F
 .btn-primary{background:#6B82B0;color:#fff;border:none;padding:9px 20px;border-radius:8px;font-size:14px;font-weight:600;cursor:pointer;transition:all .15s;box-shadow:0 2px 8px rgba(107,130,176,.2)}
 .btn-primary:hover{background:#5A70A0;box-shadow:0 4px 14px rgba(107,130,176,.3);transform:translateY(-1px)}
 .btn-secondary{background:#fff;color:#6B82B0;border:2px solid #6B82B0;padding:7px 18px;border-radius:8px;font-size:13px;font-weight:600;cursor:pointer;transition:all .15s}
+.btn-save{background:#4A9268;color:#fff;border:none;padding:9px 20px;border-radius:8px;font-size:14px;font-weight:600;cursor:pointer;transition:all .15s;box-shadow:0 2px 8px rgba(74,146,104,.2)}
+.btn-save:hover{background:#3A7D58;box-shadow:0 4px 14px rgba(74,146,104,.3);transform:translateY(-1px)}
+.btn-save:disabled{opacity:0.6;cursor:not-allowed;transform:none}
+.save-toast{position:fixed;bottom:28px;left:50%;transform:translateX(-50%) translateY(80px);padding:11px 22px;border-radius:10px;font-size:14px;font-weight:500;z-index:9999;opacity:0;transition:opacity .3s,transform .3s;pointer-events:none;color:#fff;white-space:nowrap}
+.save-toast.success{background:#4A9268}
+.save-toast.error{background:#C0392B}
+.save-toast.show{opacity:1;transform:translateX(-50%) translateY(0)}
 .btn-secondary:hover{background:#F0F4FB;transform:translateY(-1px)}
 
 /* ── WEEK SUMMARY BAR ── */
@@ -539,6 +546,7 @@ body.print-lists .top-nav,.print-lists .plan-toolbar,.print-lists .hf-section,.p
       <button class="btn-print" onclick="printPlan(false)">Print Plan</button>
       <button class="btn-print" onclick="printPlan(true)">Print Plan + Recipes</button>
       <button class="btn-primary" onclick="buildLists()">Build Grocery List</button>
+        <button class="btn-save" id="btn-save-plan" onclick="savePlan()">&#128190; Save Plan</button>
     </div>
   </div>
   <div class="week-bar" id="plan-summary-bar"></div>
@@ -999,6 +1007,32 @@ async function savePlanToSheets(){
   }
 }
 
+
+function showToast(msg, type, duration){
+  type = type || 'success'; duration = duration || 3000;
+  const t = document.getElementById('save-toast');
+  if(!t) return;
+  t.textContent = msg;
+  t.className = 'save-toast ' + type;
+  void t.offsetWidth;
+  t.classList.add('show');
+  setTimeout(function(){ t.classList.remove('show'); }, duration);
+}
+
+async function savePlan(){
+  const btn = document.getElementById('btn-save-plan');
+  if(btn){ btn.disabled = true; btn.textContent = '💾 Saving…'; }
+  try {
+    const ok = await savePlanToSheets();
+    if(ok){ showToast('✅ Plan saved!', 'success'); }
+    else { showToast('⚠️ Save failed — check API URL is set', 'error'); }
+  } catch(e){
+    showToast('❌ Error saving plan', 'error');
+    console.error('savePlan error:', e);
+  } finally {
+    if(btn){ btn.disabled = false; btn.textContent = '💾 Save Plan'; }
+  }
+}
 // Save PC Express cart to Sheets API
 async function saveCartToSheets(items){
   if(!SHEETS_API_URL) return false;
@@ -3297,5 +3331,6 @@ async function init(){
 }
 init();
 </script>
+<div class="save-toast" id="save-toast"></div>
 </body>
 </html>
