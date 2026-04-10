@@ -1655,11 +1655,18 @@ PLANNED LEFTOVERS strategy (this family needs built-in breathing room):
 - If Jenn has set 4+ open cooking days, you MUST insert at least one leftover night to break up the run
 
 WHAT COUNTS AS AN EASY NIGHT for this family:
-- BBQ chicken with a rub/marinade + salad or frozen veg — the grill does the work
+- BBQ chicken with a rub/marinade + salad or frozen veg — the grill does the work, Jenn does not
 - BBQ sausages, pork chops, or marinated lamb chops + salad
-- A genuinely quick protein: pan-seared chicken breast with a 2-ingredient sauce (e.g. lemon butter, garlic herb), done in 20 min
+- A genuinely quick protein: pan-seared chicken breast with a 2-ingredient sauce (e.g. lemon butter, garlic herb) where the sauce is made IN the pan after the chicken is done — not a separate step — total active time under 15 min
 - A night that uses leftover protein from a previous meal (Chicken Fried Rice counts)
-- DO NOT count a 45-minute oven roast as an "easy night" just because it's hands-off
+
+WHAT IS NOT AN EASY NIGHT (even if it sounds quick):
+- ANY recipe that requires browning or searing the chicken BEFORE a sauce or simmer step — this alone adds 15–20 min and makes it a medium or cook night
+- ANY recipe with more than 2 ingredients that need chopping (onions + garlic + peppers = cook night)
+- Sheet pan or oven meals — even if hands-off, the prep + heat time makes them medium or cook
+- "30-minute meals" that list 6+ steps — these are never actually 30 minutes
+
+EASY NIGHT RULE: If Jenn has to stand at the stove doing more than one thing at a time, it is NOT easy. If she has to chop before she can start cooking, it is NOT easy. Easy = protein on grill or protein in pan with minimal prep.
 
 DIFFICULTY label (include in every planned meal entry):
 - "cook" = full recipe, 30+ min active prep
@@ -2132,7 +2139,9 @@ async function loadSwapOptions(){
     const swapPrompt = `Suggest 3 dinner alternatives for ${STATE.plan[i].dayName} for the Maund family.
 
 Current meal being replaced: ${currentMeal}
-${reason ? `Reason for swapping: ${reason}` : ''}
+${reason ? `Reason for swapping: "${reason}"
+
+⚠️ HARD CONSTRAINT — READ THIS CAREFULLY: Jenn gave a specific reason above. Extract every exclusion or preference from it and treat them as ABSOLUTE RULES for all 3 suggestions. Examples: if she says "no pork" → zero pork in any suggestion; if she says "no rice" or "no more rice" → no rice in any suggestion; if she says "too heavy" → suggest lighter options only; if she says "no chicken" → suggest a different protein entirely. These override everything else. Do not suggest any meal containing an ingredient she explicitly said no to.` : ''}
 ${otherMeals.length ? `OTHER MEALS ALREADY IN THIS WEEK'S PLAN (do NOT suggest similar meals):\n${otherMeals.map(m => '- ' + m).join('\n')}` : ''}
 
 Ryan is ${ryanHome ? 'HOME (no beef)' : 'AWAY (beef OK)'} this day.
