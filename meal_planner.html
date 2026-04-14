@@ -1069,7 +1069,27 @@ async function saveCartToSheets(items){
   }
 }
 
-const WEEK_DAYS = ['Saturday','Sunday','Monday','Tuesday','Wednesday','Thursday','Friday'];
+// Mark all current emailed grocery items as purchased in Google Sheets
+  async function markEmailedGroceriesPurchased() {
+      if (!SHEETS_API_URL || EMAILED_GROCERY_ITEMS.length === 0) return;
+      const itemNames = EMAILED_GROCERY_ITEMS.map(g => g.name);
+      try {
+            const resp = await fetch(`${SHEETS_API_URL}?x-api-key=${SHEETS_API_KEY}`, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'text/plain' },
+                    body: JSON.stringify({ action: 'markGroceriesPurchased', apiKey: SHEETS_API_KEY, items: itemNames })
+            });
+            if (!resp.ok) throw new Error(`HTTP ${resp.status}`);
+            const result = await resp.json();
+            console.log(`Marked ${result.updatedCount || 0} grocery items as purchased in Sheets`);
+            return result.success;
+      } catch(e) {
+            console.warn('Could not mark groceries as purchased in Sheets:', e);
+            return false;
+      }
+  }
+  
+  const WEEK_DAYS = ['Saturday','Sunday','Monday','Tuesday','Wednesday','Thursday','Friday'];
 const SHORT_WEEK = ['Sat','Sun','Mon','Tue','Wed','Thu','Fri'];
 
 // ── PREFERENCES ───────────────────────────────────────────────
@@ -2984,6 +3004,9 @@ function createPCExpressCart(){
   // Auto-mark shopping as done (replaces Done Shopping button)
   localStorage.setItem('maund_last_shopped', Date.now().toString());
 
+  // Mark emailed grocery items as purchased in Google Sheets
+    markEmailedGroceriesPurchased().catch(e => console.warn('markPurchased failed:', e));
+  
   // Also save the shopping history for inventory tracking
   const shopHistory = JSON.parse(localStorage.getItem('maund_shop_history') || '[]');
   shopHistory.push({
@@ -3012,6 +3035,8 @@ function createPCExpressCart(){
 function doneShoppingClick(){
   if(confirm("Mark shopping as done? Emailed grocery items added before today will be hidden from the list.")){
     localStorage.setItem('maund_last_shopped', Date.now().toString());
+    // Mark emailed grocery items as purchased in Google Sheets
+        markEmailedGroceriesPurchased().catch(e => console.warn('markPurchased failed:', e));
     // Rebuild the list to reflect the cleared state
     const ryanLunches=parseInt(document.getElementById('ryan-lunches').value)||0;
     const jennLunch=document.getElementById('jenn-lunch').value||'Waldorf Salad';
