@@ -1614,6 +1614,11 @@ async function generatePlanWithAI(){
       return resolveChosenMeal(day,i);
     }
 
+    // AI-inserted leftover night on a SUGGEST day (Claude decided this night should be leftovers)
+    if(item.type==='leftovers'){
+      return{...day,mealName:'Leftovers',tags:[],type:'leftovers',approved:false,recipeId:null};
+    }
+
     // Store as a dynamic recipe
     const rid=2000+i;
     DYNAMIC_RECIPES[rid]={
@@ -1631,6 +1636,9 @@ async function generatePlanWithAI(){
       ...day, recipeId:rid, mealName:item.mealName,
       desc:item.desc||'', pairing:item.pairing||'',
       jennVegSub:item.jennVegSub||'',
+      difficulty:item.difficulty||'',
+      makeDouble:!!item.makeDouble,
+      makeDoubleNote:item.makeDoubleNote||'',
       tags:buildTagsFrom(DYNAMIC_RECIPES[rid]),
       type:day.mode==='activity'?'activity':'claude', approved:false
     };
@@ -1704,6 +1712,8 @@ REQUIRED WEEK STRUCTURE (non-negotiable — count your nights before finalizing)
 - Cook nights (30+ min, full recipe): ${weekStructureDesc.cook} max
 - Easy nights (BBQ/quick/20 min or less): at least ${weekStructureDesc.easy}
 - Planned leftover nights: at least ${weekStructureDesc.leftover}
+
+CRITICAL — LEFTOVER NIGHTS ARE YOUR RESPONSIBILITY: Even if all 7 days are marked "SUGGEST," you MUST insert at least ${weekStructureDesc.leftover} leftover night(s) by outputting type "leftovers" for those day(s). Do not wait for Jenn to pre-set them. If you produce a plan with fewer than ${weekStructureDesc.leftover} leftover nights, you have failed this requirement. Count to verify before returning your response.
 
 HARD RULE — CONSECUTIVE COOKING LIMIT (non-negotiable):
 - NEVER schedule more than 2 consecutive cook or medium nights in a row
@@ -1883,7 +1893,10 @@ Return ONLY valid JSON in this exact format:
   ]
 }
 
-Include all 7 days. For days marked LEFTOVERS, EATING OUT, or CHOSEN, use type "skip" and only include dayName and type fields. For ACTIVITY NIGHT days, provide a FULL meal entry with all fields — include the specific car-friendly meal being eaten, set difficulty to "leftovers", and explain in makeDoubleNote exactly what the night before is doing to produce this meal.${formatDinnerHistoryForPrompt(dinnerHistory||[])}`;
+Include all 7 days. Rules by day type:
+- Days marked LEFTOVERS, EATING OUT, or CHOSEN → use type "skip", only include dayName and type fields
+- ACTIVITY NIGHT days → provide a FULL meal entry with all fields — include the specific car-friendly meal, set difficulty to "leftovers", explain in makeDoubleNote what the night before is doing to produce this meal
+- AI-INSERTED LEFTOVER NIGHTS (required by week structure above) → use type "leftovers", only include dayName and type fields. These are nights where Jenn cannot cook and the family eats from fridge leftovers accumulated from cook nights earlier in the week. You MUST insert these to meet the required leftover count — do not skip this requirement even if all days were marked "SUGGEST". Count your planned nights before finalizing and add leftover nights if you are short.${formatDinnerHistoryForPrompt(dinnerHistory||[])}`;
 }
 
 // ── FALLBACK PLAN (no API key) ────────────────────────────────
