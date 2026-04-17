@@ -6,7 +6,7 @@
 <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
 <meta http-equiv="Pragma" content="no-cache">
 <meta http-equiv="Expires" content="0">
-<title>Maund Family Meal Planner — v2026-04-10</title>
+<title>Maund Family Meal Planner — v2026-04-17</title>
 <style>
 *{box-sizing:border-box;margin:0;padding:0}
 body{font-family:'Segoe UI',system-ui,-apple-system,sans-serif;background:#F9F8F5;color:#3a3a3a;min-height:100vh}
@@ -736,24 +736,30 @@ let cachedDinnerHistory = null;
 // Updated automatically by the morning-email-processor.
 // This is the fallback used when the live URL is unreachable.
 const MEAL_HISTORY_DATA = [ // BEGIN_MEAL_HISTORY
-  {date:"2026-03-24",meal:"Lemon Pepper Chicken (BBQ) + leftover potatoes + pear salad",rating:3,liked:"Easy, meets all requirements",change:"Tired of chicken+salad rut — wants marinades/sauces for variety",keepOrDrop:"Modify"},
-  {date:"2026-03-25",meal:"Pork tenderloin (seasoned at butcher) + Little Potato Co. roasted baby potatoes + frozen mixed veg",rating:3,liked:"Very low prep — put it in the oven and walk away",change:"Not very flavourful",keepOrDrop:"Modify"},
-  {date:"2026-03-26",meal:"Leftovers",rating:2,liked:"No real cooking, just made a salad and reheated from the meals we had this week",change:"The leftovers would be delicious and people would want to eat them again. Note: ",keepOrDrop:"One-off"},
-  {date:"2026-03-27",meal:"Leftovers",rating:2,liked:"I didn't have to cook. I made salads and reheated leftovers",change:"The leftovers were from mediocre meals so no one wants to eat it again. Note: Ho",keepOrDrop:"One-off"},
-  {date:"2026-03-27",meal:"Honey garlic chicken with frozen beans and rice",rating:1,liked:"Nothing",change:"The chicken was super bland and looks gross coming out of the oven.",keepOrDrop:"Remove"},
-  {date:"2026-03-29",meal:"Honey Garlic Pork Tenderloin",rating:0,liked:"",change:"Not made — removed before cooking. Same honey garlic flavour profile as the chicken that rated 1/5. Family does not enjoy honey garlic dishes.",keepOrDrop:"Remove"},
-  {date:"2026-03-28",meal:"Fried rice",rating:3,liked:"It was different than just eating chicken",change:"It wasn't very flavourful",keepOrDrop:"Modify"},
-  {date:"2026-03-29",meal:"Turkey Tornados",rating:4,liked:"Family enjoyed the meal",change:"Long prep — searing bacon first then oven. Good flavour overall.",keepOrDrop:"Keep"},
-  {date:"2026-03-30",meal:"Chimichurri Chicken Drumsticks",rating:3,liked:"Good flavour, family liked the chimichurri sauce",change:"Family didn't love eating drumsticks. Overnight marinade + very long cook. Switch to thighs or breasts.",keepOrDrop:"Modify"},
-  {date:"2026-03-31",meal:"BBQ Italian Sausage with Salad",rating:3,liked:"Very easy to cook, low prep time",change:"Feels like chicken and salad — not very exciting. Use occasionally for easy nights only.",keepOrDrop:"Keep occasionally"},
-  {date:"2026-04-01",meal:"Butter Chicken (Jenn's Version) + jasmine rice + snap peas",rating:5,liked:"Everyone loved it. Restaurant-quality sauce. 3 cans coconut milk + heavy cream = the secret. Whole family asked for it again.",change:"Takes 90+ min — plan only on lighter nights. Always make double, leftovers excellent.",keepOrDrop:"Keep"},
+  {date:"2026-03-24",meal:"Lemon Pepper Chicken (BBQ) + leftover potatoes + pear salad",rating:3,liked:"Easy, meets all requirements",change:"Tired of chicken+salad rut",keepOrDrop:"Modify"},
+  {date:"2026-03-25",meal:"Pork tenderloin + Little Potato Co. potatoes + frozen veg",rating:3,liked:"Very low prep",change:"Not very flavourful",keepOrDrop:"Modify"},
+  {date:"2026-03-26",meal:"Leftovers",rating:2,liked:"No real cooking",change:"Leftovers were from mediocre meals",keepOrDrop:"One-off"},
+  {date:"2026-03-27",meal:"Leftovers",rating:2,liked:"Didn't have to cook",change:"Leftovers from mediocre meals",keepOrDrop:"One-off"},
+  {date:"2026-03-27",meal:"Honey garlic chicken with frozen beans and rice",rating:1,liked:"Nothing",change:"Super bland and looks gross",keepOrDrop:"Remove"},
+  {date:"2026-03-29",meal:"Honey Garlic Pork Tenderloin",rating:0,liked:"",change:"Not made — same honey garlic profile",keepOrDrop:"Remove"},
+  {date:"2026-03-28",meal:"Fried rice",rating:3,liked:"Different than chicken",change:"Not very flavourful",keepOrDrop:"Modify"},
+  {date:"2026-03-29",meal:"Turkey Tornados",rating:4,liked:"Family enjoyed the meal",change:"Long prep — searing bacon then oven",keepOrDrop:"Keep"},
+  {date:"2026-03-30",meal:"Chimichurri Chicken Drumsticks",rating:3,liked:"Good chimichurri flavour",change:"Didn't love drumsticks. Switch to thighs.",keepOrDrop:"Modify"},
+  {date:"2026-03-31",meal:"BBQ Italian Sausage with Salad",rating:3,liked:"Easy to cook, low prep",change:"Feels like chicken and salad",keepOrDrop:"Keep occasionally"},
+  {date:"2026-04-01",meal:"Butter Chicken (Jenn's Version) + jasmine rice + snap peas",rating:5,liked:"Everyone loved it. Restaurant-quality.",change:"Takes 90+ min. Always make double.",keepOrDrop:"Keep"},
   {date:"2026-04-02",meal:"Chicken Shawarma Bowls",rating:4,liked:"Flavourful. Didn't take too long",change:"",keepOrDrop:"Keep"},
-  {date:"2026-04-03",meal:"Chicken shawarma leftovers",rating:4,liked:"No cooking. Just reheating.",change:"",keepOrDrop:"Keep"},
-  {date:"2026-04-04",meal:"Leftover butter chicken with a salad",rating:4,liked:"No cooking! And we liked the original meal",change:"Too many chicken thighs this week.",keepOrDrop:"Keep"},
-  {date:"2026-04-05",meal:"Ham, Schwarties potatoes, green beans and almonds, carrot soup",rating:5,liked:"Delicious and a nice change from chicken and salad",change:"It took over 2 hours to make.",keepOrDrop:"Keep"},
-  {date:"2026-04-06",meal:"Leftovers - ham, schwartie potatoes, carrot soup",rating:4,liked:"Quick and easy. Original meal was great. People liked leftovers.",change:"Everything was good.",keepOrDrop:"Keep"},
-  {date:"2026-04-07",meal:"Ham, potatoes, frozen veg",rating:3,liked:"Quick and easy. No cooking.",change:"",keepOrDrop:"Keep"},
-  {date:"2026-04-08",meal:"Beef bulgogi with edamame",rating:4,liked:"Quick to cook",change:"",keepOrDrop:"Keep"},
+  {date:"2026-04-03",meal:"Chicken shawarma leftovers",rating:4,liked:"No cooking. Just reheating.",change:"",keepOrDrop:"Keep it - add to regular rotation"},
+  {date:"2026-04-04",meal:"Leftover butter chicken with a salad",rating:4,liked:"No cooking! And we liked the original meal",change:"Too many chicken thighs this week.",keepOrDrop:"Keep it - add to regular rotation"},
+  {date:"2026-04-05",meal:"Ham, Schwarties potatoes, green beans and almonds, carrot soup",rating:5,liked:"Flavourful. Nice break from chicken and salad",change:"It took 2 hours to make.",keepOrDrop:"Keep it - add to regular rotation"},
+  {date:"2026-04-05",meal:"Ham, Schwarties potatoes, green beans and almonds, carrot soup",rating:5,liked:"It was delicious and a nice change from chicken and salad",change:"It took over 2 hours to make.",keepOrDrop:"Keep it - add to regular rotation"},
+  {date:"2026-04-08",meal:"Beef bulgoi with edamame",rating:4,liked:"Quick to cook",change:"",keepOrDrop:"Keep it - add to regular rotation"},
+  {date:"2026-04-10",meal:"We ordered Portuguese chicken and potatoes and had salad",rating:3,liked:"No cooking",change:"Chicken was a bit dry",keepOrDrop:"One-off - we had it, not a regular"},
+  {date:"2026-04-12",meal:"We went out for dinner",rating:5,liked:"No cooking !!!!!",change:"",keepOrDrop:"One-off - we had it, not a regular"},
+  {date:"2026-04-12",meal:"Chimichurri Chicken Thighs (Improved) on the BBQ",rating:4,liked:"Flavourful",change:"",keepOrDrop:"Keep it - add to regular rotation"},
+  {date:"2026-04-13",meal:"Thai Peanut Chicken Lettuce Wraps",rating:4,liked:"It was yummy",change:"It took a while to make the sauce and chop everything. It’s also very messy, which we don’t love.",keepOrDrop:"Try again with modifications"},
+  {date:"2026-04-14",meal:"Leftover chicken thighs with chimichuri sauce, rice and frozen veg",rating:2,liked:"",change:"",keepOrDrop:""},
+  {date:"2026-04-15",meal:"Leftover lettuce wraps in bowls",rating:3,liked:"",change:"",keepOrDrop:""},
+  {date:"2026-04-16",meal:"Pork Tenderloin from butcher, little potaot company potatoes, mixed veg.",rating:3,liked:"Quick and easy. Not a lot of prep. Potatoes were good.",change:"The pork is very plain. It comes seasoned with a Greek seasoning. Would like a sauce or something to elevate it.",keepOrDrop:"Try again with modifications"}
 ]; // END_MEAL_HISTORY
 
 async function fetchDinnerHistory(){
