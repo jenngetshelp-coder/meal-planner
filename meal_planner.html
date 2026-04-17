@@ -495,13 +495,16 @@ body.print-lists .top-nav,.print-lists .plan-toolbar,.print-lists .hf-section,.p
 
       <div style="margin-top:16px">
         <div class="field">
-          <label>How Busy Is This Week?</label>
+          <label>How many nights do you want to cook this week?</label>
           <div class="btn-group">
-            <button class="btn-toggle" onclick="setWeekEnergy('light',this)">Big Cook Week</button>
-            <button class="btn-toggle sel" onclick="setWeekEnergy('normal',this)">Normal Mix</button>
-            <button class="btn-toggle" onclick="setWeekEnergy('heavy',this)">Keep It Quick</button>
+            <button class="btn-toggle" onclick="setCookNights(1,this)">1</button>
+            <button class="btn-toggle" onclick="setCookNights(2,this)">2</button>
+            <button class="btn-toggle sel" onclick="setCookNights(3,this)">3</button>
+            <button class="btn-toggle" onclick="setCookNights(4,this)">4</button>
+            <button class="btn-toggle" onclick="setCookNights(5,this)">5</button>
+            <button class="btn-toggle" onclick="setCookNights(6,this)">6</button>
           </div>
-          <div class="auto-note" id="energy-note">Claude will balance cook nights, easy nights, and leftovers across the week.</div>
+          <div class="auto-note" id="energy-note">3 cook nights, 4 nights off — Claude will build in leftovers to cover the rest.</div>
         </div>
       </div>
 
@@ -706,7 +709,7 @@ const STATE = {
   ryanStatus: null,
   ryanAwayDays: [],
   adventure: 'comfort',
-  weekEnergy: 'normal',
+  cookNights: 3,
   days: [],
   plan: [],
   smartNotes: {},
@@ -1001,7 +1004,7 @@ async function savePlanToSheets(){
       difficulty: day.difficulty || '',
       mode: day.type || day.mode || '',
       makeDouble: day.makeDouble || false,
-      weekEnergy: STATE.weekEnergy || 'normal',
+      cookNights: STATE.cookNights ?? 3,
       actualMeal: '',
       actualRating: '',
       followedPlan: ''
@@ -1405,16 +1408,16 @@ function setAdventure(level,btn){
   const e=document.getElementById('adv-extra');
   level!=='comfort'?e.classList.add('vis'):e.classList.remove('vis');
 }
-function setWeekEnergy(level,btn){
-  STATE.weekEnergy=level;
+function setCookNights(n,btn){
+  STATE.cookNights=n;
   btn.closest('.btn-group').querySelectorAll('.btn-toggle').forEach(b=>b.classList.remove('sel'));
   btn.classList.add('sel');
-  const notes={
-    light:'You have time this week — Claude will include more proper cook nights and can suggest ambitious recipes like Butter Chicken.',
-    normal:'Claude will balance cook nights with easy nights and planned leftovers across the week.',
-    heavy:'Hectic week — Claude will stick to quick recipes, BBQ nights, and easy wins. Minimal prep required.'
-  };
-  document.getElementById('energy-note').textContent=notes[level];
+  const off=7-n;
+  const note=
+    n<=2?`Light week — ${n} night${n===1?'':'s'} cooking, ${off} nights you don't touch the stove.`:
+    n<=4?`${n} cook nights, ${off} nights off — Claude will build in leftovers to cover the rest.`:
+    `Big cook week — ${n} nights cooking, ${off} leftover nights built in.`;
+  document.getElementById('energy-note').textContent=note;
 }
 function isRyanHomeOnDay(i){
   if(STATE.ryanStatus==='home') return true;
@@ -1489,7 +1492,7 @@ function savePlanToStorage(){
       ryanStatus: STATE.ryanStatus,
       ryanAwayDays: STATE.ryanAwayDays,
       adventure: STATE.adventure,
-      weekEnergy: STATE.weekEnergy,
+      cookNights: STATE.cookNights ?? 3,
       dynamicRecipes: DYNAMIC_RECIPES,
       savedAt: Date.now(),
     };
@@ -1511,7 +1514,7 @@ function loadPlanFromStorage(){
     STATE.ryanStatus = data.ryanStatus || null;
     STATE.ryanAwayDays = data.ryanAwayDays || [];
     STATE.adventure = data.adventure || 'comfort';
-    STATE.weekEnergy = data.weekEnergy || 'normal';
+    STATE.cookNights = data.cookNights ?? (data.weekEnergy === 'light' ? 3 : data.weekEnergy === 'heavy' ? 1 : 3);
     Object.assign(DYNAMIC_RECIPES, data.dynamicRecipes || {});
     return true;
   } catch(e){
@@ -1699,57 +1702,33 @@ function buildPrompt(dinnerHistory){
     wild:`Be adventurous — up to ${advCount} creative or new meals are welcome`
   }[STATE.adventure];
 
-  const weekEnergy=STATE.weekEnergy||'normal';
-  const weekStructureDesc={
-    light:{label:'Big Cook Week',cook:3,easy:2,leftover:1,desc:'Jenn has time and energy this week — include up to 3 proper cook nights with more ambitious recipes (Butter Chicken, curries, one-pots welcome).'},
-    normal:{label:'Normal Mix',cook:2,easy:2,leftover:2,desc:'Typical week — balance 2 proper cook nights with easy nights and planned leftovers.'},
-    heavy:{label:'Keep It Quick',cook:1,easy:3,leftover:2,desc:'Hectic week — only 1 real cook night. Everything else must be BBQ, quick proteins, or planned leftovers. No recipes over 20 min active prep.'}
-  }[weekEnergy];
+  const cookNights=STATE.cookNights??3;
+  const leftoverNights=7-cookNights;
   const weekStructurePrompt=`
-WEEK ENERGY: ${weekStructureDesc.label} — ${weekStructureDesc.desc}
+JENN'S COOK NIGHT LIMIT: ${cookNights} nights. This is the number Jenn herself has chosen. It is an absolute hard cap — not a guideline.
 
-REQUIRED WEEK STRUCTURE (non-negotiable — count your nights before finalizing):
-- Cook nights (30+ min, full recipe): ${weekStructureDesc.cook} max
-- Easy nights (BBQ/quick/20 min or less): at least ${weekStructureDesc.easy}
-- Planned leftover nights: at least ${weekStructureDesc.leftover}
+COOK NIGHT COUNT RULE (read this carefully):
+- A "cook night" = ANY night Jenn has to prepare food. This includes BBQ nights, quick pan-sears, and easy meals. If she touches a pan or grill, it counts.
+- The remaining ${leftoverNights} nights MUST be type "leftovers" — nights where the family eats from the fridge and Jenn does nothing.
+- You MUST insert these leftover nights yourself by outputting type "leftovers" for those days, even if Jenn marked them "SUGGEST."
+- VERIFY BEFORE RETURNING: Count your cook nights. If the number exceeds ${cookNights}, convert the extra nights to leftovers.
+- A plan with more than ${cookNights} cook nights is WRONG and must be corrected.
 
-CRITICAL — LEFTOVER NIGHTS ARE YOUR RESPONSIBILITY: Even if all 7 days are marked "SUGGEST," you MUST insert at least ${weekStructureDesc.leftover} leftover night(s) by outputting type "leftovers" for those day(s). Do not wait for Jenn to pre-set them. If you produce a plan with fewer than ${weekStructureDesc.leftover} leftover nights, you have failed this requirement. Count to verify before returning your response.
+LEFTOVER STRATEGY — make the cook nights count:
+- Since Jenn is only cooking ${cookNights} night${cookNights===1?"":"s"}, each cook night should produce enough for leftovers. Set makeDouble:true on meals that reheat well.
+- Best double-batch meals: Butter Chicken, Coconut Curry, Cacciatore, Turkey Soup, Turkey Meatballs, Pork Tenderloin, Arroz con Pollo
+- Set makeDoubleNote to explain exactly which leftover night(s) this covers: e.g. "Make 1.5x — covers Wednesday leftover night"
+- Spread cook nights across the week so leftovers are fresh (don't put all cook nights at the start of the week)
+- Ideal rhythm: Cook → Leftovers → Cook → Leftovers — don't stack cook nights back-to-back if you can avoid it
 
-HARD RULE — CONSECUTIVE COOKING LIMIT (non-negotiable):
-- NEVER schedule more than 2 consecutive cook or medium nights in a row
-- After 2 cook/medium nights, the next night MUST be easy, leftovers, or eating out
-- This applies even if days are marked by the user — look at the FULL week flow including user-set days
-- Before finalizing: walk through Mon→Sun and check for 3+ cook/medium nights in a row. If you find any, fix it.
+CONSECUTIVE COOKING HARD LIMIT:
+- NEVER schedule more than 2 cook nights in a row. After 2 cook nights, the next night MUST be leftovers.
 
-PLANNED LEFTOVERS strategy (this family needs built-in breathing room):
-- Leftovers nights and Activity nights mean Jenn cannot cook — the family eats from whatever is in the fridge from cook nights earlier that week
-- Leftovers do NOT have to come from just the night before — they come from the accumulated fridge across the whole week
-- This means: if there are any leftovers nights or activity nights in the week, cook nights earlier in the week MUST produce 1.5x quantity to keep the fridge stocked
-- When you plan a cook night that produces good leftovers (curries, stews, soups, one-pots, roasted meats), set makeDouble:true
-- Best meals for double-batching: Butter Chicken, Coconut Curry, Cacciatore, Turkey Soup, Arroz con Pollo, Turkey Meatballs, Pork Tenderloin
-- Be explicit in makeDoubleNote: "Make 1.5x — covers Tuesday's Activity Night and any other leftover nights"
-- A cook night followed by a leftover/activity night is the ideal rhythm. Cook → Leftovers → Cook → Easy is a great 4-day pattern.
-- If Jenn has set 4+ open cooking days, you MUST insert at least one leftover night to break up the run
-
-WHAT COUNTS AS AN EASY NIGHT for this family:
-- BBQ chicken with a rub/marinade + salad or frozen veg — the grill does the work, Jenn does not
-- BBQ sausages, pork chops, or marinated lamb chops + salad
-- A genuinely quick protein: pan-seared chicken breast with a 2-ingredient sauce (e.g. lemon butter, garlic herb) where the sauce is made IN the pan after the chicken is done — not a separate step — total active time under 15 min
-- A night that uses leftover protein from a previous meal (Chicken Fried Rice counts)
-
-WHAT IS NOT AN EASY NIGHT (even if it sounds quick):
-- ANY recipe that requires browning or searing the chicken BEFORE a sauce or simmer step — this alone adds 15–20 min and makes it a medium or cook night
-- ANY recipe with more than 2 ingredients that need chopping (onions + garlic + peppers = cook night)
-- Sheet pan or oven meals — even if hands-off, the prep + heat time makes them medium or cook
-- "30-minute meals" that list 6+ steps — these are never actually 30 minutes
-- Any recipe where the instructions say "sear, then add sauce, then simmer 20 minutes" — that is a 45+ min cook night
-- Marinades that must be done same-day (overnight is fine; same-day marinade + cook = medium night)
-
-EASY NIGHT RULE: If Jenn has to stand at the stove doing more than one thing at a time, it is NOT easy. If she has to chop before she can start cooking, it is NOT easy. Easy = protein on grill or protein in pan with minimal prep.
-
-CRITICAL — REAL COOK TIME HONESTY: When you label a meal "cook" or "medium," think about the FULL time from fridge to table: chopping time + heat-up time + cook time + any resting time. A recipe that says "30 min" but requires dicing 2 onions, mincing garlic, searing chicken, then simmering a sauce is realistically 55–70 minutes for a tired parent. Do NOT suggest these on medium or cook nights unless the week energy is "Big Cook Week." When in doubt, round up — it is better to undercommit and have Jenn finish early than to suggest something that leaves her exhausted.
-
-DIFFICULTY label (include in every planned meal entry):
+COOK NIGHT DIFFICULTY (within Jenn's chosen ${cookNights} nights):
+- Mix it up: some nights can be proper full recipes (curry, one-pot), others should be quick wins (BBQ, pan-sear under 15 min active)
+- A "quick" cook night = protein on grill or protein in pan, minimal prep, total active time under 15 min
+- A "full recipe" night = full recipe with sauce, multiple steps, 30–60 min. These are fine for ${cookNights>=3?"up to half":"one of"} the cook nights.
+- REAL COOK TIME HONESTY: A recipe that says "30 min" but requires dicing 2 onions, mincing garlic, searing chicken, then simmering a sauce is realistically 55–70 min for a tired parent. Be honest about difficulty. When in doubt, round up.IFFICULTY label (include in every planned meal entry):
 - "cook" = full recipe, 45+ min total time from fridge to table — only on Big Cook Week
 - "medium" = 25–40 min total, moderate prep — maximum 2 cook nights per normal week
 - "easy" = BBQ, quick sear, or assembly — under 20 min active time, protein does not require chopping anything first
