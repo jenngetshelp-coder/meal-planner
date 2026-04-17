@@ -1557,7 +1557,7 @@ async function generatePlan(){
     }
     savePlanToStorage();
     savePlanToSheets().catch(e => console.warn('Sheets plan save failed:', e));
-    assignAutoSides();
+      buildDayRows();    assignAutoSides();
     renderPlan();
     // Show plan source badge
     const badge=document.getElementById('plan-source-badge');
@@ -1763,6 +1763,7 @@ ${PREFS.hardNo.join(', ')}
 JENN DOESN'T EAT (but family does) — if a recipe uses these, note a substitute veggie for Jenn:
 ${PREFS.jennNo.join(', ')}
 Jenn's preferred veggies for substitutions: ${PREFS.jennLikes.join(', ')}
+IMPORTANT: Carrots are Jenn's FAVOURITE vegetable. She loves them raw or cooked. Never suggest Jenn skip or substitute carrots — they are always a perfect choice for her.
 
 AVOID / LIMIT:
 ${PREFS.limited.join('\n')}
@@ -1776,7 +1777,8 @@ PERMANENTLY REMOVED — never suggest these again under any name or variation:
 DINNER RULES:
 - Every dinner MUST have a protein (chicken, turkey, pork, or beef when Ryan is away)
 - Every dinner MUST have vegetables — VARY them across the whole week. Before finalizing your plan, review ALL meals and ensure no single vegetable appears in more than 2 meals total, and NEVER on back-to-back nights. Bell peppers, corn, and green beans are easy defaults — actively resist using them in multiple meals. A good week uses a genuinely different vegetable most nights.
-- Claire (child) does NOT like cooked carrots — do not serve roasted/cooked carrots as a side dish
+- Claire (child) does NOT like cooked carrots — do not serve roasted/cooked carrots as a standalone side dish. Carrots are fine IN a recipe (e.g. soup, curry, fried rice) — Claire just doesn't want them as a plain roasted/steamed side.
+- Jenn LOVES carrots and they are her favourite vegetable. Never create a jennVegSub that skips or replaces carrots.
 - Valid vegetable options (use a MIX across the week, not the same 2-3 repeatedly): snap peas, bell peppers, corn, green beans, frozen mixed veg, steamed broccoli, asparagus, spinach, cherry tomatoes, cucumbers, celery. Do NOT suggest standalone salad nights — the app automatically pairs a side salad with dinners that need one.
 - MAX 2 starch-based meals this week (rice dishes, enchiladas, tortillas) — not every meal needs a starch. Pair proteins with vegetables, salads, or roasted veg instead. Rice is a side option, not a default.
 - NO beef when Ryan is HOME
@@ -1864,7 +1866,7 @@ Return ONLY valid JSON in this exact format:
       "difficulty": "cook|medium|easy|leftovers",
       "makeDouble": false,
       "makeDoubleNote": "e.g. Make 1.5x — leftovers cover Thursday night",
-      "jennVegSub": "Substitute veggie suggestion for Jenn if recipe has broccoli/cauliflower/mushrooms/zucchini — otherwise empty string",
+      "jennVegSub": "Substitute veggie suggestion for Jenn ONLY if recipe uses broccoli, cauliflower, mushrooms, or zucchini. Suggest carrots or green beans as replacements. NEVER mention skipping or substituting carrots — Jenn loves carrots. Otherwise empty string.",
       "ingredients": [
         {"name": "Chicken breasts", "qty": "4 breasts"},
         {"name": "Mixed greens", "qty": "1 bag"},
@@ -2352,6 +2354,7 @@ Family rules:
 - No fish/seafood, quinoa, chia seeds, sweet potatoes, cabbage, or BBQ sauce
 - Jenn doesn't eat: broccoli, cauliflower, mushrooms, zucchini (suggest a veggie sub if recipe uses these)
 - Jenn's preferred veggie subs: carrots, cucumbers, peas, green beans, celery, salad greens
+  - Jenn LOVES carrots — never suggest she skip or substitute carrots
 - Ryan is ${ryanHome ? 'home (no beef)' : 'away (beef OK)'}
 - Gluten-free preferred if possible
 
@@ -3363,6 +3366,7 @@ async function init(){
     const restored = loadPlanFromStorage();
     if(restored && STATE.plan.length > 0){
       updateWeekLabel();
+            buildDayRows();
       assignAutoSides();
       try {
         renderPlan();
