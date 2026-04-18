@@ -1831,15 +1831,25 @@ INGREDIENT RULES (CRITICAL):
 - Use jasmine rice or polenta — NEVER pasta or GF pasta
 - Be specific with quantities for a family of 4 with leftovers
 
-SHOPPING QUANTITIES (CRITICAL — ingredients must use PURCHASABLE units, not recipe units):
-- Write "1 can (796ml) crushed tomatoes" NOT "2 cups crushed tomatoes"
-- Write "1 bag frozen mixed veg" NOT "2 cups mixed vegetables"
+INGREDIENT QUANTITIES — every ingredient has TWO amount fields:
+- "cookQty": the exact cooking amount Jenn needs to measure out (e.g., "4 cloves, minced", "2 tbsp", "2 cups dry", "1 can (400ml)")
+- "qty": the grocery store ordering amount — what to actually buy (e.g., "1 head", "", "1 bag (2 lbs)", "1 can (400ml)")
+
+GROCERY QTY RULES (what goes in "qty"):
+- Write "1 can (796ml)" NOT "2 cups" for canned goods
+- Write "1 bag frozen mixed veg" NOT "2 cups" for frozen items
 - Write "1 bunch cilantro" NOT "handful cilantro"
-- Write "4 limes" NOT "zest of 4 limes" (they buy the whole fruit)
-- Write "1 container cherry tomatoes" NOT "1 pint cherry tomatoes"
+- Write "4 limes" NOT "zest of 4 limes" (buy the whole fruit)
+- Write "1 container cherry tomatoes" NOT "1 pint"
+- Write "1 head garlic" NOT "4 cloves" (they buy whole heads)
 - Write "3 onions" NOT "1 cup diced onion"
-- Write "1 head garlic" NOT "4 cloves garlic" (they buy whole heads)
-- DO NOT list pantry staples (olive oil, salt, pepper, garlic powder, honey, soy sauce, vinegar, spices, flour, sugar, etc.) — these are already in the pantry and tracked separately
+- Write "1 bag (2 lbs)" for jasmine rice
+
+PANTRY STAPLES (olive oil, salt, pepper, all spices, vinegars, soy sauce, honey, broth, tomato paste, flour, sugar, etc.):
+- DO include them in the ingredients array — Jenn needs to see them when cooking!
+- Set "qty" to "" (empty string) — they are already in the pantry, no ordering needed
+- Set "cookQty" to the exact amount to use (e.g., "2 tsp cumin", "3 tbsp olive oil", "to taste")
+- Example: {"name":"Cumin","cookQty":"2 tsp","qty":""}
 
 Return ONLY valid JSON in this exact format:
 {
@@ -1858,9 +1868,11 @@ Return ONLY valid JSON in this exact format:
       "makeDoubleNote": "e.g. Make 1.5x — leftovers cover Thursday night",
       "jennVegSub": "Substitute veggie suggestion for Jenn ONLY if recipe uses broccoli, cauliflower, mushrooms, or zucchini. Suggest carrots or green beans as replacements. NEVER mention skipping or substituting carrots — Jenn loves carrots. Otherwise empty string.",
       "ingredients": [
-        {"name": "Chicken breasts", "qty": "4 breasts"},
-        {"name": "Mixed greens", "qty": "1 bag"},
-        {"name": "Cherry tomatoes", "qty": "1 pint"}
+        {"name": "Chicken breasts", "cookQty": "4 breasts", "qty": "4 breasts"},
+        {"name": "Mixed greens", "cookQty": "1 bag", "qty": "1 bag"},
+        {"name": "Olive oil", "cookQty": "2 tbsp", "qty": ""},
+        {"name": "Garlic", "cookQty": "3 cloves, minced", "qty": "1 head"},
+        {"name": "Cumin", "cookQty": "1 tsp", "qty": ""}
       ],
       "butcherItems": [
         {"cut": "Chicken Breasts", "qty": "4 breasts"}
@@ -1892,7 +1904,7 @@ const FALLBACK_RECIPES = [
   {id:9,name:"Chicken Fried Rice",protein:"Chicken",gf:true,beef:false,tags:["quick","leftover"],isCompleteMeal:true,needsSide:false,desc:"Quick 10-minute fried rice using leftover chicken and rice from the night before. GF with tamari. A completely different feel from the previous night's dinner.",pairing:"Complete meal",jennVegSub:"",ingredients:[{name:"Cooked chicken breasts (leftover or rotisserie, diced)",qty:"2 breasts"},{name:"Day-old cooked jasmine rice",qty:"3 cups (leftover)"},{name:"Tamari (GF soy sauce)",qty:"3 tbsp"},{name:"Sesame oil",qty:"1 tbsp"},{name:"Garlic",qty:"2 cloves"},{name:"Carrots",qty:"2 medium, diced small"},{name:"Frozen peas",qty:"½ cup"},{name:"Green onions",qty:"3 stalks"},{name:"Eggs",qty:"3"},{name:"Avocado oil or olive oil",qty:"2 tbsp"}],butcherItems:[{cut:"Cooked Chicken Breasts (leftover, diced)",qty:"2 breasts"}],steps:["Dice leftover chicken into small pieces. Have cold rice ready — day-old works best.","Heat oil in a large pan or wok on high. Add carrots and garlic, stir fry 2 min.","Push everything to the side, crack in eggs and scramble until just set, then mix together.","Add cold rice, breaking up any clumps. Stir fry 2–3 min until heated through.","Add chicken, peas, tamari, and sesame oil. Toss everything together 1 min.","Top with sliced green onions and serve."]},
   {id:10,name:"Oven Pork Tenderloin",protein:"Pork",gf:true,beef:false,tags:["low-prep","oven"],isCompleteMeal:true,needsSide:false,desc:"Pre-seasoned pork tenderloin roasted in the oven — rated 3/5 plain, 4/5+ with a marinade. Three options: honey dijon garlic, balsamic herb, or herb butter finish.",pairing:"Little Potato Co. roasted baby potatoes + frozen mixed veg",jennVegSub:"",ingredients:[{name:"Pork tenderloin",qty:"1.5-2 lbs"},{name:"Honey",qty:"2 tbsp"},{name:"Dijon mustard",qty:"3 tbsp"},{name:"Garlic",qty:"3 cloves"},{name:"Olive oil",qty:"2 tbsp"},{name:"Fresh thyme or rosemary",qty:"1 tsp"},{name:"Little Potato Co. baby potatoes",qty:"1 bag"},{name:"Frozen mixed vegetables",qty:"1 bag"}],butcherItems:[{cut:"Pork Tenderloin (pre-seasoned)",qty:"1.5–2 lbs"}],steps:["Mix marinade: 3 tbsp dijon + 2 tbsp honey + 3 cloves garlic minced + 2 tbsp olive oil + 1 tsp thyme. Pour over tenderloin, rest 30 min.","Preheat oven to 425°F. Toss potatoes with olive oil on a sheet pan. Put in oven.","After 10 min, add tenderloin to oven. Roast 20–25 min to 145°F internal temp.","Rest 5 min tented with foil. Microwave veg during rest.","Slice on an angle and serve."]},
   {id:11,name:"Butter Chicken (Jenn's Version)",protein:"Chicken",gf:true,beef:false,tags:["sauce","cook-night","90min","leftovers-well"],isCompleteMeal:true,needsSide:false,desc:"Rich, restaurant-style butter chicken — Jenn's rescued version. Makes 6–8 servings with great leftovers. ⚠️ Plan for 90+ min total. Key: spices bloom into the sauce (not just on the chicken), and three cans of coconut milk is what makes it restaurant-quality.",pairing:"Jasmine rice + steamed snap peas",jennVegSub:"",ingredients:[{name:"Boneless skinless chicken thighs",qty:"4 lbs"},{name:"Butter",qty:"6 tbsp"},{name:"Garlic",qty:"8 cloves, minced"},{name:"Fresh ginger",qty:"2 tbsp, grated"},{name:"Tomato paste",qty:"6 tbsp"},{name:"Crushed tomatoes",qty:"2 cans (796ml each)"},{name:"Coconut milk, full fat",qty:"3 cans (400ml each)"},{name:"Heavy cream",qty:"½ cup"},{name:"Garam masala",qty:"4 tsp, divided"},{name:"Cumin",qty:"3 tsp, divided"},{name:"Smoked paprika",qty:"2 tsp, divided"},{name:"Turmeric",qty:"1 tsp, divided"},{name:"Salt",qty:"3 tsp, plus more to taste"},{name:"Sugar",qty:"1 tsp, or to taste"},{name:"Olive oil",qty:"4 tbsp"},{name:"Jasmine rice",qty:"5 cups dry"},{name:"Snap peas",qty:"6 cups, trimmed"},{name:"Fresh cilantro (optional)",qty:"1 small bunch"}],butcherItems:[{cut:"Boneless Skinless Chicken Thighs",qty:"4 lbs"}],steps:["Season chicken: Cut thighs into large bite-sized chunks. Season with 3 tsp salt, half the garam masala (2 tsp), half the cumin (1.5 tsp), half the turmeric (0.5 tsp), and half the smoked paprika (1 tsp).","Sear chicken: Heat 4 tbsp olive oil in a large Dutch oven over medium-high heat. Sear chicken 3–4 min per side until golden. Work in batches — don't crowd the pan. Remove and set aside.","Sauté aromatics: Reduce heat to medium. Add 6 tbsp butter. Sauté garlic and ginger for 1–2 min until fragrant.","Bloom spices: Stir in tomato paste and remaining spices (2 tsp garam masala, 1.5 tsp cumin, 1 tsp smoked paprika, 0.5 tsp turmeric). Cook 1 min, stirring constantly — this is the flavour foundation.","Add tomatoes and coconut milk: Pour in both cans of crushed tomatoes and all 3 cans of coconut milk. Stir well and bring to a gentle simmer.","Add cream and balance: Stir in heavy cream. Add 1 tsp sugar and taste — adjust salt and sugar to balance the acidity of the tomatoes.","Simmer with chicken: Return chicken to the pot. Simmer uncovered 18–20 min, stirring occasionally, until sauce thickens and chicken is fully cooked through.","Cook rice and snap peas: Cook jasmine rice per package directions. Steam snap peas 3–4 min until tender-crisp.","Serve: Taste sauce one final time, adjust salt. Serve over rice with snap peas alongside. Garnish with cilantro if desired.","NOTE: This makes a large batch — refrigerates well for 3 days, freezes beautifully. Always plan this as a leftover night the next day."]},
-  {id:12,name:"Coconut Curry Chicken",protein:"Chicken",gf:true,beef:false,tags:["quick","one-pan"],isCompleteMeal:true,needsSide:false,desc:"Chicken thighs simmered in a creamy coconut milk curry sauce. Rich, warm, and comforting. Ready in 30 minutes in one pan. GF and dairy-free.",pairing:"Jasmine rice",jennVegSub:"Use carrots and green beans instead of any zucchini or cauliflower",ingredients:[{name:"Coconut milk (full fat)",qty:"1 can (400ml)"},{name:"Curry powder",qty:"2 tbsp"},{name:"Garlic",qty:"4 cloves, minced"},{name:"Fresh ginger",qty:"1 tsp, grated"},{name:"Onion",qty:"1, diced"},{name:"Cherry tomatoes",qty:"1 cup"},{name:"Carrots",qty:"2, sliced"},{name:"Chicken broth",qty:"0.5 cup"},{name:"Olive oil",qty:"2 tbsp"},{name:"Salt",qty:"to taste"},{name:"Jasmine rice",qty:"2 cups"}],butcherItems:[{cut:"Boneless Skinless Chicken Thighs",qty:"8 thighs"}],steps:["Season chicken with salt. Heat oil in large pan on medium-high. Sear chicken 3 min per side until golden. Remove and set aside.","In same pan, saute onion 3 min. Add garlic, ginger, curry powder — cook 1 min until fragrant.","Add coconut milk, chicken broth, carrots, and cherry tomatoes. Stir to combine.","Return chicken to pan. Simmer 15-20 min until chicken is cooked through and sauce thickens.","Taste and adjust salt. Serve over jasmine rice."]},
+  {id:12,name:"Coconut Curry Chicken",protein:"Chicken",gf:true,beef:false,tags:["quick","one-pan"],isCompleteMeal:true,needsSide:false,desc:"Chicken thighs simmered in a creamy coconut milk curry sauce. Rich, warm, and comforting. Ready in 30 minutes in one pan. GF and dairy-free.",pairing:"Jasmine rice",jennVegSub:"Use carrots and green beans instead of any zucchini or cauliflower",ingredients:[{name:"Boneless skinless chicken thighs",cookQty:"8 thighs",qty:"8 thighs"},{name:"Coconut milk (full fat)",cookQty:"1 can (400ml)",qty:"1 can (400ml)"},{name:"Onion",cookQty:"1 medium, diced",qty:"1 onion"},{name:"Garlic",cookQty:"4 cloves, minced",qty:"1 head"},{name:"Fresh ginger",cookQty:"1 tsp, grated",qty:"1 small knob"},{name:"Cherry tomatoes",cookQty:"1 cup",qty:"1 container"},{name:"Carrots",cookQty:"2 medium, sliced",qty:"1 bag"},{name:"Frozen peas (sweetlets)",cookQty:"1 cup",qty:"1 bag frozen peas"},{name:"Jasmine rice",cookQty:"2 cups dry",qty:"1 bag (2 lbs)"},{name:"Curry powder",cookQty:"2 tbsp",qty:""},{name:"Chicken broth",cookQty:"½ cup",qty:""},{name:"Olive oil",cookQty:"2 tbsp",qty:""},{name:"Salt",cookQty:"to taste",qty:""}],butcherItems:[{cut:"Boneless Skinless Chicken Thighs",qty:"8 thighs"}],steps:["Season chicken with salt. Heat oil in large pan on medium-high. Sear chicken 3 min per side until golden. Remove and set aside.","In same pan, saute onion 3 min. Add garlic, ginger, curry powder — cook 1 min until fragrant.","Add coconut milk, chicken broth, carrots, cherry tomatoes, and frozen peas. Stir to combine.","Return chicken to pan. Simmer 15-20 min until chicken is cooked through and sauce thickens.","Taste and adjust salt. Serve over jasmine rice."]},
   {id:13,name:"Thai Peanut Chicken",protein:"Chicken",gf:true,beef:false,tags:["quick","sheet-pan"],isCompleteMeal:true,needsSide:false,desc:"Chicken baked in a rich peanut-ginger-lime sauce. No fish sauce needed — GF with coconut aminos or tamari. One of the most searched family chicken recipes. Control the spice to taste.",pairing:"Jasmine rice + steamed green beans or snap peas",jennVegSub:"",ingredients:[{name:"Boneless skinless chicken breasts or thighs",qty:"4 pieces"},{name:"Peanut butter (natural)",qty:"0.25 cup"},{name:"Tamari or coconut aminos",qty:"3 tbsp"},{name:"Lime juice",qty:"2 tbsp"},{name:"Honey",qty:"1 tbsp"},{name:"Fresh ginger (grated)",qty:"1 tsp"},{name:"Garlic",qty:"3 cloves, minced"},{name:"Sriracha (optional)",qty:"1 tsp"},{name:"Water",qty:"2 tbsp (to thin sauce)"},{name:"Jasmine rice",qty:"2 cups"},{name:"Green beans or snap peas",qty:"2 cups"}],butcherItems:[{cut:"Boneless Skinless Chicken Breasts or Thighs",qty:"4 pieces"}],steps:["Preheat oven to 400F. Whisk together peanut butter, tamari, lime juice, honey, ginger, garlic, and water until smooth.","Place chicken in baking dish. Pour peanut sauce over top and coat well.","Bake 25-30 min until internal temp reaches 165F, basting once halfway.","Steam green beans or snap peas on stovetop or microwave.","Serve chicken over rice with veggies. Drizzle any extra sauce from the pan on top."]},
   {id:14,name:"Chicken Shawarma Bowls",protein:"Chicken",gf:true,beef:false,tags:["oven","meal-prep"],isCompleteMeal:true,needsSide:false,desc:"Restaurant-quality shawarma spiced chicken thighs served over rice with fresh cucumber, cherry tomatoes, and hummus. Deeply flavoured, high protein, totally GF.",pairing:"Jasmine rice + cucumber + cherry tomatoes + hummus",jennVegSub:"",ingredients:[{name:"Boneless skinless chicken thighs",qty:"8 thighs"},{name:"Cumin",qty:"2 tsp"},{name:"Turmeric",qty:"1 tsp"},{name:"Paprika (smoked)",qty:"1 tsp"},{name:"Coriander (ground)",qty:"1 tsp"},{name:"Garlic",qty:"4 cloves, minced"},{name:"Lemon juice",qty:"3 tbsp"},{name:"Olive oil",qty:"3 tbsp"},{name:"Salt and pepper",qty:"to taste"},{name:"Jasmine rice",qty:"2 cups"},{name:"English cucumber",qty:"1, diced"},{name:"Cherry tomatoes",qty:"1 cup, halved"},{name:"Hummus",qty:"1 container"}],butcherItems:[{cut:"Boneless Skinless Chicken Thighs",qty:"8 thighs"}],steps:["Mix cumin, turmeric, paprika, coriander, garlic, lemon juice, olive oil, salt and pepper in a bowl.","Coat chicken thighs in marinade. Rest at least 20 min (or overnight in fridge).","Preheat oven to 425F. Bake chicken 30-35 min until edges caramelise and internal temp is 165F.","Cook jasmine rice. Dice cucumber, halve tomatoes.","Slice chicken and build bowls: rice base, chicken, cucumber, tomatoes, big spoonful of hummus."]},
   {id:15,name:"Baked Turkey Meatballs",protein:"Turkey",gf:true,beef:false,tags:["oven","meal-prep"],isCompleteMeal:true,needsSide:true,sideProfile:"western",desc:"Juicy Italian-style turkey meatballs baked in the oven using almond flour instead of breadcrumbs — completely GF. Kid-approved and freezer-friendly. Serve over jasmine rice with tomato sauce.",pairing:"Jasmine rice + jarred tomato sauce",jennVegSub:"",ingredients:[{name:"Ground turkey",qty:"1.5 lbs"},{name:"Almond flour",qty:"0.25 cup"},{name:"Egg",qty:"1 large"},{name:"Garlic",qty:"3 cloves, minced"},{name:"Parmesan cheese (grated)",qty:"0.25 cup"},{name:"Fresh parsley (or dried)",qty:"2 tbsp"},{name:"Dried oregano",qty:"1 tsp"},{name:"Salt and pepper",qty:"to taste"},{name:"Jasmine rice",qty:"2 cups"},{name:"Jarred tomato sauce (GF)",qty:"1 large jar"}],butcherItems:[{cut:"Ground Turkey",qty:"1.5 lbs"}],steps:["Preheat oven to 400F. Line a baking sheet with parchment.","Mix ground turkey, almond flour, egg, garlic, parmesan, parsley, oregano, salt and pepper. Don't overmix.","Roll into golf-ball sized meatballs (about 20). Place on baking sheet.","Bake 20-22 min until cooked through and lightly browned on the outside.","Cook pasta or rice. Warm tomato sauce in a pan. Serve meatballs over pasta or rice with sauce.","Tip: Double the batch and freeze half for a future no-cook night."]},
@@ -2074,28 +2086,34 @@ function renderPlan(){
         <div class="recipe-panel-title">${recipe.name}
           <button class="recipe-panel-close print-hide" onclick="toggleRecipePanel(${i})">&#x2715;</button>
         </div>
-        ${recipe.subRecipes?
-          recipe.subRecipes.map(sub=>`
-          <div style="margin-bottom:18px;border-top:1.5px solid #D8DFF0;padding-top:14px;">
-            <div style="font-size:14px;font-weight:700;color:#3A6B9F;margin-bottom:10px;">${sub.name}</div>
-            <div class="recipe-cols">
-              <div><div class="recipe-section"><div class="recipe-section-title">Ingredients</div>
-                <ul>${(sub.ingredients||[]).map(ing=>`<li>${ing.qty?ing.qty+' — ':''} ${ing.name||ing}</li>`).join('')}</ul>
-              </div></div>
-              <div><div class="recipe-section"><div class="recipe-section-title">Instructions</div>
-                <ol>${(sub.steps||[]).map(s=>`<li>${s}</li>`).join('')}</ol>
-              </div></div>
-            </div>
-          </div>`).join('')
-        :`
-        <div class="recipe-cols">
-          <div><div class="recipe-section"><div class="recipe-section-title">Ingredients</div>
-            <ul>${(recipe.ingredients||[]).map(ing=>`<li>${ing.qty?ing.qty+' — ':''} ${ing.name||ing}</li>`).join('')}</ul>
-          </div></div>
-          <div><div class="recipe-section"><div class="recipe-section-title">Instructions</div>
-            <ol>${(recipe.steps||[]).map(s=>`<li>${s}</li>`).join('')}</ol>
-          </div></div>
-        </div>`}
+        ${(()=>{
+          const sf=day.makeDouble?parseScaleFactor(day.makeDoubleNote):1;
+          const scaleBanner=sf>1?`<div style="background:#EBF0FA;border:1px solid #B8C8E8;border-radius:8px;padding:8px 14px;margin-bottom:12px;font-size:12px;color:#3A6B9F;font-weight:600">↗ Scaled to ${sf}x — ${day.makeDoubleNote||'make extra for leftovers'}. All amounts below are already adjusted.</div>`:'';
+          if(recipe.subRecipes){
+            return scaleBanner+recipe.subRecipes.map(sub=>`
+            <div style="margin-bottom:18px;border-top:1.5px solid #D8DFF0;padding-top:14px;">
+              <div style="font-size:14px;font-weight:700;color:#3A6B9F;margin-bottom:10px;">${sub.name}</div>
+              <div class="recipe-cols">
+                <div><div class="recipe-section"><div class="recipe-section-title">Ingredients</div>
+                  <ul>${(sub.ingredients||[]).map(ing=>renderIngLine(ing,sf)).join('')}</ul>
+                </div></div>
+                <div><div class="recipe-section"><div class="recipe-section-title">Instructions</div>
+                  <ol>${(sub.steps||[]).map(s=>`<li>${s}</li>`).join('')}</ol>
+                </div></div>
+              </div>
+            </div>`).join('');
+          }
+          const butcherLines=(recipe.butcherItems||[]).map(b=>'<li style="color:#C07070"><strong>'+(scaleQty(b.qty||'',sf)||'')+'</strong>'+(scaleQty(b.qty||'',sf)?' — ':'')+' '+(b.cut||b.name||b)+' 🥩</li>').join('');
+          return scaleBanner+`
+          <div class="recipe-cols">
+            <div><div class="recipe-section"><div class="recipe-section-title">Ingredients</div>
+              <ul>${butcherLines}${(recipe.ingredients||[]).filter(ing=>!isButcherIngredient(ing.name||ing)).map(ing=>renderIngLine(ing,sf)).join('')}</ul>
+            </div></div>
+            <div><div class="recipe-section"><div class="recipe-section-title">Instructions</div>
+              <ol>${(recipe.steps||[]).map(s=>`<li>${s}</li>`).join('')}</ol>
+            </div></div>
+          </div>`;
+        })()}
         <div class="recipe-notes print-hide">
           <label>My Notes for This Recipe</label>
           <div class="notes-hint">Ingredient changes are applied to your grocery list — e.g. "skip the olives", "not using spinach", "no mushrooms"</div>
@@ -2642,6 +2660,50 @@ function tryAddQtys(q1, q2){
   return q1+' + '+q2;
 }
 
+// Parse a scale factor from makeDoubleNote (e.g. "Make 1.5x", "Double batch")
+function parseScaleFactor(note){
+  if(!note) return 1;
+  var mx=(note||'').match(/(\d+\.?\d*)\s*x\b/i);
+  if(mx) return parseFloat(mx[1]);
+  if(/\bdouble\b/i.test(note)) return 2;
+  return 1;
+}
+
+// Scale a quantity string by a factor (handles integers, decimals, unicode fractions)
+function scaleQty(q,factor){
+  if(!q||factor===1||!factor) return q;
+  if(/to taste|as needed|pinch|handful|optional/i.test(q)) return q;
+  var UFRACS=[['\u00bd','0.5'],['\u00bc','0.25'],['\u00be','0.75'],['\u2153','0.333'],['\u2154','0.667']];
+  var s=q;
+  UFRACS.forEach(function(p){s=s.replace(new RegExp(p[0],'g'),p[1]);});
+  var m=s.match(/^(\d+\.?\d*)(.*)/);
+  if(!m) return q;
+  var n=parseFloat(m[1]);
+  if(!n) return q;
+  var rest=m[2];
+  var scaled=Math.round(n*factor*100)/100;
+  var whole=Math.floor(scaled);
+  var frac=Math.round((scaled-whole)*100)/100;
+  var fmt;
+  if(frac<0.01) fmt=String(whole);
+  else if(Math.abs(frac-0.5)<0.04) fmt=(whole?whole+'\u00bd':'\u00bd');
+  else if(Math.abs(frac-0.25)<0.04) fmt=(whole?whole+'\u00bc':'\u00bc');
+  else if(Math.abs(frac-0.75)<0.04) fmt=(whole?whole+'\u00be':'\u00be');
+  else if(Math.abs(frac-0.33)<0.04) fmt=(whole?whole+'\u2153':'\u2153');
+  else if(Math.abs(frac-0.67)<0.04) fmt=(whole?whole+'\u2154':'\u2154');
+  else fmt=parseFloat(scaled.toFixed(1)).toString();
+  return fmt+rest;
+}
+
+// Render one ingredient line for recipe view (shows cooking amount; grocery note if different)
+function renderIngLine(ing,sf){
+  var dq=scaleQty(ing.cookQty||ing.qty||'',sf||1);
+  var gq=ing.qty||'';
+  var cq=ing.cookQty||'';
+  var bn=(cq&&gq&&cq!==gq&&sf===1)?' <span style="font-size:11px;color:#bbb;font-style:italic">(buy: '+gq+')</span>':'';
+  return '<li>'+(dq?'<strong>'+dq+'</strong> — ':'')+' '+(ing.name||ing)+bn+'</li>';
+}
+
 // ── NOTES INTELLIGENCE ──────────────────────────────────────────
 function parseNoteExclusions(noteText){
   if(!noteText) return [];
@@ -2813,28 +2875,27 @@ function renderGroceryList(ryanLunches,jennLunch){
       // Parse notes for this recipe to find ingredient exclusions
       const noteText=STATE.smartNotes[meal._planIdx]||'';
       const exclusions=parseNoteExclusions(noteText);
+      const scaleFactor=meal.makeDouble?parseScaleFactor(meal.makeDoubleNote):1;
       (recipe.ingredients||[]).forEach(ing=>{
         const n=ing.name||ing;
-        const q=ing.qty||'';
+        const rawQ=ing.qty||ing.cookQty||'';
+        const q=scaleQty(rawQ,scaleFactor);
         if(isButcherIngredient(n)) return;
-        // Apply notes exclusions
         if(ingMatchesExclusion(n,exclusions)) return;
         const nl=n.toLowerCase();
         const nk=normalizeIngredientKey(n);
-        // Check if it's a pantry staple
         if(PANTRY_STAPLES.has(nl)||PANTRY_STAPLES.has(nk)){
           if(pantryNeeded.has(nk)) pantryNeeded.get(nk).sources.push(recipe.name);
           else pantryNeeded.set(nk,{name:n,qty:q,sources:[recipe.name]});
           return;
         }
-        // Skip if already in staples/waldorf/emails
+        if(!rawQ) return;
         if(alreadyCovered.has(nl)||alreadyCovered.has(nk)) return;
-        // Aggregate quantities (use normalized key, display name from first occurrence)
         if(agg.has(nk)){
           const ex=agg.get(nk);
-          ex.sources.push(recipe.name);
+          ex.sources.push(recipe.name+(scaleFactor>1?' (×'+scaleFactor+')':''));
           ex.qty=tryAddQtys(ex.qty,q);
-        } else agg.set(nk,{name:n,qty:q,sources:[recipe.name]});
+        } else agg.set(nk,{name:n,qty:q,sources:[recipe.name+(scaleFactor>1?' (×'+scaleFactor+')':'')]});
       });
     });
     // Also include auto-assigned veggie sides
@@ -3084,12 +3145,15 @@ function renderButcherList(ryanLunches,jennLunch){
       other.push({cut:recipe.name+' — buy premade',qty:'',source:'premade'});
       return;
     }
+    const bSf=meal.makeDouble?parseScaleFactor(meal.makeDoubleNote):1;
     (recipe.butcherItems||[]).forEach(bi=>{
+      const scaledQty=scaleQty(bi.qty||'',bSf);
+      const bSrc=recipe.name+(bSf>1?' (×'+bSf+')':'');
       const lc=bi.cut.toLowerCase();
-      if(lc.includes('chicken')) chicken.push({cut:bi.cut,qty:bi.qty,source:recipe.name});
-      else if(lc.includes('turkey')||lc.includes('ground turkey')) turkey.push({cut:bi.cut,qty:bi.qty,source:recipe.name});
-      else if(lc.includes('beef')||lc.includes('steak')||lc.includes('brisket')) beef.push({cut:bi.cut,qty:bi.qty,source:recipe.name});
-      else other.push({cut:bi.cut,qty:bi.qty,source:recipe.name});
+      if(lc.includes('chicken')) chicken.push({cut:bi.cut,qty:scaledQty,source:bSrc});
+      else if(lc.includes('turkey')||lc.includes('ground turkey')) turkey.push({cut:bi.cut,qty:scaledQty,source:bSrc});
+      else if(lc.includes('beef')||lc.includes('steak')||lc.includes('brisket')) beef.push({cut:bi.cut,qty:scaledQty,source:bSrc});
+      else other.push({cut:bi.cut,qty:scaledQty,source:bSrc});
     });
   });
 
@@ -3257,7 +3321,7 @@ function filterRecipeBook(){
         <div class="recipe-cols">
           <div>
             <div class="recipe-section-title">Ingredients</div>
-            <ul>${(r.ingredients||[]).map(ing => `<li>${ing.qty ? ing.qty + ' — ' : ''}${ing.name||ing}</li>`).join('')}</ul>
+            <ul>${(r.butcherItems||[]).map(b=>'<li style="color:#C07070"><strong>'+(b.qty||'')+'</strong>'+(b.qty?' — ':'')+' '+(b.cut||b.name||b)+' 🥩</li>').join('')}${(r.ingredients||[]).filter(ing=>!isButcherIngredient(ing.name||ing)).map(ing=>renderIngLine(ing,1)).join('')}</ul>
           </div>
           <div>
             <div class="recipe-section-title">Instructions</div>
@@ -3291,8 +3355,13 @@ function printRecipe(idx){
   w.document.write(`<div class="meta">${r.protein||''} ${r.gf?'• GF':''} ${r.difficulty?'• '+r.difficulty:''}</div>`);
   if(r.desc) w.document.write(`<p>${r.desc}</p>`);
   if(r.pairing) w.document.write(`<p><strong>Served with:</strong> ${r.pairing}</p>`);
-  w.document.write(`<h2>Ingredients</h2><ul>`);
-  (r.ingredients||[]).forEach(ing => w.document.write(`<li>${ing.qty ? '<strong>'+ing.qty+'</strong> — ' : ''}${ing.name||ing}</li>`));
+  w.document.write('<h2>Ingredients</h2><ul>');
+  (r.butcherItems||[]).forEach(b => w.document.write('<li style="color:#C07070"><strong>'+(b.qty||'')+'</strong>'+(b.qty?' — ':'')+' '+(b.cut||b.name||b)+' 🥩</li>'));
+  (r.ingredients||[]).filter(ing=>!isButcherIngredient(ing.name||ing)).forEach(ing => {
+    var dq=ing.cookQty||ing.qty||''; var gq=ing.qty||''; var cq=ing.cookQty||'';
+    var buyNote=(cq&&gq&&cq!==gq)?' <em style="color:#aaa;font-size:12px">(buy: '+gq+')</em>':''; 
+    w.document.write('<li>'+(dq?'<strong>'+dq+'</strong> — ':'')+' '+(ing.name||ing)+buyNote+'</li>');
+  });
   w.document.write(`</ul><h2>Instructions</h2><ol>`);
   (r.steps||[]).forEach(s => w.document.write(`<li>${s}</li>`));
   w.document.write(`</ol>`);
