@@ -2946,7 +2946,7 @@ function renderGroceryList(ryanLunches,jennLunch){
         if(agg.has(addNk)){
           const ex=agg.get(addNk);
           if(!ex.sources.includes(label)) ex.sources.push(label);
-        } else agg.set(addNk,{name:sub.add,qty:sub.qty||'1',sources:[label]});
+        } else agg.set(addNk,{name:sub.add,qty:sub.purchaseQty||sub.qty||'1',sources:[label]});
       });
     });
     // Also include auto-assigned veggie sides
@@ -3215,7 +3215,7 @@ function renderButcherList(ryanLunches,jennLunch){
     }
     const scaleFactor=meal.makeDouble?parseScaleFactor(meal.makeDoubleNote):1;
     (recipe.butcherItems||[]).forEach(bi=>{
-      const scaledQty=scaleQty(bi.qty||'',scaleFactor);
+      const scaledQty=scaleQty(bi.purchaseQty||bi.qty||'',scaleFactor);
       const sourceLabel=recipe.name+(scaleFactor>1?` (×${scaleFactor})`:'');
       const lc=bi.cut.toLowerCase();
       if(lc.includes('chicken')) chicken.push({cut:bi.cut,qty:scaledQty,source:sourceLabel});
