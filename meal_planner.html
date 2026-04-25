@@ -3240,20 +3240,22 @@ function doneShoppingClick(){
   }
 }
 
+const BUTCHER_CANONICAL={chicken_breast:'Boneless Skinless Chicken Breasts',chicken_thigh:'Chicken Thighs',chicken_drumstick:'Chicken Drumsticks',chicken_supreme:'Chicken Supremes',chicken_wing:'Chicken Wings',turkey_breast:'Turkey Breast',turkey_ground:'Ground Turkey',pork_chop:'Pork Chops',pork_tenderloin:'Pork Tenderloin',ground_beef:'Ground Beef'};
 function normalizeCutKey(cut){
-  return cut.toLowerCase().replace(/\s+or\s+\w+/gi,'').replace(/[()]/g,'').trim();
+  const lc=cut.toLowerCase().replace(/[()]/g,'').trim();
+  if(/chicken/.test(lc)){if(/breast/.test(lc))return 'chicken_breast';if(/thigh/.test(lc))return 'chicken_thigh';if(/drumstick/.test(lc))return 'chicken_drumstick';if(/supreme/.test(lc))return 'chicken_supreme';if(/wing/.test(lc))return 'chicken_wing';return 'chicken_other';}
+  if(/turkey/.test(lc)){if(/breast/.test(lc))return 'turkey_breast';if(/ground/.test(lc))return 'turkey_ground';return 'turkey_other';}
+  if(/pork/.test(lc)){if(/chop/.test(lc))return 'pork_chop';if(/tenderloin/.test(lc))return 'pork_tenderloin';return 'pork_other';}
+  if(/ground.*beef|beef.*ground/.test(lc))return 'ground_beef';
+  return lc.replace(/\s+or\s+\w+/gi,'').trim();
 }
 function aggregateButcherItems(items){
   const map=new Map();
   items.forEach(item=>{
     const key=normalizeCutKey(item.cut);
-    if(map.has(key)){
-      const ex=map.get(key);
-      ex.qty=tryAddQtys(ex.qty,item.qty);
-      ex.sources.push(item.source);
-    } else {
-      map.set(key,{cut:item.cut,qty:item.qty,sources:[item.source]});
-    }
+    const displayName=BUTCHER_CANONICAL[key]||item.cut;
+    if(map.has(key)){const ex=map.get(key);ex.qty=tryAddQtys(ex.qty,item.qty);ex.sources.push(item.source);}
+    else{map.set(key,{cut:displayName,qty:item.qty,sources:[item.source]});}
   });
   return [...map.values()];
 }
