@@ -2717,6 +2717,12 @@ const INGREDIENT_ALIASES = {
   'lemons (for waldorf)':'lemon',
   'lemon (juice and zest)':'lemon',
   'lemon juice (optional)':'lemon juice',
+  'tamari (gf soy sauce)':'tamari',
+  'tamari or coconut aminos':'tamari',
+  'soy sauce or tamari':'soy sauce',
+  'tamari or soy sauce':'tamari',
+  'coconut aminos or tamari':'coconut aminos',
+  'apple cider vinegar or white vinegar':'apple cider vinegar',
 };
 function normalizeIngredientKey(name){
   const l=name.toLowerCase().trim();
@@ -2978,7 +2984,7 @@ function renderGroceryList(ryanLunches,jennLunch){
       const scaleFactor=meal.makeDouble?parseScaleFactor(meal.makeDoubleNote):1;
       (recipe.ingredients||[]).forEach(ing=>{
         const n=ing.name||ing;
-        const rawQ=ing.qty||ing.cookQty||'';
+        const rawQ=ing.qty||'';// qty:"" means pantry/don't-buy; never fall back to cookQty
         const q=scaleQty(rawQ,scaleFactor);
         if(isButcherIngredient(n)) return;
         if(ingMatchesExclusion(n,exclusions)) return;
