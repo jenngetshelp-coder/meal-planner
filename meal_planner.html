@@ -1733,14 +1733,23 @@ CONSECUTIVE COOKING HARD LIMIT:
 - NEVER schedule more than 2 cook nights in a row. After 2 cook nights, the next night MUST be leftovers.
 
 COOK NIGHT DIFFICULTY (within Jenn's chosen ${cookNights} nights):
-- Mix it up: some nights can be proper full recipes (curry, one-pot), others should be quick wins (BBQ, pan-sear under 15 min active)
-- A "quick" cook night = protein on grill or protein in pan, minimal prep, total active time under 15 min
-- A "full recipe" night = full recipe with sauce, multiple steps, 30–60 min. These are fine for ${cookNights>=3?"up to half":"one of"} the cook nights.
-- REAL COOK TIME HONESTY: A recipe that says "30 min" but requires dicing 2 onions, mincing garlic, searing chicken, then simmering a sauce is realistically 55–70 min for a tired parent. Be honest about difficulty. When in doubt, round up.IFFICULTY label (include in every planned meal entry):
-- "cook" = full recipe, 45+ min total time from fridge to table — only on Big Cook Week
-- "medium" = 25–40 min total, moderate prep — maximum 2 cook nights per normal week
-- "easy" = BBQ, quick sear, or assembly — under 20 min active time, protein does not require chopping anything first
-- "leftovers" = reheating/repurposing — no real cooking`;
+- The DEFAULT for every cook night should be EASY — BBQ, quick pan protein, something that takes under 20 min active time
+- Only include 1 "medium" or "cook" difficulty night maximum, and only if cookNights >= 3
+- Jenn dreads cooking every night. Even on cook nights, err dramatically toward easy. A BBQ chicken breast with a marinade IS a good dinner.
+- REAL COOK TIME HONESTY: A recipe that says "30 min" but requires dicing 2 onions, mincing garlic, searing chicken, then simmering a sauce is realistically 55–70 min for a tired parent. Be honest about difficulty. When in doubt, round up.
+
+DIFFICULTY label (include in every planned meal entry):
+- "cook" = full recipe, 45+ min total time from fridge to table — MAX 1 PER WEEK, only if Jenn has 3+ cook nights
+- "medium" = 25–40 min total, moderate prep — MAX 1 PER WEEK
+- "easy" = BBQ, quick sear, or assembly — under 20 min active time — THIS SHOULD BE MOST COOK NIGHTS
+- "leftovers" = reheating/repurposing — no real cooking
+
+MANDATORY FINAL CHECK BEFORE RESPONDING:
+1. Count every day with difficulty "cook", "medium", or "easy". Must equal exactly ${cookNights}.
+2. Remaining ${leftoverNights} days MUST be "leftovers" or type "skip".
+3. If cook night count exceeds ${cookNights}, convert extras to leftovers NOW before returning.
+4. More than 1 "cook" difficulty night? Downgrade extras to "easy".
+A wrong cook night count = wrong answer.`;
 
 
   return `Plan dinners for the Maund family, week of ${fmtDate(dates[0])} to ${fmtDate(dates[6])}.
@@ -1778,6 +1787,7 @@ DINNER RULES:
 - Claire (child) does NOT like cooked carrots — do not serve roasted/cooked carrots as a standalone side dish. Carrots are fine IN a recipe (e.g. soup, curry, fried rice) — Claire just doesn't want them as a plain roasted/steamed side.
 - Jenn LOVES carrots and they are her favourite vegetable. Never create a jennVegSub that skips or replaces carrots.
 - Valid vegetable options (use a MIX across the week, not the same 2-3 repeatedly): snap peas, bell peppers, corn, green beans, frozen mixed veg, steamed broccoli, asparagus, spinach, cherry tomatoes, cucumbers, celery. Do NOT suggest standalone salad nights — the app automatically pairs a side salad with dinners that need one.
+- SIDES IN INGREDIENT LIST (CRITICAL): If a meal needs a side (e.g. "Jerk Chicken with BBQ Corn"), you MUST include ALL the side's ingredients in that day's ingredient array. Never mention a pairing without including everything needed to make it. The grocery list is built from ingredients only — if it's not in the array, Jenn won't have it.
 - MAX 2 starch-based meals this week (rice dishes, enchiladas, tortillas) — not every meal needs a starch. Pair proteins with vegetables, salads, or roasted veg instead. Rice is a side option, not a default.
 - NO beef when Ryan is HOME
 - NO slow cooker — all meals cooked at dinner time, quick prep preferred
@@ -1789,6 +1799,7 @@ DINNER RULES:
 - Meals should create leftovers when possible
 - Prefer saucy or mixed-in chicken dishes to avoid "chicken again" fatigue (think: butter chicken, cacciatore, curry, chimichurri, shawarma bowls)
 - For chicken shawarma: ALWAYS make it as a BOWL — boneless skinless chicken (thighs or breasts), served over rice with diced cucumber, cherry tomatoes, and hummus. NEVER bone-in, NEVER sheet pan style with roasted peppers/snap peas on the side
+- CUTTING AND BROWNING CHICKEN IS JENN'S MOST HATED TASK: Never suggest a recipe that requires (1) cutting raw chicken into pieces AND (2) browning those pieces in a pan. This rules out Butter Chicken and any similar recipe as a regular suggestion — it requires cutting thighs into chunks then searing batches. These recipes are ONLY acceptable if Jenn explicitly marks a night as a big cook with extra time. For easy and medium nights, use: whole breasts on BBQ, whole chicken pieces in the oven, or ground turkey/chicken. The protein should go in as-is — no cutting, no browning in batches.
 - CHICKEN THIGHS — MAX 1 PER WEEK, SOMETIMES ZERO: The recipe library is heavily loaded with thigh-based recipes. NEVER suggest more than one thigh meal in the same 7-day plan. The following recipes all use thighs — treat this list as a "pick at most one" pool: Butter Chicken, Coconut Curry Chicken, Chicken Shawarma Bowls, Chimichurri Chicken Thighs, Chicken Cacciatore, Arroz con Pollo, Lemon Herb Roasted Chicken Thighs, Mediterranean Chicken Drumsticks, Filipino Chicken Adobo, Harissa Chicken Thighs, One-Pan Moroccan Chicken. Use chicken BREASTS, ground turkey, or pork for the other protein nights.
 - CREAM AND COCONUT CREAM — OCCASIONAL ONLY: Butter Chicken, Coconut Curry, and any recipe with heavy cream or 2+ cans coconut milk are treat meals, not regular rotation. Max 1 per week. On Normal Mix or Keep It Quick weeks, skip them entirely and use lighter sauces (tomato-based, herb-based, chimichurri, vinaigrette, light broth sauces). The family is trying to eat healthy — cream-heavy every week does not fit that goal.
 
@@ -1977,6 +1988,8 @@ function resolveChosenMeal(day, dayIdx){
 
   const parts=rawName.split(',').map(s=>s.trim()).filter(Boolean);
   const matched=[];
+  // Words that mean "don't look this up" — user is describing an easy night, not a library recipe
+  const BYPASS_WORDS=new Set(['premade','pre-made','ordered','delivery','takeout','takeaway','frozen','bought','store-bought','storebought','precooked','pre-cooked']);
   // Word-overlap fuzzy match: ignore common stop words, count significant word overlaps
   const STOP_WORDS=new Set(['a','an','the','and','or','with','in','of','for','on','to','is','are','my','our','its']);
   function sigWords(str){
@@ -1984,11 +1997,19 @@ function resolveChosenMeal(day, dayIdx){
   }
   function wordOverlapScore(typedWords, recipeName){
     const recWords=sigWords(recipeName);
-    if(recWords.length===0) return 0;
-    const matches=typedWords.filter(w=>recWords.some(rw=>rw.startsWith(w)||w.startsWith(rw)));
-    return matches.length/Math.min(typedWords.length,recWords.length);
+    if(recWords.length===0||typedWords.length===0) return 0;
+    const matchCount=typedWords.filter(w=>recWords.some(rw=>rw.startsWith(w)||w.startsWith(rw))).length;
+    if(matchCount===0) return 0;
+    // F1-style harmonic mean of precision and recall — prevents a single generic word
+    // like "chicken" or "salad" from matching a 5-word recipe name
+    const precision=matchCount/typedWords.length;
+    const recall=matchCount/recWords.length;
+    return 2*precision*recall/(precision+recall);
   }
   parts.forEach(part=>{
+    // Bypass: if any word signals a non-library item (premade, ordered, etc.), skip lookup
+    const partWords=part.toLowerCase().replace(/[^a-z0-9\s]/g,'').split(/\s+/);
+    if(partWords.some(w=>BYPASS_WORDS.has(w))) return;
     const typedWords=sigWords(part);
     if(typedWords.length===0) return;
     // First try exact/contains match
@@ -1998,14 +2019,17 @@ function resolveChosenMeal(day, dayIdx){
       rec.name.toLowerCase().includes(pl) ||
       pl.includes(rec.name.toLowerCase())
     );
-    // Fallback: word-overlap (need ≥50% overlap)
+    // Fallback: F1 word-overlap — require score ≥0.55 AND ≥2 matching words when query is 3+ words
     if(!r){
       let bestScore=0, bestRec=null;
       FALLBACK_RECIPES.forEach(rec=>{
         const score=wordOverlapScore(typedWords, rec.name);
         if(score>bestScore){bestScore=score;bestRec=rec;}
       });
-      if(bestScore>=0.5) r=bestRec;
+      const recWords=bestRec?sigWords(bestRec.name):[];
+      const matchCount=bestRec?typedWords.filter(w=>recWords.some(rw=>rw.startsWith(w)||w.startsWith(rw))).length:0;
+      const minMatchesOk=typedWords.length<3||matchCount>=2;
+      if(bestScore>=0.55&&minMatchesOk) r=bestRec;
     }
     if(r && !matched.find(m=>m.id===r.id)) matched.push(r);
   });
