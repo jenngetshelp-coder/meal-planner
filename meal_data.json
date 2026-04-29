@@ -1,28 +1,170 @@
 {
   "schema": "maund-meal-data-v1",
   "lastUpdated": "2026-04-29",
-  "lastSyncedBy": "initial-seed",
+  "lastSyncedBy": "weekly-recipe-research",
   "mealHistory": [
-    {"date":"2026-03-24","meal":"Lemon Pepper Chicken (BBQ) + leftover potatoes + pear salad","rating":3,"liked":"Easy","change":"Tired of chicken+salad rut — wants marinades/sauces","keepOrDrop":"Modify"},
-    {"date":"2026-03-25","meal":"Pork tenderloin (Greek seasoning) + Little Potato Co. baby potatoes + frozen mixed veg","rating":3,"liked":"Low prep","change":"Not flavourful — needs sauce/marinade","keepOrDrop":"Modify"},
-    {"date":"2026-03-29","meal":"Turkey Tornados","rating":4,"liked":"Flavour was good","change":"Long prep but worth it","keepOrDrop":"Keep"},
-    {"date":"2026-03-30","meal":"Chimichurri Chicken Drumsticks","rating":3,"liked":"Good chimichurri","change":"Switch to thighs/breasts","keepOrDrop":"Modify"},
-    {"date":"2026-03-31","meal":"BBQ Italian Sausage with Salad","rating":3,"liked":"Easy","change":"Use occasionally","keepOrDrop":"Keep"},
-    {"date":"2026-04-01","meal":"Butter Chicken (Jenn's Version) + jasmine rice + snap peas","rating":5,"liked":"Restaurant quality","change":"Always make double","keepOrDrop":"Keep"},
-    {"date":"2026-04-02","meal":"Chicken Shawarma Bowls","rating":4,"liked":"Flavourful","change":"","keepOrDrop":"Keep"},
-    {"date":"2026-04-04","meal":"Leftover Butter Chicken with salad","rating":4,"liked":"No cooking","change":"","keepOrDrop":"One-off"},
-    {"date":"2026-04-08","meal":"Beef Bulgogi with edamame","rating":4,"liked":"Quick to cook","change":"","keepOrDrop":"Keep"},
-    {"date":"2026-04-11","meal":"Chimichurri Chicken Thighs (improved, BBQ)","rating":4,"liked":"Flavourful","change":"Sauce needed 2x garlic, lemon, salt","keepOrDrop":"Keep"},
-    {"date":"2026-04-13","meal":"Thai Peanut Chicken Lettuce Wraps","rating":4,"liked":"Yummy","change":"Convert to rice bowl","keepOrDrop":"Modify"},
-    {"date":"2026-04-16","meal":"Pork Tenderloin (Greek seasoning) + Little Potato Co. potatoes + mixed veg","rating":3,"liked":"Quick","change":"Pork is plain — needs marinade","keepOrDrop":"Modify"},
-    {"date":"2026-04-20","meal":"Coconut Curry Chicken with frozen mixed veg over rice","rating":4,"liked":"Liked the sauce","change":"Brown step too long","keepOrDrop":"Keep"},
-    {"date":"2026-04-21","meal":"Coconut Curry Chicken leftovers with salad","rating":3,"liked":"Fast","change":"Chicken didn't reheat well","keepOrDrop":"One-off"},
-    {"date":"2026-04-23","meal":"Harissa Pork Tenderloin with Garlic Green Beans (BBQ)","rating":3,"liked":"Outside flavour good","change":"Inside bland — marinade overnight","keepOrDrop":"Modify"}
+    {
+      "date": "2026-03-24",
+      "meal": "Lemon Pepper Chicken (BBQ) + leftover potatoes + pear salad",
+      "rating": 3,
+      "liked": "Easy",
+      "change": "Tired of chicken+salad rut â wants marinades/sauces",
+      "keepOrDrop": "Modify"
+    },
+    {
+      "date": "2026-03-25",
+      "meal": "Pork tenderloin (Greek seasoning) + Little Potato Co. baby potatoes + frozen mixed veg",
+      "rating": 3,
+      "liked": "Low prep",
+      "change": "Not flavourful â needs sauce/marinade",
+      "keepOrDrop": "Modify"
+    },
+    {
+      "date": "2026-03-29",
+      "meal": "Turkey Tornados",
+      "rating": 4,
+      "liked": "Flavour was good",
+      "change": "Long prep but worth it",
+      "keepOrDrop": "Keep"
+    },
+    {
+      "date": "2026-03-30",
+      "meal": "Chimichurri Chicken Drumsticks",
+      "rating": 3,
+      "liked": "Good chimichurri",
+      "change": "Switch to thighs/breasts",
+      "keepOrDrop": "Modify"
+    },
+    {
+      "date": "2026-03-31",
+      "meal": "BBQ Italian Sausage with Salad",
+      "rating": 3,
+      "liked": "Easy",
+      "change": "Use occasionally",
+      "keepOrDrop": "Keep"
+    },
+    {
+      "date": "2026-04-01",
+      "meal": "Butter Chicken (Jenn's Version) + jasmine rice + snap peas",
+      "rating": 5,
+      "liked": "Restaurant quality",
+      "change": "Always make double",
+      "keepOrDrop": "Keep"
+    },
+    {
+      "date": "2026-04-02",
+      "meal": "Chicken Shawarma Bowls",
+      "rating": 4,
+      "liked": "Flavourful",
+      "change": "",
+      "keepOrDrop": "Keep"
+    },
+    {
+      "date": "2026-04-04",
+      "meal": "Leftover Butter Chicken with salad",
+      "rating": 4,
+      "liked": "No cooking",
+      "change": "",
+      "keepOrDrop": "One-off"
+    },
+    {
+      "date": "2026-04-08",
+      "meal": "Beef Bulgogi with edamame",
+      "rating": 4,
+      "liked": "Quick to cook",
+      "change": "",
+      "keepOrDrop": "Keep"
+    },
+    {
+      "date": "2026-04-11",
+      "meal": "Chimichurri Chicken Thighs (improved, BBQ)",
+      "rating": 4,
+      "liked": "Flavourful",
+      "change": "Sauce needed 2x garlic, lemon, salt",
+      "keepOrDrop": "Keep"
+    },
+    {
+      "date": "2026-04-13",
+      "meal": "Thai Peanut Chicken Lettuce Wraps",
+      "rating": 4,
+      "liked": "Yummy",
+      "change": "Convert to rice bowl",
+      "keepOrDrop": "Modify"
+    },
+    {
+      "date": "2026-04-16",
+      "meal": "Pork Tenderloin (Greek seasoning) + Little Potato Co. potatoes + mixed veg",
+      "rating": 3,
+      "liked": "Quick",
+      "change": "Pork is plain â needs marinade",
+      "keepOrDrop": "Modify"
+    },
+    {
+      "date": "2026-04-20",
+      "meal": "Coconut Curry Chicken with frozen mixed veg over rice",
+      "rating": 4,
+      "liked": "Liked the sauce",
+      "change": "Brown step too long",
+      "keepOrDrop": "Keep"
+    },
+    {
+      "date": "2026-04-21",
+      "meal": "Coconut Curry Chicken leftovers with salad",
+      "rating": 3,
+      "liked": "Fast",
+      "change": "Chicken didn't reheat well",
+      "keepOrDrop": "One-off"
+    },
+    {
+      "date": "2026-04-23",
+      "meal": "Harissa Pork Tenderloin with Garlic Green Beans (BBQ)",
+      "rating": 3,
+      "liked": "Outside flavour good",
+      "change": "Inside bland â marinade overnight",
+      "keepOrDrop": "Modify"
+    }
   ],
-  "newToTry": [],
+  "newToTry": [
+    {
+      "name": "Grilled Cumin Spiced Pork Tenderloin",
+      "protein": "pork",
+      "season": "summer",
+      "time": 30,
+      "why": "Bold spice rub, whole tenderloin on the BBQ — zero prep stress",
+      "source": "https://www.skinnytaste.com/grilled-cumin-spiced-pork-tenderloin/"
+    },
+    {
+      "name": "Turkey Cutlets in White Wine Sauce",
+      "protein": "turkey",
+      "season": "all",
+      "time": 20,
+      "why": "Herby white wine pan sauce, 20 min, GF — fills the turkey gap",
+      "source": "https://www.cookincanuck.com/easy-turkey-cutlets-in-white-wine-sauce/"
+    },
+    {
+      "name": "Creamy Chicken Skillet with Asparagus & Peas",
+      "protein": "breast",
+      "season": "summer",
+      "time": 50,
+      "why": "Spring asparagus + peas, cream sauce, whole breasts, one pan",
+      "source": "https://themodernproper.com/creamy-chicken-skillet-with-asparagus-peas"
+    }
+  ],
   "failurePatterns": [
-    {"profile":"honey garlic","reason":"Two dishes (Honey Garlic Chicken, Honey Garlic Pork Tenderloin) rated 0–1/5","status":"banned"},
-    {"profile":"sun-dried tomato","reason":"Tuscan / Marry Me Chicken not loved","status":"banned"},
-    {"profile":"teriyaki","reason":"Jenn explicit dislike","status":"banned"}
+    {
+      "profile": "honey garlic",
+      "reason": "Two dishes (Honey Garlic Chicken, Honey Garlic Pork Tenderloin) rated 0â1/5",
+      "status": "banned"
+    },
+    {
+      "profile": "sun-dried tomato",
+      "reason": "Tuscan / Marry Me Chicken not loved",
+      "status": "banned"
+    },
+    {
+      "profile": "teriyaki",
+      "reason": "Jenn explicit dislike",
+      "status": "banned"
+    }
   ]
 }
