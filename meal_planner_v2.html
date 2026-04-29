@@ -544,6 +544,8 @@ input, textarea { font-family: inherit; }
         <div class="variety-row" id="variety-row"></div>
       </div>
 
+      <div id="failure-banner"></div>
+
       <div class="card">
         <h2>
           <span class="dot"></span>Recipe Deck
@@ -716,9 +718,10 @@ function isButcherIngredient(name){
 }
 
 // ============================================================
-// DATA: MEAL HISTORY (compacted from v1)
+// DATA: MEAL HISTORY (compacted from v1) — FALLBACK ONLY
+// At runtime, fetched fresh from meal_data.json — see init()
 // ============================================================
-const MEAL_HISTORY_DATA = [
+let MEAL_HISTORY_DATA = [
   {date:"2026-03-24",meal:"Lemon Pepper Chicken (BBQ) + leftover potatoes + pear salad",rating:3,liked:"Easy",change:"Tired of chicken+salad rut — wants marinades/sauces",keepOrDrop:"Modify"},
   {date:"2026-03-25",meal:"Pork tenderloin (Greek seasoning) + Little Potato Co. baby potatoes + frozen mixed veg",rating:3,liked:"Low prep",change:"Not flavourful — needs sauce/marinade",keepOrDrop:"Modify"},
   {date:"2026-03-29",meal:"Turkey Tornados",rating:4,liked:"Flavour was good",change:"Long prep but worth it",keepOrDrop:"Keep"},
@@ -836,10 +839,15 @@ const RECIPES = [
 ];
 
 // ============================================================
-// DERIVE: ratings, last-cooked from MEAL_HISTORY
+// DERIVE: ratings, last-cooked, leftover-viability from MEAL_HISTORY
 // ============================================================
 function computeRecipeStats() {
   const today = new Date();
+  // First clear computed fields (in case we re-run after fetch)
+  RECIPES.forEach(r => {
+    r._avgRating = null; r._lastCooked = null; r._weeksSince = 99; r._freshScore = 0;
+    // Don't clear baked-in modificationNote/leftoverViability — only auto-fill if empty
+  });
   RECIPES.forEach(r => {
     const matches = MEAL_HISTORY_DATA.filter(m => {
       const ml = m.meal.toLowerCase();
@@ -853,15 +861,35 @@ function computeRecipeStats() {
       const last = dates.length ? new Date(Math.max(...dates.map(d=>d.getTime()))) : null;
       r._lastCooked = last;
       r._weeksSince = last ? Math.floor((today - last) / (7*24*60*60*1000)) : 99;
-      // Pull mod note from latest match if recipe doesn't have one baked in
       if (!r.modificationNote) {
         const latestModify = matches.sort((a,b)=>new Date(b.date)-new Date(a.date)).find(m => m.keepOrDrop && m.keepOrDrop.toLowerCase().includes('modify'));
         if (latestModify && latestModify.change) r.modificationNote = latestModify.change;
       }
-    } else {
-      r._avgRating = null;
-      r._lastCooked = null;
-      r._weeksSince = 99;
+      // Auto-derive leftoverViability if not baked in
+      if (!r.leftoverViability) {
+        // Find leftover entries that came within 3 days after a cook of this recipe
+        const leftoverRatings = [];
+        matches.forEach(cookMatch => {
+          const cookDate = new Date(cookMatch.date);
+          MEAL_HISTORY_DATA.forEach(maybeLeftover => {
+            const lm = maybeLeftover.meal.toLowerCase();
+            if (!lm.includes('leftover')) return;
+            const lDate = new Date(maybeLeftover.date);
+            const daysAfter = (lDate - cookDate) / (24*60*60*1000);
+            if (daysAfter < 0 || daysAfter > 3) return;
+            const words = r.name.toLowerCase().split(/[\s\-(]+/).filter(w => w.length > 3);
+            if (words.some(w => lm.includes(w))) {
+              const rating = parseFloat(maybeLeftover.rating);
+              if (rating > 0) leftoverRatings.push(rating);
+            }
+          });
+        });
+        if (leftoverRatings.length >= 1) {
+          const avgLeft = leftoverRatings.reduce((a,b)=>a+b,0)/leftoverRatings.length;
+          if (avgLeft >= 4) r.leftoverViability = 'good';
+          else if (avgLeft <= 3) r.leftoverViability = 'bad';
+        }
+      }
     }
     r._freshScore = (r._avgRating || 0) * Math.min(r._weeksSince, 10);
   });
@@ -886,6 +914,8 @@ const STATE = {
   cmDayIndex: -1,
   cmCurrentTab: 'manual',
   cmGenerated: null,
+  failurePatterns: [],
+  dataSource: 'embedded',  // 'fetched' once meal_data.json loads
 };
 
 function getMonday(d) {
@@ -1726,10 +1756,56 @@ function wireEvents() {
 }
 
 // ============================================================
+// FETCH meal_data.json — server-side data layer
+// ============================================================
+async function fetchMealData() {
+  try {
+    const r = await fetch('./meal_data.json?_=' + Date.now(), {cache:'no-store'});
+    if (!r.ok) throw new Error('status ' + r.status);
+    const d = await r.json();
+    if (Array.isArray(d.mealHistory) && d.mealHistory.length > 0) {
+      MEAL_HISTORY_DATA = d.mealHistory;
+    }
+    if (Array.isArray(d.newToTry)) {
+      if (!STATE.newToTry || STATE.newToTry.length === 0) {
+        STATE.newToTry = d.newToTry;
+      }
+    }
+    if (Array.isArray(d.failurePatterns)) {
+      STATE.failurePatterns = d.failurePatterns;
+    }
+    STATE.dataSource = 'fetched';
+    STATE.dataLastUpdated = d.lastUpdated || null;
+    return true;
+  } catch (e) {
+    console.warn('meal_data.json fetch failed, using embedded:', e.message);
+    STATE.dataSource = 'embedded';
+    return false;
+  }
+}
+
+function renderFailureBanner() {
+  const wrap = document.getElementById('failure-banner');
+  if (!wrap) return;
+  if (!STATE.failurePatterns || STATE.failurePatterns.length === 0) {
+    wrap.innerHTML = '';
+    return;
+  }
+  const banned = STATE.failurePatterns.filter(p => p.status === 'banned');
+  if (banned.length === 0) { wrap.innerHTML = ''; return; }
+  wrap.innerHTML = `
+    <div style="background:var(--coral-soft);border:1px solid var(--coral);border-radius:10px;padding:8px 14px;margin-bottom:14px;font-size:12px;color:var(--coral-dark);display:flex;align-items:center;gap:8px;flex-wrap:wrap">
+      <strong>🚫 Banned profiles (auto-flagged):</strong>
+      ${banned.map(p => `<span style="background:#FFF;padding:2px 8px;border-radius:8px;font-weight:600">${p.profile}</span>`).join('')}
+    </div>`;
+}
+
+// ============================================================
 // INIT
 // ============================================================
-function init() {
+async function init() {
   loadState();
+  await fetchMealData();
   computeRecipeStats();
   renderTopbar();
   renderSetup();
@@ -1737,6 +1813,7 @@ function init() {
   renderTabs();
   renderDeckContent();
   renderGrocery();
+  renderFailureBanner();
   wireEvents();
 }
 init();
