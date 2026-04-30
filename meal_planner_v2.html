@@ -762,11 +762,11 @@ const RECIPES = [
   {id:9,name:"Chicken Fried Rice (leftover meal)",protein:"breast",season:"all",time:15,bbq:false,easy:true,cook:false,thigh:false,leftoverMeal:true,
    ingredients:[{name:"Cooked chicken breasts (leftover)",qty:"2 breasts"},{name:"Day-old jasmine rice",qty:""},{name:"Carrots",qty:"1 bag"},{name:"Frozen peas",qty:"1 bag"},{name:"Green onions",qty:"1 bunch"},{name:"Eggs",qty:"1 dozen"}],
    butcherItems:[]},
-  {id:11,name:"Butter Chicken (Jenn's Version)",protein:"thigh",season:"winter",time:90,bbq:false,easy:false,cook:true,thigh:true,creamHeavy:true,leftoverViability:"good",
-   modificationNote:"Always make double — leftovers are excellent.",
+  {id:11,name:"Butter Chicken (Jenn's Version)",protein:"thigh",season:"winter",time:90,bbq:false,easy:false,cook:true,thigh:true,creamHeavy:true,leftoverViability:"good",frequencyWeeks:4,
+   modificationNote:"Always make double — leftovers are excellent. Treat meal — max once a month.",
    ingredients:[{name:"Boneless skinless chicken thighs",qty:"4 lbs"},{name:"Butter",qty:""},{name:"Garlic",qty:"1 head"},{name:"Fresh ginger",qty:"1 small knob"},{name:"Crushed tomatoes",qty:"2 large cans (796ml)"},{name:"Coconut milk (full fat)",qty:"3 cans (400ml)"},{name:"Heavy cream",qty:"1 small carton"},{name:"Jasmine rice",qty:"1 large bag"},{name:"Snap peas",qty:"2 bags"},{name:"Fresh cilantro",qty:"1 small bunch"}],
    butcherItems:[{cut:"Boneless Skinless Chicken Thighs",qty:"4 lbs"}]},
-  {id:12,name:"Coconut Curry Chicken",protein:"thigh",season:"winter",time:35,bbq:false,easy:false,cook:true,thigh:true,creamHeavy:true,leftoverViability:"bad",
+  {id:12,name:"Coconut Curry Chicken",protein:"thigh",season:"winter",time:35,bbq:false,easy:false,cook:true,thigh:true,creamHeavy:true,leftoverViability:"bad",frequencyWeeks:3,
    modificationNote:"Shorten browning step — 30 min was too long. Try higher heat or smaller pieces.",
    ingredients:[{name:"Boneless skinless chicken thighs",qty:"4 lbs"},{name:"Coconut milk (canned)",qty:"2 cans (400ml)"},{name:"Tomato paste",qty:"1 small can"},{name:"Yellow onions",qty:"2"},{name:"Garlic",qty:"1 head"},{name:"Fresh ginger",qty:"1 knob"},{name:"Snap peas",qty:"1 bag (300g)"},{name:"Jasmine rice",qty:"1 bag"},{name:"Fresh cilantro",qty:"1 bunch"}],
    butcherItems:[{cut:"Boneless Skinless Chicken Thighs",qty:"4 lbs"}]},
@@ -836,6 +836,10 @@ const RECIPES = [
    modificationNote:"Replaces old Oven Pork Tenderloin — marinade is mandatory not optional. Garlic/lemon/Dijon/rosemary.",
    ingredients:[{name:"Pork tenderloin",qty:"1.5–2 lbs"},{name:"Garlic",qty:"1 head"},{name:"Lemons",qty:"2"},{name:"Fresh rosemary",qty:"1 sprig"},{name:"Baby potatoes (Little Potato Co.)",qty:"1 bag"},{name:"Frozen mixed veg",qty:"1 bag"}],
    butcherItems:[{cut:"Pork Tenderloin",qty:"1.5–2 lbs"}]},
+  {id:55,name:"Tuna Pesto Pasta",protein:"tuna",season:"all",time:20,bbq:false,easy:true,cook:false,thigh:false,ryanAway:true,frequencyWeeks:3,
+   modificationNote:"Couch night — Jenn + kids eat together on the couch with TV when Ryan is out. Family favourite, but rotate so people don't get sick of it.",
+   ingredients:[{name:"Pasta (regular, 1 bag)",qty:"1 bag"},{name:"Jarred pesto",qty:"2 jars"},{name:"Canned tuna",qty:"3–4 cans"},{name:"Parmesan cheese (optional, to top)",qty:"1 wedge"}],
+   butcherItems:[]},
 ];
 
 // ============================================================
@@ -892,6 +896,13 @@ function computeRecipeStats() {
       }
     }
     r._freshScore = (r._avgRating || 0) * Math.min(r._weeksSince, 10);
+    // Frequency check — flag if cooked too recently per recipe's frequencyWeeks
+    if (r.frequencyWeeks && r._weeksSince < r.frequencyWeeks) {
+      r._tooSoon = true;
+      r._tooSoonGap = r.frequencyWeeks - r._weeksSince;
+    } else {
+      r._tooSoon = false;
+    }
   });
 }
 
@@ -1181,6 +1192,24 @@ function renderVarietyChips() {
   if (bbqCount > 0) chips.push(`<span class="variety-chip info">🔥 ${bbqCount} BBQ-friendly</span>`);
   const creamCount = recipes.filter(r => r.creamHeavy).length;
   if (creamCount > 1) chips.push(`<span class="variety-chip warn">⚠️ ${creamCount} cream meals — max 1/wk</span>`);
+  // Frequency warnings — recipes scheduled too soon after last cook
+  const tooSoonRecipes = recipes.filter(r => r._tooSoon);
+  if (tooSoonRecipes.length > 0) {
+    const names = tooSoonRecipes.map(r => r.name).join(', ');
+    chips.push(`<span class="variety-chip warn" title="${names}">⏳ ${tooSoonRecipes.length} meal${tooSoonRecipes.length===1?'':'s'} repeat too soon</span>`);
+  }
+  // Ryan-home-only meal on Ryan-away day
+  const ryanIssues = [];
+  STATE.plan.forEach((day, i) => {
+    if (!day || !day.recipeId) return;
+    const r = RECIPES.find(x => x.id === day.recipeId);
+    if (!r) return;
+    if (r.ryanHomeOnly && !STATE.ryanHomeDays[i]) ryanIssues.push(`${r.name} on ${DAY_NAMES[i]} (Ryan away)`);
+    if (r.ryanAway && STATE.ryanHomeDays[i]) ryanIssues.push(`${r.name} on ${DAY_NAMES[i]} (Ryan home — has beef)`);
+  });
+  if (ryanIssues.length > 0) {
+    chips.push(`<span class="variety-chip warn" title="${ryanIssues.join('; ')}">⚠️ ${ryanIssues.length} Ryan conflict${ryanIssues.length===1?'':'s'}</span>`);
+  }
   const emptyCount = STATE.plan.filter(d => !d).length;
   if (emptyCount > 0) chips.push(`<span class="variety-chip info">${emptyCount} day${emptyCount===1?'':'s'} still empty</span>`);
   wrap.innerHTML = chips.join('');
@@ -1271,6 +1300,11 @@ function renderRecipeCard(r, freshTab) {
   let leftoverTag = '';
   if (r.leftoverViability === 'good') leftoverTag = `<span class="leftover-tag good">♻️ Great leftover</span>`;
   else if (r.leftoverViability === 'bad') leftoverTag = `<span class="leftover-tag bad">⚠️ Don't double-batch</span>`;
+  let tooSoonTag = '';
+  if (r._tooSoon) tooSoonTag = `<span class="leftover-tag bad">⏳ Just had this — usually wait ${r.frequencyWeeks}wk</span>`;
+  let ryanFlag = '';
+  if (r.ryanHomeOnly) ryanFlag = `<span class="leftover-tag" style="background:var(--blue-soft);color:var(--blue-dark)">👨 Ryan-home only</span>`;
+  else if (r.ryanAway) ryanFlag = `<span class="leftover-tag" style="background:var(--blue-soft);color:var(--blue-dark)">🚐 Ryan-away only</span>`;
   let modNote = '';
   if (r.modificationNote) modNote = `<div class="last-cook-note">📝 <strong>Note:</strong> ${r.modificationNote}</div>`;
 
@@ -1285,6 +1319,8 @@ function renderRecipeCard(r, freshTab) {
       ${bringBack}
       <div class="name">${r.name}</div>
       <div class="meta-row">${tags.join('')}</div>
+      ${tooSoonTag}
+      ${ryanFlag}
       ${leftoverTag}
       ${modNote}
       <div class="stats">
