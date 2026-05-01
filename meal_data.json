@@ -1,7 +1,7 @@
 {
   "schema": "maund-meal-data-v1",
-  "lastUpdated": "2026-04-30",
-  "lastSyncedBy": "weekly-recipe-research",
+  "lastUpdated": "2026-05-01",
+  "lastSyncedBy": "friday-meal-sync",
   "mealHistory": [
     {
       "date": "2026-03-24",
@@ -9,15 +9,17 @@
       "rating": 3,
       "liked": "Easy",
       "change": "Tired of chicken+salad rut",
-      "keepOrDrop": "Modify"
+      "keepOrDrop": "Modify",
+      "frequency": ""
     },
     {
       "date": "2026-03-25",
       "meal": "Pork tenderloin (Greek seasoning) + Little Potato Co. baby potatoes + frozen mixed veg",
       "rating": 3,
       "liked": "Low prep",
-      "change": "Not flavourful â needs sauce",
-      "keepOrDrop": "Modify"
+      "change": "Not flavourful — needs sauce",
+      "keepOrDrop": "Modify",
+      "frequency": ""
     },
     {
       "date": "2026-03-26",
@@ -25,15 +27,17 @@
       "rating": 2,
       "liked": "No cooking",
       "change": "Mediocre leftovers",
-      "keepOrDrop": "One-off"
+      "keepOrDrop": "One-off",
+      "frequency": ""
     },
     {
       "date": "2026-03-27",
       "meal": "Leftovers",
       "rating": 2,
-      "liked": "I didnât have to cook. I made salads and reheated leftovers",
+      "liked": "I didn’t have to cook. I made salads and reheated leftovers",
       "change": "The leftovers were from mediocre meals so no one wants to eat it again.",
-      "keepOrDrop": "One-off - we had it, not a regular"
+      "keepOrDrop": "One-off - we had it, not a regular",
+      "frequency": "\""
     },
     {
       "date": "2026-03-27",
@@ -41,15 +45,17 @@
       "rating": 1,
       "liked": "Nothing",
       "change": "The chicken was super blend and looks gross coming out of the oven.",
-      "keepOrDrop": "Remove it - not for us"
+      "keepOrDrop": "Remove it - not for us",
+      "frequency": "\""
     },
     {
       "date": "2026-03-28",
       "meal": "Fried rice",
       "rating": 3,
       "liked": "It was different than just eating chicken",
-      "change": "It wasnât very flavourful",
-      "keepOrDrop": "Try again with modifications"
+      "change": "It wasn’t very flavourful",
+      "keepOrDrop": "Try again with modifications",
+      "frequency": "\""
     },
     {
       "date": "2026-03-29",
@@ -57,15 +63,17 @@
       "rating": 4,
       "liked": "Flavour was good",
       "change": "Took a long time to make because I was searing the bacon first and then cooking in the oven.",
-      "keepOrDrop": "Keep it - add to regular rotation"
+      "keepOrDrop": "Keep it - add to regular rotation",
+      "frequency": "\""
     },
     {
       "date": "2026-03-30",
       "meal": "Chicken drumsticks",
       "rating": 3,
       "liked": "The flavour was good. I liked the chimichuri sauce.",
-      "change": "I had to marinate the night before. The family didnât love eating drumsticks. It took a really long time to cook.",
-      "keepOrDrop": "Try again with modifications"
+      "change": "I had to marinate the night before. The family didn’t love eating drumsticks. It took a really long time to cook.",
+      "keepOrDrop": "Try again with modifications",
+      "frequency": "\""
     },
     {
       "date": "2026-03-31",
@@ -73,7 +81,8 @@
       "rating": 3,
       "liked": "Very easy to cook. Low prep time",
       "change": "Feels like chicken and salad",
-      "keepOrDrop": "Keep it - add to regular rotation"
+      "keepOrDrop": "Keep it - add to regular rotation",
+      "frequency": "Occasionally"
     },
     {
       "date": "2026-04-01",
@@ -81,15 +90,17 @@
       "rating": 5,
       "liked": "It was flavourful.",
       "change": "It took 90 min to make. The recipe was terrible. I had to get help from Claude to salvage it. We have updated the recipe.",
-      "keepOrDrop": "Keep it - add to regular rotation"
+      "keepOrDrop": "Keep it - add to regular rotation",
+      "frequency": "Occasionally"
     },
     {
       "date": "2026-04-02",
       "meal": "Chicken shawarma bowls",
       "rating": 4,
-      "liked": "Flavourful. Didnât take too long to make.",
+      "liked": "Flavourful. Didn’t take too long to make.",
       "change": "\"",
-      "keepOrDrop": "Keep it - add to regular rotation"
+      "keepOrDrop": "Keep it - add to regular rotation",
+      "frequency": "Every 2–3 weeks"
     },
     {
       "date": "2026-04-03",
@@ -97,7 +108,8 @@
       "rating": 4,
       "liked": "No cooking. Just reheating.",
       "change": "\"",
-      "keepOrDrop": "Keep it - add to regular rotation"
+      "keepOrDrop": "Keep it - add to regular rotation",
+      "frequency": "Every 2–3 weeks"
     },
     {
       "date": "2026-04-04",
@@ -105,7 +117,8 @@
       "rating": 4,
       "liked": "No cooking!  And we liked the original meal",
       "change": "Too many chicken thighs this week.",
-      "keepOrDrop": "Keep it - add to regular rotation"
+      "keepOrDrop": "Keep it - add to regular rotation",
+      "frequency": "Occasionally"
     },
     {
       "date": "2026-04-05",
@@ -113,7 +126,8 @@
       "rating": 5,
       "liked": "Flavourful. Nice break from chicken and salad",
       "change": "It took 2 hours to make.",
-      "keepOrDrop": "Keep it - add to regular rotation"
+      "keepOrDrop": "Keep it - add to regular rotation",
+      "frequency": "Occasionally"
     },
     {
       "date": "2026-04-07",
@@ -121,7 +135,8 @@
       "rating": 4,
       "liked": "Quick and easy. Original meal was great. People liked leftovers.",
       "change": "Everything was good.",
-      "keepOrDrop": "Keep it - add to regular rotation"
+      "keepOrDrop": "Keep it - add to regular rotation",
+      "frequency": "Occasionally"
     },
     {
       "date": "2026-04-08",
@@ -129,7 +144,8 @@
       "rating": 3,
       "liked": "Quick and easy. No cooking",
       "change": "\"",
-      "keepOrDrop": "Keep it - add to regular rotation"
+      "keepOrDrop": "Keep it - add to regular rotation",
+      "frequency": "Occasionally"
     },
     {
       "date": "2026-04-08",
@@ -137,7 +153,8 @@
       "rating": 4,
       "liked": "Quick to cook",
       "change": "\"",
-      "keepOrDrop": "Keep it - add to regular rotation"
+      "keepOrDrop": "Keep it - add to regular rotation",
+      "frequency": "Every 2–3 weeks"
     },
     {
       "date": "2026-04-10",
@@ -145,7 +162,8 @@
       "rating": 3,
       "liked": "No cooking",
       "change": "Chicken was a bit dry",
-      "keepOrDrop": "One-off - we had it, not a regular"
+      "keepOrDrop": "One-off - we had it, not a regular",
+      "frequency": "\""
     },
     {
       "date": "2026-04-11",
@@ -153,7 +171,8 @@
       "rating": 4,
       "liked": "Flavourful",
       "change": "\"",
-      "keepOrDrop": "Keep it - add to regular rotation"
+      "keepOrDrop": "Keep it - add to regular rotation",
+      "frequency": "Every 2–3 weeks"
     },
     {
       "date": "2026-04-12",
@@ -161,15 +180,17 @@
       "rating": 5,
       "liked": "No cooking !!!!!",
       "change": "\"",
-      "keepOrDrop": "One-off - we had it, not a regular"
+      "keepOrDrop": "One-off - we had it, not a regular",
+      "frequency": "\""
     },
     {
       "date": "2026-04-13",
       "meal": "Thai Peanut Chicken Lettuce Wraps",
       "rating": 4,
       "liked": "It was yummy",
-      "change": "It took a while to make the sauce and chop everything. Itâs also very messy, which we donât love.",
-      "keepOrDrop": "Try again with modifications"
+      "change": "It took a while to make the sauce and chop everything. It’s also very messy, which we don’t love.",
+      "keepOrDrop": "Try again with modifications",
+      "frequency": "\""
     },
     {
       "date": "2026-04-14",
@@ -177,15 +198,17 @@
       "rating": 2,
       "liked": "Quick and easy",
       "change": "Tired of leftovers",
-      "keepOrDrop": "One-off - we had it, not a regular"
+      "keepOrDrop": "One-off - we had it, not a regular",
+      "frequency": "\""
     },
     {
       "date": "2026-04-15",
       "meal": "Leftover lettuce wraps in bowls",
       "rating": 3,
       "liked": "Easy",
-      "change": "Itâs messy",
-      "keepOrDrop": "One-off - we had it, not a regular"
+      "change": "It’s messy",
+      "keepOrDrop": "One-off - we had it, not a regular",
+      "frequency": "\""
     },
     {
       "date": "2026-04-16",
@@ -193,7 +216,8 @@
       "rating": 3,
       "liked": "Quick and easy. Not a lot of prep. Potatoes were good.",
       "change": "The pork is very plain. It comes seasoned with a Greek seasoning. Would like a sauce or something to elevate it.",
-      "keepOrDrop": "Try again with modifications"
+      "keepOrDrop": "Try again with modifications",
+      "frequency": "\""
     },
     {
       "date": "2026-04-18",
@@ -201,7 +225,8 @@
       "rating": 4,
       "liked": "It was yummy",
       "change": "Could have been more flavourful. Maybe more salt or lemon.",
-      "keepOrDrop": "Try again with modifications"
+      "keepOrDrop": "Try again with modifications",
+      "frequency": "\""
     },
     {
       "date": "2026-04-19",
@@ -209,7 +234,8 @@
       "rating": 3,
       "liked": "Quick and easy",
       "change": "\"",
-      "keepOrDrop": "One-off - we had it, not a regular"
+      "keepOrDrop": "One-off - we had it, not a regular",
+      "frequency": "\""
     },
     {
       "date": "2026-04-20",
@@ -217,15 +243,17 @@
       "rating": 4,
       "liked": "It was pretty yummy.  We liked the sauce",
       "change": "the kids didn't like the texture of the meat because it had simmered for a long time. It took a really long time to brown the thighs making this a big cook night,",
-      "keepOrDrop": "Keep it - add to regular rotation"
+      "keepOrDrop": "Keep it - add to regular rotation",
+      "frequency": "Occasionally"
     },
     {
       "date": "2026-04-21",
       "meal": "Coconut curry chicken and salad",
       "rating": 3,
       "liked": "It was fast to heat up",
-      "change": "Chicken didnât heat up well",
-      "keepOrDrop": "One-off - we had it, not a regular"
+      "change": "Chicken didn’t heat up well",
+      "keepOrDrop": "One-off - we had it, not a regular",
+      "frequency": "\""
     },
     {
       "date": "2026-04-23",
@@ -233,7 +261,8 @@
       "rating": 3,
       "liked": "Flavour on outside of pork was good. I like cooking on bbq.",
       "change": "The inside of the prom was bland.",
-      "keepOrDrop": "Try again with modifications"
+      "keepOrDrop": "Try again with modifications",
+      "frequency": "\""
     },
     {
       "date": "2026-04-24",
@@ -241,7 +270,8 @@
       "rating": 3,
       "liked": "Easy",
       "change": "\"",
-      "keepOrDrop": "One-off - we had it, not a regular"
+      "keepOrDrop": "One-off - we had it, not a regular",
+      "frequency": "\""
     },
     {
       "date": "2026-04-25",
@@ -249,7 +279,8 @@
       "rating": 4,
       "liked": "Super quick",
       "change": "Salad was boring.",
-      "keepOrDrop": "Keep it - add to regular rotation"
+      "keepOrDrop": "Keep it - add to regular rotation",
+      "frequency": "Every 2–3 weeks"
     },
     {
       "date": "2026-04-26",
@@ -257,7 +288,8 @@
       "rating": 4,
       "liked": "Different flavour. Easy to cook",
       "change": "Would be better if a bit saucier. Have a sauce to put on after cooking",
-      "keepOrDrop": "Keep it - add to regular rotation"
+      "keepOrDrop": "Keep it - add to regular rotation",
+      "frequency": "Occasionally"
     },
     {
       "date": "2026-04-27",
@@ -265,7 +297,26 @@
       "rating": 5,
       "liked": "Quick, easy, flavourful",
       "change": "\"",
-      "keepOrDrop": "Keep it - add to regular rotation"
+      "keepOrDrop": "Keep it - add to regular rotation",
+      "frequency": "Occasionally"
+    },
+    {
+      "date": "2026-04-28",
+      "meal": "Leftovers",
+      "rating": 3,
+      "liked": "Easy to reheat",
+      "change": "\"",
+      "keepOrDrop": "Keep it - add to regular rotation",
+      "frequency": "Occasionally"
+    },
+    {
+      "date": "2026-04-29",
+      "meal": "Beef Bulgogi Bowls with Edamame and Cucumber",
+      "rating": 4,
+      "liked": "Easy, flavourful, fresh",
+      "change": "Could use a sauce to put over the bowl",
+      "keepOrDrop": "Keep it - add to regular rotation",
+      "frequency": "Every 2–3 weeks"
     }
   ],
   "newToTry": [
@@ -298,7 +349,7 @@
       "protein": "pork",
       "season": "summer",
       "time": 30,
-      "why": "Bold spice rub, whole tenderloin on the BBQ Ã¢ÂÂ zero prep stress",
+      "why": "Bold spice rub, whole tenderloin on the BBQ ÃÂ¢ÃÂÃÂ zero prep stress",
       "source": "https://www.skinnytaste.com/grilled-cumin-spiced-pork-tenderloin/"
     },
     {
@@ -306,7 +357,7 @@
       "protein": "turkey",
       "season": "all",
       "time": 20,
-      "why": "Herby white wine pan sauce, 20 min, GF Ã¢ÂÂ fills the turkey gap",
+      "why": "Herby white wine pan sauce, 20 min, GF ÃÂ¢ÃÂÃÂ fills the turkey gap",
       "source": "https://www.cookincanuck.com/easy-turkey-cutlets-in-white-wine-sauce/"
     },
     {
@@ -321,7 +372,7 @@
   "failurePatterns": [
     {
       "profile": "honey garlic",
-      "reason": "Two dishes rated 0â1/5",
+      "reason": "Two dishes rated 0–1/5",
       "status": "banned"
     },
     {
