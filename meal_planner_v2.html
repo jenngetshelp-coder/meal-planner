@@ -926,6 +926,7 @@ const STATE = {
   cmCurrentTab: 'manual',
   cmGenerated: null,
   failurePatterns: [],
+  emailedGroceryItems: [],  // items emailed by Jenn, fetched from meal_data.json, expire after 7 days
   dataSource: 'embedded',  // 'fetched' once meal_data.json loads
 };
 
@@ -1361,6 +1362,17 @@ function renderGrocery() {
 function buildGroceryList() {
   const sections = [];
   sections.push({title:'Weekly Staples', items: STAPLE_ITEMS.map(i => ({...i, key:'staple-'+i.name})), defaultChecked:true});
+  if (STATE.emailedGroceryItems && STATE.emailedGroceryItems.length > 0) {
+    sections.push({
+      title: '📬 Emailed Items',
+      items: STATE.emailedGroceryItems.map(i => ({
+        name: i.name,
+        qty: i.qty || '',
+        key: 'emailed-' + i.name.toLowerCase().replace(/[^a-z0-9]/g,'').slice(0, 20)
+      })),
+      defaultChecked: true
+    });
+  }
   const jennLunchLower = (STATE.jennLunch||'').toLowerCase();
   if (jennLunchLower.includes('waldorf')) {
     sections.push({
@@ -1809,6 +1821,12 @@ async function fetchMealData() {
     }
     if (Array.isArray(d.failurePatterns)) {
       STATE.failurePatterns = d.failurePatterns;
+    }
+    if (Array.isArray(d.emailedGroceryItems)) {
+      const cutoff = new Date();
+      cutoff.setDate(cutoff.getDate() - 7);
+      const cutoffStr = cutoff.toISOString().slice(0, 10);
+      STATE.emailedGroceryItems = d.emailedGroceryItems.filter(i => i.addedDate >= cutoffStr);
     }
     STATE.dataSource = 'fetched';
     STATE.dataLastUpdated = d.lastUpdated || null;
