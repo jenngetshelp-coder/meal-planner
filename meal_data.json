@@ -1,378 +1,135 @@
 {
   "schema": "maund-meal-data-v1",
   "lastUpdated": "2026-05-01",
-  "lastSyncedBy": "friday-meal-sync",
+  "lastSyncedBy": "initial-seed",
   "mealHistory": [
     {
       "date": "2026-03-24",
       "meal": "Lemon Pepper Chicken (BBQ) + leftover potatoes + pear salad",
       "rating": 3,
       "liked": "Easy",
-      "change": "Tired of chicken+salad rut",
-      "keepOrDrop": "Modify",
-      "frequency": ""
+      "change": "Tired of chicken+salad rut — wants marinades/sauces",
+      "keepOrDrop": "Modify"
     },
     {
       "date": "2026-03-25",
       "meal": "Pork tenderloin (Greek seasoning) + Little Potato Co. baby potatoes + frozen mixed veg",
       "rating": 3,
       "liked": "Low prep",
-      "change": "Not flavourful — needs sauce",
-      "keepOrDrop": "Modify",
-      "frequency": ""
-    },
-    {
-      "date": "2026-03-26",
-      "meal": "Leftovers",
-      "rating": 2,
-      "liked": "No cooking",
-      "change": "Mediocre leftovers",
-      "keepOrDrop": "One-off",
-      "frequency": ""
-    },
-    {
-      "date": "2026-03-27",
-      "meal": "Leftovers",
-      "rating": 2,
-      "liked": "I didn’t have to cook. I made salads and reheated leftovers",
-      "change": "The leftovers were from mediocre meals so no one wants to eat it again.",
-      "keepOrDrop": "One-off - we had it, not a regular",
-      "frequency": "\""
-    },
-    {
-      "date": "2026-03-27",
-      "meal": "Honey garlic chicken with frozen beans and rice",
-      "rating": 1,
-      "liked": "Nothing",
-      "change": "The chicken was super blend and looks gross coming out of the oven.",
-      "keepOrDrop": "Remove it - not for us",
-      "frequency": "\""
-    },
-    {
-      "date": "2026-03-28",
-      "meal": "Fried rice",
-      "rating": 3,
-      "liked": "It was different than just eating chicken",
-      "change": "It wasn’t very flavourful",
-      "keepOrDrop": "Try again with modifications",
-      "frequency": "\""
+      "change": "Not flavourful — needs sauce/marinade",
+      "keepOrDrop": "Modify"
     },
     {
       "date": "2026-03-29",
-      "meal": "Turkey tornados",
+      "meal": "Turkey Tornados",
       "rating": 4,
       "liked": "Flavour was good",
-      "change": "Took a long time to make because I was searing the bacon first and then cooking in the oven.",
-      "keepOrDrop": "Keep it - add to regular rotation",
-      "frequency": "\""
+      "change": "Long prep but worth it",
+      "keepOrDrop": "Keep"
     },
     {
       "date": "2026-03-30",
-      "meal": "Chicken drumsticks",
+      "meal": "Chimichurri Chicken Drumsticks",
       "rating": 3,
-      "liked": "The flavour was good. I liked the chimichuri sauce.",
-      "change": "I had to marinate the night before. The family didn’t love eating drumsticks. It took a really long time to cook.",
-      "keepOrDrop": "Try again with modifications",
-      "frequency": "\""
+      "liked": "Good chimichurri",
+      "change": "Switch to thighs/breasts",
+      "keepOrDrop": "Modify"
     },
     {
       "date": "2026-03-31",
-      "meal": "Bbq Italian sausage with salad",
+      "meal": "BBQ Italian Sausage with Salad",
       "rating": 3,
-      "liked": "Very easy to cook. Low prep time",
-      "change": "Feels like chicken and salad",
-      "keepOrDrop": "Keep it - add to regular rotation",
-      "frequency": "Occasionally"
+      "liked": "Easy",
+      "change": "Use occasionally",
+      "keepOrDrop": "Keep"
     },
     {
       "date": "2026-04-01",
-      "meal": "Butter chicken and green beans",
+      "meal": "Butter Chicken (Jenn's Version) + jasmine rice + snap peas",
       "rating": 5,
-      "liked": "It was flavourful.",
-      "change": "It took 90 min to make. The recipe was terrible. I had to get help from Claude to salvage it. We have updated the recipe.",
-      "keepOrDrop": "Keep it - add to regular rotation",
-      "frequency": "Occasionally"
+      "liked": "Restaurant quality",
+      "change": "Always make double",
+      "keepOrDrop": "Keep"
     },
     {
       "date": "2026-04-02",
-      "meal": "Chicken shawarma bowls",
+      "meal": "Chicken Shawarma Bowls",
       "rating": 4,
-      "liked": "Flavourful. Didn’t take too long to make.",
-      "change": "\"",
-      "keepOrDrop": "Keep it - add to regular rotation",
-      "frequency": "Every 2–3 weeks"
-    },
-    {
-      "date": "2026-04-03",
-      "meal": "Chicken shawarma leftovers",
-      "rating": 4,
-      "liked": "No cooking. Just reheating.",
-      "change": "\"",
-      "keepOrDrop": "Keep it - add to regular rotation",
-      "frequency": "Every 2–3 weeks"
+      "liked": "Flavourful",
+      "change": "",
+      "keepOrDrop": "Keep"
     },
     {
       "date": "2026-04-04",
-      "meal": "Leftover butter chicken with a salad",
+      "meal": "Leftover Butter Chicken with salad",
       "rating": 4,
-      "liked": "No cooking!  And we liked the original meal",
-      "change": "Too many chicken thighs this week.",
-      "keepOrDrop": "Keep it - add to regular rotation",
-      "frequency": "Occasionally"
-    },
-    {
-      "date": "2026-04-05",
-      "meal": "Ham, Schwarties potatoes, green beans and roasted carrots",
-      "rating": 5,
-      "liked": "Flavourful. Nice break from chicken and salad",
-      "change": "It took 2 hours to make.",
-      "keepOrDrop": "Keep it - add to regular rotation",
-      "frequency": "Occasionally"
-    },
-    {
-      "date": "2026-04-07",
-      "meal": "Leftovers - ham, schwartie potatoes, carrot soup",
-      "rating": 4,
-      "liked": "Quick and easy. Original meal was great. People liked leftovers.",
-      "change": "Everything was good.",
-      "keepOrDrop": "Keep it - add to regular rotation",
-      "frequency": "Occasionally"
+      "liked": "No cooking",
+      "change": "",
+      "keepOrDrop": "One-off"
     },
     {
       "date": "2026-04-08",
-      "meal": "Ham, potatoes, frozen veg",
-      "rating": 3,
-      "liked": "Quick and easy. No cooking",
-      "change": "\"",
-      "keepOrDrop": "Keep it - add to regular rotation",
-      "frequency": "Occasionally"
-    },
-    {
-      "date": "2026-04-08",
-      "meal": "Beef bulgoi with edamame",
+      "meal": "Beef Bulgogi with edamame",
       "rating": 4,
       "liked": "Quick to cook",
-      "change": "\"",
-      "keepOrDrop": "Keep it - add to regular rotation",
-      "frequency": "Every 2–3 weeks"
-    },
-    {
-      "date": "2026-04-10",
-      "meal": "We ordered Portuguese chicken and potatoes and had salad",
-      "rating": 3,
-      "liked": "No cooking",
-      "change": "Chicken was a bit dry",
-      "keepOrDrop": "One-off - we had it, not a regular",
-      "frequency": "\""
+      "change": "",
+      "keepOrDrop": "Keep"
     },
     {
       "date": "2026-04-11",
-      "meal": "Chimichurri Chicken Thighs (Improved) on the BBQ",
+      "meal": "Chimichurri Chicken Thighs (improved, BBQ)",
       "rating": 4,
       "liked": "Flavourful",
-      "change": "\"",
-      "keepOrDrop": "Keep it - add to regular rotation",
-      "frequency": "Every 2–3 weeks"
-    },
-    {
-      "date": "2026-04-12",
-      "meal": "We went out for dinner",
-      "rating": 5,
-      "liked": "No cooking !!!!!",
-      "change": "\"",
-      "keepOrDrop": "One-off - we had it, not a regular",
-      "frequency": "\""
+      "change": "Sauce needed 2x garlic, lemon, salt",
+      "keepOrDrop": "Keep"
     },
     {
       "date": "2026-04-13",
       "meal": "Thai Peanut Chicken Lettuce Wraps",
       "rating": 4,
-      "liked": "It was yummy",
-      "change": "It took a while to make the sauce and chop everything. It’s also very messy, which we don’t love.",
-      "keepOrDrop": "Try again with modifications",
-      "frequency": "\""
-    },
-    {
-      "date": "2026-04-14",
-      "meal": "Leftover chicken thighs with chimichuri sauce, rice and frozen veg",
-      "rating": 2,
-      "liked": "Quick and easy",
-      "change": "Tired of leftovers",
-      "keepOrDrop": "One-off - we had it, not a regular",
-      "frequency": "\""
-    },
-    {
-      "date": "2026-04-15",
-      "meal": "Leftover lettuce wraps in bowls",
-      "rating": 3,
-      "liked": "Easy",
-      "change": "It’s messy",
-      "keepOrDrop": "One-off - we had it, not a regular",
-      "frequency": "\""
+      "liked": "Yummy",
+      "change": "Convert to rice bowl",
+      "keepOrDrop": "Modify"
     },
     {
       "date": "2026-04-16",
-      "meal": "Pork Tenderloin from butcher, little potaot company potatoes, mixed veg.",
+      "meal": "Pork Tenderloin (Greek seasoning) + Little Potato Co. potatoes + mixed veg",
       "rating": 3,
-      "liked": "Quick and easy. Not a lot of prep. Potatoes were good.",
-      "change": "The pork is very plain. It comes seasoned with a Greek seasoning. Would like a sauce or something to elevate it.",
-      "keepOrDrop": "Try again with modifications",
-      "frequency": "\""
-    },
-    {
-      "date": "2026-04-18",
-      "meal": "Eating Out - risotto with lemon, pea and carrots",
-      "rating": 4,
-      "liked": "It was yummy",
-      "change": "Could have been more flavourful. Maybe more salt or lemon.",
-      "keepOrDrop": "Try again with modifications",
-      "frequency": "\""
-    },
-    {
-      "date": "2026-04-19",
-      "meal": "Eggs, cucumbers, oranges",
-      "rating": 3,
-      "liked": "Quick and easy",
-      "change": "\"",
-      "keepOrDrop": "One-off - we had it, not a regular",
-      "frequency": "\""
+      "liked": "Quick",
+      "change": "Pork is plain — needs marinade",
+      "keepOrDrop": "Modify"
     },
     {
       "date": "2026-04-20",
-      "meal": "curry coconut chicken with frozen mixed veg",
+      "meal": "Coconut Curry Chicken with frozen mixed veg over rice",
       "rating": 4,
-      "liked": "It was pretty yummy.  We liked the sauce",
-      "change": "the kids didn't like the texture of the meat because it had simmered for a long time. It took a really long time to brown the thighs making this a big cook night,",
-      "keepOrDrop": "Keep it - add to regular rotation",
-      "frequency": "Occasionally"
+      "liked": "Liked the sauce",
+      "change": "Brown step too long",
+      "keepOrDrop": "Keep"
     },
     {
       "date": "2026-04-21",
-      "meal": "Coconut curry chicken and salad",
+      "meal": "Coconut Curry Chicken leftovers with salad",
       "rating": 3,
-      "liked": "It was fast to heat up",
-      "change": "Chicken didn’t heat up well",
-      "keepOrDrop": "One-off - we had it, not a regular",
-      "frequency": "\""
+      "liked": "Fast",
+      "change": "Chicken didn't reheat well",
+      "keepOrDrop": "One-off"
     },
     {
       "date": "2026-04-23",
-      "meal": "Harissa Pork Tenderloin with Garlic Green Beans",
+      "meal": "Harissa Pork Tenderloin with Garlic Green Beans (BBQ)",
       "rating": 3,
-      "liked": "Flavour on outside of pork was good. I like cooking on bbq.",
-      "change": "The inside of the prom was bland.",
-      "keepOrDrop": "Try again with modifications",
-      "frequency": "\""
-    },
-    {
-      "date": "2026-04-24",
-      "meal": "Leftovers",
-      "rating": 3,
-      "liked": "Easy",
-      "change": "\"",
-      "keepOrDrop": "One-off - we had it, not a regular",
-      "frequency": "\""
-    },
-    {
-      "date": "2026-04-25",
-      "meal": "Pre made chicken burgers, store bought wedges, salad",
-      "rating": 4,
-      "liked": "Super quick",
-      "change": "Salad was boring.",
-      "keepOrDrop": "Keep it - add to regular rotation",
-      "frequency": "Every 2–3 weeks"
-    },
-    {
-      "date": "2026-04-26",
-      "meal": "Korean-Style Grilled Chicken Breasts with Sesame Snap Peas",
-      "rating": 4,
-      "liked": "Different flavour. Easy to cook",
-      "change": "Would be better if a bit saucier. Have a sauce to put on after cooking",
-      "keepOrDrop": "Keep it - add to regular rotation",
-      "frequency": "Occasionally"
-    },
-    {
-      "date": "2026-04-27",
-      "meal": "Tuna pesto pasta",
-      "rating": 5,
-      "liked": "Quick, easy, flavourful",
-      "change": "\"",
-      "keepOrDrop": "Keep it - add to regular rotation",
-      "frequency": "Occasionally"
-    },
-    {
-      "date": "2026-04-28",
-      "meal": "Leftovers",
-      "rating": 3,
-      "liked": "Easy to reheat",
-      "change": "\"",
-      "keepOrDrop": "Keep it - add to regular rotation",
-      "frequency": "Occasionally"
-    },
-    {
-      "date": "2026-04-29",
-      "meal": "Beef Bulgogi Bowls with Edamame and Cucumber",
-      "rating": 4,
-      "liked": "Easy, flavourful, fresh",
-      "change": "Could use a sauce to put over the bowl",
-      "keepOrDrop": "Keep it - add to regular rotation",
-      "frequency": "Every 2–3 weeks"
+      "liked": "Outside flavour good",
+      "change": "Inside bland — marinade overnight",
+      "keepOrDrop": "Modify"
     }
   ],
-  "newToTry": [
-    {
-      "name": "Peruvian Chicken with Creamy Green Sauce",
-      "protein": "breast",
-      "season": "all",
-      "time": 40,
-      "why": "Bold cumin/herb rub, vibrant green crema, uses mango + avocado",
-      "source": "https://www.halfbakedharvest.com/peruvian-chicken/"
-    },
-    {
-      "name": "Grilled Pork Tenderloin with Chimichurri",
-      "protein": "pork",
-      "season": "summer",
-      "time": 30,
-      "why": "BBQ-season ready, family loves chimichurri, whole tenderloin",
-      "source": "https://themodernproper.com/grilled-pork-tenderloin-with-chimichurri"
-    },
-    {
-      "name": "Skillet Chicken in Tomato-Chipotle Sauce",
-      "protein": "breast",
-      "season": "all",
-      "time": 25,
-      "why": "Smoky chipotle tomato sauce + avocado crema, 25 min, GF",
-      "source": "https://www.skinnytaste.com/skillet-chicken-in-tomato-chipotle-sauce/"
-    },
-    {
-      "name": "Grilled Cumin Spiced Pork Tenderloin",
-      "protein": "pork",
-      "season": "summer",
-      "time": 30,
-      "why": "Bold spice rub, whole tenderloin on the BBQ ÃÂ¢ÃÂÃÂ zero prep stress",
-      "source": "https://www.skinnytaste.com/grilled-cumin-spiced-pork-tenderloin/"
-    },
-    {
-      "name": "Turkey Cutlets in White Wine Sauce",
-      "protein": "turkey",
-      "season": "all",
-      "time": 20,
-      "why": "Herby white wine pan sauce, 20 min, GF ÃÂ¢ÃÂÃÂ fills the turkey gap",
-      "source": "https://www.cookincanuck.com/easy-turkey-cutlets-in-white-wine-sauce/"
-    },
-    {
-      "name": "Creamy Chicken Skillet with Asparagus & Peas",
-      "protein": "breast",
-      "season": "summer",
-      "time": 50,
-      "why": "Spring asparagus + peas, cream sauce, whole breasts, one pan",
-      "source": "https://themodernproper.com/creamy-chicken-skillet-with-asparagus-peas"
-    }
-  ],
+  "newToTry": [],
+  "emailedGroceryItems": [],
   "failurePatterns": [
     {
       "profile": "honey garlic",
-      "reason": "Two dishes rated 0–1/5",
+      "reason": "Two dishes (Honey Garlic Chicken, Honey Garlic Pork Tenderloin) rated 0–1/5",
       "status": "banned"
     },
     {
