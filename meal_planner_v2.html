@@ -581,12 +581,7 @@ input, textarea { font-family: inherit; }
     <span class="brand-sub">Drag and drop, no plan generation</span>
   </div>
   <div class="topbar-right">
-    <div class="week-nav">
-      <button class="week-nav-btn" onclick="changeWeek(-1)" title="Previous week">&#8592;</button>
-      <span id="week-label">Week of —</span>
-      <button class="week-nav-btn" onclick="changeWeek(1)" title="Next week">&#8594;</button>
-    </div>
-    <button class="week-nav-btn" onclick="printWeeklyPlan()" title="Print weekly plan with recipes" style="width:auto;padding:0 10px;font-size:12px;font-weight:700;gap:4px">🖨 Print</button>
+
     <span class="api-status" id="api-status" onclick="promptApiKey()">Loading…</span>
   </div>
 </div>
@@ -625,7 +620,17 @@ input, textarea { font-family: inherit; }
       </div>
 
       <div class="card">
-        <h2><span class="dot"></span>Your Week — drag meals onto days</h2>
+        <div style="display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:8px;margin-bottom:4px">
+          <h2 style="margin:0"><span class="dot"></span>Your Week — drag meals onto days</h2>
+          <div style="display:flex;align-items:center;gap:8px">
+            <div class="week-nav">
+              <button class="week-nav-btn" onclick="changeWeek(-1)" title="Previous week">&#8592;</button>
+              <span id="week-label" style="font-size:13px;font-weight:700;color:var(--text);white-space:nowrap">Week of —</span>
+              <button class="week-nav-btn" onclick="changeWeek(1)" title="Next week">&#8594;</button>
+            </div>
+            <button class="week-nav-btn" onclick="printWeeklyPlan()" title="Print weekly plan with recipes" style="width:auto;padding:0 10px;font-size:12px;font-weight:700">🖨 Print</button>
+          </div>
+        </div>
         <div class="week-strip" id="week-strip"></div>
         <div class="variety-row" id="variety-row"></div>
       </div>
@@ -749,7 +754,7 @@ input, textarea { font-family: inherit; }
 // CONSTANTS
 // ============================================================
 const PROXY_URL = 'https://meal-planner-proxy.jenngetshelp.workers.dev';
-const DAY_NAMES = ['Mon','Tue','Wed','Thu','Fri','Sat','Sun'];
+const DAY_NAMES = ['Sat','Sun','Mon','Tue','Wed','Thu','Fri'];
 
 // ============================================================
 // DATA: STAPLES, WALDORF, EXTRAS, PANTRY
@@ -1339,7 +1344,7 @@ function computeRecipeStats() {
 // STATE
 // ============================================================
 const STATE = {
-  weekStart: getMonday(new Date()),
+  weekStart: getSaturday(new Date()),
   ryanHomeDays: [true,true,true,true,true,true,true],
   ryanLunches: null,   // null = auto (weekday home days); number = manual override
   ryderLunch: '',
@@ -1357,16 +1362,17 @@ const STATE = {
   cmGenerated: null,
   failurePatterns: [],
   emailedGroceryItems: [],  // items emailed by Jenn, fetched from meal_data.json, expire after 7 days
+  dismissedEmailedKeys: [],  // keys of emailed items Jenn has checked off — persists so they don't come back on reload
   dataSource: 'embedded',  // 'fetched' once meal_data.json loads
 };
 
-function getMonday(d) {
-  const day = d.getDay();
-  const diff = d.getDate() - day + (day === 0 ? -6 : 1);
-  const m = new Date(d);
-  m.setDate(diff);
-  m.setHours(0,0,0,0);
-  return m;
+function getSaturday(d) {
+  const day = d.getDay(); // 0=Sun … 6=Sat
+  const diff = (day === 6) ? 0 : (day + 1); // days back to last Saturday
+  const s = new Date(d);
+  s.setDate(d.getDate() - diff);
+  s.setHours(0,0,0,0);
+  return s;
 }
 function fmtDate(d) { return d.toLocaleDateString('en-US',{month:'short',day:'numeric'}); }
 
@@ -1386,6 +1392,7 @@ function saveState() {
       jennLunch: STATE.jennLunch,
       plan: STATE.plan,
       groceryChecks: STATE.groceryChecks,
+      dismissedEmailedKeys: STATE.dismissedEmailedKeys || [],
       newToTry: STATE.newToTry,
     };
     localStorage.setItem(STORAGE_KEY, JSON.stringify(s));
@@ -1406,6 +1413,7 @@ function loadState() {
       if (s.claireLunch !== undefined) STATE.claireLunch = s.claireLunch;
       if (s.jennLunch !== undefined) STATE.jennLunch = s.jennLunch;
       if (s.groceryChecks) STATE.groceryChecks = s.groceryChecks;
+      if (s.dismissedEmailedKeys) STATE.dismissedEmailedKeys = s.dismissedEmailedKeys;
       if (s.newToTry) STATE.newToTry = s.newToTry;
     }
   } catch(e) { console.error('load failed', e); }
@@ -1438,7 +1446,7 @@ function renderSetup() {
   `).join('');
   const homeCount = STATE.ryanHomeDays.filter(Boolean).length;
   const lunchCount = getRyanLunchCount();
-  const autoLunchCount = STATE.ryanHomeDays.slice(0,5).filter(Boolean).length;
+  const autoLunchCount = STATE.ryanHomeDays.slice(2).filter(Boolean).length;
   const isManual = STATE.ryanLunches !== null;
 
   const summaryEl = document.getElementById('ryan-summary');
@@ -1507,7 +1515,7 @@ function changeWeek(delta) {
 // null in STATE = auto (count Mon–Fri home days); number = manual override.
 function getRyanLunchCount() {
   if (STATE.ryanLunches !== null) return STATE.ryanLunches;
-  return STATE.ryanHomeDays.slice(0, 5).filter(Boolean).length;
+  return STATE.ryanHomeDays.slice(2).filter(Boolean).length;
 }
 
 function setRyanLunches(delta) {
@@ -1858,11 +1866,16 @@ function buildGroceryList() {
   if (STATE.emailedGroceryItems && STATE.emailedGroceryItems.length > 0) {
     sections.push({
       title: '📬 Emailed Items',
-      items: STATE.emailedGroceryItems.map(i => ({
-        name: i.name,
-        qty: i.qty || '',
-        key: 'emailed-' + i.name.toLowerCase().replace(/[^a-z0-9]/g,'').slice(0, 20)
-      })),
+      items: STATE.emailedGroceryItems.map(i => {
+        const d = i.addedDate ? new Date(i.addedDate + 'T12:00:00') : null;
+        const dateLabel = d ? d.toLocaleDateString('en-US',{month:'short',day:'numeric'}) : '';
+        return {
+          name: i.name,
+          qty: i.qty || '',
+          dateLabel,
+          key: 'emailed-' + i.name.toLowerCase().replace(/[^a-z0-9]/g,'').slice(0, 20)
+        };
+      }),
       defaultChecked: true
     });
   }
@@ -1997,15 +2010,31 @@ function renderGrocerySection(s) {
 function renderGroceryItem(item, defaultChecked) {
   const k = item.key;
   const checked = STATE.groceryChecks.hasOwnProperty(k) ? STATE.groceryChecks[k] : defaultChecked;
+  const dateHtml = item.dateLabel ? `<span class="item-date-tag">added ${item.dateLabel}</span>` : '';
   return `
     <div class="grocery-item ${checked?'':'skipped'}">
-      <input type="checkbox" ${checked?'checked':''} onchange="toggleGroceryItem('${k}', this.checked)">
-      <span class="item-name">${item.name}</span>
+      <input type="checkbox" ${checked?'checked':''} onchange="toggleGroceryItem('${k}', this.checked, ${JSON.stringify(!!item.dateLabel)})">
+      <span class="item-name">${item.name}${dateHtml}</span>
       <span class="item-qty">${item.qty || ''}</span>
     </div>`;
 }
 
-function toggleGroceryItem(key, checked) {
+function toggleGroceryItem(key, checked, isEmailed) {
+  if (!checked && isEmailed && key.startsWith('emailed-')) {
+    // Remove from visible list
+    STATE.emailedGroceryItems = STATE.emailedGroceryItems.filter(i => {
+      const k = 'emailed-' + i.name.toLowerCase().replace(/[^a-z0-9]/g,'').slice(0, 20);
+      return k !== key;
+    });
+    // Remember so it doesn't come back on reload
+    if (!STATE.dismissedEmailedKeys) STATE.dismissedEmailedKeys = [];
+    if (!STATE.dismissedEmailedKeys.includes(key)) STATE.dismissedEmailedKeys.push(key);
+    // Clean up check state
+    delete STATE.groceryChecks[key];
+    saveState();
+    renderGrocery();
+    return;
+  }
   STATE.groceryChecks[key] = checked;
   saveState();
   renderGrocery();
@@ -2360,6 +2389,9 @@ function printWeeklyPlan() {
         stepsRows = psteps.length
           ? `<div class="pv-steps-label">How to cook</div><ol class="pv-steps">${psteps.map(s=>`<li>${s}</li>`).join('')}</ol>`
           : '';
+        if (r.sourceUrl) {
+          stepsRows += `<div class="pv-source">Recipe source: ${r.sourceUrl}</div>`;
+        }
       }
     } else if (entry.leftoverOf !== undefined) {
       const src = RECIPES.find(x => x.id === STATE.plan[entry.leftoverOf]?.recipeId);
@@ -2441,7 +2473,17 @@ async function fetchMealData() {
       const cutoff = new Date();
       cutoff.setDate(cutoff.getDate() - 7);
       const cutoffStr = cutoff.toISOString().slice(0, 10);
-      STATE.emailedGroceryItems = d.emailedGroceryItems.filter(i => i.addedDate >= cutoffStr);
+      const dismissed = new Set(STATE.dismissedEmailedKeys || []);
+      const unexpired = d.emailedGroceryItems.filter(i => i.addedDate >= cutoffStr);
+      STATE.emailedGroceryItems = unexpired.filter(i => {
+        const k = 'emailed-' + i.name.toLowerCase().replace(/[^a-z0-9]/g,'').slice(0, 20);
+        return !dismissed.has(k);
+      });
+      // Prune dismissed keys that have aged out of GitHub too
+      STATE.dismissedEmailedKeys = (STATE.dismissedEmailedKeys || []).filter(k => {
+        const match = unexpired.find(i => ('emailed-' + i.name.toLowerCase().replace(/[^a-z0-9]/g,'').slice(0,20)) === k);
+        return !!match;
+      });
     }
     STATE.dataSource = 'fetched';
     STATE.dataLastUpdated = d.lastUpdated || null;
