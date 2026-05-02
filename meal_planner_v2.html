@@ -491,6 +491,86 @@ input, textarea { font-family: inherit; }
   border-radius: 6px; color: var(--text-muted);
 }
 .season-toggle button.active { background: var(--blue); color: #FFF; }
+
+/* WEEK NAV */
+.week-nav { display: flex; align-items: center; gap: 8px; }
+.week-nav-btn {
+  background: var(--bg-soft); border: 1.5px solid var(--border);
+  border-radius: 6px; width: 28px; height: 28px;
+  font-size: 15px; color: var(--text-muted); font-weight: 700;
+  display: flex; align-items: center; justify-content: center;
+  transition: all .12s; padding: 0; line-height: 1;
+}
+.week-nav-btn:hover { background: var(--blue-soft); border-color: var(--blue); color: var(--blue); }
+#week-label { font-size: 13px; font-weight: 700; color: var(--text); white-space: nowrap; }
+
+/* LUNCH STEPPER */
+.lunch-stepper { display: flex; align-items: center; gap: 8px; margin-top: 8px; }
+.stepper-btn {
+  width: 26px; height: 26px; border-radius: 6px;
+  background: var(--bg-soft); border: 1.5px solid var(--border);
+  font-size: 16px; font-weight: 700; color: var(--blue);
+  display: flex; align-items: center; justify-content: center;
+  padding: 0; line-height: 1; transition: all .12s;
+}
+.stepper-btn:hover { background: var(--blue-soft); border-color: var(--blue); }
+.stepper-count { font-size: 16px; font-weight: 800; color: var(--text); min-width: 22px; text-align: center; }
+.stepper-auto { font-size: 10px; color: var(--text-muted); font-style: italic; }
+.stepper-reset { font-size: 10px; color: var(--blue); text-decoration: underline; cursor: pointer; background: none; border: none; padding: 0; font-weight: 600; }
+
+/* RECIPE DETAIL MODAL */
+.recipe-detail-modal { max-width: 560px; }
+.recipe-detail-header { margin-bottom: 16px; }
+.recipe-detail-header h3 { font-size: 20px; font-weight: 800; margin-bottom: 6px; }
+.recipe-detail-chips { display: flex; flex-wrap: wrap; gap: 6px; margin-bottom: 10px; }
+.recipe-detail-chip {
+  font-size: 11px; padding: 3px 10px;
+  border-radius: 10px; font-weight: 700;
+}
+.recipe-detail-chip.protein { background: var(--coral-soft); color: var(--coral-dark); }
+.recipe-detail-chip.tag { background: var(--bg-soft); color: var(--text-muted); }
+.recipe-detail-chip.time { background: var(--blue-soft); color: var(--blue-dark); }
+.recipe-detail-chip.easy { background: var(--teal-soft); color: var(--teal-dark); }
+.recipe-detail-note {
+  background: var(--coral-soft); border-left: 3px solid var(--coral);
+  padding: 8px 12px; border-radius: 4px;
+  font-size: 12px; color: var(--coral-dark); margin-bottom: 14px; line-height: 1.4;
+}
+.recipe-detail-section-label {
+  font-size: 11px; font-weight: 800; text-transform: uppercase; letter-spacing: 0.7px;
+  color: var(--text-muted); margin-bottom: 8px;
+}
+.recipe-detail-ingredient {
+  display: flex; justify-content: space-between; align-items: center;
+  padding: 7px 0; border-bottom: 1px solid var(--border-soft);
+  font-size: 13px;
+}
+.recipe-detail-ingredient:last-child { border-bottom: none; }
+.recipe-detail-ingredient .ing-qty { color: var(--text-muted); font-weight: 600; font-size: 12px; }
+.recipe-detail-ingredient.butcher-item { color: var(--coral-dark); font-weight: 600; }
+.recipe-detail-no-steps {
+  background: var(--bg-soft); border-radius: 8px; padding: 12px 14px;
+  font-size: 12px; color: var(--text-muted); margin-top: 14px; line-height: 1.5;
+}
+
+/* PRINT VIEW */
+#print-view { display: none; }
+@media print {
+  body > *:not(#print-view) { display: none !important; }
+  #print-view { display: block !important; font-family: 'Segoe UI', system-ui, sans-serif; color: #000; padding: 20px; }
+  .pv-header { font-size: 20px; font-weight: 800; margin-bottom: 4px; }
+  .pv-week { font-size: 13px; color: #666; margin-bottom: 20px; }
+  .pv-day { page-break-inside: avoid; margin-bottom: 22px; border-top: 2px solid #0796C3; padding-top: 10px; }
+  .pv-day-name { font-size: 13px; font-weight: 800; text-transform: uppercase; color: #0796C3; letter-spacing: 0.6px; }
+  .pv-meal-name { font-size: 17px; font-weight: 800; margin: 4px 0 8px; }
+  .pv-ingredients { margin-left: 12px; font-size: 12px; line-height: 1.7; }
+  .pv-ing-row { display: flex; gap: 16px; }
+  .pv-ing-row .qty { color: #666; min-width: 80px; }
+  .pv-note { font-size: 11px; color: #666; border-left: 3px solid #FE908E; padding-left: 8px; margin-top: 6px; }
+  .pv-empty { font-size: 12px; color: #999; font-style: italic; }
+  .pv-butcher { font-size: 11px; color: #C24F4D; font-weight: 600; }
+  .pv-tags { font-size: 11px; color: #888; margin-bottom: 6px; }
+}
 </style>
 </head>
 <body>
@@ -501,7 +581,12 @@ input, textarea { font-family: inherit; }
     <span class="brand-sub">Drag and drop, no plan generation</span>
   </div>
   <div class="topbar-right">
-    <span id="week-label">Week of —</span>
+    <div class="week-nav">
+      <button class="week-nav-btn" onclick="changeWeek(-1)" title="Previous week">&#8592;</button>
+      <span id="week-label">Week of —</span>
+      <button class="week-nav-btn" onclick="changeWeek(1)" title="Next week">&#8594;</button>
+    </div>
+    <button class="week-nav-btn" onclick="printWeeklyPlan()" title="Print weekly plan with recipes" style="width:auto;padding:0 10px;font-size:12px;font-weight:700;gap:4px">🖨 Print</button>
     <span class="api-status" id="api-status" onclick="promptApiKey()">Loading…</span>
   </div>
 </div>
@@ -519,6 +604,7 @@ input, textarea { font-family: inherit; }
             <label>Ryan's home days</label>
             <div class="day-toggles" id="ryan-day-toggles"></div>
             <div class="field-hint" id="ryan-summary"></div>
+            <div id="ryan-lunch-stepper"></div>
           </div>
 
           <div class="setup-block">
@@ -643,6 +729,19 @@ input, textarea { font-family: inherit; }
   </div>
 </div>
 
+<!-- ============== RECIPE DETAIL MODAL ============== -->
+<div class="modal-bg" id="recipe-detail-modal" onclick="closeModal(event,'recipe-detail-modal')">
+  <div class="modal recipe-detail-modal" onclick="event.stopPropagation()">
+    <div id="recipe-detail-content"></div>
+    <div class="modal-btns">
+      <button class="btn-cancel" onclick="closeModalById('recipe-detail-modal')">Close</button>
+    </div>
+  </div>
+</div>
+
+<!-- ============== PRINT VIEW (hidden, shown only on print) ============== -->
+<div id="print-view"></div>
+
 <div class="toast" id="toast"></div>
 
 <script>
@@ -745,64 +844,82 @@ let MEAL_HISTORY_DATA = [
 const RECIPES = [
   {id:1,name:"Lemon Pepper Chicken (BBQ)",protein:"breast",season:"summer",time:25,bbq:true,easy:true,cook:false,thigh:false,
    ingredients:[{name:"Chicken breasts",qty:"4 breasts"},{name:"Lemon pepper seasoning",qty:""},{name:"Mixed greens",qty:"1 bag"},{name:"Cherry tomatoes",qty:"1 pint"},{name:"English cucumber",qty:"1"},{name:"Lemons",qty:"2"}],
-   butcherItems:[{cut:"Chicken Breasts",qty:"4 breasts"}]},
+   butcherItems:[{cut:"Chicken Breasts",qty:"4 breasts"}],
+   sourceUrl:"https://www.recipetineats.com/lemon-pepper-chicken/"},
   {id:3,name:"Healthy Chicken Enchiladas (corn tortillas)",protein:"breast",season:"all",time:45,bbq:false,easy:false,cook:true,thigh:false,
    ingredients:[{name:"Chicken breasts (for shredding)",qty:"3 breasts"},{name:"Corn tortillas (GF)",qty:"1 pkg"},{name:"Enchilada sauce",qty:"2 cans"},{name:"Cheddar cheese",qty:"1 block"},{name:"Sour cream",qty:"1 tub"},{name:"Avocados",qty:"2"},{name:"Romaine lettuce",qty:"1 head"},{name:"Roma tomatoes",qty:"2"}],
-   butcherItems:[{cut:"Chicken Breasts (for shredding)",qty:"3 breasts"}]},
+   butcherItems:[{cut:"Chicken Breasts (for shredding)",qty:"3 breasts"}],
+   sourceUrl:"https://jordosworld.com/healthy-chicken-enchiladas/"},
   {id:4,name:"Korean Beef Bowl (Pre-Marinated)",protein:"beef",season:"all",time:15,bbq:false,easy:true,cook:false,thigh:false,ryanAway:true,
    modificationNote:"Replaces old Korean Beef Satay — uses pre-marinated bulgogi from butcher. Zero prep on marinade.",
    ingredients:[{name:"Pre-marinated bulgogi from butcher",qty:"1.5–2 lbs"},{name:"Jasmine rice",qty:"1 bag"},{name:"Edamame (frozen)",qty:"1 bag"},{name:"Carrots",qty:"1 bag"},{name:"English cucumber",qty:"1"},{name:"Sesame seeds",qty:"1 small jar"},{name:"Green onions",qty:"1 bunch"}],
-   butcherItems:[{cut:"Korean Bulgogi (pre-marinated)",qty:"1.5–2 lbs"}]},
+   butcherItems:[{cut:"Korean Bulgogi (pre-marinated)",qty:"1.5–2 lbs"}],
+   sourceUrl:"https://www.recipetineats.com/korean-beef-bowl/"},
   {id:6,name:"Turkey and Rice Soup",protein:"turkey",season:"winter",time:50,bbq:false,easy:false,cook:true,thigh:false,
    ingredients:[{name:"Ground turkey",qty:"1 lb"},{name:"Long grain rice",qty:"1 bag"},{name:"Carrots",qty:"1 bag"},{name:"Celery stalks",qty:"1 bunch"},{name:"Yellow onion",qty:"1 large"},{name:"Crusty bread",qty:"1 loaf"}],
-   butcherItems:[{cut:"Ground Turkey",qty:"1 lb"}]},
+   butcherItems:[{cut:"Ground Turkey",qty:"1 lb"}],
+   sourceUrl:"https://iamhomesteader.com/turkey-rice-soup/"},
   {id:7,name:"Mango Black Bean Salad with Grilled Chicken",protein:"breast",season:"summer",time:25,bbq:true,easy:true,cook:false,thigh:false,
    ingredients:[{name:"Chicken breasts",qty:"3 breasts"},{name:"Mangos",qty:"2"},{name:"Canned black beans",qty:"1 can"},{name:"Red bell pepper",qty:"1"},{name:"Red onion (small)",qty:"1 small"},{name:"Limes",qty:"2"},{name:"Avocados",qty:"2"},{name:"Mixed greens",qty:"1 bag"},{name:"Fresh cilantro",qty:"1 bunch"}],
-   butcherItems:[{cut:"Chicken Breasts",qty:"3 breasts"}]},
+   butcherItems:[{cut:"Chicken Breasts",qty:"3 breasts"}],
+   sourceUrl:"https://manysimplerecipes.com/"},
   {id:9,name:"Chicken Fried Rice (leftover meal)",protein:"breast",season:"all",time:15,bbq:false,easy:true,cook:false,thigh:false,leftoverMeal:true,
    ingredients:[{name:"Cooked chicken breasts (leftover)",qty:"2 breasts"},{name:"Day-old jasmine rice",qty:""},{name:"Carrots",qty:"1 bag"},{name:"Frozen peas",qty:"1 bag"},{name:"Green onions",qty:"1 bunch"},{name:"Eggs",qty:"1 dozen"}],
-   butcherItems:[]},
+   butcherItems:[],
+   sourceUrl:"https://www.recipetineats.com/chicken-fried-rice/"},
   {id:11,name:"Butter Chicken (Jenn's Version)",protein:"thigh",season:"winter",time:90,bbq:false,easy:false,cook:true,thigh:true,creamHeavy:true,leftoverViability:"good",frequencyWeeks:4,
    modificationNote:"Always make double — leftovers are excellent. Treat meal — max once a month.",
    ingredients:[{name:"Boneless skinless chicken thighs",qty:"4 lbs"},{name:"Butter",qty:""},{name:"Garlic",qty:"1 head"},{name:"Fresh ginger",qty:"1 small knob"},{name:"Crushed tomatoes",qty:"2 large cans (796ml)"},{name:"Coconut milk (full fat)",qty:"3 cans (400ml)"},{name:"Heavy cream",qty:"1 small carton"},{name:"Jasmine rice",qty:"1 large bag"},{name:"Snap peas",qty:"2 bags"},{name:"Fresh cilantro",qty:"1 small bunch"}],
-   butcherItems:[{cut:"Boneless Skinless Chicken Thighs",qty:"4 lbs"}]},
+   butcherItems:[{cut:"Boneless Skinless Chicken Thighs",qty:"4 lbs"}],
+   sourceUrl:"https://cafedelites.com/butter-chicken/"},
   {id:12,name:"Coconut Curry Chicken",protein:"thigh",season:"winter",time:35,bbq:false,easy:false,cook:true,thigh:true,creamHeavy:true,leftoverViability:"bad",frequencyWeeks:3,
    modificationNote:"Shorten browning step — 30 min was too long. Try higher heat or smaller pieces.",
    ingredients:[{name:"Boneless skinless chicken thighs",qty:"4 lbs"},{name:"Coconut milk (canned)",qty:"2 cans (400ml)"},{name:"Tomato paste",qty:"1 small can"},{name:"Yellow onions",qty:"2"},{name:"Garlic",qty:"1 head"},{name:"Fresh ginger",qty:"1 knob"},{name:"Snap peas",qty:"1 bag (300g)"},{name:"Jasmine rice",qty:"1 bag"},{name:"Fresh cilantro",qty:"1 bunch"}],
-   butcherItems:[{cut:"Boneless Skinless Chicken Thighs",qty:"4 lbs"}]},
+   butcherItems:[{cut:"Boneless Skinless Chicken Thighs",qty:"4 lbs"}],
+   sourceUrl:"https://www.recipetineats.com/coconut-chicken-curry/"},
   {id:13,name:"Peanut Chicken Rice Bowl",protein:"breast",season:"all",time:25,bbq:false,easy:true,cook:false,thigh:false,
    modificationNote:"REWRITTEN from lettuce wraps — too messy. Now a rice bowl with whole-seared breast sliced after.",
    ingredients:[{name:"Boneless skinless chicken breasts",qty:"4 breasts (~2 lbs)"},{name:"Natural peanut butter",qty:"1 jar"},{name:"Limes",qty:"3"},{name:"Fresh ginger",qty:"1 small knob"},{name:"Garlic",qty:"1 head"},{name:"Jasmine rice",qty:"1 bag"},{name:"Carrots",qty:"1 bag"},{name:"English cucumber",qty:"1"},{name:"Roasted peanuts",qty:"1 small bag"},{name:"Green onions",qty:"1 bunch"},{name:"Fresh cilantro",qty:"1 bunch"}],
-   butcherItems:[{cut:"Boneless Skinless Chicken Breasts",qty:"~2 lbs"}]},
+   butcherItems:[{cut:"Boneless Skinless Chicken Breasts",qty:"~2 lbs"}],
+   sourceUrl:"https://www.halfbakedharvest.com/peanut-chicken-rice-bowl/"},
   {id:14,name:"Chicken Shawarma Bowls",protein:"thigh",season:"all",time:45,bbq:false,easy:false,cook:true,thigh:true,
    ingredients:[{name:"Boneless skinless chicken thighs",qty:"8 thighs"},{name:"Garlic",qty:"1 head"},{name:"Lemons",qty:"1"},{name:"Jasmine rice",qty:"1 bag"},{name:"English cucumber",qty:"1"},{name:"Cherry tomatoes",qty:"1 pint"},{name:"Hummus",qty:"1 container"}],
-   butcherItems:[{cut:"Boneless Skinless Chicken Thighs",qty:"8 thighs"}]},
+   butcherItems:[{cut:"Boneless Skinless Chicken Thighs",qty:"8 thighs"}],
+   sourceUrl:"https://www.recipetineats.com/chicken-shawarma/"},
   {id:15,name:"Baked Turkey Meatballs",protein:"turkey",season:"all",time:35,bbq:false,easy:true,cook:false,thigh:false,
    ingredients:[{name:"Ground turkey",qty:"1.5 lbs"},{name:"Almond flour",qty:"1 bag"},{name:"Egg",qty:"1 dozen"},{name:"Garlic",qty:"1 head"},{name:"Parmesan cheese",qty:"1 wedge"},{name:"Fresh parsley",qty:"1 bunch"},{name:"Jasmine rice",qty:"1 bag"},{name:"Jarred tomato sauce (GF)",qty:"1 large jar"}],
-   butcherItems:[{cut:"Ground Turkey",qty:"1.5 lbs"}]},
+   butcherItems:[{cut:"Ground Turkey",qty:"1.5 lbs"}],
+   sourceUrl:"https://www.wellplated.com/turkey-meatballs/"},
   {id:17,name:"Turkey Tornados",protein:"turkey",season:"all",time:60,bbq:false,easy:false,cook:true,thigh:false,
    ingredients:[{name:"Turkey breast (cut into 2-inch chunks)",qty:"1.5 lbs"},{name:"Bacon strips",qty:"1 pkg"},{name:"Butter",qty:""},{name:"Garlic",qty:"1 head"},{name:"Baby potatoes (Little Potato Co.)",qty:"1 bag"},{name:"Green beans",qty:"1 lb"}],
-   butcherItems:[{cut:"Turkey Breast (chunked)",qty:"1.5 lbs"},{cut:"Bacon",qty:"1 pkg"}]},
+   butcherItems:[{cut:"Turkey Breast (chunked)",qty:"1.5 lbs"},{cut:"Bacon",qty:"1 pkg"}],
+   sourceUrl:"https://www.justapinch.com/recipes/main-course/turkey/turkey-tornadoes.html"},
   {id:20,name:"Arroz con Pollo",protein:"thigh",season:"winter",time:55,bbq:false,easy:false,cook:true,thigh:true,
    ingredients:[{name:"Bone-in skin-on chicken thighs",qty:"6–8 pieces"},{name:"Long grain white rice",qty:"1 bag"},{name:"Yellow onion",qty:"1 large"},{name:"Red bell pepper",qty:"1"},{name:"Garlic",qty:"1 head"},{name:"Canned diced tomatoes",qty:"1 can (400ml)"},{name:"Frozen peas",qty:"1 bag"},{name:"Limes",qty:"2"},{name:"Fresh cilantro",qty:"1 small bunch"}],
-   butcherItems:[{cut:"Bone-in Skin-on Chicken Thighs",qty:"6–8 pieces"}]},
+   butcherItems:[{cut:"Bone-in Skin-on Chicken Thighs",qty:"6–8 pieces"}],
+   sourceUrl:"https://www.recipetineats.com/arroz-con-pollo/"},
   {id:21,name:"Chicken Cacciatore",protein:"thigh",season:"winter",time:55,bbq:false,easy:false,cook:true,thigh:true,
    ingredients:[{name:"Bone-in skin-on chicken thighs",qty:"6–8 pieces"},{name:"Tomato passata",qty:"1 can (400ml)"},{name:"Red bell peppers",qty:"2"},{name:"Yellow bell pepper",qty:"1"},{name:"Yellow onion",qty:"1 large"},{name:"Garlic",qty:"1 head"},{name:"Green olives (pitted) — on side only",qty:"1 jar"},{name:"Polenta (tube)",qty:"1 tube"}],
-   butcherItems:[{cut:"Bone-in Skin-on Chicken Thighs",qty:"6–8 pieces"}]},
+   butcherItems:[{cut:"Bone-in Skin-on Chicken Thighs",qty:"6–8 pieces"}],
+   sourceUrl:"https://www.recipetineats.com/chicken-cacciatore/"},
   {id:22,name:"Chimichurri Chicken Thighs",protein:"thigh",season:"summer",time:25,bbq:true,easy:true,cook:false,thigh:true,
    modificationNote:"Sauce needs 2x the garlic, lemon juice, and salt the recipe says.",
    ingredients:[{name:"Boneless skin-on chicken thighs",qty:"8 thighs"},{name:"Fresh flat-leaf parsley",qty:"1 large bunch"},{name:"Fresh cilantro",qty:"1 bunch"},{name:"Garlic",qty:"1 head"},{name:"Baby potatoes",qty:"1 bag"}],
-   butcherItems:[{cut:"Boneless Skin-on Chicken Thighs",qty:"8 thighs"}]},
+   butcherItems:[{cut:"Boneless Skin-on Chicken Thighs",qty:"8 thighs"}],
+   sourceUrl:"https://cafedelites.com/chimichurri-chicken/"},
   {id:31,name:"Filipino Chicken Adobo",protein:"thigh",season:"all",time:60,bbq:false,easy:false,cook:true,thigh:true,leftoverViability:"good",
    ingredients:[{name:"Boneless skinless chicken thighs",qty:"8 thighs"},{name:"Garlic",qty:"1 head"},{name:"Bay leaves",qty:""},{name:"Jasmine rice",qty:"1 bag"},{name:"Snap peas or green beans",qty:"1 bag"}],
-   butcherItems:[{cut:"Boneless Skinless Chicken Thighs",qty:"8 thighs"}]},
+   butcherItems:[{cut:"Boneless Skinless Chicken Thighs",qty:"8 thighs"}],
+   sourceUrl:"https://www.recipetineats.com/filipino-chicken-adobo-flavour-kapow/"},
   {id:32,name:"Harissa Chicken Thighs",protein:"thigh",season:"all",time:35,bbq:false,easy:false,cook:true,thigh:true,
    modificationNote:"Marinate 4–8 hrs or overnight — this is what makes harissa penetrate.",
    ingredients:[{name:"Boneless skinless chicken thighs",qty:"8 thighs"},{name:"Harissa paste",qty:"1 jar"},{name:"Garlic",qty:"1 head"},{name:"Lemons",qty:"1"},{name:"Jasmine rice",qty:"1 bag"},{name:"Snap peas or green beans",qty:"1 bag"}],
-   butcherItems:[{cut:"Boneless Skinless Chicken Thighs",qty:"8 thighs"}]},
+   butcherItems:[{cut:"Boneless Skinless Chicken Thighs",qty:"8 thighs"}],
+   sourceUrl:"https://themodernproper.com/easy-harissa-chicken"},
   {id:33,name:"One-Pan Moroccan Chicken",protein:"thigh",season:"winter",time:55,bbq:false,easy:false,cook:true,thigh:true,leftoverViability:"good",
    ingredients:[{name:"Bone-in skin-on chicken thighs",qty:"6–8 pieces"},{name:"Yellow onion",qty:"1 large"},{name:"Garlic",qty:"1 head"},{name:"Canned diced tomatoes",qty:"1 can (400ml)"},{name:"Lemons",qty:"1"},{name:"Fresh cilantro",qty:"1 bunch"},{name:"Jasmine rice",qty:"1 bag"},{name:"Snap peas",qty:"1 bag"}],
-   butcherItems:[{cut:"Bone-in Skin-on Chicken Thighs",qty:"6–8 pieces"}]},
+   butcherItems:[{cut:"Bone-in Skin-on Chicken Thighs",qty:"6–8 pieces"}],
+   sourceUrl:"https://www.dinneratthezoo.com/moroccan-chicken/"},
   {id:34,name:"BBQ Beef Burgers (No Bun)",protein:"beef",season:"summer",time:15,bbq:true,easy:true,cook:false,thigh:false,ryanAway:true,
    ingredients:[{name:"Ground beef patties (butcher-formed)",qty:"4–6 patties"},{name:"Bagged salad kit (not Caesar)",qty:"1–2 kits"},{name:"Corn on the cob or snap peas",qty:"4 cobs or 1 bag"}],
    butcherItems:[{cut:"Ground Beef Patties",qty:"4–6 patties"}]},
@@ -816,31 +933,343 @@ const RECIPES = [
   {id:49,name:"Peanut Satay Salad (Mandy's-inspired)",protein:"breast",season:"summer",time:25,bbq:true,easy:true,cook:false,thigh:false,
    proteinOptions:"chicken (default), pork tenderloin leftovers, BBQ sausage sliced, Korean beef leftovers",
    ingredients:[{name:"Chicken breasts (or leftover protein)",qty:"~1.5 lbs"},{name:"Mixed greens",qty:"1 bag"},{name:"Fresh cilantro",qty:"1 bunch"},{name:"Fresh mint",qty:"1 bunch"},{name:"Thai basil",qty:"1 bunch"},{name:"Green onions",qty:"1 bunch"},{name:"Carrots",qty:"1 bag"},{name:"Mango",qty:"1"},{name:"Roasted peanuts (unsalted)",qty:"1 bag"},{name:"Limes",qty:"2"},{name:"Lemons",qty:"1"},{name:"Oranges",qty:"1"}],
-   butcherItems:[{cut:"Chicken Breasts (or leftovers)",qty:"~1.5 lbs"}]},
+   butcherItems:[{cut:"Chicken Breasts (or leftovers)",qty:"~1.5 lbs"}],
+   sourceUrl:"https://mandys.ca/en/salad/peanut-satay/"},
   {id:50,name:"Greek Chopped Salad with Lemon Tahini",protein:"breast",season:"all",time:30,bbq:true,easy:true,cook:false,thigh:false,
    proteinOptions:"chicken (default — grilled WHOLE, sliced cold), Harissa pork leftovers, lamb (Ryan-away), chickpeas-only",
    ingredients:[{name:"Chicken breasts (or leftover protein)",qty:"~1.5 lbs"},{name:"Romaine lettuce",qty:"2 heads"},{name:"Canned chickpeas",qty:"1 can"},{name:"Cherry tomatoes",qty:"1 pint"},{name:"Persian cucumbers",qty:"4–5"},{name:"Red onion",qty:"1 small"},{name:"Feta cheese",qty:"1 block"},{name:"Avocados",qty:"1"},{name:"Tahini",qty:"1 jar"},{name:"Lemons",qty:"2"},{name:"Toasted pumpkin seeds or sliced almonds",qty:"1 bag"}],
-   butcherItems:[{cut:"Chicken Breasts (or leftovers)",qty:"~1.5 lbs"}]},
+   butcherItems:[{cut:"Chicken Breasts (or leftovers)",qty:"~1.5 lbs"}],
+   sourceUrl:"https://www.halfbakedharvest.com/greek-chicken-chopped-salad/"},
   // === NEW: Round 1 picks (51–54) ===
   {id:51,name:"Creamy Lemon Garlic Chicken",protein:"breast",season:"all",time:25,bbq:false,easy:true,cook:false,thigh:false,creamHeavy:true,
    ingredients:[{name:"Chicken breasts (whole)",qty:"4 breasts"},{name:"Garlic",qty:"1 head"},{name:"Lemons",qty:"2"},{name:"Heavy cream",qty:"1 small carton"},{name:"Parmesan cheese",qty:"1 wedge"},{name:"Fresh parsley",qty:"1 bunch"},{name:"Jasmine rice",qty:"1 bag"}],
-   butcherItems:[{cut:"Chicken Breasts (whole)",qty:"4 breasts"}]},
+   butcherItems:[{cut:"Chicken Breasts (whole)",qty:"4 breasts"}],
+   sourceUrl:"https://www.littlespicejar.com/one-skillet-chicken-with-lemon-garlic-cream-sauce/"},
   {id:52,name:"Italian Marinated Sheet Pan Chicken",protein:"breast",season:"all",time:35,bbq:false,easy:true,cook:false,thigh:false,
    ingredients:[{name:"Chicken breasts (whole)",qty:"4 breasts"},{name:"Garlic",qty:"1 head"},{name:"Lemons",qty:"1"},{name:"Yukon gold potatoes",qty:"1 bag"},{name:"Asparagus",qty:"1 bunch"}],
-   butcherItems:[{cut:"Chicken Breasts (whole)",qty:"4 breasts"}]},
+   butcherItems:[{cut:"Chicken Breasts (whole)",qty:"4 breasts"}],
+   sourceUrl:"https://cookathomemom.com/one-pan-italian-chicken-breasts/"},
   {id:53,name:"Turkey Cutlets with Dijon Sauce",protein:"turkey",season:"all",time:30,bbq:false,easy:true,cook:false,thigh:false,
    modificationNote:"Skip the flour-dredge step — pan-sear cutlets directly, then sauce.",
    ingredients:[{name:"Turkey breast cutlets",qty:"1.5 lbs"},{name:"Heavy cream or chicken broth",qty:"1 small carton"},{name:"Garlic",qty:"1 head"},{name:"Fresh thyme",qty:"1 bunch"},{name:"Lemons",qty:"1"},{name:"Jasmine rice",qty:"1 bag"},{name:"Snap peas or green beans",qty:"1 bag"}],
-   butcherItems:[{cut:"Turkey Breast Cutlets",qty:"1.5 lbs"}]},
+   butcherItems:[{cut:"Turkey Breast Cutlets",qty:"1.5 lbs"}],
+   sourceUrl:"https://easylowcarb.com/turkey-breast-cutlets-with-dijon-sauce/"},
   {id:54,name:"Garlic + Herb Pork Tenderloin",protein:"pork",season:"all",time:35,bbq:true,easy:true,cook:false,thigh:false,
    modificationNote:"Replaces old Oven Pork Tenderloin — marinade is mandatory not optional. Garlic/lemon/Dijon/rosemary.",
    ingredients:[{name:"Pork tenderloin",qty:"1.5–2 lbs"},{name:"Garlic",qty:"1 head"},{name:"Lemons",qty:"2"},{name:"Fresh rosemary",qty:"1 sprig"},{name:"Baby potatoes (Little Potato Co.)",qty:"1 bag"},{name:"Frozen mixed veg",qty:"1 bag"}],
-   butcherItems:[{cut:"Pork Tenderloin",qty:"1.5–2 lbs"}]},
+   butcherItems:[{cut:"Pork Tenderloin",qty:"1.5–2 lbs"}],
+   sourceUrl:"https://tastesbetterfromscratch.com/pork-tenderloin-marinade/"},
   {id:55,name:"Tuna Pesto Pasta",protein:"tuna",season:"all",time:20,bbq:false,easy:true,cook:false,thigh:false,ryanAway:true,frequencyWeeks:3,
    modificationNote:"Couch night — Jenn + kids eat together on the couch with TV when Ryan is out. Family favourite, but rotate so people don't get sick of it.",
    ingredients:[{name:"Pasta (regular, 1 bag)",qty:"1 bag"},{name:"Jarred pesto",qty:"2 jars"},{name:"Canned tuna",qty:"3–4 cans"},{name:"Parmesan cheese (optional, to top)",qty:"1 wedge"}],
    butcherItems:[]},
 ];
+
+// ============================================================
+// RECIPE STEPS — cooking instructions for each recipe
+// Keyed by recipe ID. Adapted for the Maund family rules:
+// no batch-browning, whole pieces, family of 4 + leftovers.
+// ============================================================
+const RECIPE_STEPS = {
+  1: [
+    "Make marinade: mince 2 garlic cloves, juice ¾ lemon. Mix with 1½ tbsp lemon pepper seasoning, ¾ tsp paprika, ¾ tsp oregano, and 1½ tbsp coconut oil.",
+    "Pound 4–6 chicken breasts to even thickness with a mallet or mason jar bottom — this is key for even BBQ cooking.",
+    "Coat chicken in marinade, cover, and refrigerate 2 hours (plan ahead).",
+    "Fire up BBQ to medium-high. Remove chicken from fridge 20 min before grilling.",
+    "Grill 6–7 min per side with lid closed until internal temp hits 165°F. Don't move them while they're searing.",
+    "Rest 5 min, then serve with lemon wedges."
+  ],
+  3: [
+    "Preheat oven to 350°F. Grease a 9×13 baking dish.",
+    "Make cilantro lime sauce: stir together ½ cup Greek yogurt, juice of ½ lime, and 2 tbsp chopped fresh cilantro. Set aside.",
+    "Cook and shred 3 chicken breasts — poach in salted water 15–18 min, or use leftover chicken.",
+    "Mix shredded chicken with one 4-oz can diced green chiles, half the enchilada sauce, and half the cheese. Season with salt and pepper.",
+    "Warm corn tortillas briefly in a dry pan so they don't crack. Spoon filling into each, roll up, place seam-side down in the baking dish.",
+    "Pour remaining enchilada sauce over top. Sprinkle with remaining cheese.",
+    "Bake 18–20 min until cheese is melted and bubbly.",
+    "Drizzle cilantro lime sauce over top before serving."
+  ],
+  4: [
+    "Start jasmine rice so it's ready when the beef is done.",
+    "Set out toppings: microwave frozen edamame per package, grate or julienne 1–2 carrots, slice 1 cucumber, chop 2 green onions.",
+    "Heat a large skillet or griddle over HIGH heat until very hot — this is how you get that caramelized edge on the bulgogi.",
+    "Add pre-marinated bulgogi. Spread in a single layer. Cook 2–3 min without stirring, then stir-fry 2–3 more min until no longer pink and edges are slightly caramelized.",
+    "Build bowls: rice base, bulgogi on top, edamame, carrot, cucumber.",
+    "Finish with sesame seeds and green onions. Serve with sriracha or gochujang on the side."
+  ],
+  6: [
+    "Heat 1 tbsp olive oil and 1 tbsp butter in a large pot over medium heat.",
+    "Add diced onion, diced carrots, and sliced celery. Cook 8–10 min, stirring occasionally, until softened.",
+    "Add 2 tsp minced garlic. Cook 1 more minute.",
+    "Add 1 tsp basil, ½ tsp oregano, 1 tsp salt, ¼ tsp pepper, pinch of red pepper flakes. Stir.",
+    "Pour in 8 cups turkey or chicken broth. Bring to a boil.",
+    "Reduce heat to medium-low. Add 1 cup long-grain white rice and stir.",
+    "Simmer 10–12 min until rice is almost done but still slightly firm.",
+    "Add 2 cups cubed cooked turkey. Simmer 15–20 more min until rice is fully cooked and soup is thick.",
+    "Taste, adjust salt. Garnish with fresh parsley and serve."
+  ],
+  7: [
+    "Marinate chicken: whisk olive oil, juice of 1 lime, 1 tsp cumin, 1 garlic clove minced, salt and pepper. Coat 3 whole chicken breasts. Marinate 30 min.",
+    "Prep the salad: dice 2 ripe mangoes, rinse 1 can black beans, dice 1 red bell pepper, thinly slice ½ red onion, chop ¼ cup cilantro.",
+    "BBQ chicken on medium-high, 6–7 min per side, lid closed, until internal temp is 165°F. Rest 5 min, slice thin.",
+    "In a large bowl: combine mango, black beans, red pepper, red onion, cilantro. Dress with juice of 1–2 limes, drizzle of olive oil, salt to taste.",
+    "Serve over mixed greens with sliced chicken on top. Avocado on the side."
+  ],
+  9: [
+    "Have leftover cooked chicken and cooked rice ready — cold rice works best (makes it fry rather than steam).",
+    "Chop or shred leftover chicken into bite-sized pieces.",
+    "Heat a large skillet or wok over HIGH heat. Add 1 tbsp sesame oil.",
+    "Add cold rice. Press it flat. Let it sit 2 min untouched to fry, then stir. Repeat until lightly golden in spots.",
+    "Push rice to the sides. Crack 2 eggs into the center and scramble them, then mix into the rice.",
+    "Add chicken, 1 cup frozen mixed veg (no need to thaw), 2–3 tbsp tamari or soy sauce, ½ tsp garlic powder.",
+    "Stir-fry everything together 3–4 min until hot, well-combined, and slightly caramelized.",
+    "Taste and adjust seasoning. Top with sliced green onions. Add a dash more sesame oil or sriracha if you like."
+  ],
+  11: [
+    "MARINADE (day before or morning of): Mix plain yogurt, garam masala, cumin, turmeric, paprika, lemon juice, garlic. Coat chicken thighs, cover, refrigerate 2+ hours.",
+    "SEARING: This is the one recipe where it's worth it. Heat oil in large pot over high heat. Sear marinated thighs in batches — 3 min per side until golden. Set aside. (Keep batches small so they sear, not steam.)",
+    "In same pot: melt 2 tbsp butter with 1 tbsp oil. Sauté diced onion on medium 10–12 min until deep golden.",
+    "Add 2 tbsp garlic-ginger paste (or minced garlic + grated ginger). Cook 2 min.",
+    "Add garam masala, cumin, coriander, paprika, salt. Cook 2 min until very fragrant.",
+    "Add one 28-oz can crushed tomatoes. Cook 10 min stirring, until sauce deepens and thickens.",
+    "Add 3 cans coconut milk + a splash of heavy cream. Stir well.",
+    "Return chicken to pot. Bring to a simmer, then cook UNCOVERED 45–60 min until sauce is deep red-orange and coats a spoon. Stir occasionally.",
+    "Taste and adjust salt. Serve over jasmine rice with snap peas on the side. ALWAYS double batch — leftovers are excellent and it freezes well."
+  ],
+  12: [
+    "Season chicken thighs with salt and a pinch of turmeric.",
+    "Heat oil in a large pan over medium-high. Sear thighs skin-side down 3 min per side until golden. Don't let this go longer — keep the browning step SHORT. Set thighs aside.",
+    "In same pan: add 2–3 tbsp red or yellow curry paste. Fry in the oil 1–2 min until very fragrant.",
+    "Add diced onion, 3 minced garlic cloves, and 1 tbsp grated ginger. Cook 3 min.",
+    "Pour in 1 can full-fat coconut milk. Stir to combine with curry paste.",
+    "Return chicken to pan. Add 1–2 cups frozen mixed veg.",
+    "Simmer 20–25 min, turning chicken occasionally, until cooked through.",
+    "Taste and adjust salt. Serve over jasmine rice."
+  ],
+  13: [
+    "Start jasmine rice.",
+    "Make peanut sauce: whisk ⅓ cup natural peanut butter + 3 tbsp tamari + juice of 2 limes + 1 tbsp grated fresh ginger + 2 garlic cloves minced + 1 tbsp rice vinegar + dash of sriracha. Thin with 2–3 tbsp warm water until it pours easily.",
+    "Season whole chicken breasts with salt and pepper.",
+    "Heat pan over medium-high with 1 tbsp oil. Cook whole breasts 5–6 min per side until internal temp is 165°F. Rest 5 min. Slice on the bias.",
+    "Set out toppings: shred 1 carrot, slice 1 cucumber, chop ½ cup peanuts, slice 3 green onions.",
+    "Build bowls: rice → chicken slices → carrot, cucumber, peanuts, scallions.",
+    "Drizzle peanut sauce generously over everything. Lime wedge on the side. Sauce on the side for kids."
+  ],
+  14: [
+    "Make shawarma marinade: 3 tbsp olive oil + 2 tsp cumin + 1 tsp turmeric + 1½ tsp paprika + 1 tsp coriander + 3 garlic cloves minced + juice of 1 lemon + salt. Coat whole chicken breasts. Marinate 30 min minimum, overnight is better.",
+    "Start jasmine rice. Set out hummus, sliced cucumbers, and halved cherry tomatoes.",
+    "BBQ on medium-high: cook whole breasts 6–7 min per side, lid closed, until internal temp is 165°F. Rest 5 min, slice thin.",
+    "Build bowls: rice base → chicken → hummus → cucumber → tomatoes.",
+    "Drizzle with tahini or a quick garlic yogurt (Greek yogurt + garlic + lemon). Squeeze fresh lemon over everything before serving."
+  ],
+  15: [
+    "Preheat oven to 400°F. Line a baking sheet with parchment.",
+    "In a large bowl, combine 1.5 lbs ground turkey + ¼ cup almond flour + 1 egg + 2 garlic cloves minced + 1 tsp Italian seasoning + 1 tsp salt + ½ tsp pepper. Mix until just combined — don't overwork it.",
+    "Roll into golf-ball sized balls (about 18–20). Place on baking sheet with space between each.",
+    "Bake 18–20 min until golden on top and cooked through (internal temp 165°F).",
+    "While meatballs bake, heat marinara sauce in a pot over low heat.",
+    "Add baked meatballs to the sauce. Simmer 5 min to let them soak up the flavour.",
+    "Serve over jasmine rice. Parmesan on top if you have it."
+  ],
+  17: [
+    "Cut 1.5 lbs turkey breast into 2-inch chunks.",
+    "Wrap each chunk tightly with one strip of bacon. Secure with a toothpick pushed through the side. (This takes time — put on music. It's worth it.)",
+    "Make garlic herb butter: 3 tbsp butter + 3 garlic cloves minced + 1 tbsp fresh thyme + 1 tbsp fresh rosemary + salt.",
+    "Heat an oven-safe skillet over medium-high until hot. Sear tornados 2–3 min per side, rotating to crisp the bacon all around.",
+    "Baste generously with garlic herb butter.",
+    "Transfer pan to oven at 400°F. Bake 12–15 min until turkey reaches 165°F.",
+    "Pull from oven and baste one more time with the pan butter. Rest 3 min before serving.",
+    "Note: Bacon wrapping does NOT count as the weekly pork meal."
+  ],
+  20: [
+    "Season 6–8 chicken pieces with 1 tsp cumin, 1 tsp paprika, 1 tsp garlic powder, 1 tsp salt, ½ tsp oregano.",
+    "Heat 2 tbsp oil in a large oven-safe pot or Dutch oven over medium-high. Sear chicken pieces 3–4 min per side until golden. Remove and set aside.",
+    "In same pot: sauté 1 diced onion and 1 diced green or red bell pepper for 5 min. Add 3 garlic cloves minced, cook 1 min.",
+    "Add 1 can diced tomatoes, 2 cups chicken broth, 1 tsp cumin, ½ tsp turmeric (or a pinch of saffron if you have it). Stir well.",
+    "Add 1½ cups rinsed long-grain rice. Stir to distribute evenly across the pan.",
+    "Nestle chicken pieces on top, skin-side up. Bring to a simmer.",
+    "Cover and cook on low heat 25–30 min until rice is fluffy and chicken is cooked through.",
+    "Rest 5 min covered. Fluff rice. Garnish with fresh cilantro and lime wedges."
+  ],
+  21: [
+    "Season chicken pieces (breasts or thighs) with salt and pepper.",
+    "Heat 2 tbsp olive oil in a large pot over medium-high. Sear chicken 3–4 min per side until golden. Remove and set aside.",
+    "In same pot: sauté 1 diced onion and 1 diced red bell pepper for 5 min. Add 3 garlic cloves minced, cook 1 min.",
+    "Add 1 can crushed tomatoes, ½ cup chicken broth, 1 tsp dried oregano, ½ tsp thyme, 1 bay leaf.",
+    "Return chicken pieces to pot, pushing them into the sauce. Spoon sauce over top.",
+    "Serve Jenn's portion now (before olives go in), then add ½ cup pitted olives to the pot for the rest of the family.",
+    "Cover and simmer on LOW 35–40 min until chicken is very tender and sauce has thickened.",
+    "Remove bay leaf. Taste and adjust salt. Serve over jasmine rice or polenta."
+  ],
+  22: [
+    "Make chimichurri FIRST (it improves as it sits): finely chop 1 large bunch fresh parsley + DOUBLE garlic (4–6 cloves, minced) + 1 tbsp dried oregano + DOUBLE lemon juice (2 lemons) + 2 tbsp red wine vinegar + ½ cup olive oil + ½ tsp red pepper flakes + generous salt. Taste — it should be VERY bright and punchy. Add more lemon and salt until it stops tasting flat.",
+    "Season chicken thighs with salt and pepper. Rub with a bit of olive oil.",
+    "BBQ on medium-high: thighs go skin-side down FIRST. Cook 7–8 min per side, lid closed, until skin is charred and internal temp hits 165°F.",
+    "Rest 5 min.",
+    "Spoon chimichurri generously over chicken — don't be shy, this IS the meal. Extra sauce on the table for dipping.",
+    "Note: The sauce always needs more garlic, lemon, and salt than you think. Taste after making and adjust aggressively."
+  ],
+  31: [
+    "Combine 1.5 lbs chicken thighs with ⅓ cup tamari (or soy sauce), ¼ cup white vinegar, 6 garlic cloves crushed, 3 bay leaves, and 1 tsp black pepper. Marinate 30 min in the fridge (overnight makes it better).",
+    "Heat 1 tbsp oil in a large pan over HIGH heat. Lift chicken from marinade (reserve it), pat dry. Sear skin-side down 5 min until golden. Flip and sear 2 min more. Remove.",
+    "Pour reserved marinade into the pan plus 3 more crushed garlic cloves. Bring to a boil.",
+    "Return chicken skin-side UP. Cover and reduce to a simmer. Cook 20 min.",
+    "Uncover, increase heat to medium-high. Simmer uncovered 10–15 min, spooning sauce over chicken, until sauce reduces and becomes glossy and sticky.",
+    "Serve over jasmine rice. Spoon extra sauce from the pan over each bowl. Snap peas on the side."
+  ],
+  32: [
+    "Make harissa marinade: 3 tbsp harissa paste + 2 tbsp olive oil + 2 garlic cloves minced + juice of ½ lemon + salt. Mix well.",
+    "Coat 1.5 lbs chicken thighs thoroughly — get under the skin if possible. Cover and refrigerate 4–8 hours. This is MANDATORY — the April 23 batch was bland because the harissa didn't penetrate. Don't skip the time.",
+    "Remove chicken from fridge 20 min before cooking.",
+    "Option A — Oven (425°F): place thighs on a wire rack over a baking sheet. Roast 30–35 min until edges are charred and internal temp is 165°F.",
+    "Option B — BBQ: medium-high heat. Grill skin-side down 8–10 min, flip, cook 8–10 min more.",
+    "Rest 5 min. Serve with lemon wedges and garlic green beans."
+  ],
+  33: [
+    "Mix spice blend: 1 tsp cumin + 1 tsp coriander + ½ tsp cinnamon + 1 tsp paprika + ½ tsp turmeric + salt and pepper.",
+    "Pat chicken thighs dry. Coat all over with the spice blend.",
+    "Heat 2 tbsp olive oil in a large oven-safe skillet over medium-high. Sear thighs skin-side down 4–5 min until golden. Flip and sear 2 min. Remove.",
+    "In same pan: sauté 1 diced onion 3 min. Add 3 garlic cloves minced, cook 1 min. Add 1 can diced tomatoes, ½ cup chicken broth, and the same spice blend.",
+    "Set a small bowl of olives on the counter — they go on the TABLE for the family, not into Jenn's portion.",
+    "Return chicken skin-side up. Bring to a simmer.",
+    "Cover and simmer 25–30 min until chicken is cooked through.",
+    "Serve over jasmine rice with a squeeze of lemon. Olives at the table."
+  ],
+  34: [
+    "Season butcher-formed beef patties with salt, pepper, garlic powder. Don't press them — keep them thick.",
+    "BBQ on medium-high: cook 4–5 min per side. Don't press the patties down while cooking.",
+    "Rest 2 min before serving.",
+    "Serve with a bagged salad kit (not Caesar), sliced tomato, avocado. Cheese on the side."
+  ],
+  35: [
+    "If forming patties: combine ground turkey with 1 tsp garlic powder, ½ tsp onion powder, 1 tbsp Worcestershire sauce, salt and pepper. Form into 4–6 patties.",
+    "BBQ on MEDIUM (not high — turkey needs gentler heat): cook 6–7 min per side until fully cooked through with NO pink inside. Internal temp must hit 165°F.",
+    "Rest 2 min.",
+    "Serve with a bagged salad kit (not Caesar) and sliced avocado."
+  ],
+  36: [
+    "Poke sausages 3–4 times to prevent splitting (skip if they're natural-casing type with no added fillers).",
+    "BBQ on MEDIUM heat: cook 12–15 min total, turning every 3–4 min until nicely browned all around and cooked through.",
+    "Serve with a bagged salad kit or whatever salad veg is on hand."
+  ],
+  37: [
+    "Season 4–6 chicken breasts with salt, pepper, and garlic powder.",
+    "Heat a large skillet over medium-high. Add 1 tbsp butter + 1 tbsp oil (butter alone burns).",
+    "Cook whole breasts 6–7 min per side until golden and 165°F internal. Don't move them while searing — let them build a crust.",
+    "Remove chicken. Reduce heat to medium. Add 3 garlic cloves minced to the pan, cook 30 sec.",
+    "Add ¼ cup chicken broth and squeeze of half a lemon. Scrape up any browned bits. Swirl to make pan sauce.",
+    "Return chicken to pan, spoon sauce over. Serve immediately with whatever veg is on hand."
+  ],
+  38: [
+    "Make herb marinade: 3 tbsp olive oil + 2 garlic cloves minced + 1 tsp rosemary + 1 tsp thyme + 1 tbsp Dijon + juice of ½ lemon + salt and pepper. Coat bone-in pork chops. Marinate 30 min minimum — overnight is better.",
+    "Remove from fridge 15 min before grilling.",
+    "BBQ on medium-high: cook 4–5 min per side. Pork is done at 145°F internal — don't overcook or it dries out fast.",
+    "Rest 5 min before cutting.",
+    "Serve with salad and a simple veg side."
+  ],
+  40: [
+    "Make marinade: 3 tbsp balsamic vinegar + 3 tbsp olive oil + 3 garlic cloves minced + 1 tsp Italian seasoning + 1 tsp Dijon + salt and pepper. Coat whole chicken breasts. Marinate 30 min–overnight.",
+    "Remove from fridge 20 min before grilling.",
+    "BBQ on medium-high: cook 6–7 min per side, lid closed. Internal temp should hit 165°F.",
+    "Rest 5 min before slicing. Serve with salad and veg."
+  ],
+  41: [
+    "Season 4–6 chicken breasts with salt and pepper.",
+    "Heat pan over medium-high with 1 tbsp oil. Cook whole breasts 6–7 min per side until 165°F internal. Remove and set aside.",
+    "Reduce heat to medium. Add 1 tbsp butter. Add 2 garlic cloves minced, cook 30 sec.",
+    "Add 2 tbsp Dijon mustard + juice of 1 lemon + ¼ cup chicken broth. Whisk to combine.",
+    "Simmer sauce 2–3 min until slightly thickened. Taste and adjust lemon and salt.",
+    "Return chicken to pan, spoon sauce over. Serve immediately with green beans or salad."
+  ],
+  42: [
+    "Season 4–6 chicken breasts with salt, pepper, and ½ tsp cumin.",
+    "Heat pan over medium-high with 1 tbsp oil. Sear breasts 3–4 min per side until golden.",
+    "Pour one 16-oz jar of salsa verde over the chicken. Cover and reduce heat to medium-low.",
+    "Simmer 15–20 min until chicken is cooked through and sauce has thickened slightly.",
+    "Serve over rice with diced avocado, fresh cilantro, and a squeeze of lime."
+  ],
+  44: [
+    "Season bone-in pork chops with salt, pepper, and garlic powder.",
+    "Heat skillet over medium-high with 1 tbsp oil. Sear chops 4–5 min per side until golden brown. Remove.",
+    "Reduce heat to medium. Add 2 tbsp butter to pan. Add 3 garlic cloves minced + 1 tsp fresh thyme or rosemary. Cook 1 min.",
+    "Add ¼ cup chicken broth + 1 tbsp Dijon mustard. Whisk to make a pan sauce.",
+    "Return chops to pan, spoon sauce over. Simmer 3–5 min until sauce thickens and pork reaches 145°F.",
+    "Rest 3 min. Serve with green beans or snap peas."
+  ],
+  45: [
+    "Make jerk marinade: 1 tsp allspice + 1 tsp dried thyme + 1 tsp ground ginger + ½ tsp cayenne + 3 garlic cloves minced + 2 tbsp tamari + juice of 2 limes + 2 tbsp olive oil + 1 tsp brown sugar. Mix well.",
+    "Score chicken breasts with a knife (4–5 slashes). Coat in marinade. Marinate overnight — minimum 4 hours. Jerk needs time.",
+    "Remove from fridge 20 min before grilling.",
+    "BBQ on medium-high: cook 6–7 min per side until 165°F internal. Let the marinade char a bit — that char is the flavour.",
+    "Rest 5 min. Serve with corn on the cob or mango avocado salad."
+  ],
+  46: [
+    "Make yogurt marinade: ½ cup plain yogurt + 1½ tsp garam masala + 1 tsp cumin + ½ tsp turmeric + 1 tsp paprika + 3 garlic cloves minced + 1 tbsp grated ginger + juice of ½ lemon + 1 tsp salt. Mix well.",
+    "Score chicken breasts with 4–5 knife cuts. Coat in marinade — press it into the cuts. Marinate overnight (minimum 4 hours). The yogurt tenderizes the meat and keeps it juicy on the BBQ.",
+    "Remove from fridge 20 min before grilling.",
+    "BBQ on medium-high: cook 6–8 min per side until beautiful char marks and 165°F internal.",
+    "Rest 5 min. Serve with cucumber lime salad or fresh greens."
+  ],
+  49: [
+    "The night before: BBQ or pan-grill 1.5 lbs chicken breasts whole. Cool and refrigerate. (Or use leftover pork tenderloin — slice thin.)",
+    "Make your chosen dressing — Sesame Citrus Vinaigrette: whisk zest + juice of 1 orange, 1 lemon, 1 lime + ¼ cup rice vinegar + ¼ cup toasted sesame oil + 1–2 tbsp tamari + 2 garlic cloves minced. OR Creamy Peanut: whisk ⅓ cup peanut butter + 3 tbsp tamari + 3 tbsp lime juice + 2 tbsp rice vinegar + 1 tbsp honey + 1 tbsp sesame oil + 1 tbsp grated ginger + 1 garlic clove + warm water to thin. Taste and adjust — should be bold.",
+    "In a very large bowl: layer 8 cups mixed greens, 1.5 cups fresh cilantro, 1 cup fresh mint, ½ cup fresh basil, 4 chopped green onions, 2 grated carrots, 2 cubed mangoes, sliced red bell pepper.",
+    "Slice cold protein thin and lay over the salad.",
+    "Drizzle 2–3 tbsp dressing over salad, toss gently. Add more only as needed — don't drown it. Reserve extra dressing on the side.",
+    "Top with 1 cup roughly-chopped peanuts RIGHT before serving so they stay crunchy. No cabbage. No chow mein noodles."
+  ],
+  50: [
+    "The night before: marinate 1.5 lbs chicken breasts in olive oil + balsamic + smoked paprika + oregano + garlic for at least 30 min. Grill whole on BBQ until 165°F internal. Cool and refrigerate. Do NOT cube raw chicken — grill whole, slice cold.",
+    "Make Lemon Tahini Vinaigrette: whisk 3 tbsp tahini + juice and zest of 2 lemons + 2 tbsp red wine vinegar + 1 tbsp Dijon + 2 tsp honey + ¼ cup olive oil + 1 garlic clove minced + pinch red pepper flakes + salt and pepper. Add warm water 1 tbsp at a time to thin. Should be creamy and tangy.",
+    "Slice cold chicken into thin strips.",
+    "In a large bowl: layer 1 head chopped romaine, 1 can drained chickpeas, 1 cup halved cherry tomatoes, 2 chopped cucumbers, ½ sliced red onion.",
+    "Top with chicken, crumbled feta, diced avocado, ¼ cup toasted pumpkin seeds.",
+    "Drizzle dressing — start with 3–4 tbsp, toss, taste, add more. Reserve extra on the side.",
+    "Set out a small bowl of olives at the table — never toss them in. Family adds to their own plates, Jenn's stays olive-free."
+  ],
+  51: [
+    "Season 4–6 chicken breasts with salt, pepper, garlic powder, and a pinch of paprika.",
+    "Heat a large skillet over medium-high. Add 1 tbsp butter + 1 tbsp olive oil. Sear whole breasts 5–6 min per side until golden and 165°F internal. Remove and set aside.",
+    "Reduce heat to medium. Add 4 garlic cloves minced to the pan. Cook 1 min, stirring (don't burn).",
+    "Add ¼ cup chicken broth and juice of 1 lemon. Scrape up any browned bits.",
+    "Pour in ½ cup heavy cream. Add 2 tbsp fresh parsley. Stir and simmer 3–4 min until sauce thickens.",
+    "Return chicken to pan. Spoon sauce over. Simmer 2 more min.",
+    "Serve immediately — the sauce is the star. Note: this counts toward the 1 cream-sauce meal/week limit."
+  ],
+  52: [
+    "Make Italian marinade: 3 tbsp olive oil + 2 tsp Italian seasoning + 3 garlic cloves minced + juice of ½ lemon + 1 tbsp Dijon + salt and pepper. Coat whole chicken breasts. Marinate 30 min minimum, overnight is better.",
+    "Preheat oven to 425°F.",
+    "Toss baby potatoes with 1 tbsp olive oil + ½ tsp Italian seasoning + salt. Spread on one end of a large baking sheet.",
+    "Place marinated chicken on the other end of the sheet. Add asparagus spears (or green beans) around the chicken.",
+    "Roast 25–30 min until chicken reaches 165°F and potatoes are fork-tender.",
+    "Optional: broil 2–3 min at the end for caramelized edges on the chicken and veg.",
+    "Note: Potatoes count toward Ryder's 2/week limit."
+  ],
+  53: [
+    "Pat turkey cutlets dry with paper towel. Season with salt, pepper, garlic powder. Do NOT flour-dredge — skip that step from any recipe that includes it.",
+    "Heat skillet over medium-high with 1 tbsp oil + 1 tbsp butter. Sear cutlets 3–4 min per side until golden brown and cooked through (165°F, no pink). Remove and set aside.",
+    "Reduce heat to medium. Add 1 small shallot or 2 garlic cloves, diced. Cook 1 min.",
+    "Add ¼ cup chicken broth + 2 tbsp Dijon mustard. Whisk to combine. Add 2 tbsp heavy cream or an extra knob of butter.",
+    "Simmer until sauce thickens enough to coat a spoon, about 2–3 min.",
+    "Return cutlets to pan, spoon sauce over. Serve immediately with green beans or snap peas."
+  ],
+  54: [
+    "Make marinade: 3 tbsp olive oil + 4 garlic cloves minced + juice of 1 lemon + 2 tbsp Dijon + 1 tbsp fresh rosemary + 1 tbsp fresh thyme + salt and pepper. Whisk together.",
+    "Trim the silver skin from the tenderloin. Place in a zip bag, pour marinade over. Marinate 4–8 hours in the fridge. This is MANDATORY — the plain version consistently rated 3/5. The marinade makes the difference.",
+    "Remove from fridge 20 min before cooking.",
+    "Option A — BBQ (preferred): preheat to medium-high. Cook tenderloin 15–20 min total, turning every 5 min, until internal temp hits 145°F. Rest 5 min, slice into medallions.",
+    "Option B — Oven: heat oven-safe pan over high. Sear tenderloin 2 min per side on all 4 sides. Transfer to 425°F oven for 15–20 min until 145°F internal. Rest 5 min.",
+    "Slice and serve with green beans, snap peas, or a simple salad."
+  ],
+  55: [
+    "Boil a large pot of salted water. Cook pasta according to package directions. Before draining, scoop out ½ cup pasta water. Drain.",
+    "While pasta cooks: drain and flake 2 cans of good tuna. Open a jar of good-quality pesto.",
+    "In the now-empty pasta pot: combine tuna + ¾ cup pesto + 3 tbsp of reserved pasta water. Warm over low heat, stirring.",
+    "Add the drained pasta and toss to coat. Add more pasta water a splash at a time if it looks dry.",
+    "Taste and adjust salt. Top with grated Parmesan and a squeeze of lemon zest.",
+    "Note: Ryan-away nights only (contains regular gluten pasta)."
+  ]
+};
 
 // ============================================================
 // DERIVE: ratings, last-cooked, leftover-viability from MEAL_HISTORY
@@ -912,6 +1341,7 @@ function computeRecipeStats() {
 const STATE = {
   weekStart: getMonday(new Date()),
   ryanHomeDays: [true,true,true,true,true,true,true],
+  ryanLunches: null,   // null = auto (weekday home days); number = manual override
   ryderLunch: '',
   claireLunch: '',
   jennLunch: 'Waldorf Salad',
@@ -950,6 +1380,7 @@ function saveState() {
     const s = {
       weekStart: STATE.weekStart.toISOString(),
       ryanHomeDays: STATE.ryanHomeDays,
+      ryanLunches: STATE.ryanLunches,
       ryderLunch: STATE.ryderLunch,
       claireLunch: STATE.claireLunch,
       jennLunch: STATE.jennLunch,
@@ -966,17 +1397,11 @@ function loadState() {
     if (raw) {
       const s = JSON.parse(raw);
       if (s.weekStart) {
-        const wk = new Date(s.weekStart);
-        const thisMonday = getMonday(new Date());
-        if (wk < thisMonday) {
-          STATE.weekStart = thisMonday;
-          STATE.plan = Array(7).fill(null);
-        } else {
-          STATE.weekStart = wk;
-          STATE.plan = s.plan || Array(7).fill(null);
-        }
+        STATE.weekStart = new Date(s.weekStart);
+        STATE.plan = s.plan || Array(7).fill(null);
       }
       if (s.ryanHomeDays) STATE.ryanHomeDays = s.ryanHomeDays;
+      STATE.ryanLunches = s.ryanLunches !== undefined ? s.ryanLunches : null;
       if (s.ryderLunch !== undefined) STATE.ryderLunch = s.ryderLunch;
       if (s.claireLunch !== undefined) STATE.claireLunch = s.claireLunch;
       if (s.jennLunch !== undefined) STATE.jennLunch = s.jennLunch;
@@ -1012,9 +1437,32 @@ function renderSetup() {
     <div class="day-toggle ${STATE.ryanHomeDays[i]?'on':''}" onclick="toggleRyanDay(${i})">${d.charAt(0)}</div>
   `).join('');
   const homeCount = STATE.ryanHomeDays.filter(Boolean).length;
-  document.getElementById('ryan-summary').textContent = homeCount > 0
-    ? `${homeCount} home day${homeCount===1?'':'s'} → ${homeCount} salad kit${homeCount===1?'':'s'} + ${homeCount} chicken supreme`
-    : `Ryan away all week — no lunches needed`;
+  const lunchCount = getRyanLunchCount();
+  const autoLunchCount = STATE.ryanHomeDays.slice(0,5).filter(Boolean).length;
+  const isManual = STATE.ryanLunches !== null;
+
+  const summaryEl = document.getElementById('ryan-summary');
+  summaryEl.textContent = homeCount > 0
+    ? `${homeCount} night${homeCount===1?'':'s'} home`
+    : `Ryan away all week`;
+
+  // Render lunch stepper
+  const stepperEl = document.getElementById('ryan-lunch-stepper');
+  if (stepperEl) {
+    stepperEl.innerHTML = `
+      <div class="lunch-stepper">
+        <span class="lunch-label" style="margin-bottom:0;white-space:nowrap">Lunches this week:</span>
+        <button class="stepper-btn" onclick="setRyanLunches(-1)">−</button>
+        <span class="stepper-count">${lunchCount}</span>
+        <button class="stepper-btn" onclick="setRyanLunches(1)">+</button>
+        ${isManual
+          ? `<button class="stepper-reset" onclick="resetRyanLunchesToAuto()" title="Reset to auto (weekday home days)">↺ auto</button>`
+          : `<span class="stepper-auto">(auto from weekdays)</span>`}
+      </div>
+      <div class="field-hint" style="margin-top:4px">${lunchCount} salad kit${lunchCount===1?'':'s'} + ${lunchCount} chicken supreme</div>
+    `;
+  }
+
   document.getElementById('ryder-lunch').value = STATE.ryderLunch;
   document.getElementById('claire-lunch').value = STATE.claireLunch;
   document.getElementById('jenn-lunch').value = STATE.jennLunch;
@@ -1038,6 +1486,50 @@ function getWeekDates() {
     dates.push(d);
   }
   return dates;
+}
+
+function changeWeek(delta) {
+  const d = new Date(STATE.weekStart);
+  d.setDate(d.getDate() + delta * 7);
+  STATE.weekStart = d;
+  STATE.plan = Array(7).fill(null);   // clear plan for the new week
+  STATE.groceryChecks = {};
+  saveState();
+  renderTopbar();
+  renderSetup();
+  renderWeek();
+  renderTabs();
+  renderDeckContent();
+  renderGrocery();
+}
+
+// Returns the number of lunches to buy for Ryan.
+// null in STATE = auto (count Mon–Fri home days); number = manual override.
+function getRyanLunchCount() {
+  if (STATE.ryanLunches !== null) return STATE.ryanLunches;
+  return STATE.ryanHomeDays.slice(0, 5).filter(Boolean).length;
+}
+
+function setRyanLunches(delta) {
+  const current = getRyanLunchCount();
+  const next = Math.max(0, Math.min(7, current + delta));
+  // If the result equals what auto would give AND user hasn't already overridden, stay auto
+  const autoVal = STATE.ryanHomeDays.slice(0, 5).filter(Boolean).length;
+  if (STATE.ryanLunches === null && next === autoVal - 1) {
+    STATE.ryanLunches = next;  // just went below auto — now manual
+  } else {
+    STATE.ryanLunches = next;
+  }
+  saveState();
+  renderSetup();
+  renderGrocery();
+}
+
+function resetRyanLunchesToAuto() {
+  STATE.ryanLunches = null;
+  saveState();
+  renderSetup();
+  renderGrocery();
 }
 
 function renderWeek() {
@@ -1327,6 +1819,7 @@ function renderRecipeCard(r, freshTab) {
       <div class="stats">
         <span class="rating">${ratingStr}</span>
         <span>${lastStr}</span>
+        <button class="btn-mini" onclick="event.stopPropagation();showRecipeDetail(${r.id})" style="padding:2px 8px;font-size:10px;flex:none;color:var(--blue);border-color:var(--blue-soft)" title="View full recipe">👁 Recipe</button>
       </div>
     </div>`;
 }
@@ -1385,13 +1878,13 @@ function buildGroceryList() {
   } else if (STATE.jennLunch && STATE.jennLunch.trim()) {
     sections.push({title:`Jenn's Lunch — ${STATE.jennLunch}`, items: [], note:'Add ingredients via a custom meal entry on a day, or to dinner ingredients.'});
   }
-  const homeCount = STATE.ryanHomeDays.filter(Boolean).length;
-  if (homeCount > 0) {
+  const lunchCount = getRyanLunchCount();
+  if (lunchCount > 0) {
     sections.push({
-      title:`Ryan's Lunches (${homeCount} day${homeCount===1?'':'s'})`,
+      title:`Ryan's Lunches (${lunchCount} day${lunchCount===1?'':'s'})`,
       items: [
-        {name:`Salad kits (${homeCount} different — never Caesar)`, qty:`${homeCount}`, key:'ryan-saladkits'},
-        {name:`Chicken Supreme servings`, qty:`${homeCount}`, key:'ryan-supreme'},
+        {name:`Salad kits (${lunchCount} different — never Caesar)`, qty:`${lunchCount}`, key:'ryan-saladkits'},
+        {name:`Chicken Supreme servings`, qty:`${lunchCount}`, key:'ryan-supreme'},
       ],
       defaultChecked:true
     });
@@ -1667,7 +2160,6 @@ function cmSave() {
   if (STATE.cmCurrentTab === 'manual') {
     const lines = document.getElementById('cm-ingredients').value.split('\n').map(l => l.trim()).filter(Boolean);
     const parsedAll = lines.map(l => {
-      const parts = l.split(/\s*[—-]\s*|\s{2,}/);
       if (parts.length >= 2) return {qty: parts[0], name: parts.slice(1).join(' ')};
       return {name: l, qty: ''};
     });
@@ -1770,6 +2262,129 @@ function saveApiKey() {
   showToast('API key saved','success');
 }
 
+
+// ============================================================
+// RECIPE DETAIL
+// ============================================================
+function showRecipeDetail(id) {
+  const r = RECIPES.find(x => x.id === id);
+  if (!r) return;
+
+  const tagChips = [];
+  tagChips.push(`<span class="recipe-detail-chip protein">${r.protein}</span>`);
+  tagChips.push(`<span class="recipe-detail-chip time">⏱ ${r.time} min</span>`);
+  if (r.easy) tagChips.push(`<span class="recipe-detail-chip easy">✓ Easy night</span>`);
+  if (r.bbq) tagChips.push(`<span class="recipe-detail-chip easy">🔥 BBQ</span>`);
+  if (r.cook) tagChips.push(`<span class="recipe-detail-chip tag">🍳 Cook night</span>`);
+  if (r.season !== 'all') tagChips.push(`<span class="recipe-detail-chip tag">${r.season==='summer'?'☀️ Summer':'❄️ Winter'}</span>`);
+  if (r.ryanAway) tagChips.push(`<span class="recipe-detail-chip tag">🚐 Ryan away only</span>`);
+  if (r.ryanHomeOnly) tagChips.push(`<span class="recipe-detail-chip tag">👨 Ryan home only</span>`);
+
+  const ratingStr = r._avgRating ? `★ ${r._avgRating.toFixed(1)}/5 · last cooked ${r._weeksSince} wk${r._weeksSince===1?'':'s'} ago` : 'Not yet cooked';
+
+  const allIng = r.ingredients || [];
+  const butcherIng = r.butcherItems || [];
+  const groceryIng = allIng.filter(i => !isButcherIngredient(i.name));
+  const autoButcher = allIng.filter(i => isButcherIngredient(i.name));
+  const butcherList = butcherIng.length ? butcherIng : autoButcher;
+
+  const ingHTML = groceryIng.map(i =>
+    `<div class="recipe-detail-ingredient"><span>${i.name}</span><span class="ing-qty">${i.qty||''}</span></div>`
+  ).join('');
+  const butcherHTML = butcherList.map(i =>
+    `<div class="recipe-detail-ingredient butcher-item"><span>🥩 ${i.cut||i.name}</span><span class="ing-qty">${i.qty||''}</span></div>`
+  ).join('');
+
+  // Cooking steps
+  const steps = (typeof RECIPE_STEPS !== 'undefined' && RECIPE_STEPS[r.id]) || [];
+  const stepsHTML = steps.length
+    ? `<div class="recipe-detail-section-label" style="margin-top:16px">👩‍🍳 How to cook</div>
+       <ol class="recipe-steps-list">${steps.map(s => `<li>${s}</li>`).join('')}</ol>`
+    : '';
+
+  const sourceLink = r.sourceUrl
+    ? `<a href="${r.sourceUrl}" target="_blank" class="recipe-source-link">🔗 View original recipe</a>`
+    : '';
+
+  document.getElementById('recipe-detail-content').innerHTML = `
+    <div class="recipe-detail-header">
+      <h3>${r.name}</h3>
+      <div class="recipe-detail-chips">${tagChips.join('')}</div>
+      <div style="font-size:12px;color:var(--text-muted)">${ratingStr}</div>
+    </div>
+    ${r.modificationNote ? `<div class="recipe-detail-note">📝 <strong>Note:</strong> ${r.modificationNote}</div>` : ''}
+    ${butcherHTML ? `<div class="recipe-detail-section-label" style="margin-top:14px">🥩 Butcher</div>${butcherHTML}` : ''}
+    ${ingHTML ? `<div class="recipe-detail-section-label" style="margin-top:14px">🛒 Grocery ingredients</div>${ingHTML}` : ''}
+    ${stepsHTML}
+    ${sourceLink ? `<div style="margin-top:14px;padding-top:12px;border-top:1px solid var(--border)">${sourceLink}</div>` : ''}
+  `;
+  document.getElementById('recipe-detail-modal').classList.add('show');
+}
+
+// ============================================================
+// PRINT WEEKLY PLAN
+// ============================================================
+function printWeeklyPlan() {
+  const dates = getWeekDates();
+  const weekLabel = `Week of ${fmtDate(dates[0])} – ${fmtDate(dates[6])}`;
+  let html = `<div class="pv-header">Maund Family Meal Plan</div><div class="pv-week">${weekLabel}</div>`;
+
+  for (let i = 0; i < 7; i++) {
+    const d = dates[i];
+    const entry = STATE.plan[i];
+    const dayLabel = `${DAY_NAMES[i]}, ${fmtDate(d)}`;
+
+    if (!entry) {
+      html += `<div class="pv-day"><div class="pv-day-name">${dayLabel}</div><div class="pv-empty">— Not planned —</div></div>`;
+      continue;
+    }
+
+    let mealName = '', ingRows = '', noteHtml = '', tagsHtml = '', stepsRows = '';
+    if (entry.recipeId) {
+      const r = RECIPES.find(x => x.id === entry.recipeId);
+      if (r) {
+        mealName = r.name;
+        const chips = [];
+        if (r.easy) chips.push('Easy');
+        if (r.bbq) chips.push('BBQ');
+        if (r.cook) chips.push('Cook night');
+        chips.push(`${r.time} min`);
+        tagsHtml = chips.length ? `<div class="pv-tags">${chips.join(' · ')}</div>` : '';
+        if (r.modificationNote) noteHtml = `<div class="pv-note">📝 ${r.modificationNote}</div>`;
+        const allIng = r.ingredients || [];
+        const groceryIng = allIng.filter(i => !isButcherIngredient(i.name));
+        const butcherIng = (r.butcherItems || []).length ? r.butcherItems : allIng.filter(i => isButcherIngredient(i.name));
+        ingRows += butcherIng.map(i => `<div class="pv-ing-row pv-butcher"><span class="qty">${i.qty||''}</span><span>🥩 ${i.cut||i.name}</span></div>`).join('');
+        ingRows += groceryIng.map(i => `<div class="pv-ing-row"><span class="qty">${i.qty||''}</span><span>${i.name}</span></div>`).join('');
+        const psteps = (typeof RECIPE_STEPS !== 'undefined' && RECIPE_STEPS[r.id]) || [];
+        stepsRows = psteps.length
+          ? `<div class="pv-steps-label">How to cook</div><ol class="pv-steps">${psteps.map(s=>`<li>${s}</li>`).join('')}</ol>`
+          : '';
+      }
+    } else if (entry.leftoverOf !== undefined) {
+      const src = RECIPES.find(x => x.id === STATE.plan[entry.leftoverOf]?.recipeId);
+      mealName = src ? `Leftovers — ${src.name}` : 'Leftovers';
+    } else if (entry.custom) {
+      mealName = entry.custom.name;
+      const allIng = entry.custom.ingredients || [];
+      ingRows = allIng.map(i => `<div class="pv-ing-row"><span class="qty">${i.qty||''}</span><span>${i.name}</span></div>`).join('');
+    }
+
+    html += `
+      <div class="pv-day">
+        <div class="pv-day-name">${dayLabel}</div>
+        <div class="pv-meal-name">${mealName}</div>
+        ${tagsHtml}
+        ${noteHtml}
+        ${ingRows ? `<div class="pv-ingredients">${ingRows}</div>` : ''}
+        ${stepsRows}
+      </div>`;
+  }
+
+  document.getElementById('print-view').innerHTML = html;
+  window.print();
+}
+
 function closeModal(e, id) { if (e.target.classList.contains('modal-bg')) closeModalById(id); }
 function closeModalById(id) { document.getElementById(id).classList.remove('show'); }
 
@@ -1848,8 +2463,8 @@ function renderFailureBanner() {
   const banned = STATE.failurePatterns.filter(p => p.status === 'banned');
   if (banned.length === 0) { wrap.innerHTML = ''; return; }
   wrap.innerHTML = `
-    <div style="background:var(--coral-soft);border:1px solid var(--coral);border-radius:10px;padding:8px 14px;margin-bottom:14px;font-size:12px;color:var(--coral-dark);display:flex;align-items:center;gap:8px;flex-wrap:wrap">
-      <strong>🚫 Banned profiles (auto-flagged):</strong>
+    <div style="background:var(--coral-soft);border:1px solid var(--coral);ding:8px 14px;margin-bottom:14px;font-size:12px;color:var(--coral-dark);display:flex;align-items:center;gap:8px;flex-wrap:wrap">
+      <strong>🚫 Auto-flagged profiles:</strong>
       ${banned.map(p => `<span style="background:#FFF;padding:2px 8px;border-radius:8px;font-weight:600">${p.profile}</span>`).join('')}
     </div>`;
 }
