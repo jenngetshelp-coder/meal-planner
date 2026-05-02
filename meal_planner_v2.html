@@ -166,6 +166,14 @@ input, textarea { font-family: inherit; }
 .clear-btn:hover { background: var(--coral-soft); color: var(--coral-dark); border-color: var(--coral); }
 
 .day-empty .drop-hint { font-size: 11px; color: var(--text-muted); text-align: center; margin-top: 14px; line-height: 1.4; }
+.day-sides { margin-top: 7px; display: flex; flex-direction: column; gap: 3px; }
+.day-side-item { display: flex; align-items: center; justify-content: space-between; font-size: 11px; color: var(--text); background: var(--bg-soft); border: 1px solid var(--border); border-radius: 5px; padding: 3px 6px; gap: 4px; }
+.day-side-item span { flex: 1; min-width: 0; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.side-remove-btn { background: none; border: none; cursor: pointer; color: var(--text-muted); font-size: 13px; padding: 0 2px; line-height: 1; flex-shrink: 0; }
+.side-remove-btn:hover { color: var(--coral); }
+.day-note-input { width: 100%; box-sizing: border-box; border: 1px dashed var(--border); border-radius: 5px; padding: 4px 7px; font-size: 11px; color: var(--text-muted); background: transparent; margin-top: 6px; outline: none; font-family: inherit; }
+.day-note-input:focus { border-color: var(--blue); border-style: solid; color: var(--text); background: var(--bg-soft); }
+.day-note-input::placeholder { color: var(--text-muted); opacity: 0.7; }
 .day-empty .or-divider { font-size: 10px; color: var(--text-muted); text-align: center; margin: 6px 0 4px; font-weight: 600; opacity: .6; }
 .day-actions { display: flex; flex-direction: column; gap: 4px; margin-top: 4px; }
 .day-action-btn {
@@ -366,8 +374,9 @@ input, textarea { font-family: inherit; }
 }
 .grocery-item .item-name { color: var(--text); }
 .grocery-item .item-qty { color: var(--text-muted); font-size: 11px; margin-left: auto; font-weight: 600; }
-.grocery-item.skipped .item-name { color: #C8C8CE; text-decoration: line-through; }
-.grocery-item.skipped .item-qty { color: #DDD; }
+.grocery-item.ordered .item-name { color: #C8C8CE; text-decoration: line-through; }
+.grocery-item.ordered .item-qty { color: #DDD; }
+.item-date-tag { font-size: 10px; color: var(--text-muted); margin-left: 6px; font-weight: 400; white-space: nowrap; }
 .butcher-section { background: var(--coral-soft); }
 .butcher-section .section-title { color: var(--coral-dark); }
 .butcher-section .item-count { background: #FFF; color: var(--coral-dark); }
@@ -493,6 +502,12 @@ input, textarea { font-family: inherit; }
 .season-toggle button.active { background: var(--blue); color: #FFF; }
 
 /* WEEK NAV */
+.week-card-sticky {
+  position: sticky;
+  top: 52px; /* just below the topbar */
+  z-index: 90;
+  background: var(--bg);
+}
 .week-nav { display: flex; align-items: center; gap: 8px; }
 .week-nav-btn {
   background: var(--bg-soft); border: 1.5px solid var(--border);
@@ -619,7 +634,7 @@ input, textarea { font-family: inherit; }
         </div>
       </div>
 
-      <div class="card">
+      <div class="card week-card-sticky">
         <div style="display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:8px;margin-bottom:4px">
           <h2 style="margin:0"><span class="dot"></span>Your Week — drag meals onto days</h2>
           <div style="display:flex;align-items:center;gap:8px">
@@ -892,8 +907,9 @@ const RECIPES = [
    butcherItems:[{cut:"Boneless Skinless Chicken Thighs",qty:"8 thighs"}],
    sourceUrl:"https://www.recipetineats.com/chicken-shawarma/"},
   {id:15,name:"Baked Turkey Meatballs",protein:"turkey",season:"all",time:35,bbq:false,easy:true,cook:false,thigh:false,
-   ingredients:[{name:"Ground turkey",qty:"1.5 lbs"},{name:"Almond flour",qty:"1 bag"},{name:"Egg",qty:"1 dozen"},{name:"Garlic",qty:"1 head"},{name:"Parmesan cheese",qty:"1 wedge"},{name:"Fresh parsley",qty:"1 bunch"},{name:"Jasmine rice",qty:"1 bag"},{name:"Jarred tomato sauce (GF)",qty:"1 large jar"}],
-   butcherItems:[{cut:"Ground Turkey",qty:"1.5 lbs"}],
+   modificationNote:"Meatballs are pre-made from the butcher — no scratch mixing. Serve over GF pasta with jarred sauce.",
+   ingredients:[{name:"GF pasta",qty:"1 bag"},{name:"Jarred tomato sauce (GF)",qty:"1 large jar"}],
+   butcherItems:[{cut:"Turkey Meatballs (pre-made, raw)",qty:"1.5–2 lbs"}],
    sourceUrl:"https://www.wellplated.com/turkey-meatballs/"},
   {id:17,name:"Turkey Tornados",protein:"turkey",season:"all",time:60,bbq:false,easy:false,cook:true,thigh:false,
    ingredients:[{name:"Turkey breast (cut into 2-inch chunks)",qty:"1.5 lbs"},{name:"Bacon strips",qty:"1 pkg"},{name:"Butter",qty:""},{name:"Garlic",qty:"1 head"},{name:"Baby potatoes (Little Potato Co.)",qty:"1 bag"},{name:"Green beans",qty:"1 lb"}],
@@ -968,6 +984,12 @@ const RECIPES = [
    modificationNote:"Couch night — Jenn + kids eat together on the couch with TV when Ryan is out. Family favourite, but rotate so people don't get sick of it.",
    ingredients:[{name:"Pasta (regular, 1 bag)",qty:"1 bag"},{name:"Jarred pesto",qty:"2 jars"},{name:"Canned tuna",qty:"3–4 cans"},{name:"Parmesan cheese (optional, to top)",qty:"1 wedge"}],
    butcherItems:[]},
+  // === NEW: Pork Chimichurri (ID 56, added from New to Try 2026-05-01) ===
+  {id:56,name:"Grilled Pork Tenderloin with Chimichurri",protein:"pork",season:"summer",time:30,bbq:true,easy:true,cook:false,thigh:false,frequencyWeeks:3,
+   modificationNote:"Dry rub + BBQ whole, chimichurri poured on top at the table. Same chimichurri sauce as chicken version — double the garlic and lemon.",
+   ingredients:[{name:"Fresh flat-leaf parsley",qty:"1 large bunch"},{name:"Fresh cilantro",qty:"1 bunch"},{name:"Lemons",qty:"1"},{name:"Baby potatoes (Little Potato Co.)",qty:"1 bag"},{name:"Snap peas or green beans",qty:"1 bag"}],
+   butcherItems:[{cut:"Pork Tenderloin",qty:"1.5–2 lbs"}],
+   sourceUrl:"https://themodernproper.com/grilled-pork-tenderloin-with-chimichurri"},
 ];
 
 // ============================================================
@@ -1069,12 +1091,11 @@ const RECIPE_STEPS = {
   ],
   15: [
     "Preheat oven to 400°F. Line a baking sheet with parchment.",
-    "In a large bowl, combine 1.5 lbs ground turkey + ¼ cup almond flour + 1 egg + 2 garlic cloves minced + 1 tsp Italian seasoning + 1 tsp salt + ½ tsp pepper. Mix until just combined — don't overwork it.",
-    "Roll into golf-ball sized balls (about 18–20). Place on baking sheet with space between each.",
-    "Bake 18–20 min until golden on top and cooked through (internal temp 165°F).",
-    "While meatballs bake, heat marinara sauce in a pot over low heat.",
-    "Add baked meatballs to the sauce. Simmer 5 min to let them soak up the flavour.",
-    "Serve over jasmine rice. Parmesan on top if you have it."
+    "Arrange pre-made turkey meatballs from the butcher on the sheet — leave space between each so they brown rather than steam.",
+    "Bake 18–22 min until cooked through (165°F internal). No need to flip.",
+    "While meatballs bake: boil a large salted pot and cook GF pasta per package directions.",
+    "Warm jarred tomato sauce in a saucepan over low heat.",
+    "Drain pasta. Plate pasta, top with meatballs and sauce. Done."
   ],
   17: [
     "Cut 1.5 lbs turkey breast into 2-inch chunks.",
@@ -1273,6 +1294,14 @@ const RECIPE_STEPS = {
     "Add the drained pasta and toss to coat. Add more pasta water a splash at a time if it looks dry.",
     "Taste and adjust salt. Top with grated Parmesan and a squeeze of lemon zest.",
     "Note: Ryan-away nights only (contains regular gluten pasta)."
+  ],
+  56: [
+    "Mix dry rub: 1 tsp smoked paprika + 1 tsp garlic powder + 1 tsp salt + ½ tsp pepper + 1 tsp brown sugar. Pat pork tenderloin dry and coat all over with the rub.",
+    "Make chimichurri: finely chop 1 large bunch flat-leaf parsley + 1 bunch cilantro + 3–4 garlic cloves. Mix with ½ cup olive oil + 2 tbsp red wine vinegar + juice of ½ lemon + pinch of red pepper flakes + salt. Double the garlic and lemon — the family likes it punchy. Set aside.",
+    "Fire up BBQ to medium-high. Let it get hot — you want a good sear.",
+    "Grill tenderloin turning every 3–4 min until internal temp hits 145°F (~15–20 min total). It's safe to eat with a slight blush in the middle — don't overcook it or it dries out.",
+    "Rest 5 min before slicing — this is important for juicy pork.",
+    "Slice into medallions and pour chimichurri generously over the top. Serve with baby potatoes and veg."
   ]
 };
 
@@ -1579,13 +1608,16 @@ function renderDayContent(day,i) {
   if (day.leftoverOf !== undefined) {
     const src = STATE.plan[day.leftoverOf];
     const srcName = src && src.recipeId ? (RECIPES.find(r=>r.id===src.recipeId)||{}).name : (src && src.custom ? src.custom.name : '?');
+    const noteValL = (day.note||'').replace(/"/g,'&quot;');
     return `
       <button class="clear-btn" onclick="clearDay(${i})" title="Clear">×</button>
       <div class="day-meal">
         <div class="meal-title">↻ Leftover of ${DAY_NAMES[day.leftoverOf]}</div>
         <div style="font-size:10px;color:var(--text-muted);margin-top:2px">${srcName||''}</div>
         <div class="meal-tags"><span class="tag-chip leftover">leftover</span></div>
-      </div>`;
+      </div>
+      <input class="day-note-input" placeholder="+ note..." value="${noteValL}"
+             onchange="updateDayNote(${i},this.value)" onclick="event.stopPropagation()" onfocus="event.stopPropagation()" onkeydown="event.stopPropagation()">`;
   }
   if (day.recipeId) {
     const r = RECIPES.find(x => x.id === day.recipeId);
@@ -1595,20 +1627,36 @@ function renderDayContent(day,i) {
     if (r.cook) tags.push('<span class="tag-chip cook">cook</span>');
     if (r.easy) tags.push('<span class="tag-chip easy">easy</span>');
     tags.push(`<span class="tag-chip">${r.time} min</span>`);
+    const sidesHtml = (day.sides||[]).map((sid,si) => {
+      const sr = RECIPES.find(x=>x.id===sid);
+      return sr ? `<div class="day-side-item"><span>+ ${sr.name}</span><button class="side-remove-btn" onclick="event.stopPropagation();removeSide(${i},${si})" title="Remove side">×</button></div>` : '';
+    }).join('');
+    const noteVal = (day.note||'').replace(/"/g,'&quot;');
     return `
-      <button class="clear-btn" onclick="clearDay(${i})" title="Clear">×</button>
+      <button class="clear-btn" onclick="clearDay(${i})" title="Clear day">×</button>
       <div class="day-meal">
         <div class="meal-title">${r.name}</div>
         <div class="meal-tags">${tags.join('')}</div>
-      </div>`;
+      </div>
+      ${sidesHtml ? `<div class="day-sides">${sidesHtml}</div>` : ''}
+      <input class="day-note-input" placeholder="+ side dish or note..." value="${noteVal}"
+             onchange="updateDayNote(${i},this.value)" onclick="event.stopPropagation()" onfocus="event.stopPropagation()" onkeydown="event.stopPropagation()">`;
   }
   if (day.custom) {
+    const sidesHtml = (day.sides||[]).map((sid,si) => {
+      const sr = RECIPES.find(x=>x.id===sid);
+      return sr ? `<div class="day-side-item"><span>+ ${sr.name}</span><button class="side-remove-btn" onclick="event.stopPropagation();removeSide(${i},${si})" title="Remove side">×</button></div>` : '';
+    }).join('');
+    const noteVal = (day.note||'').replace(/"/g,'&quot;');
     return `
-      <button class="clear-btn" onclick="clearDay(${i})" title="Clear">×</button>
+      <button class="clear-btn" onclick="clearDay(${i})" title="Clear day">×</button>
       <div class="day-meal">
         <div class="meal-title">${day.custom.name}</div>
         <div class="meal-tags"><span class="tag-chip">custom</span></div>
-      </div>`;
+      </div>
+      ${sidesHtml ? `<div class="day-sides">${sidesHtml}</div>` : ''}
+      <input class="day-note-input" placeholder="+ side dish or note..." value="${noteVal}"
+             onchange="updateDayNote(${i},this.value)" onclick="event.stopPropagation()" onfocus="event.stopPropagation()" onkeydown="event.stopPropagation()">`;
   }
   return '';
 }
@@ -1616,6 +1664,19 @@ function renderDayContent(day,i) {
 function clearDay(i) {
   STATE.plan[i] = null;
   saveState(); renderWeek(); renderGrocery();
+}
+function removeSide(dayIndex, sideIndex) {
+  if (STATE.plan[dayIndex] && STATE.plan[dayIndex].sides) {
+    STATE.plan[dayIndex].sides.splice(sideIndex, 1);
+    if (STATE.plan[dayIndex].sides.length === 0) delete STATE.plan[dayIndex].sides;
+    saveState(); renderWeek(); renderGrocery();
+  }
+}
+function updateDayNote(dayIndex, value) {
+  if (STATE.plan[dayIndex]) {
+    STATE.plan[dayIndex].note = value.trim();
+    saveState(); // no re-render — would lose focus
+  }
 }
 function setEatingOut(i) {
   STATE.plan[i] = {eatingOut:true};
@@ -1635,6 +1696,23 @@ function setLeftover(i) {
 // DRAG & DROP
 // ============================================================
 let _draggingRecipeId = null;
+let _autoScrollInterval = null;
+function startAutoScroll(e) {
+  if (_autoScrollInterval) clearInterval(_autoScrollInterval);
+  _autoScrollInterval = setInterval(() => {
+    const y = e.clientY;
+    const threshold = 120;
+    const speed = 12;
+    if (y < threshold) window.scrollBy(0, -speed);
+    else if (y > window.innerHeight - threshold) window.scrollBy(0, speed);
+  }, 30);
+}
+function stopAutoScroll() {
+  if (_autoScrollInterval) { clearInterval(_autoScrollInterval); _autoScrollInterval = null; }
+}
+document.addEventListener('dragover', e => { if (_draggingRecipeId) startAutoScroll(e); });
+document.addEventListener('dragend', stopAutoScroll);
+document.addEventListener('drop', stopAutoScroll);
 function onCardDragStart(e, recipeId) {
   _draggingRecipeId = recipeId;
   e.dataTransfer.effectAllowed = 'copy';
@@ -1655,9 +1733,23 @@ function onDrop(e, i) {
   e.preventDefault();
   e.currentTarget.classList.remove('dragover');
   if (_draggingRecipeId) {
-    STATE.plan[i] = {recipeId: _draggingRecipeId};
+    const recipeName = (RECIPES.find(r=>r.id===_draggingRecipeId)||{}).name || 'Recipe';
+    if (!STATE.plan[i] || STATE.plan[i].eatingOut) {
+      // Empty slot (or eating out) — set as primary
+      STATE.plan[i] = {recipeId: _draggingRecipeId};
+    } else {
+      // Occupied — add as side dish
+      if (!STATE.plan[i].sides) STATE.plan[i].sides = [];
+      const alreadyPrimary = STATE.plan[i].recipeId === _draggingRecipeId;
+      const alreadySide = (STATE.plan[i].sides||[]).includes(_draggingRecipeId);
+      if (!alreadyPrimary && !alreadySide) {
+        STATE.plan[i].sides.push(_draggingRecipeId);
+      } else {
+        showToast(`${recipeName} is already on ${DAY_NAMES[i]}`,'error'); return;
+      }
+    }
     saveState(); renderWeek(); renderGrocery();
-    showToast(`Added "${RECIPES.find(r=>r.id===_draggingRecipeId).name}" to ${DAY_NAMES[i]}`,'success');
+    showToast(`Added "${recipeName}" to ${DAY_NAMES[i]}`,'success');
   }
 }
 function onCardClick(e, recipeId) {
@@ -1862,7 +1954,7 @@ function renderGrocery() {
 
 function buildGroceryList() {
   const sections = [];
-  sections.push({title:'Weekly Staples', items: STAPLE_ITEMS.map(i => ({...i, key:'staple-'+i.name})), defaultChecked:true});
+  sections.push({title:'Weekly Staples', items: STAPLE_ITEMS.map(i => ({...i, key:'staple-'+i.name})), defaultChecked:false});
   if (STATE.emailedGroceryItems && STATE.emailedGroceryItems.length > 0) {
     sections.push({
       title: '📬 Emailed Items',
@@ -1876,7 +1968,7 @@ function buildGroceryList() {
           key: 'emailed-' + i.name.toLowerCase().replace(/[^a-z0-9]/g,'').slice(0, 20)
         };
       }),
-      defaultChecked: true
+      defaultChecked: false
     });
   }
   const jennLunchLower = (STATE.jennLunch||'').toLowerCase();
@@ -1885,7 +1977,7 @@ function buildGroceryList() {
       title:"Jenn's Waldorf",
       items: WALDORF_GROCERY.map(i => ({...i, key:'waldorf-'+i.name})),
       restock: WALDORF_OCCASIONAL.map(i => ({...i, key:'waldorf-restock-'+i.name})),
-      defaultChecked:true,
+      defaultChecked:false,
       butcher:[{cut:'Chicken Breasts (Waldorf)',qty:'5'}]
     });
   } else if (STATE.jennLunch && STATE.jennLunch.trim()) {
@@ -1899,24 +1991,24 @@ function buildGroceryList() {
         {name:`Salad kits (${lunchCount} different — never Caesar)`, qty:`${lunchCount}`, key:'ryan-saladkits'},
         {name:`Chicken Supreme servings`, qty:`${lunchCount}`, key:'ryan-supreme'},
       ],
-      defaultChecked:true
+      defaultChecked:false
     });
   }
   const kidsItems = parseKidsLunches();
   if (kidsItems.length > 0) {
-    sections.push({title:"🍱 Kids' Lunches", items: kidsItems, defaultChecked:true});
+    sections.push({title:"🍱 Kids' Lunches", items: kidsItems, defaultChecked:false});
   }
   const dinnerData = aggregateDinnerIngredients();
   if (dinnerData.items.length > 0) {
-    sections.push({title:'Dinner Ingredients', items: dinnerData.items, defaultChecked:true});
+    sections.push({title:'Dinner Ingredients', items: dinnerData.items, defaultChecked:false});
   }
   // Build butcher list combining recipe butcher + waldorf butcher + custom butcher
   const allButcher = [...dinnerData.butcher];
   sections.forEach(s => { if (s.butcher) allButcher.push(...s.butcher.map(b => ({cut: b.cut || b.name, qty: b.qty, key: 'butcher-'+(b.cut||b.name).toLowerCase().replace(/[^a-z]/g,'').slice(0,15)}))); });
   if (allButcher.length > 0) {
-    sections.push({title:'🥩 Butcher List', items: allButcher.map(b => ({name: b.cut || b.name, qty: b.qty, key: b.key || 'butcher-'+(b.cut||b.name).toLowerCase().replace(/[^a-z]/g,'').slice(0,15)})), defaultChecked:true, isButcher:true});
+    sections.push({title:'🥩 Butcher List', items: allButcher.map(b => ({name: b.cut || b.name, qty: b.qty, key: b.key || 'butcher-'+(b.cut||b.name).toLowerCase().replace(/[^a-z]/g,'').slice(0,15)})), defaultChecked:false, isButcher:true});
   }
-  sections.push({title:'High-Frequency Extras (restock?)', items: HIGH_FREQ_EXTRAS.map(i => ({...i, key:'hf-'+i.name})), defaultChecked:false});
+  sections.push({title:'High-Frequency Extras (restock?)', items: HIGH_FREQ_EXTRAS.map(i => ({...i, key:'hf-'+i.name})), defaultChecked:true});
   return sections;
 }
 
@@ -1938,6 +2030,14 @@ function aggregateDinnerIngredients() {
       ingredients = day.custom.ingredients || [];
       butcherItems = day.custom.butcherItems || [];
     }
+    // Also collect from side dishes
+    (day.sides || []).forEach(sid => {
+      const sr = RECIPES.find(x => x.id === sid);
+      if (sr) {
+        ingredients = [...ingredients, ...(sr.ingredients || [])];
+        butcherItems = [...butcherItems, ...(sr.butcherItems || [])];
+      }
+    });
     ingredients.forEach(ing => {
       const name = (ing.name || ing).trim();
       if (!name) return;
@@ -1995,7 +2095,7 @@ function renderGrocerySection(s) {
   const itemsHtml = s.items.map(item => renderGroceryItem(item, s.defaultChecked)).join('');
   const restockHtml = s.restock ? `
     <div class="restock-divider">Tick if you're running low</div>
-    ${s.restock.map(item => renderGroceryItem(item, false)).join('')}
+    ${s.restock.map(item => renderGroceryItem(item, true)).join('')}
   ` : '';
   const noteHtml = s.note ? `<div style="font-size:11px;color:var(--text-muted);margin-top:6px">${s.note}</div>` : '';
   return `
@@ -2012,7 +2112,7 @@ function renderGroceryItem(item, defaultChecked) {
   const checked = STATE.groceryChecks.hasOwnProperty(k) ? STATE.groceryChecks[k] : defaultChecked;
   const dateHtml = item.dateLabel ? `<span class="item-date-tag">added ${item.dateLabel}</span>` : '';
   return `
-    <div class="grocery-item ${checked?'':'skipped'}">
+    <div class="grocery-item ${checked?'ordered':''}">
       <input type="checkbox" ${checked?'checked':''} onchange="toggleGroceryItem('${k}', this.checked, ${JSON.stringify(!!item.dateLabel)})">
       <span class="item-name">${item.name}${dateHtml}</span>
       <span class="item-qty">${item.qty || ''}</span>
@@ -2020,7 +2120,7 @@ function renderGroceryItem(item, defaultChecked) {
 }
 
 function toggleGroceryItem(key, checked, isEmailed) {
-  if (!checked && isEmailed && key.startsWith('emailed-')) {
+  if (checked && isEmailed && key.startsWith('emailed-')) {
     // Remove from visible list
     STATE.emailedGroceryItems = STATE.emailedGroceryItems.filter(i => {
       const k = 'emailed-' + i.name.toLowerCase().replace(/[^a-z0-9]/g,'').slice(0, 20);
@@ -2047,8 +2147,9 @@ function copyGroceryList() {
   const lines = [`GROCERY LIST — week of ${fmtDate(getWeekDates()[0])}`];
   buildGroceryList().forEach(s => {
     if (s.isButcher) return;
-    const items = (s.items || []).filter(i => STATE.groceryChecks.hasOwnProperty(i.key) ? STATE.groceryChecks[i.key] : s.defaultChecked);
-    const restock = (s.restock || []).filter(i => STATE.groceryChecks[i.key]);
+    const isChecked = i => STATE.groceryChecks.hasOwnProperty(i.key) ? STATE.groceryChecks[i.key] : s.defaultChecked;
+    const items = (s.items || []).filter(i => !isChecked(i));
+    const restock = (s.restock || []).filter(i => !isChecked(i));
     if (items.length === 0 && restock.length === 0) return;
     lines.push(`\n${s.title.toUpperCase()}`);
     items.forEach(i => lines.push(`  • ${i.name}${i.qty?' — '+i.qty:''}`));
@@ -2063,7 +2164,7 @@ function emailGroceryList() {
   const lines = [];
   buildGroceryList().forEach(s => {
     if (s.isButcher) return;
-    const items = (s.items || []).filter(i => STATE.groceryChecks.hasOwnProperty(i.key) ? STATE.groceryChecks[i.key] : s.defaultChecked);
+    const items = (s.items || []).filter(i => !(STATE.groceryChecks.hasOwnProperty(i.key) ? STATE.groceryChecks[i.key] : s.defaultChecked));
     if (items.length === 0) return;
     lines.push(`\n${s.title}`);
     items.forEach(i => lines.push(`  • ${i.name}${i.qty?' — '+i.qty:''}`));
@@ -2189,7 +2290,9 @@ function cmSave() {
   if (STATE.cmCurrentTab === 'manual') {
     const lines = document.getElementById('cm-ingredients').value.split('\n').map(l => l.trim()).filter(Boolean);
     const parsedAll = lines.map(l => {
-      if (parts.length >= 2) return {qty: parts[0], name: parts.slice(1).join(' ')};
+      // Try to detect a leading quantity: number, fraction, or word-qty at start
+      const qtyMatch = l.match(/^(\d[\d\/\.]*(?:\s+(?:lbs?|oz|cups?|tbsp?|tsp?|kg|g|bags?|cans?|bunches?|heads?|cloves?|sprigs?|pints?|jars?|pkgs?|packages?|lbs?|pounds?|pieces?|slices?))?)\s+(.+)/i);
+      if (qtyMatch) return {qty: qtyMatch[1], name: qtyMatch[2]};
       return {name: l, qty: ''};
     });
     butcherItems = parsedAll.filter(i => isButcherIngredient(i.name)).map(i => ({cut: i.name, qty: i.qty}));
@@ -2402,14 +2505,31 @@ function printWeeklyPlan() {
       ingRows = allIng.map(i => `<div class="pv-ing-row"><span class="qty">${i.qty||''}</span><span>${i.name}</span></div>`).join('');
     }
 
+    // Sides in print
+    let sidesHtml = '';
+    if (entry.sides && entry.sides.length > 0) {
+      entry.sides.forEach(sid => {
+        const sr = RECIPES.find(x => x.id === sid);
+        if (!sr) return;
+        const sIngRows = (sr.ingredients||[]).filter(i=>!isButcherIngredient(i.name))
+          .map(i=>`<div class="pv-ing-row"><span class="qty">${i.qty||''}</span><span>${i.name}</span></div>`).join('');
+        const sSteps = (typeof RECIPE_STEPS!=='undefined' && RECIPE_STEPS[sr.id]) || [];
+        const sStepsHtml = sSteps.length ? `<div class="pv-steps-label">How to cook</div><ol class="pv-steps">${sSteps.map(s=>`<li>${s}</li>`).join('')}</ol>` : '';
+        sidesHtml += `<div class="pv-side-name">+ ${sr.name}</div>${sIngRows?`<div class="pv-ingredients">${sIngRows}</div>`:''}${sStepsHtml}`;
+        if (sr.sourceUrl) sidesHtml += `<div class="pv-source">Source: ${sr.sourceUrl}</div>`;
+      });
+    }
+    const dayNoteHtml = entry.note ? `<div class="pv-day-note">📝 ${entry.note}</div>` : '';
     html += `
       <div class="pv-day">
         <div class="pv-day-name">${dayLabel}</div>
         <div class="pv-meal-name">${mealName}</div>
         ${tagsHtml}
         ${noteHtml}
+        ${dayNoteHtml}
         ${ingRows ? `<div class="pv-ingredients">${ingRows}</div>` : ''}
         ${stepsRows}
+        ${sidesHtml}
       </div>`;
   }
 
