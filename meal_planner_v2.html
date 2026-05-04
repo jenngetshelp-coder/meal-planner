@@ -1410,6 +1410,63 @@ function fmtDate(d) { return d.toLocaleDateString('en-US',{month:'short',day:'nu
 // ============================================================
 const STORAGE_KEY = 'maund_v2_state';
 
+// ============================================================
+// GOOGLE SHEETS PLAN SYNC
+// Keeps the "Dinner Log" sheet in sync so the 9pm nightly
+// review email knows what was planned tonight.
+// Fires automatically 10 seconds after any plan change.
+// ============================================================
+const APPS_SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbxdF2YSeVC2v8dfrkoojwAFcUnKSvzQpiOuJUYuFgE4M-vms2AZvUQT0IR1oowCRaolDg/exec?x-api-key=maund-meal-planner-2026';
+const DAY_FULL = ['Saturday','Sunday','Monday','Tuesday','Wednesday','Thursday','Friday'];
+let _syncTimer = null;
+
+function resolveMealName(dayPlan) {
+  if (!dayPlan) return null;
+  if (dayPlan.eatingOut) return 'Eating out';
+  if (dayPlan.leftoverOf !== undefined) {
+    const src = STATE.plan[dayPlan.leftoverOf];
+    const srcName = src ? resolveMealName(src) : null;
+    return srcName ? 'Leftovers — ' + srcName : 'Leftovers';
+  }
+  if (dayPlan.recipeId) {
+    const r = RECIPES.find(x => x.id === dayPlan.recipeId);
+    return r ? r.name : null;
+  }
+  if (dayPlan.custom) return dayPlan.custom.name || null;
+  return null;
+}
+
+function syncPlanToSheets() {
+  try {
+    const dates = getWeekDates();
+    const weekOf = dates[0].toISOString().slice(0, 10);
+    const planRows = [];
+    STATE.plan.forEach((dayPlan, i) => {
+      const mealName = resolveMealName(dayPlan);
+      planRows.push({
+        weekOf,
+        date: dates[i].toISOString().slice(0, 10),
+        day: DAY_FULL[i],
+        plannedMeal: mealName || ''
+      });
+    });
+    fetch(APPS_SCRIPT_URL, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ action: 'savePlan', weekOf, plan: planRows })
+    }).then(r => {
+      console.log('[sheets-sync]', r.ok ? 'OK' : 'failed ' + r.status);
+    }).catch(e => console.warn('[sheets-sync] error:', e.message));
+  } catch(e) {
+    console.warn('[sheets-sync] syncPlanToSheets error:', e.message);
+  }
+}
+
+function scheduleSheetsSync() {
+  clearTimeout(_syncTimer);
+  _syncTimer = setTimeout(syncPlanToSheets, 10000); // debounce 10s
+}
+
 function saveState() {
   try {
     const s = {
@@ -1425,6 +1482,7 @@ function saveState() {
       newToTry: STATE.newToTry,
     };
     localStorage.setItem(STORAGE_KEY, JSON.stringify(s));
+    scheduleSheetsSync(); // keep Dinner Log in sync for the 9pm review email
   } catch(e) { console.error('save failed', e); }
 }
 function loadState() {
@@ -2646,6 +2704,9 @@ async function init() {
   renderGrocery();
   renderFailureBanner();
   wireEvents();
+  // Sync whatever plan is in localStorage to Sheets on load
+  // (covers the case where plan exists locally but not yet in Sheets)
+  setTimeout(syncPlanToSheets, 3000);
 }
 init();
 </script>
