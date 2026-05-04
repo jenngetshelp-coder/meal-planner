@@ -1450,12 +1450,14 @@ function syncPlanToSheets() {
         plannedMeal: mealName || ''
       });
     });
+    // mode:'no-cors' avoids preflight CORS failure with Apps Script.
+    // The request still reaches the server; we just get an opaque response.
     fetch(APPS_SCRIPT_URL, {
       method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
+      mode: 'no-cors',
       body: JSON.stringify({ action: 'savePlan', weekOf, plan: planRows })
-    }).then(r => {
-      console.log('[sheets-sync]', r.ok ? 'OK' : 'failed ' + r.status);
+    }).then(() => {
+      console.log('[sheets-sync] plan sent (' + planRows.filter(r => r.plannedMeal).length + ' days)');
     }).catch(e => console.warn('[sheets-sync] error:', e.message));
   } catch(e) {
     console.warn('[sheets-sync] syncPlanToSheets error:', e.message);
