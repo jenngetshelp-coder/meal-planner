@@ -1,14 +1,14 @@
 {
   "schema": "maund-meal-data-v1",
-  "lastUpdated": "2026-05-01",
-  "lastSyncedBy": "initial-seed",
+  "lastUpdated": "2026-05-07",
+  "lastSyncedBy": "weekly-recipe-research",
   "mealHistory": [
     {
       "date": "2026-03-24",
       "meal": "Lemon Pepper Chicken (BBQ) + leftover potatoes + pear salad",
       "rating": 3,
       "liked": "Easy",
-      "change": "Tired of chicken+salad rut — wants marinades/sauces",
+      "change": "Tired of chicken+salad rut â wants marinades/sauces",
       "keepOrDrop": "Modify"
     },
     {
@@ -16,7 +16,7 @@
       "meal": "Pork tenderloin (Greek seasoning) + Little Potato Co. baby potatoes + frozen mixed veg",
       "rating": 3,
       "liked": "Low prep",
-      "change": "Not flavourful — needs sauce/marinade",
+      "change": "Not flavourful â needs sauce/marinade",
       "keepOrDrop": "Modify"
     },
     {
@@ -96,7 +96,7 @@
       "meal": "Pork Tenderloin (Greek seasoning) + Little Potato Co. potatoes + mixed veg",
       "rating": 3,
       "liked": "Quick",
-      "change": "Pork is plain — needs marinade",
+      "change": "Pork is plain â needs marinade",
       "keepOrDrop": "Modify"
     },
     {
@@ -120,16 +120,41 @@
       "meal": "Harissa Pork Tenderloin with Garlic Green Beans (BBQ)",
       "rating": 3,
       "liked": "Outside flavour good",
-      "change": "Inside bland — marinade overnight",
+      "change": "Inside bland â marinade overnight",
       "keepOrDrop": "Modify"
     }
   ],
-  "newToTry": [],
+  "newToTry": [
+    {
+      "name": "Sheet Pan Chicken Fajitas",
+      "protein": "breast",
+      "season": "summer",
+      "time": 35,
+      "why": "Bold Tex-Mex, one pan, serve with rice or corn tortillas",
+      "source": "https://themodernproper.com/sheet-pan-chicken-fajitas"
+    },
+    {
+      "name": "Peruvian Chicken with Creamy Green Sauce",
+      "protein": "breast",
+      "season": "all",
+      "time": 40,
+      "why": "Whole oven-baked breasts, herb sauce, uses your weekly mango",
+      "source": "https://www.halfbakedharvest.com/peruvian-chicken/"
+    },
+    {
+      "name": "Prosciutto Wrapped Stuffed Turkey Tenderloin",
+      "protein": "turkey",
+      "season": "all",
+      "time": 60,
+      "why": "Turkey protein variety, prosciutto-wrapped, big-cook night",
+      "source": "https://www.skinnytaste.com/stuffed-turkey-tenderloin-recipe/"
+    }
+  ],
   "emailedGroceryItems": [],
   "failurePatterns": [
     {
       "profile": "honey garlic",
-      "reason": "Two dishes (Honey Garlic Chicken, Honey Garlic Pork Tenderloin) rated 0–1/5",
+      "reason": "Two dishes (Honey Garlic Chicken, Honey Garlic Pork Tenderloin) rated 0â1/5",
       "status": "banned"
     },
     {
