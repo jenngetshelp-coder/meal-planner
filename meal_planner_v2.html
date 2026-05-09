@@ -4,7 +4,7 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
-<title>Maund Family Meal Planner â v2</title>
+<title>Maund Family Meal Planner — v2</title>
 <style>
 :root {
   --bg: #FFFFFF;
@@ -608,7 +608,7 @@ input, textarea { font-family: inherit; }
   </div>
   <div class="topbar-right">
 
-    <span class="api-status" id="api-status" onclick="promptApiKey()">Loadingâ¦</span>
+    <span class="api-status" id="api-status" onclick="promptApiKey()">Loading…</span>
   </div>
 </div>
 
@@ -640,21 +640,21 @@ input, textarea { font-family: inherit; }
             <label>Jenn's lunch</label>
             <span class="lunch-label">This week</span>
             <input class="lunch-input" type="text" id="jenn-lunch" value="Waldorf Salad">
-            <div class="field-hint">Defaults to Waldorf â change anytime. If Waldorf, ingredients auto-add.</div>
+            <div class="field-hint">Defaults to Waldorf — change anytime. If Waldorf, ingredients auto-add.</div>
           </div>
         </div>
       </div>
 
       <div class="card week-card-sticky">
         <div style="display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:8px;margin-bottom:4px">
-          <h2 style="margin:0"><span class="dot"></span>Your Week â drag meals onto days</h2>
+          <h2 style="margin:0"><span class="dot"></span>Your Week — drag meals onto days</h2>
           <div style="display:flex;align-items:center;gap:8px">
             <div class="week-nav">
               <button class="week-nav-btn" onclick="changeWeek(-1)" title="Previous week">&#8592;</button>
-              <span id="week-label" style="font-size:13px;font-weight:700;color:var(--text);white-space:nowrap">Week of â</span>
+              <span id="week-label" style="font-size:13px;font-weight:700;color:var(--text);white-space:nowrap">Week of —</span>
               <button class="week-nav-btn" onclick="changeWeek(1)" title="Next week">&#8594;</button>
             </div>
-            <button class="week-nav-btn" onclick="printWeeklyPlan()" title="Print weekly plan with recipes" style="width:auto;padding:0 10px;font-size:12px;font-weight:700">ð¨ Print</button>
+            <button class="week-nav-btn" onclick="printWeeklyPlan()" title="Print weekly plan with recipes" style="width:auto;padding:0 10px;font-size:12px;font-weight:700">🖨 Print</button>
           </div>
         </div>
         <div class="week-strip" id="week-strip"></div>
@@ -668,11 +668,11 @@ input, textarea { font-family: inherit; }
           <span class="dot"></span>Recipe Deck
           <div class="season-toggle" id="season-toggle">
             <button data-season="all" class="active">All seasons</button>
-            <button data-season="summer">âï¸ Summer</button>
-            <button data-season="winter">âï¸ Winter</button>
+            <button data-season="summer">☀️ Summer</button>
+            <button data-season="winter">❄️ Winter</button>
           </div>
         </h2>
-        <input class="deck-search" type="text" id="deck-search" placeholder="Search recipes by name, protein, or tagâ¦">
+        <input class="deck-search" type="text" id="deck-search" placeholder="Search recipes by name, protein, or tag…">
         <div class="deck-tabs" id="deck-tabs"></div>
         <div id="deck-content"></div>
       </div>
@@ -681,13 +681,13 @@ input, textarea { font-family: inherit; }
 
     <div class="grocery-card">
       <div class="grocery-header">
-        <h2>ð Grocery List</h2>
-        <div class="grocery-meta">Live â updates as you fill the week</div>
+        <h2>🛒 Grocery List</h2>
+        <div class="grocery-meta">Live — updates as you fill the week</div>
       </div>
       <div id="grocery-content"></div>
       <div class="grocery-actions">
-        <button class="btn-primary" onclick="copyGroceryList()">ð Copy list</button>
-        <button class="btn-secondary" onclick="emailGroceryList()" title="Email yourself the full list">âï¸</button>
+        <button class="btn-primary" onclick="copyGroceryList()">📋 Copy list</button>
+        <button class="btn-secondary" onclick="emailGroceryList()" title="Email yourself the full list">✉️</button>
       </div>
     </div>
 
@@ -699,11 +699,11 @@ input, textarea { font-family: inherit; }
 <div class="modal-bg" id="custom-meal-modal" onclick="closeModal(event,'custom-meal-modal')">
   <div class="modal" onclick="event.stopPropagation()">
     <h3>Type your own meal</h3>
-    <div class="modal-sub">For <strong id="cm-day-name">â</strong>. If you type a name we know, it'll match. Otherwise pick how to fill the grocery list.</div>
+    <div class="modal-sub">For <strong id="cm-day-name">—</strong>. If you type a name we know, it'll match. Otherwise pick how to fill the grocery list.</div>
 
     <div class="modal-section">
       <label>Meal name</label>
-      <input type="text" id="cm-name" oninput="cmSearchLibrary()" placeholder="e.g. salmon teriyaki, chicken parmâ¦">
+      <input type="text" id="cm-name" oninput="cmSearchLibrary()" placeholder="e.g. salmon teriyaki, chicken parm…">
       <div id="cm-matches" style="margin-top:6px"></div>
     </div>
 
@@ -716,14 +716,14 @@ input, textarea { font-family: inherit; }
     <div id="cm-tab-manual">
       <div class="modal-section">
         <label>Ingredients (one per line)</label>
-        <textarea id="cm-ingredients" rows="6" placeholder="2 lbs salmon&#10;1 cup rice&#10;2 limesâ¦"></textarea>
+        <textarea id="cm-ingredients" rows="6" placeholder="2 lbs salmon&#10;1 cup rice&#10;2 limes…"></textarea>
       </div>
     </div>
 
     <div id="cm-tab-ai" style="display:none">
       <div class="modal-section">
-        <div class="modal-sub" style="font-size:12px">Claude will generate a grocery list from just the meal name. Costs ~1Â¢ per call.</div>
-        <button class="btn-secondary" onclick="cmAskClaude()" id="cm-ask-btn">Generate ingredients â</button>
+        <div class="modal-sub" style="font-size:12px">Claude will generate a grocery list from just the meal name. Costs ~1¢ per call.</div>
+        <button class="btn-secondary" onclick="cmAskClaude()" id="cm-ask-btn">Generate ingredients →</button>
         <div id="cm-ai-result" style="margin-top:10px"></div>
       </div>
     </div>
@@ -731,8 +731,8 @@ input, textarea { font-family: inherit; }
     <div id="cm-tab-url" style="display:none">
       <div class="modal-section">
         <label>Recipe URL</label>
-        <input type="text" id="cm-url" placeholder="https://â¦">
-        <button class="btn-secondary" onclick="cmParseUrl()" id="cm-url-btn" style="margin-top:8px">Parse recipe â</button>
+        <input type="text" id="cm-url" placeholder="https://…">
+        <button class="btn-secondary" onclick="cmParseUrl()" id="cm-url-btn" style="margin-top:8px">Parse recipe →</button>
         <div id="cm-url-result" style="margin-top:10px"></div>
       </div>
     </div>
@@ -751,7 +751,7 @@ input, textarea { font-family: inherit; }
     <div class="modal-sub">Required for "New to try" candidates, custom-meal Ask Claude, and URL parsing. Stored in your browser only. Already set in v1? When v2 deploys to the same GitHub Pages domain, the key auto-shares.</div>
     <div class="modal-section">
       <label>API key (starts with sk-ant-)</label>
-      <input type="text" id="api-key-input" placeholder="sk-ant-â¦">
+      <input type="text" id="api-key-input" placeholder="sk-ant-…">
     </div>
     <div class="modal-btns">
       <button class="btn-cancel" onclick="closeModalById('api-key-modal')">Cancel</button>
@@ -786,17 +786,17 @@ const DAY_NAMES = ['Sat','Sun','Mon','Tue','Wed','Thu','Fri'];
 // DATA: STAPLES, WALDORF, EXTRAS, PANTRY
 // ============================================================
 const STAPLE_ITEMS = [
-  {name:"Mango", qty:"2â3"},
+  {name:"Mango", qty:"2–3"},
   {name:"Green Seedless Grapes", qty:"1 bag"},
   {name:"Blueberries", qty:"4 ct"},
   {name:"Pepperettes (European)", qty:"1 pkg"},
-  {name:"Passion Fruit", qty:"2â4"},
-  {name:"English Cucumber", qty:"2â3"},
-  {name:"Green Giant Mixed Veg (frozen)", qty:"1â2 bags"},
+  {name:"Passion Fruit", qty:"2–4"},
+  {name:"English Cucumber", qty:"2–3"},
+  {name:"Green Giant Mixed Veg (frozen)", qty:"1–2 bags"},
   {name:"2% Milk (1L)", qty:"1"},
   {name:"Kiwis", qty:"1 bag"},
   {name:"Mandarin Oranges (2 lb)", qty:"1 bag"},
-  {name:"Raspberries", qty:"1â2"},
+  {name:"Raspberries", qty:"1–2"},
   {name:"Large Oranges", qty:"6"},
 ];
 const WALDORF_GROCERY = [
@@ -808,7 +808,7 @@ const WALDORF_GROCERY = [
 const WALDORF_OCCASIONAL = [
   {name:"Walnuts", qty:"1 bag"},
   {name:"Chosen Foods Avocado Mayo", qty:"1 jar"},
-  {name:"Lemons (for Waldorf)", qty:"3â5"},
+  {name:"Lemons (for Waldorf)", qty:"3–5"},
 ];
 const HIGH_FREQ_EXTRAS = [
   {name:"Baby Arugula / Field Greens", qty:"1 pkg"},
@@ -816,12 +816,12 @@ const HIGH_FREQ_EXTRAS = [
   {name:"Cherry Tomatoes", qty:"1 pkg"},
   {name:"Shredded Cheddar", qty:"1 pkg"},
   {name:"Squeeze Applesauce 8-pk", qty:"1 pkg"},
-  {name:"Avocados", qty:"2â3"},
+  {name:"Avocados", qty:"2–3"},
   {name:"Limes", qty:"1 bag"},
-  {name:"Olives Stuffed with Garlic", qty:"1â2 jars"},
-  {name:"Lime & Black Pepper Chips", qty:"1â2 bags"},
+  {name:"Olives Stuffed with Garlic", qty:"1–2 jars"},
+  {name:"Lime & Black Pepper Chips", qty:"1–2 bags"},
   {name:"Energy Bars 12-pk", qty:"1 box"},
-  {name:"Hummus", qty:"1â2 tubs"},
+  {name:"Hummus", qty:"1–2 tubs"},
 ];
 const PANTRY_STAPLES = new Set([
   'olive oil','vegetable oil','canola oil','cooking oil','oil','avocado oil','sesame oil','coconut oil',
@@ -848,12 +848,12 @@ function isButcherIngredient(name){
 }
 
 // ============================================================
-// DATA: MEAL HISTORY (compacted from v1) â FALLBACK ONLY
-// At runtime, fetched fresh from meal_data.json â see init()
+// DATA: MEAL HISTORY (compacted from v1) — FALLBACK ONLY
+// At runtime, fetched fresh from meal_data.json — see init()
 // ============================================================
 let MEAL_HISTORY_DATA = [
-  {date:"2026-03-24",meal:"Lemon Pepper Chicken (BBQ) + leftover potatoes + pear salad",rating:3,liked:"Easy",change:"Tired of chicken+salad rut â wants marinades/sauces",keepOrDrop:"Modify"},
-  {date:"2026-03-25",meal:"Pork tenderloin (Greek seasoning) + Little Potato Co. baby potatoes + frozen mixed veg",rating:3,liked:"Low prep",change:"Not flavourful â needs sauce/marinade",keepOrDrop:"Modify"},
+  {date:"2026-03-24",meal:"Lemon Pepper Chicken (BBQ) + leftover potatoes + pear salad",rating:3,liked:"Easy",change:"Tired of chicken+salad rut — wants marinades/sauces",keepOrDrop:"Modify"},
+  {date:"2026-03-25",meal:"Pork tenderloin (Greek seasoning) + Little Potato Co. baby potatoes + frozen mixed veg",rating:3,liked:"Low prep",change:"Not flavourful — needs sauce/marinade",keepOrDrop:"Modify"},
   {date:"2026-03-29",meal:"Turkey Tornados",rating:4,liked:"Flavour was good",change:"Long prep but worth it",keepOrDrop:"Keep"},
   {date:"2026-03-30",meal:"Chimichurri Chicken Drumsticks",rating:3,liked:"Good chimichurri",change:"Switch to thighs/breasts",keepOrDrop:"Modify"},
   {date:"2026-04-01",meal:"Butter Chicken (Jenn's Version) + jasmine rice + snap peas",rating:5,liked:"Restaurant quality",change:"Always make double",keepOrDrop:"Keep"},
@@ -862,15 +862,15 @@ let MEAL_HISTORY_DATA = [
   {date:"2026-04-08",meal:"Beef Bulgogi with edamame",rating:4,liked:"Quick to cook",change:"",keepOrDrop:"Keep"},
   {date:"2026-04-11",meal:"Chimichurri Chicken Thighs (improved, BBQ)",rating:4,liked:"Flavourful",change:"Sauce needed 2x garlic, lemon, salt",keepOrDrop:"Keep"},
   {date:"2026-04-13",meal:"Thai Peanut Chicken Lettuce Wraps",rating:4,liked:"Yummy",change:"Convert to rice bowl",keepOrDrop:"Modify"},
-  {date:"2026-04-16",meal:"Pork Tenderloin (Greek seasoning) + Little Potato Co. potatoes + mixed veg",rating:3,liked:"Quick",change:"Pork is plain â needs marinade",keepOrDrop:"Modify"},
+  {date:"2026-04-16",meal:"Pork Tenderloin (Greek seasoning) + Little Potato Co. potatoes + mixed veg",rating:3,liked:"Quick",change:"Pork is plain — needs marinade",keepOrDrop:"Modify"},
   {date:"2026-04-20",meal:"Coconut Curry Chicken with frozen mixed veg over rice",rating:4,liked:"Liked the sauce",change:"Brown step too long",keepOrDrop:"Keep"},
   {date:"2026-04-21",meal:"Coconut Curry Chicken leftovers with salad",rating:3,liked:"Fast",change:"Chicken didn't reheat well",keepOrDrop:"One-off"},
-  {date:"2026-04-23",meal:"Harissa Pork Tenderloin with Garlic Green Beans (BBQ)",rating:3,liked:"Outside flavour good",change:"Inside bland â marinade overnight",keepOrDrop:"Modify"},
+  {date:"2026-04-23",meal:"Harissa Pork Tenderloin with Garlic Green Beans (BBQ)",rating:3,liked:"Outside flavour good",change:"Inside bland — marinade overnight",keepOrDrop:"Modify"},
   {date:"2026-03-31",meal:"BBQ Italian Sausage with Salad",rating:3,liked:"Easy",change:"Use occasionally",keepOrDrop:"Keep"},
 ];
 
 // ============================================================
-// DATA: RECIPES (post-cleanup, with new IDs 49â54)
+// DATA: RECIPES (post-cleanup, with new IDs 49–54)
 // ============================================================
 const RECIPES = [
   {id:1,name:"Lemon Pepper Chicken (BBQ)",protein:"breast",season:"summer",time:25,bbq:true,easy:true,cook:false,thigh:false,
@@ -882,9 +882,9 @@ const RECIPES = [
    butcherItems:[{cut:"Chicken Breasts (for shredding)",qty:"3 breasts"}],
    sourceUrl:"https://jordosworld.com/healthy-chicken-enchiladas/"},
   {id:4,name:"Korean Beef Bowl (Pre-Marinated)",protein:"beef",season:"all",time:15,bbq:false,easy:true,cook:false,thigh:false,ryanAway:true,
-   modificationNote:"Replaces old Korean Beef Satay â uses pre-marinated bulgogi from butcher. Zero prep on marinade.",
-   ingredients:[{name:"Pre-marinated bulgogi from butcher",qty:"1.5â2 lbs"},{name:"Jasmine rice",qty:"1 bag"},{name:"Edamame (frozen)",qty:"1 bag"},{name:"Carrots",qty:"1 bag"},{name:"English cucumber",qty:"1"},{name:"Sesame seeds",qty:"1 small jar"},{name:"Green onions",qty:"1 bunch"}],
-   butcherItems:[{cut:"Korean Bulgogi (pre-marinated)",qty:"1.5â2 lbs"}],
+   modificationNote:"Replaces old Korean Beef Satay — uses pre-marinated bulgogi from butcher. Zero prep on marinade.",
+   ingredients:[{name:"Pre-marinated bulgogi from butcher",qty:"1.5–2 lbs"},{name:"Jasmine rice",qty:"1 bag"},{name:"Edamame (frozen)",qty:"1 bag"},{name:"Carrots",qty:"1 bag"},{name:"English cucumber",qty:"1"},{name:"Sesame seeds",qty:"1 small jar"},{name:"Green onions",qty:"1 bunch"}],
+   butcherItems:[{cut:"Korean Bulgogi (pre-marinated)",qty:"1.5–2 lbs"}],
    sourceUrl:"https://www.recipetineats.com/korean-beef-bowl/"},
   {id:6,name:"Turkey and Rice Soup",protein:"turkey",season:"winter",time:50,bbq:false,easy:false,cook:true,thigh:false,
    ingredients:[{name:"Ground turkey",qty:"1 lb"},{name:"Long grain rice",qty:"1 bag"},{name:"Carrots",qty:"1 bag"},{name:"Celery stalks",qty:"1 bunch"},{name:"Yellow onion",qty:"1 large"},{name:"Crusty bread",qty:"1 loaf"}],
@@ -899,17 +899,17 @@ const RECIPES = [
    butcherItems:[],
    sourceUrl:"https://www.recipetineats.com/chicken-fried-rice/"},
   {id:11,name:"Butter Chicken (Jenn's Version)",protein:"thigh",season:"winter",time:90,bbq:false,easy:false,cook:true,thigh:true,creamHeavy:true,leftoverViability:"good",frequencyWeeks:4,
-   modificationNote:"Always make double â leftovers are excellent. Treat meal â max once a month.",
+   modificationNote:"Always make double — leftovers are excellent. Treat meal — max once a month.",
    ingredients:[{name:"Boneless skinless chicken thighs",qty:"4 lbs"},{name:"Butter",qty:""},{name:"Garlic",qty:"1 head"},{name:"Fresh ginger",qty:"1 small knob"},{name:"Crushed tomatoes",qty:"2 large cans (796ml)"},{name:"Coconut milk (full fat)",qty:"3 cans (400ml)"},{name:"Heavy cream",qty:"1 small carton"},{name:"Jasmine rice",qty:"1 large bag"},{name:"Snap peas",qty:"2 bags"},{name:"Fresh cilantro",qty:"1 small bunch"}],
    butcherItems:[{cut:"Boneless Skinless Chicken Thighs",qty:"4 lbs"}],
    sourceUrl:"https://cafedelites.com/butter-chicken/"},
   {id:12,name:"Coconut Curry Chicken",protein:"thigh",season:"winter",time:35,bbq:false,easy:false,cook:true,thigh:true,creamHeavy:true,leftoverViability:"bad",frequencyWeeks:3,
-   modificationNote:"Shorten browning step â 30 min was too long. Try higher heat or smaller pieces.",
+   modificationNote:"Shorten browning step — 30 min was too long. Try higher heat or smaller pieces.",
    ingredients:[{name:"Boneless skinless chicken thighs",qty:"4 lbs"},{name:"Coconut milk (canned)",qty:"2 cans (400ml)"},{name:"Tomato paste",qty:"1 small can"},{name:"Yellow onions",qty:"2"},{name:"Garlic",qty:"1 head"},{name:"Fresh ginger",qty:"1 knob"},{name:"Snap peas",qty:"1 bag (300g)"},{name:"Jasmine rice",qty:"1 bag"},{name:"Fresh cilantro",qty:"1 bunch"}],
    butcherItems:[{cut:"Boneless Skinless Chicken Thighs",qty:"4 lbs"}],
    sourceUrl:"https://www.recipetineats.com/coconut-chicken-curry/"},
   {id:13,name:"Peanut Chicken Rice Bowl",protein:"breast",season:"all",time:25,bbq:false,easy:true,cook:false,thigh:false,
-   modificationNote:"REWRITTEN from lettuce wraps â too messy. Now a rice bowl with whole-seared breast sliced after.",
+   modificationNote:"REWRITTEN from lettuce wraps — too messy. Now a rice bowl with whole-seared breast sliced after.",
    ingredients:[{name:"Boneless skinless chicken breasts",qty:"4 breasts (~2 lbs)"},{name:"Natural peanut butter",qty:"1 jar"},{name:"Limes",qty:"3"},{name:"Fresh ginger",qty:"1 small knob"},{name:"Garlic",qty:"1 head"},{name:"Jasmine rice",qty:"1 bag"},{name:"Carrots",qty:"1 bag"},{name:"English cucumber",qty:"1"},{name:"Roasted peanuts",qty:"1 small bag"},{name:"Green onions",qty:"1 bunch"},{name:"Fresh cilantro",qty:"1 bunch"}],
    butcherItems:[{cut:"Boneless Skinless Chicken Breasts",qty:"~2 lbs"}],
    sourceUrl:"https://www.halfbakedharvest.com/peanut-chicken-rice-bowl/"},
@@ -918,21 +918,21 @@ const RECIPES = [
    butcherItems:[{cut:"Boneless Skinless Chicken Thighs",qty:"8 thighs"}],
    sourceUrl:"https://www.recipetineats.com/chicken-shawarma/"},
   {id:15,name:"Baked Turkey Meatballs",protein:"turkey",season:"all",time:35,bbq:false,easy:true,cook:false,thigh:false,
-   modificationNote:"Meatballs are pre-made from the butcher â no scratch mixing. Serve over GF pasta with jarred sauce.",
+   modificationNote:"Meatballs are pre-made from the butcher — no scratch mixing. Serve over GF pasta with jarred sauce.",
    ingredients:[{name:"GF pasta",qty:"1 bag"},{name:"Jarred tomato sauce (GF)",qty:"1 large jar"}],
-   butcherItems:[{cut:"Turkey Meatballs (pre-made, raw)",qty:"1.5â2 lbs"}],
+   butcherItems:[{cut:"Turkey Meatballs (pre-made, raw)",qty:"1.5–2 lbs"}],
    sourceUrl:"https://www.wellplated.com/turkey-meatballs/"},
   {id:17,name:"Turkey Tornados",protein:"turkey",season:"all",time:60,bbq:false,easy:false,cook:true,thigh:false,
    ingredients:[{name:"Turkey breast (cut into 2-inch chunks)",qty:"1.5 lbs"},{name:"Bacon strips",qty:"1 pkg"},{name:"Butter",qty:""},{name:"Garlic",qty:"1 head"},{name:"Baby potatoes (Little Potato Co.)",qty:"1 bag"},{name:"Green beans",qty:"1 lb"}],
    butcherItems:[{cut:"Turkey Breast (chunked)",qty:"1.5 lbs"},{cut:"Bacon",qty:"1 pkg"}],
    sourceUrl:"https://www.justapinch.com/recipes/main-course/turkey/turkey-tornadoes.html"},
   {id:20,name:"Arroz con Pollo",protein:"thigh",season:"winter",time:55,bbq:false,easy:false,cook:true,thigh:true,
-   ingredients:[{name:"Bone-in skin-on chicken thighs",qty:"6â8 pieces"},{name:"Long grain white rice",qty:"1 bag"},{name:"Yellow onion",qty:"1 large"},{name:"Red bell pepper",qty:"1"},{name:"Garlic",qty:"1 head"},{name:"Canned diced tomatoes",qty:"1 can (400ml)"},{name:"Frozen peas",qty:"1 bag"},{name:"Limes",qty:"2"},{name:"Fresh cilantro",qty:"1 small bunch"}],
-   butcherItems:[{cut:"Bone-in Skin-on Chicken Thighs",qty:"6â8 pieces"}],
+   ingredients:[{name:"Bone-in skin-on chicken thighs",qty:"6–8 pieces"},{name:"Long grain white rice",qty:"1 bag"},{name:"Yellow onion",qty:"1 large"},{name:"Red bell pepper",qty:"1"},{name:"Garlic",qty:"1 head"},{name:"Canned diced tomatoes",qty:"1 can (400ml)"},{name:"Frozen peas",qty:"1 bag"},{name:"Limes",qty:"2"},{name:"Fresh cilantro",qty:"1 small bunch"}],
+   butcherItems:[{cut:"Bone-in Skin-on Chicken Thighs",qty:"6–8 pieces"}],
    sourceUrl:"https://www.recipetineats.com/arroz-con-pollo/"},
   {id:21,name:"Chicken Cacciatore",protein:"thigh",season:"winter",time:55,bbq:false,easy:false,cook:true,thigh:true,
-   ingredients:[{name:"Bone-in skin-on chicken thighs",qty:"6â8 pieces"},{name:"Tomato passata",qty:"1 can (400ml)"},{name:"Red bell peppers",qty:"2"},{name:"Yellow bell pepper",qty:"1"},{name:"Yellow onion",qty:"1 large"},{name:"Garlic",qty:"1 head"},{name:"Green olives (pitted) â on side only",qty:"1 jar"},{name:"Polenta (tube)",qty:"1 tube"}],
-   butcherItems:[{cut:"Bone-in Skin-on Chicken Thighs",qty:"6â8 pieces"}],
+   ingredients:[{name:"Bone-in skin-on chicken thighs",qty:"6–8 pieces"},{name:"Tomato passata",qty:"1 can (400ml)"},{name:"Red bell peppers",qty:"2"},{name:"Yellow bell pepper",qty:"1"},{name:"Yellow onion",qty:"1 large"},{name:"Garlic",qty:"1 head"},{name:"Green olives (pitted) — on side only",qty:"1 jar"},{name:"Polenta (tube)",qty:"1 tube"}],
+   butcherItems:[{cut:"Bone-in Skin-on Chicken Thighs",qty:"6–8 pieces"}],
    sourceUrl:"https://www.recipetineats.com/chicken-cacciatore/"},
   {id:22,name:"Chimichurri Chicken Thighs",protein:"thigh",season:"summer",time:25,bbq:true,easy:true,cook:false,thigh:true,
    modificationNote:"Sauce needs 2x the garlic, lemon juice, and salt the recipe says.",
@@ -944,35 +944,35 @@ const RECIPES = [
    butcherItems:[{cut:"Boneless Skinless Chicken Thighs",qty:"8 thighs"}],
    sourceUrl:"https://www.recipetineats.com/filipino-chicken-adobo-flavour-kapow/"},
   {id:32,name:"Harissa Chicken Thighs",protein:"thigh",season:"all",time:35,bbq:false,easy:false,cook:true,thigh:true,
-   modificationNote:"Marinate 4â8 hrs or overnight â this is what makes harissa penetrate.",
+   modificationNote:"Marinate 4–8 hrs or overnight — this is what makes harissa penetrate.",
    ingredients:[{name:"Boneless skinless chicken thighs",qty:"8 thighs"},{name:"Harissa paste",qty:"1 jar"},{name:"Garlic",qty:"1 head"},{name:"Lemons",qty:"1"},{name:"Jasmine rice",qty:"1 bag"},{name:"Snap peas or green beans",qty:"1 bag"}],
    butcherItems:[{cut:"Boneless Skinless Chicken Thighs",qty:"8 thighs"}],
    sourceUrl:"https://themodernproper.com/easy-harissa-chicken"},
   {id:33,name:"One-Pan Moroccan Chicken",protein:"thigh",season:"winter",time:55,bbq:false,easy:false,cook:true,thigh:true,leftoverViability:"good",
-   ingredients:[{name:"Bone-in skin-on chicken thighs",qty:"6â8 pieces"},{name:"Yellow onion",qty:"1 large"},{name:"Garlic",qty:"1 head"},{name:"Canned diced tomatoes",qty:"1 can (400ml)"},{name:"Lemons",qty:"1"},{name:"Fresh cilantro",qty:"1 bunch"},{name:"Jasmine rice",qty:"1 bag"},{name:"Snap peas",qty:"1 bag"}],
-   butcherItems:[{cut:"Bone-in Skin-on Chicken Thighs",qty:"6â8 pieces"}],
+   ingredients:[{name:"Bone-in skin-on chicken thighs",qty:"6–8 pieces"},{name:"Yellow onion",qty:"1 large"},{name:"Garlic",qty:"1 head"},{name:"Canned diced tomatoes",qty:"1 can (400ml)"},{name:"Lemons",qty:"1"},{name:"Fresh cilantro",qty:"1 bunch"},{name:"Jasmine rice",qty:"1 bag"},{name:"Snap peas",qty:"1 bag"}],
+   butcherItems:[{cut:"Bone-in Skin-on Chicken Thighs",qty:"6–8 pieces"}],
    sourceUrl:"https://www.dinneratthezoo.com/moroccan-chicken/"},
   {id:34,name:"BBQ Beef Burgers (No Bun)",protein:"beef",season:"summer",time:15,bbq:true,easy:true,cook:false,thigh:false,ryanAway:true,
-   ingredients:[{name:"Ground beef patties (butcher-formed)",qty:"4â6 patties"},{name:"Bagged salad kit (not Caesar)",qty:"1â2 kits"},{name:"Corn on the cob or snap peas",qty:"4 cobs or 1 bag"}],
-   butcherItems:[{cut:"Ground Beef Patties",qty:"4â6 patties"}]},
+   ingredients:[{name:"Ground beef patties (butcher-formed)",qty:"4–6 patties"},{name:"Bagged salad kit (not Caesar)",qty:"1–2 kits"},{name:"Corn on the cob or snap peas",qty:"4 cobs or 1 bag"}],
+   butcherItems:[{cut:"Ground Beef Patties",qty:"4–6 patties"}]},
   {id:35,name:"BBQ Turkey Burgers (No Bun)",protein:"turkey",season:"summer",time:20,bbq:true,easy:true,cook:false,thigh:false,
-   ingredients:[{name:"Ground turkey patties (butcher-formed)",qty:"4â6 patties"},{name:"Bagged salad kit (not Caesar)",qty:"1â2 kits"},{name:"Snap peas or frozen mixed veg",qty:"1 bag"}],
-   butcherItems:[{cut:"Ground Turkey Patties",qty:"4â6 patties"}]},
+   ingredients:[{name:"Ground turkey patties (butcher-formed)",qty:"4–6 patties"},{name:"Bagged salad kit (not Caesar)",qty:"1–2 kits"},{name:"Snap peas or frozen mixed veg",qty:"1 bag"}],
+   butcherItems:[{cut:"Ground Turkey Patties",qty:"4–6 patties"}]},
   {id:36,name:"BBQ Italian Sausages",protein:"pork",season:"summer",time:15,bbq:true,easy:true,cook:false,thigh:false,
-   ingredients:[{name:"Italian sausages (fresh)",qty:"6â8 sausages"},{name:"Bagged salad kit (not Caesar)",qty:"1â2 kits"},{name:"Corn on the cob or snap peas",qty:"4 cobs or 1 bag"}],
-   butcherItems:[{cut:"Italian Sausages",qty:"6â8 sausages"}]},
-  // === NEW: salads from parallel session (49â50) ===
+   ingredients:[{name:"Italian sausages (fresh)",qty:"6–8 sausages"},{name:"Bagged salad kit (not Caesar)",qty:"1–2 kits"},{name:"Corn on the cob or snap peas",qty:"4 cobs or 1 bag"}],
+   butcherItems:[{cut:"Italian Sausages",qty:"6–8 sausages"}]},
+  // === NEW: salads from parallel session (49–50) ===
   {id:49,name:"Peanut Satay Salad (Mandy's-inspired)",protein:"breast",season:"summer",time:25,bbq:true,easy:true,cook:false,thigh:false,
    proteinOptions:"chicken (default), pork tenderloin leftovers, BBQ sausage sliced, Korean beef leftovers",
    ingredients:[{name:"Chicken breasts (or leftover protein)",qty:"~1.5 lbs"},{name:"Mixed greens",qty:"1 bag"},{name:"Fresh cilantro",qty:"1 bunch"},{name:"Fresh mint",qty:"1 bunch"},{name:"Thai basil",qty:"1 bunch"},{name:"Green onions",qty:"1 bunch"},{name:"Carrots",qty:"1 bag"},{name:"Mango",qty:"1"},{name:"Roasted peanuts (unsalted)",qty:"1 bag"},{name:"Limes",qty:"2"},{name:"Lemons",qty:"1"},{name:"Oranges",qty:"1"}],
    butcherItems:[{cut:"Chicken Breasts (or leftovers)",qty:"~1.5 lbs"}],
    sourceUrl:"https://mandys.ca/en/salad/peanut-satay/"},
   {id:50,name:"Greek Chopped Salad with Lemon Tahini",protein:"breast",season:"all",time:30,bbq:true,easy:true,cook:false,thigh:false,
-   proteinOptions:"chicken (default â grilled WHOLE, sliced cold), Harissa pork leftovers, lamb (Ryan-away), chickpeas-only",
-   ingredients:[{name:"Chicken breasts (or leftover protein)",qty:"~1.5 lbs"},{name:"Romaine lettuce",qty:"2 heads"},{name:"Canned chickpeas",qty:"1 can"},{name:"Cherry tomatoes",qty:"1 pint"},{name:"Persian cucumbers",qty:"4â5"},{name:"Red onion",qty:"1 small"},{name:"Feta cheese",qty:"1 block"},{name:"Avocados",qty:"1"},{name:"Tahini",qty:"1 jar"},{name:"Lemons",qty:"2"},{name:"Toasted pumpkin seeds or sliced almonds",qty:"1 bag"}],
+   proteinOptions:"chicken (default — grilled WHOLE, sliced cold), Harissa pork leftovers, lamb (Ryan-away), chickpeas-only",
+   ingredients:[{name:"Chicken breasts (or leftover protein)",qty:"~1.5 lbs"},{name:"Romaine lettuce",qty:"2 heads"},{name:"Canned chickpeas",qty:"1 can"},{name:"Cherry tomatoes",qty:"1 pint"},{name:"Persian cucumbers",qty:"4–5"},{name:"Red onion",qty:"1 small"},{name:"Feta cheese",qty:"1 block"},{name:"Avocados",qty:"1"},{name:"Tahini",qty:"1 jar"},{name:"Lemons",qty:"2"},{name:"Toasted pumpkin seeds or sliced almonds",qty:"1 bag"}],
    butcherItems:[{cut:"Chicken Breasts (or leftovers)",qty:"~1.5 lbs"}],
    sourceUrl:"https://www.halfbakedharvest.com/greek-chicken-chopped-salad/"},
-  // === NEW: Round 1 picks (51â54) ===
+  // === NEW: Round 1 picks (51–54) ===
   {id:51,name:"Creamy Lemon Garlic Chicken",protein:"breast",season:"all",time:25,bbq:false,easy:true,cook:false,thigh:false,creamHeavy:true,
    ingredients:[{name:"Chicken breasts (whole)",qty:"4 breasts"},{name:"Garlic",qty:"1 head"},{name:"Lemons",qty:"2"},{name:"Heavy cream",qty:"1 small carton"},{name:"Parmesan cheese",qty:"1 wedge"},{name:"Fresh parsley",qty:"1 bunch"},{name:"Jasmine rice",qty:"1 bag"}],
    butcherItems:[{cut:"Chicken Breasts (whole)",qty:"4 breasts"}],
@@ -982,336 +982,348 @@ const RECIPES = [
    butcherItems:[{cut:"Chicken Breasts (whole)",qty:"4 breasts"}],
    sourceUrl:"https://cookathomemom.com/one-pan-italian-chicken-breasts/"},
   {id:53,name:"Turkey Cutlets with Dijon Sauce",protein:"turkey",season:"all",time:30,bbq:false,easy:true,cook:false,thigh:false,
-   modificationNote:"Skip the flour-dredge step â pan-sear cutlets directly, then sauce.",
+   modificationNote:"Skip the flour-dredge step — pan-sear cutlets directly, then sauce.",
    ingredients:[{name:"Turkey breast cutlets",qty:"1.5 lbs"},{name:"Heavy cream or chicken broth",qty:"1 small carton"},{name:"Garlic",qty:"1 head"},{name:"Fresh thyme",qty:"1 bunch"},{name:"Lemons",qty:"1"},{name:"Jasmine rice",qty:"1 bag"},{name:"Snap peas or green beans",qty:"1 bag"}],
    butcherItems:[{cut:"Turkey Breast Cutlets",qty:"1.5 lbs"}],
    sourceUrl:"https://easylowcarb.com/turkey-breast-cutlets-with-dijon-sauce/"},
   {id:54,name:"Garlic + Herb Pork Tenderloin",protein:"pork",season:"all",time:35,bbq:true,easy:true,cook:false,thigh:false,
-   modificationNote:"Replaces old Oven Pork Tenderloin â marinade is mandatory not optional. Garlic/lemon/Dijon/rosemary.",
-   ingredients:[{name:"Pork tenderloin",qty:"1.5â2 lbs"},{name:"Garlic",qty:"1 head"},{name:"Lemons",qty:"2"},{name:"Fresh rosemary",qty:"1 sprig"},{name:"Baby potatoes (Little Potato Co.)",qty:"1 bag"},{name:"Frozen mixed veg",qty:"1 bag"}],
-   butcherItems:[{cut:"Pork Tenderloin",qty:"1.5â2 lbs"}],
+   modificationNote:"Replaces old Oven Pork Tenderloin — marinade is mandatory not optional. Garlic/lemon/Dijon/rosemary.",
+   ingredients:[{name:"Pork tenderloin",qty:"1.5–2 lbs"},{name:"Garlic",qty:"1 head"},{name:"Lemons",qty:"2"},{name:"Fresh rosemary",qty:"1 sprig"},{name:"Baby potatoes (Little Potato Co.)",qty:"1 bag"},{name:"Frozen mixed veg",qty:"1 bag"}],
+   butcherItems:[{cut:"Pork Tenderloin",qty:"1.5–2 lbs"}],
    sourceUrl:"https://tastesbetterfromscratch.com/pork-tenderloin-marinade/"},
   {id:55,name:"Tuna Pesto Pasta",protein:"tuna",season:"all",time:20,bbq:false,easy:true,cook:false,thigh:false,ryanAway:true,frequencyWeeks:3,
-   modificationNote:"Couch night â Jenn + kids eat together on the couch with TV when Ryan is out. Family favourite, but rotate so people don't get sick of it.",
-   ingredients:[{name:"Pasta (regular, 1 bag)",qty:"1 bag"},{name:"Jarred pesto",qty:"2 jars"},{name:"Canned tuna",qty:"3â4 cans"},{name:"Parmesan cheese (optional, to top)",qty:"1 wedge"}],
+   modificationNote:"Couch night — Jenn + kids eat together on the couch with TV when Ryan is out. Family favourite, but rotate so people don't get sick of it.",
+   ingredients:[{name:"Pasta (regular, 1 bag)",qty:"1 bag"},{name:"Jarred pesto",qty:"2 jars"},{name:"Canned tuna",qty:"3–4 cans"},{name:"Parmesan cheese (optional, to top)",qty:"1 wedge"}],
    butcherItems:[]},
+  // === NEW: Peruvian Chicken (ID 57, accepted from New to Try 2026-05-09) ===
+  {id:57,name:"Peruvian Roasted Chicken",protein:"breast",season:"all",time:50,bbq:false,easy:false,cook:true,thigh:false,frequencyWeeks:3,
+   ingredients:[{name:"Chicken breasts",qty:"4 breasts"},{name:"Olive oil",qty:"3 tbsp"},{name:"Garlic",qty:"4 cloves, minced"},{name:"Cumin",qty:"2 tsp"},{name:"Paprika",qty:"1 tsp"},{name:"Dried oregano",qty:"1 tsp"},{name:"Turmeric",qty:"½ tsp"},{name:"Lime juice",qty:"2 limes"},{name:"Soy sauce (or tamari)",qty:"1 tbsp"}],
+   butcherItems:[{cut:"Chicken breasts",qty:"4 breasts"}],
+   sourceUrl:"https://www.skinnytaste.com/peruvian-roasted-chicken/",
+   steps:["Mix olive oil, garlic, cumin, paprika, oregano, turmeric, lime juice and soy sauce into a paste.","Coat chicken breasts thoroughly. Marinate 1–4 hours in the fridge if time allows.","Roast at 425°F / 220°C for 25–30 min until internal temp reaches 165°F / 74°C.","Rest 5 min before slicing. Serve with rice, roasted veg, or salad."]},
+  // === NEW: Cilantro Lime Chicken (ID 58, accepted from New to Try 2026-05-09) ===
+  {id:58,name:"Cilantro Lime Chicken",protein:"breast",season:"summer",time:25,bbq:true,easy:true,cook:false,thigh:false,frequencyWeeks:3,
+   ingredients:[{name:"Chicken breasts",qty:"4 breasts"},{name:"Fresh cilantro",qty:"½ cup, chopped"},{name:"Lime juice",qty:"3 limes"},{name:"Garlic",qty:"3 cloves, minced"},{name:"Olive oil",qty:"2 tbsp"},{name:"Cumin",qty:"1 tsp"}],
+   butcherItems:[{cut:"Chicken breasts",qty:"4 breasts"}],
+   sourceUrl:"https://www.gimmesomeoven.com/cilantro-lime-chicken/",
+   steps:["Whisk together cilantro, lime juice, garlic, olive oil and cumin into a marinade.","Marinate chicken at least 30 min (overnight is better).","BBQ or grill over medium-high 5–6 min per side until cooked through (165°F / 74°C).","Rest 5 min, slice on the bias. Serve over rice or with a fresh salad."]},
   // === NEW: Pork Chimichurri (ID 56, added from New to Try 2026-05-01) ===
   {id:56,name:"Grilled Pork Tenderloin with Chimichurri",protein:"pork",season:"summer",time:30,bbq:true,easy:true,cook:false,thigh:false,frequencyWeeks:3,
-   modificationNote:"Dry rub + BBQ whole, chimichurri poured on top at the table. Same chimichurri sauce as chicken version â double the garlic and lemon.",
+   modificationNote:"Dry rub + BBQ whole, chimichurri poured on top at the table. Same chimichurri sauce as chicken version — double the garlic and lemon.",
    ingredients:[{name:"Fresh flat-leaf parsley",qty:"1 large bunch"},{name:"Fresh cilantro",qty:"1 bunch"},{name:"Lemons",qty:"1"},{name:"Baby potatoes (Little Potato Co.)",qty:"1 bag"},{name:"Snap peas or green beans",qty:"1 bag"}],
-   butcherItems:[{cut:"Pork Tenderloin",qty:"1.5â2 lbs"}],
+   butcherItems:[{cut:"Pork Tenderloin",qty:"1.5–2 lbs"}],
    sourceUrl:"https://themodernproper.com/grilled-pork-tenderloin-with-chimichurri"},
 ];
 
 // ============================================================
-// RECIPE STEPS â cooking instructions for each recipe
+// RECIPE STEPS — cooking instructions for each recipe
 // Keyed by recipe ID. Adapted for the Maund family rules:
 // no batch-browning, whole pieces, family of 4 + leftovers.
 // ============================================================
 const RECIPE_STEPS = {
   1: [
-    "Make marinade: mince 2 garlic cloves, juice Â¾ lemon. Mix with 1Â½ tbsp lemon pepper seasoning, Â¾ tsp paprika, Â¾ tsp oregano, and 1Â½ tbsp coconut oil.",
-    "Pound 4â6 chicken breasts to even thickness with a mallet or mason jar bottom â this is key for even BBQ cooking.",
+    "Make marinade: mince 2 garlic cloves, juice ¾ lemon. Mix with 1½ tbsp lemon pepper seasoning, ¾ tsp paprika, ¾ tsp oregano, and 1½ tbsp coconut oil.",
+    "Pound 4–6 chicken breasts to even thickness with a mallet or mason jar bottom — this is key for even BBQ cooking.",
     "Coat chicken in marinade, cover, and refrigerate 2 hours (plan ahead).",
     "Fire up BBQ to medium-high. Remove chicken from fridge 20 min before grilling.",
-    "Grill 6â7 min per side with lid closed until internal temp hits 165Â°F. Don't move them while they're searing.",
+    "Grill 6–7 min per side with lid closed until internal temp hits 165°F. Don't move them while they're searing.",
     "Rest 5 min, then serve with lemon wedges."
   ],
   3: [
-    "Preheat oven to 350Â°F. Grease a 9Ã13 baking dish.",
-    "Make cilantro lime sauce: stir together Â½ cup Greek yogurt, juice of Â½ lime, and 2 tbsp chopped fresh cilantro. Set aside.",
-    "Cook and shred 3 chicken breasts â poach in salted water 15â18 min, or use leftover chicken.",
+    "Preheat oven to 350°F. Grease a 9×13 baking dish.",
+    "Make cilantro lime sauce: stir together ½ cup Greek yogurt, juice of ½ lime, and 2 tbsp chopped fresh cilantro. Set aside.",
+    "Cook and shred 3 chicken breasts — poach in salted water 15–18 min, or use leftover chicken.",
     "Mix shredded chicken with one 4-oz can diced green chiles, half the enchilada sauce, and half the cheese. Season with salt and pepper.",
     "Warm corn tortillas briefly in a dry pan so they don't crack. Spoon filling into each, roll up, place seam-side down in the baking dish.",
     "Pour remaining enchilada sauce over top. Sprinkle with remaining cheese.",
-    "Bake 18â20 min until cheese is melted and bubbly.",
+    "Bake 18–20 min until cheese is melted and bubbly.",
     "Drizzle cilantro lime sauce over top before serving."
   ],
   4: [
     "Start jasmine rice so it's ready when the beef is done.",
-    "Set out toppings: microwave frozen edamame per package, grate or julienne 1â2 carrots, slice 1 cucumber, chop 2 green onions.",
-    "Heat a large skillet or griddle over HIGH heat until very hot â this is how you get that caramelized edge on the bulgogi.",
-    "Add pre-marinated bulgogi. Spread in a single layer. Cook 2â3 min without stirring, then stir-fry 2â3 more min until no longer pink and edges are slightly caramelized.",
+    "Set out toppings: microwave frozen edamame per package, grate or julienne 1–2 carrots, slice 1 cucumber, chop 2 green onions.",
+    "Heat a large skillet or griddle over HIGH heat until very hot — this is how you get that caramelized edge on the bulgogi.",
+    "Add pre-marinated bulgogi. Spread in a single layer. Cook 2–3 min without stirring, then stir-fry 2–3 more min until no longer pink and edges are slightly caramelized.",
     "Build bowls: rice base, bulgogi on top, edamame, carrot, cucumber.",
     "Finish with sesame seeds and green onions. Serve with sriracha or gochujang on the side."
   ],
   6: [
     "Heat 1 tbsp olive oil and 1 tbsp butter in a large pot over medium heat.",
-    "Add diced onion, diced carrots, and sliced celery. Cook 8â10 min, stirring occasionally, until softened.",
+    "Add diced onion, diced carrots, and sliced celery. Cook 8–10 min, stirring occasionally, until softened.",
     "Add 2 tsp minced garlic. Cook 1 more minute.",
-    "Add 1 tsp basil, Â½ tsp oregano, 1 tsp salt, Â¼ tsp pepper, pinch of red pepper flakes. Stir.",
+    "Add 1 tsp basil, ½ tsp oregano, 1 tsp salt, ¼ tsp pepper, pinch of red pepper flakes. Stir.",
     "Pour in 8 cups turkey or chicken broth. Bring to a boil.",
     "Reduce heat to medium-low. Add 1 cup long-grain white rice and stir.",
-    "Simmer 10â12 min until rice is almost done but still slightly firm.",
-    "Add 2 cups cubed cooked turkey. Simmer 15â20 more min until rice is fully cooked and soup is thick.",
+    "Simmer 10–12 min until rice is almost done but still slightly firm.",
+    "Add 2 cups cubed cooked turkey. Simmer 15–20 more min until rice is fully cooked and soup is thick.",
     "Taste, adjust salt. Garnish with fresh parsley and serve."
   ],
   7: [
     "Marinate chicken: whisk olive oil, juice of 1 lime, 1 tsp cumin, 1 garlic clove minced, salt and pepper. Coat 3 whole chicken breasts. Marinate 30 min.",
-    "Prep the salad: dice 2 ripe mangoes, rinse 1 can black beans, dice 1 red bell pepper, thinly slice Â½ red onion, chop Â¼ cup cilantro.",
-    "BBQ chicken on medium-high, 6â7 min per side, lid closed, until internal temp is 165Â°F. Rest 5 min, slice thin.",
-    "In a large bowl: combine mango, black beans, red pepper, red onion, cilantro. Dress with juice of 1â2 limes, drizzle of olive oil, salt to taste.",
+    "Prep the salad: dice 2 ripe mangoes, rinse 1 can black beans, dice 1 red bell pepper, thinly slice ½ red onion, chop ¼ cup cilantro.",
+    "BBQ chicken on medium-high, 6–7 min per side, lid closed, until internal temp is 165°F. Rest 5 min, slice thin.",
+    "In a large bowl: combine mango, black beans, red pepper, red onion, cilantro. Dress with juice of 1–2 limes, drizzle of olive oil, salt to taste.",
     "Serve over mixed greens with sliced chicken on top. Avocado on the side."
   ],
   9: [
-    "Have leftover cooked chicken and cooked rice ready â cold rice works best (makes it fry rather than steam).",
+    "Have leftover cooked chicken and cooked rice ready — cold rice works best (makes it fry rather than steam).",
     "Chop or shred leftover chicken into bite-sized pieces.",
     "Heat a large skillet or wok over HIGH heat. Add 1 tbsp sesame oil.",
     "Add cold rice. Press it flat. Let it sit 2 min untouched to fry, then stir. Repeat until lightly golden in spots.",
     "Push rice to the sides. Crack 2 eggs into the center and scramble them, then mix into the rice.",
-    "Add chicken, 1 cup frozen mixed veg (no need to thaw), 2â3 tbsp tamari or soy sauce, Â½ tsp garlic powder.",
-    "Stir-fry everything together 3â4 min until hot, well-combined, and slightly caramelized.",
+    "Add chicken, 1 cup frozen mixed veg (no need to thaw), 2–3 tbsp tamari or soy sauce, ½ tsp garlic powder.",
+    "Stir-fry everything together 3–4 min until hot, well-combined, and slightly caramelized.",
     "Taste and adjust seasoning. Top with sliced green onions. Add a dash more sesame oil or sriracha if you like."
   ],
   11: [
     "MARINADE (day before or morning of): Mix plain yogurt, garam masala, cumin, turmeric, paprika, lemon juice, garlic. Coat chicken thighs, cover, refrigerate 2+ hours.",
-    "SEARING: This is the one recipe where it's worth it. Heat oil in large pot over high heat. Sear marinated thighs in batches â 3 min per side until golden. Set aside. (Keep batches small so they sear, not steam.)",
-    "In same pot: melt 2 tbsp butter with 1 tbsp oil. SautÃ© diced onion on medium 10â12 min until deep golden.",
+    "SEARING: This is the one recipe where it's worth it. Heat oil in large pot over high heat. Sear marinated thighs in batches — 3 min per side until golden. Set aside. (Keep batches small so they sear, not steam.)",
+    "In same pot: melt 2 tbsp butter with 1 tbsp oil. Sauté diced onion on medium 10–12 min until deep golden.",
     "Add 2 tbsp garlic-ginger paste (or minced garlic + grated ginger). Cook 2 min.",
     "Add garam masala, cumin, coriander, paprika, salt. Cook 2 min until very fragrant.",
     "Add one 28-oz can crushed tomatoes. Cook 10 min stirring, until sauce deepens and thickens.",
     "Add 3 cans coconut milk + a splash of heavy cream. Stir well.",
-    "Return chicken to pot. Bring to a simmer, then cook UNCOVERED 45â60 min until sauce is deep red-orange and coats a spoon. Stir occasionally.",
-    "Taste and adjust salt. Serve over jasmine rice with snap peas on the side. ALWAYS double batch â leftovers are excellent and it freezes well."
+    "Return chicken to pot. Bring to a simmer, then cook UNCOVERED 45–60 min until sauce is deep red-orange and coats a spoon. Stir occasionally.",
+    "Taste and adjust salt. Serve over jasmine rice with snap peas on the side. ALWAYS double batch — leftovers are excellent and it freezes well."
   ],
   12: [
     "Season chicken thighs with salt and a pinch of turmeric.",
-    "Heat oil in a large pan over medium-high. Sear thighs skin-side down 3 min per side until golden. Don't let this go longer â keep the browning step SHORT. Set thighs aside.",
-    "In same pan: add 2â3 tbsp red or yellow curry paste. Fry in the oil 1â2 min until very fragrant.",
+    "Heat oil in a large pan over medium-high. Sear thighs skin-side down 3 min per side until golden. Don't let this go longer — keep the browning step SHORT. Set thighs aside.",
+    "In same pan: add 2–3 tbsp red or yellow curry paste. Fry in the oil 1–2 min until very fragrant.",
     "Add diced onion, 3 minced garlic cloves, and 1 tbsp grated ginger. Cook 3 min.",
     "Pour in 1 can full-fat coconut milk. Stir to combine with curry paste.",
-    "Return chicken to pan. Add 1â2 cups frozen mixed veg.",
-    "Simmer 20â25 min, turning chicken occasionally, until cooked through.",
+    "Return chicken to pan. Add 1–2 cups frozen mixed veg.",
+    "Simmer 20–25 min, turning chicken occasionally, until cooked through.",
     "Taste and adjust salt. Serve over jasmine rice."
   ],
   13: [
     "Start jasmine rice.",
-    "Make peanut sauce: whisk â cup natural peanut butter + 3 tbsp tamari + juice of 2 limes + 1 tbsp grated fresh ginger + 2 garlic cloves minced + 1 tbsp rice vinegar + dash of sriracha. Thin with 2â3 tbsp warm water until it pours easily.",
+    "Make peanut sauce: whisk ⅓ cup natural peanut butter + 3 tbsp tamari + juice of 2 limes + 1 tbsp grated fresh ginger + 2 garlic cloves minced + 1 tbsp rice vinegar + dash of sriracha. Thin with 2–3 tbsp warm water until it pours easily.",
     "Season whole chicken breasts with salt and pepper.",
-    "Heat pan over medium-high with 1 tbsp oil. Cook whole breasts 5â6 min per side until internal temp is 165Â°F. Rest 5 min. Slice on the bias.",
-    "Set out toppings: shred 1 carrot, slice 1 cucumber, chop Â½ cup peanuts, slice 3 green onions.",
-    "Build bowls: rice â chicken slices â carrot, cucumber, peanuts, scallions.",
+    "Heat pan over medium-high with 1 tbsp oil. Cook whole breasts 5–6 min per side until internal temp is 165°F. Rest 5 min. Slice on the bias.",
+    "Set out toppings: shred 1 carrot, slice 1 cucumber, chop ½ cup peanuts, slice 3 green onions.",
+    "Build bowls: rice → chicken slices → carrot, cucumber, peanuts, scallions.",
     "Drizzle peanut sauce generously over everything. Lime wedge on the side. Sauce on the side for kids."
   ],
   14: [
-    "Make shawarma marinade: 3 tbsp olive oil + 2 tsp cumin + 1 tsp turmeric + 1Â½ tsp paprika + 1 tsp coriander + 3 garlic cloves minced + juice of 1 lemon + salt. Coat whole chicken breasts. Marinate 30 min minimum, overnight is better.",
+    "Make shawarma marinade: 3 tbsp olive oil + 2 tsp cumin + 1 tsp turmeric + 1½ tsp paprika + 1 tsp coriander + 3 garlic cloves minced + juice of 1 lemon + salt. Coat whole chicken breasts. Marinate 30 min minimum, overnight is better.",
     "Start jasmine rice. Set out hummus, sliced cucumbers, and halved cherry tomatoes.",
-    "BBQ on medium-high: cook whole breasts 6â7 min per side, lid closed, until internal temp is 165Â°F. Rest 5 min, slice thin.",
-    "Build bowls: rice base â chicken â hummus â cucumber â tomatoes.",
+    "BBQ on medium-high: cook whole breasts 6–7 min per side, lid closed, until internal temp is 165°F. Rest 5 min, slice thin.",
+    "Build bowls: rice base → chicken → hummus → cucumber → tomatoes.",
     "Drizzle with tahini or a quick garlic yogurt (Greek yogurt + garlic + lemon). Squeeze fresh lemon over everything before serving."
   ],
   15: [
-    "Preheat oven to 400Â°F. Line a baking sheet with parchment.",
-    "Arrange pre-made turkey meatballs from the butcher on the sheet â leave space between each so they brown rather than steam.",
-    "Bake 18â22 min until cooked through (165Â°F internal). No need to flip.",
+    "Preheat oven to 400°F. Line a baking sheet with parchment.",
+    "Arrange pre-made turkey meatballs from the butcher on the sheet — leave space between each so they brown rather than steam.",
+    "Bake 18–22 min until cooked through (165°F internal). No need to flip.",
     "While meatballs bake: boil a large salted pot and cook GF pasta per package directions.",
     "Warm jarred tomato sauce in a saucepan over low heat.",
     "Drain pasta. Plate pasta, top with meatballs and sauce. Done."
   ],
   17: [
     "Cut 1.5 lbs turkey breast into 2-inch chunks.",
-    "Wrap each chunk tightly with one strip of bacon. Secure with a toothpick pushed through the side. (This takes time â put on music. It's worth it.)",
+    "Wrap each chunk tightly with one strip of bacon. Secure with a toothpick pushed through the side. (This takes time — put on music. It's worth it.)",
     "Make garlic herb butter: 3 tbsp butter + 3 garlic cloves minced + 1 tbsp fresh thyme + 1 tbsp fresh rosemary + salt.",
-    "Heat an oven-safe skillet over medium-high until hot. Sear tornados 2â3 min per side, rotating to crisp the bacon all around.",
+    "Heat an oven-safe skillet over medium-high until hot. Sear tornados 2–3 min per side, rotating to crisp the bacon all around.",
     "Baste generously with garlic herb butter.",
-    "Transfer pan to oven at 400Â°F. Bake 12â15 min until turkey reaches 165Â°F.",
+    "Transfer pan to oven at 400°F. Bake 12–15 min until turkey reaches 165°F.",
     "Pull from oven and baste one more time with the pan butter. Rest 3 min before serving.",
     "Note: Bacon wrapping does NOT count as the weekly pork meal."
   ],
   20: [
-    "Season 6â8 chicken pieces with 1 tsp cumin, 1 tsp paprika, 1 tsp garlic powder, 1 tsp salt, Â½ tsp oregano.",
-    "Heat 2 tbsp oil in a large oven-safe pot or Dutch oven over medium-high. Sear chicken pieces 3â4 min per side until golden. Remove and set aside.",
-    "In same pot: sautÃ© 1 diced onion and 1 diced green or red bell pepper for 5 min. Add 3 garlic cloves minced, cook 1 min.",
-    "Add 1 can diced tomatoes, 2 cups chicken broth, 1 tsp cumin, Â½ tsp turmeric (or a pinch of saffron if you have it). Stir well.",
-    "Add 1Â½ cups rinsed long-grain rice. Stir to distribute evenly across the pan.",
+    "Season 6–8 chicken pieces with 1 tsp cumin, 1 tsp paprika, 1 tsp garlic powder, 1 tsp salt, ½ tsp oregano.",
+    "Heat 2 tbsp oil in a large oven-safe pot or Dutch oven over medium-high. Sear chicken pieces 3–4 min per side until golden. Remove and set aside.",
+    "In same pot: sauté 1 diced onion and 1 diced green or red bell pepper for 5 min. Add 3 garlic cloves minced, cook 1 min.",
+    "Add 1 can diced tomatoes, 2 cups chicken broth, 1 tsp cumin, ½ tsp turmeric (or a pinch of saffron if you have it). Stir well.",
+    "Add 1½ cups rinsed long-grain rice. Stir to distribute evenly across the pan.",
     "Nestle chicken pieces on top, skin-side up. Bring to a simmer.",
-    "Cover and cook on low heat 25â30 min until rice is fluffy and chicken is cooked through.",
+    "Cover and cook on low heat 25–30 min until rice is fluffy and chicken is cooked through.",
     "Rest 5 min covered. Fluff rice. Garnish with fresh cilantro and lime wedges."
   ],
   21: [
     "Season chicken pieces (breasts or thighs) with salt and pepper.",
-    "Heat 2 tbsp olive oil in a large pot over medium-high. Sear chicken 3â4 min per side until golden. Remove and set aside.",
-    "In same pot: sautÃ© 1 diced onion and 1 diced red bell pepper for 5 min. Add 3 garlic cloves minced, cook 1 min.",
-    "Add 1 can crushed tomatoes, Â½ cup chicken broth, 1 tsp dried oregano, Â½ tsp thyme, 1 bay leaf.",
+    "Heat 2 tbsp olive oil in a large pot over medium-high. Sear chicken 3–4 min per side until golden. Remove and set aside.",
+    "In same pot: sauté 1 diced onion and 1 diced red bell pepper for 5 min. Add 3 garlic cloves minced, cook 1 min.",
+    "Add 1 can crushed tomatoes, ½ cup chicken broth, 1 tsp dried oregano, ½ tsp thyme, 1 bay leaf.",
     "Return chicken pieces to pot, pushing them into the sauce. Spoon sauce over top.",
-    "Serve Jenn's portion now (before olives go in), then add Â½ cup pitted olives to the pot for the rest of the family.",
-    "Cover and simmer on LOW 35â40 min until chicken is very tender and sauce has thickened.",
+    "Serve Jenn's portion now (before olives go in), then add ½ cup pitted olives to the pot for the rest of the family.",
+    "Cover and simmer on LOW 35–40 min until chicken is very tender and sauce has thickened.",
     "Remove bay leaf. Taste and adjust salt. Serve over jasmine rice or polenta."
   ],
   22: [
-    "Make chimichurri FIRST (it improves as it sits): finely chop 1 large bunch fresh parsley + DOUBLE garlic (4â6 cloves, minced) + 1 tbsp dried oregano + DOUBLE lemon juice (2 lemons) + 2 tbsp red wine vinegar + Â½ cup olive oil + Â½ tsp red pepper flakes + generous salt. Taste â it should be VERY bright and punchy. Add more lemon and salt until it stops tasting flat.",
+    "Make chimichurri FIRST (it improves as it sits): finely chop 1 large bunch fresh parsley + DOUBLE garlic (4–6 cloves, minced) + 1 tbsp dried oregano + DOUBLE lemon juice (2 lemons) + 2 tbsp red wine vinegar + ½ cup olive oil + ½ tsp red pepper flakes + generous salt. Taste — it should be VERY bright and punchy. Add more lemon and salt until it stops tasting flat.",
     "Season chicken thighs with salt and pepper. Rub with a bit of olive oil.",
-    "BBQ on medium-high: thighs go skin-side down FIRST. Cook 7â8 min per side, lid closed, until skin is charred and internal temp hits 165Â°F.",
+    "BBQ on medium-high: thighs go skin-side down FIRST. Cook 7–8 min per side, lid closed, until skin is charred and internal temp hits 165°F.",
     "Rest 5 min.",
-    "Spoon chimichurri generously over chicken â don't be shy, this IS the meal. Extra sauce on the table for dipping.",
+    "Spoon chimichurri generously over chicken — don't be shy, this IS the meal. Extra sauce on the table for dipping.",
     "Note: The sauce always needs more garlic, lemon, and salt than you think. Taste after making and adjust aggressively."
   ],
   31: [
-    "Combine 1.5 lbs chicken thighs with â cup tamari (or soy sauce), Â¼ cup white vinegar, 6 garlic cloves crushed, 3 bay leaves, and 1 tsp black pepper. Marinate 30 min in the fridge (overnight makes it better).",
+    "Combine 1.5 lbs chicken thighs with ⅓ cup tamari (or soy sauce), ¼ cup white vinegar, 6 garlic cloves crushed, 3 bay leaves, and 1 tsp black pepper. Marinate 30 min in the fridge (overnight makes it better).",
     "Heat 1 tbsp oil in a large pan over HIGH heat. Lift chicken from marinade (reserve it), pat dry. Sear skin-side down 5 min until golden. Flip and sear 2 min more. Remove.",
     "Pour reserved marinade into the pan plus 3 more crushed garlic cloves. Bring to a boil.",
     "Return chicken skin-side UP. Cover and reduce to a simmer. Cook 20 min.",
-    "Uncover, increase heat to medium-high. Simmer uncovered 10â15 min, spooning sauce over chicken, until sauce reduces and becomes glossy and sticky.",
+    "Uncover, increase heat to medium-high. Simmer uncovered 10–15 min, spooning sauce over chicken, until sauce reduces and becomes glossy and sticky.",
     "Serve over jasmine rice. Spoon extra sauce from the pan over each bowl. Snap peas on the side."
   ],
   32: [
-    "Make harissa marinade: 3 tbsp harissa paste + 2 tbsp olive oil + 2 garlic cloves minced + juice of Â½ lemon + salt. Mix well.",
-    "Coat 1.5 lbs chicken thighs thoroughly â get under the skin if possible. Cover and refrigerate 4â8 hours. This is MANDATORY â the April 23 batch was bland because the harissa didn't penetrate. Don't skip the time.",
+    "Make harissa marinade: 3 tbsp harissa paste + 2 tbsp olive oil + 2 garlic cloves minced + juice of ½ lemon + salt. Mix well.",
+    "Coat 1.5 lbs chicken thighs thoroughly — get under the skin if possible. Cover and refrigerate 4–8 hours. This is MANDATORY — the April 23 batch was bland because the harissa didn't penetrate. Don't skip the time.",
     "Remove chicken from fridge 20 min before cooking.",
-    "Option A â Oven (425Â°F): place thighs on a wire rack over a baking sheet. Roast 30â35 min until edges are charred and internal temp is 165Â°F.",
-    "Option B â BBQ: medium-high heat. Grill skin-side down 8â10 min, flip, cook 8â10 min more.",
+    "Option A — Oven (425°F): place thighs on a wire rack over a baking sheet. Roast 30–35 min until edges are charred and internal temp is 165°F.",
+    "Option B — BBQ: medium-high heat. Grill skin-side down 8–10 min, flip, cook 8–10 min more.",
     "Rest 5 min. Serve with lemon wedges and garlic green beans."
   ],
   33: [
-    "Mix spice blend: 1 tsp cumin + 1 tsp coriander + Â½ tsp cinnamon + 1 tsp paprika + Â½ tsp turmeric + salt and pepper.",
+    "Mix spice blend: 1 tsp cumin + 1 tsp coriander + ½ tsp cinnamon + 1 tsp paprika + ½ tsp turmeric + salt and pepper.",
     "Pat chicken thighs dry. Coat all over with the spice blend.",
-    "Heat 2 tbsp olive oil in a large oven-safe skillet over medium-high. Sear thighs skin-side down 4â5 min until golden. Flip and sear 2 min. Remove.",
-    "In same pan: sautÃ© 1 diced onion 3 min. Add 3 garlic cloves minced, cook 1 min. Add 1 can diced tomatoes, Â½ cup chicken broth, and the same spice blend.",
-    "Set a small bowl of olives on the counter â they go on the TABLE for the family, not into Jenn's portion.",
+    "Heat 2 tbsp olive oil in a large oven-safe skillet over medium-high. Sear thighs skin-side down 4–5 min until golden. Flip and sear 2 min. Remove.",
+    "In same pan: sauté 1 diced onion 3 min. Add 3 garlic cloves minced, cook 1 min. Add 1 can diced tomatoes, ½ cup chicken broth, and the same spice blend.",
+    "Set a small bowl of olives on the counter — they go on the TABLE for the family, not into Jenn's portion.",
     "Return chicken skin-side up. Bring to a simmer.",
-    "Cover and simmer 25â30 min until chicken is cooked through.",
+    "Cover and simmer 25–30 min until chicken is cooked through.",
     "Serve over jasmine rice with a squeeze of lemon. Olives at the table."
   ],
   34: [
-    "Season butcher-formed beef patties with salt, pepper, garlic powder. Don't press them â keep them thick.",
-    "BBQ on medium-high: cook 4â5 min per side. Don't press the patties down while cooking.",
+    "Season butcher-formed beef patties with salt, pepper, garlic powder. Don't press them — keep them thick.",
+    "BBQ on medium-high: cook 4–5 min per side. Don't press the patties down while cooking.",
     "Rest 2 min before serving.",
     "Serve with a bagged salad kit (not Caesar), sliced tomato, avocado. Cheese on the side."
   ],
   35: [
-    "If forming patties: combine ground turkey with 1 tsp garlic powder, Â½ tsp onion powder, 1 tbsp Worcestershire sauce, salt and pepper. Form into 4â6 patties.",
-    "BBQ on MEDIUM (not high â turkey needs gentler heat): cook 6â7 min per side until fully cooked through with NO pink inside. Internal temp must hit 165Â°F.",
+    "If forming patties: combine ground turkey with 1 tsp garlic powder, ½ tsp onion powder, 1 tbsp Worcestershire sauce, salt and pepper. Form into 4–6 patties.",
+    "BBQ on MEDIUM (not high — turkey needs gentler heat): cook 6–7 min per side until fully cooked through with NO pink inside. Internal temp must hit 165°F.",
     "Rest 2 min.",
     "Serve with a bagged salad kit (not Caesar) and sliced avocado."
   ],
   36: [
-    "Poke sausages 3â4 times to prevent splitting (skip if they're natural-casing type with no added fillers).",
-    "BBQ on MEDIUM heat: cook 12â15 min total, turning every 3â4 min until nicely browned all around and cooked through.",
+    "Poke sausages 3–4 times to prevent splitting (skip if they're natural-casing type with no added fillers).",
+    "BBQ on MEDIUM heat: cook 12–15 min total, turning every 3–4 min until nicely browned all around and cooked through.",
     "Serve with a bagged salad kit or whatever salad veg is on hand."
   ],
   37: [
-    "Season 4â6 chicken breasts with salt, pepper, and garlic powder.",
+    "Season 4–6 chicken breasts with salt, pepper, and garlic powder.",
     "Heat a large skillet over medium-high. Add 1 tbsp butter + 1 tbsp oil (butter alone burns).",
-    "Cook whole breasts 6â7 min per side until golden and 165Â°F internal. Don't move them while searing â let them build a crust.",
+    "Cook whole breasts 6–7 min per side until golden and 165°F internal. Don't move them while searing — let them build a crust.",
     "Remove chicken. Reduce heat to medium. Add 3 garlic cloves minced to the pan, cook 30 sec.",
-    "Add Â¼ cup chicken broth and squeeze of half a lemon. Scrape up any browned bits. Swirl to make pan sauce.",
+    "Add ¼ cup chicken broth and squeeze of half a lemon. Scrape up any browned bits. Swirl to make pan sauce.",
     "Return chicken to pan, spoon sauce over. Serve immediately with whatever veg is on hand."
   ],
   38: [
-    "Make herb marinade: 3 tbsp olive oil + 2 garlic cloves minced + 1 tsp rosemary + 1 tsp thyme + 1 tbsp Dijon + juice of Â½ lemon + salt and pepper. Coat bone-in pork chops. Marinate 30 min minimum â overnight is better.",
+    "Make herb marinade: 3 tbsp olive oil + 2 garlic cloves minced + 1 tsp rosemary + 1 tsp thyme + 1 tbsp Dijon + juice of ½ lemon + salt and pepper. Coat bone-in pork chops. Marinate 30 min minimum — overnight is better.",
     "Remove from fridge 15 min before grilling.",
-    "BBQ on medium-high: cook 4â5 min per side. Pork is done at 145Â°F internal â don't overcook or it dries out fast.",
+    "BBQ on medium-high: cook 4–5 min per side. Pork is done at 145°F internal — don't overcook or it dries out fast.",
     "Rest 5 min before cutting.",
     "Serve with salad and a simple veg side."
   ],
   40: [
-    "Make marinade: 3 tbsp balsamic vinegar + 3 tbsp olive oil + 3 garlic cloves minced + 1 tsp Italian seasoning + 1 tsp Dijon + salt and pepper. Coat whole chicken breasts. Marinate 30 minâovernight.",
+    "Make marinade: 3 tbsp balsamic vinegar + 3 tbsp olive oil + 3 garlic cloves minced + 1 tsp Italian seasoning + 1 tsp Dijon + salt and pepper. Coat whole chicken breasts. Marinate 30 min–overnight.",
     "Remove from fridge 20 min before grilling.",
-    "BBQ on medium-high: cook 6â7 min per side, lid closed. Internal temp should hit 165Â°F.",
+    "BBQ on medium-high: cook 6–7 min per side, lid closed. Internal temp should hit 165°F.",
     "Rest 5 min before slicing. Serve with salad and veg."
   ],
   41: [
-    "Season 4â6 chicken breasts with salt and pepper.",
-    "Heat pan over medium-high with 1 tbsp oil. Cook whole breasts 6â7 min per side until 165Â°F internal. Remove and set aside.",
+    "Season 4–6 chicken breasts with salt and pepper.",
+    "Heat pan over medium-high with 1 tbsp oil. Cook whole breasts 6–7 min per side until 165°F internal. Remove and set aside.",
     "Reduce heat to medium. Add 1 tbsp butter. Add 2 garlic cloves minced, cook 30 sec.",
-    "Add 2 tbsp Dijon mustard + juice of 1 lemon + Â¼ cup chicken broth. Whisk to combine.",
-    "Simmer sauce 2â3 min until slightly thickened. Taste and adjust lemon and salt.",
+    "Add 2 tbsp Dijon mustard + juice of 1 lemon + ¼ cup chicken broth. Whisk to combine.",
+    "Simmer sauce 2–3 min until slightly thickened. Taste and adjust lemon and salt.",
     "Return chicken to pan, spoon sauce over. Serve immediately with green beans or salad."
   ],
   42: [
-    "Season 4â6 chicken breasts with salt, pepper, and Â½ tsp cumin.",
-    "Heat pan over medium-high with 1 tbsp oil. Sear breasts 3â4 min per side until golden.",
+    "Season 4–6 chicken breasts with salt, pepper, and ½ tsp cumin.",
+    "Heat pan over medium-high with 1 tbsp oil. Sear breasts 3–4 min per side until golden.",
     "Pour one 16-oz jar of salsa verde over the chicken. Cover and reduce heat to medium-low.",
-    "Simmer 15â20 min until chicken is cooked through and sauce has thickened slightly.",
+    "Simmer 15–20 min until chicken is cooked through and sauce has thickened slightly.",
     "Serve over rice with diced avocado, fresh cilantro, and a squeeze of lime."
   ],
   44: [
     "Season bone-in pork chops with salt, pepper, and garlic powder.",
-    "Heat skillet over medium-high with 1 tbsp oil. Sear chops 4â5 min per side until golden brown. Remove.",
+    "Heat skillet over medium-high with 1 tbsp oil. Sear chops 4–5 min per side until golden brown. Remove.",
     "Reduce heat to medium. Add 2 tbsp butter to pan. Add 3 garlic cloves minced + 1 tsp fresh thyme or rosemary. Cook 1 min.",
-    "Add Â¼ cup chicken broth + 1 tbsp Dijon mustard. Whisk to make a pan sauce.",
-    "Return chops to pan, spoon sauce over. Simmer 3â5 min until sauce thickens and pork reaches 145Â°F.",
+    "Add ¼ cup chicken broth + 1 tbsp Dijon mustard. Whisk to make a pan sauce.",
+    "Return chops to pan, spoon sauce over. Simmer 3–5 min until sauce thickens and pork reaches 145°F.",
     "Rest 3 min. Serve with green beans or snap peas."
   ],
   45: [
-    "Make jerk marinade: 1 tsp allspice + 1 tsp dried thyme + 1 tsp ground ginger + Â½ tsp cayenne + 3 garlic cloves minced + 2 tbsp tamari + juice of 2 limes + 2 tbsp olive oil + 1 tsp brown sugar. Mix well.",
-    "Score chicken breasts with a knife (4â5 slashes). Coat in marinade. Marinate overnight â minimum 4 hours. Jerk needs time.",
+    "Make jerk marinade: 1 tsp allspice + 1 tsp dried thyme + 1 tsp ground ginger + ½ tsp cayenne + 3 garlic cloves minced + 2 tbsp tamari + juice of 2 limes + 2 tbsp olive oil + 1 tsp brown sugar. Mix well.",
+    "Score chicken breasts with a knife (4–5 slashes). Coat in marinade. Marinate overnight — minimum 4 hours. Jerk needs time.",
     "Remove from fridge 20 min before grilling.",
-    "BBQ on medium-high: cook 6â7 min per side until 165Â°F internal. Let the marinade char a bit â that char is the flavour.",
+    "BBQ on medium-high: cook 6–7 min per side until 165°F internal. Let the marinade char a bit — that char is the flavour.",
     "Rest 5 min. Serve with corn on the cob or mango avocado salad."
   ],
   46: [
-    "Make yogurt marinade: Â½ cup plain yogurt + 1Â½ tsp garam masala + 1 tsp cumin + Â½ tsp turmeric + 1 tsp paprika + 3 garlic cloves minced + 1 tbsp grated ginger + juice of Â½ lemon + 1 tsp salt. Mix well.",
-    "Score chicken breasts with 4â5 knife cuts. Coat in marinade â press it into the cuts. Marinate overnight (minimum 4 hours). The yogurt tenderizes the meat and keeps it juicy on the BBQ.",
+    "Make yogurt marinade: ½ cup plain yogurt + 1½ tsp garam masala + 1 tsp cumin + ½ tsp turmeric + 1 tsp paprika + 3 garlic cloves minced + 1 tbsp grated ginger + juice of ½ lemon + 1 tsp salt. Mix well.",
+    "Score chicken breasts with 4–5 knife cuts. Coat in marinade — press it into the cuts. Marinate overnight (minimum 4 hours). The yogurt tenderizes the meat and keeps it juicy on the BBQ.",
     "Remove from fridge 20 min before grilling.",
-    "BBQ on medium-high: cook 6â8 min per side until beautiful char marks and 165Â°F internal.",
+    "BBQ on medium-high: cook 6–8 min per side until beautiful char marks and 165°F internal.",
     "Rest 5 min. Serve with cucumber lime salad or fresh greens."
   ],
   49: [
-    "The night before: BBQ or pan-grill 1.5 lbs chicken breasts whole. Cool and refrigerate. (Or use leftover pork tenderloin â slice thin.)",
-    "Make your chosen dressing â Sesame Citrus Vinaigrette: whisk zest + juice of 1 orange, 1 lemon, 1 lime + Â¼ cup rice vinegar + Â¼ cup toasted sesame oil + 1â2 tbsp tamari + 2 garlic cloves minced. OR Creamy Peanut: whisk â cup peanut butter + 3 tbsp tamari + 3 tbsp lime juice + 2 tbsp rice vinegar + 1 tbsp honey + 1 tbsp sesame oil + 1 tbsp grated ginger + 1 garlic clove + warm water to thin. Taste and adjust â should be bold.",
-    "In a very large bowl: layer 8 cups mixed greens, 1.5 cups fresh cilantro, 1 cup fresh mint, Â½ cup fresh basil, 4 chopped green onions, 2 grated carrots, 2 cubed mangoes, sliced red bell pepper.",
+    "The night before: BBQ or pan-grill 1.5 lbs chicken breasts whole. Cool and refrigerate. (Or use leftover pork tenderloin — slice thin.)",
+    "Make your chosen dressing — Sesame Citrus Vinaigrette: whisk zest + juice of 1 orange, 1 lemon, 1 lime + ¼ cup rice vinegar + ¼ cup toasted sesame oil + 1–2 tbsp tamari + 2 garlic cloves minced. OR Creamy Peanut: whisk ⅓ cup peanut butter + 3 tbsp tamari + 3 tbsp lime juice + 2 tbsp rice vinegar + 1 tbsp honey + 1 tbsp sesame oil + 1 tbsp grated ginger + 1 garlic clove + warm water to thin. Taste and adjust — should be bold.",
+    "In a very large bowl: layer 8 cups mixed greens, 1.5 cups fresh cilantro, 1 cup fresh mint, ½ cup fresh basil, 4 chopped green onions, 2 grated carrots, 2 cubed mangoes, sliced red bell pepper.",
     "Slice cold protein thin and lay over the salad.",
-    "Drizzle 2â3 tbsp dressing over salad, toss gently. Add more only as needed â don't drown it. Reserve extra dressing on the side.",
+    "Drizzle 2–3 tbsp dressing over salad, toss gently. Add more only as needed — don't drown it. Reserve extra dressing on the side.",
     "Top with 1 cup roughly-chopped peanuts RIGHT before serving so they stay crunchy. No cabbage. No chow mein noodles."
   ],
   50: [
-    "The night before: marinate 1.5 lbs chicken breasts in olive oil + balsamic + smoked paprika + oregano + garlic for at least 30 min. Grill whole on BBQ until 165Â°F internal. Cool and refrigerate. Do NOT cube raw chicken â grill whole, slice cold.",
-    "Make Lemon Tahini Vinaigrette: whisk 3 tbsp tahini + juice and zest of 2 lemons + 2 tbsp red wine vinegar + 1 tbsp Dijon + 2 tsp honey + Â¼ cup olive oil + 1 garlic clove minced + pinch red pepper flakes + salt and pepper. Add warm water 1 tbsp at a time to thin. Should be creamy and tangy.",
+    "The night before: marinate 1.5 lbs chicken breasts in olive oil + balsamic + smoked paprika + oregano + garlic for at least 30 min. Grill whole on BBQ until 165°F internal. Cool and refrigerate. Do NOT cube raw chicken — grill whole, slice cold.",
+    "Make Lemon Tahini Vinaigrette: whisk 3 tbsp tahini + juice and zest of 2 lemons + 2 tbsp red wine vinegar + 1 tbsp Dijon + 2 tsp honey + ¼ cup olive oil + 1 garlic clove minced + pinch red pepper flakes + salt and pepper. Add warm water 1 tbsp at a time to thin. Should be creamy and tangy.",
     "Slice cold chicken into thin strips.",
-    "In a large bowl: layer 1 head chopped romaine, 1 can drained chickpeas, 1 cup halved cherry tomatoes, 2 chopped cucumbers, Â½ sliced red onion.",
-    "Top with chicken, crumbled feta, diced avocado, Â¼ cup toasted pumpkin seeds.",
-    "Drizzle dressing â start with 3â4 tbsp, toss, taste, add more. Reserve extra on the side.",
-    "Set out a small bowl of olives at the table â never toss them in. Family adds to their own plates, Jenn's stays olive-free."
+    "In a large bowl: layer 1 head chopped romaine, 1 can drained chickpeas, 1 cup halved cherry tomatoes, 2 chopped cucumbers, ½ sliced red onion.",
+    "Top with chicken, crumbled feta, diced avocado, ¼ cup toasted pumpkin seeds.",
+    "Drizzle dressing — start with 3–4 tbsp, toss, taste, add more. Reserve extra on the side.",
+    "Set out a small bowl of olives at the table — never toss them in. Family adds to their own plates, Jenn's stays olive-free."
   ],
   51: [
-    "Season 4â6 chicken breasts with salt, pepper, garlic powder, and a pinch of paprika.",
-    "Heat a large skillet over medium-high. Add 1 tbsp butter + 1 tbsp olive oil. Sear whole breasts 5â6 min per side until golden and 165Â°F internal. Remove and set aside.",
+    "Season 4–6 chicken breasts with salt, pepper, garlic powder, and a pinch of paprika.",
+    "Heat a large skillet over medium-high. Add 1 tbsp butter + 1 tbsp olive oil. Sear whole breasts 5–6 min per side until golden and 165°F internal. Remove and set aside.",
     "Reduce heat to medium. Add 4 garlic cloves minced to the pan. Cook 1 min, stirring (don't burn).",
-    "Add Â¼ cup chicken broth and juice of 1 lemon. Scrape up any browned bits.",
-    "Pour in Â½ cup heavy cream. Add 2 tbsp fresh parsley. Stir and simmer 3â4 min until sauce thickens.",
+    "Add ¼ cup chicken broth and juice of 1 lemon. Scrape up any browned bits.",
+    "Pour in ½ cup heavy cream. Add 2 tbsp fresh parsley. Stir and simmer 3–4 min until sauce thickens.",
     "Return chicken to pan. Spoon sauce over. Simmer 2 more min.",
-    "Serve immediately â the sauce is the star. Note: this counts toward the 1 cream-sauce meal/week limit."
+    "Serve immediately — the sauce is the star. Note: this counts toward the 1 cream-sauce meal/week limit."
   ],
   52: [
-    "Make Italian marinade: 3 tbsp olive oil + 2 tsp Italian seasoning + 3 garlic cloves minced + juice of Â½ lemon + 1 tbsp Dijon + salt and pepper. Coat whole chicken breasts. Marinate 30 min minimum, overnight is better.",
-    "Preheat oven to 425Â°F.",
-    "Toss baby potatoes with 1 tbsp olive oil + Â½ tsp Italian seasoning + salt. Spread on one end of a large baking sheet.",
+    "Make Italian marinade: 3 tbsp olive oil + 2 tsp Italian seasoning + 3 garlic cloves minced + juice of ½ lemon + 1 tbsp Dijon + salt and pepper. Coat whole chicken breasts. Marinate 30 min minimum, overnight is better.",
+    "Preheat oven to 425°F.",
+    "Toss baby potatoes with 1 tbsp olive oil + ½ tsp Italian seasoning + salt. Spread on one end of a large baking sheet.",
     "Place marinated chicken on the other end of the sheet. Add asparagus spears (or green beans) around the chicken.",
-    "Roast 25â30 min until chicken reaches 165Â°F and potatoes are fork-tender.",
-    "Optional: broil 2â3 min at the end for caramelized edges on the chicken and veg.",
+    "Roast 25–30 min until chicken reaches 165°F and potatoes are fork-tender.",
+    "Optional: broil 2–3 min at the end for caramelized edges on the chicken and veg.",
     "Note: Potatoes count toward Ryder's 2/week limit."
   ],
   53: [
-    "Pat turkey cutlets dry with paper towel. Season with salt, pepper, garlic powder. Do NOT flour-dredge â skip that step from any recipe that includes it.",
-    "Heat skillet over medium-high with 1 tbsp oil + 1 tbsp butter. Sear cutlets 3â4 min per side until golden brown and cooked through (165Â°F, no pink). Remove and set aside.",
+    "Pat turkey cutlets dry with paper towel. Season with salt, pepper, garlic powder. Do NOT flour-dredge — skip that step from any recipe that includes it.",
+    "Heat skillet over medium-high with 1 tbsp oil + 1 tbsp butter. Sear cutlets 3–4 min per side until golden brown and cooked through (165°F, no pink). Remove and set aside.",
     "Reduce heat to medium. Add 1 small shallot or 2 garlic cloves, diced. Cook 1 min.",
-    "Add Â¼ cup chicken broth + 2 tbsp Dijon mustard. Whisk to combine. Add 2 tbsp heavy cream or an extra knob of butter.",
-    "Simmer until sauce thickens enough to coat a spoon, about 2â3 min.",
+    "Add ¼ cup chicken broth + 2 tbsp Dijon mustard. Whisk to combine. Add 2 tbsp heavy cream or an extra knob of butter.",
+    "Simmer until sauce thickens enough to coat a spoon, about 2–3 min.",
     "Return cutlets to pan, spoon sauce over. Serve immediately with green beans or snap peas."
   ],
   54: [
     "Make marinade: 3 tbsp olive oil + 4 garlic cloves minced + juice of 1 lemon + 2 tbsp Dijon + 1 tbsp fresh rosemary + 1 tbsp fresh thyme + salt and pepper. Whisk together.",
-    "Trim the silver skin from the tenderloin. Place in a zip bag, pour marinade over. Marinate 4â8 hours in the fridge. This is MANDATORY â the plain version consistently rated 3/5. The marinade makes the difference.",
+    "Trim the silver skin from the tenderloin. Place in a zip bag, pour marinade over. Marinate 4–8 hours in the fridge. This is MANDATORY — the plain version consistently rated 3/5. The marinade makes the difference.",
     "Remove from fridge 20 min before cooking.",
-    "Option A â BBQ (preferred): preheat to medium-high. Cook tenderloin 15â20 min total, turning every 5 min, until internal temp hits 145Â°F. Rest 5 min, slice into medallions.",
-    "Option B â Oven: heat oven-safe pan over high. Sear tenderloin 2 min per side on all 4 sides. Transfer to 425Â°F oven for 15â20 min until 145Â°F internal. Rest 5 min.",
+    "Option A — BBQ (preferred): preheat to medium-high. Cook tenderloin 15–20 min total, turning every 5 min, until internal temp hits 145°F. Rest 5 min, slice into medallions.",
+    "Option B — Oven: heat oven-safe pan over high. Sear tenderloin 2 min per side on all 4 sides. Transfer to 425°F oven for 15–20 min until 145°F internal. Rest 5 min.",
     "Slice and serve with green beans, snap peas, or a simple salad."
   ],
   55: [
-    "Boil a large pot of salted water. Cook pasta according to package directions. Before draining, scoop out Â½ cup pasta water. Drain.",
+    "Boil a large pot of salted water. Cook pasta according to package directions. Before draining, scoop out ½ cup pasta water. Drain.",
     "While pasta cooks: drain and flake 2 cans of good tuna. Open a jar of good-quality pesto.",
-    "In the now-empty pasta pot: combine tuna + Â¾ cup pesto + 3 tbsp of reserved pasta water. Warm over low heat, stirring.",
+    "In the now-empty pasta pot: combine tuna + ¾ cup pesto + 3 tbsp of reserved pasta water. Warm over low heat, stirring.",
     "Add the drained pasta and toss to coat. Add more pasta water a splash at a time if it looks dry.",
     "Taste and adjust salt. Top with grated Parmesan and a squeeze of lemon zest.",
     "Note: Ryan-away nights only (contains regular gluten pasta)."
   ],
   56: [
-    "Mix dry rub: 1 tsp smoked paprika + 1 tsp garlic powder + 1 tsp salt + Â½ tsp pepper + 1 tsp brown sugar. Pat pork tenderloin dry and coat all over with the rub.",
-    "Make chimichurri: finely chop 1 large bunch flat-leaf parsley + 1 bunch cilantro + 3â4 garlic cloves. Mix with Â½ cup olive oil + 2 tbsp red wine vinegar + juice of Â½ lemon + pinch of red pepper flakes + salt. Double the garlic and lemon â the family likes it punchy. Set aside.",
-    "Fire up BBQ to medium-high. Let it get hot â you want a good sear.",
-    "Grill tenderloin turning every 3â4 min until internal temp hits 145Â°F (~15â20 min total). It's safe to eat with a slight blush in the middle â don't overcook it or it dries out.",
-    "Rest 5 min before slicing â this is important for juicy pork.",
+    "Mix dry rub: 1 tsp smoked paprika + 1 tsp garlic powder + 1 tsp salt + ½ tsp pepper + 1 tsp brown sugar. Pat pork tenderloin dry and coat all over with the rub.",
+    "Make chimichurri: finely chop 1 large bunch flat-leaf parsley + 1 bunch cilantro + 3–4 garlic cloves. Mix with ½ cup olive oil + 2 tbsp red wine vinegar + juice of ½ lemon + pinch of red pepper flakes + salt. Double the garlic and lemon — the family likes it punchy. Set aside.",
+    "Fire up BBQ to medium-high. Let it get hot — you want a good sear.",
+    "Grill tenderloin turning every 3–4 min until internal temp hits 145°F (~15–20 min total). It's safe to eat with a slight blush in the middle — don't overcook it or it dries out.",
+    "Rest 5 min before slicing — this is important for juicy pork.",
     "Slice into medallions and pour chimichurri generously over the top. Serve with baby potatoes and veg."
   ]
 };
@@ -1324,7 +1336,7 @@ function computeRecipeStats() {
   // First clear computed fields (in case we re-run after fetch)
   RECIPES.forEach(r => {
     r._avgRating = null; r._lastCooked = null; r._weeksSince = 99; r._freshScore = 0;
-    // Don't clear baked-in modificationNote/leftoverViability â only auto-fill if empty
+    // Don't clear baked-in modificationNote/leftoverViability — only auto-fill if empty
   });
   RECIPES.forEach(r => {
     const matches = MEAL_HISTORY_DATA.filter(m => {
@@ -1370,7 +1382,7 @@ function computeRecipeStats() {
       }
     }
     r._freshScore = (r._avgRating || 0) * Math.min(r._weeksSince, 10);
-    // Frequency check â flag if cooked too recently per recipe's frequencyWeeks
+    // Frequency check — flag if cooked too recently per recipe's frequencyWeeks
     if (r.frequencyWeeks && r._weeksSince < r.frequencyWeeks) {
       r._tooSoon = true;
       r._tooSoonGap = r.frequencyWeeks - r._weeksSince;
@@ -1395,6 +1407,7 @@ const STATE = {
   manualGroceryItems: [],   // added by Jenn manually this week — cleared on week navigation
   manualButcherItems: [],   // added by Jenn manually this week — cleared on week navigation
   newToTry: [],
+  acceptedRecipes: [],
   apiKey: '',
   activeTab: 'easy',
   seasonFilter: 'all',
@@ -1404,12 +1417,12 @@ const STATE = {
   cmGenerated: null,
   failurePatterns: [],
   emailedGroceryItems: [],  // items emailed by Jenn, fetched from meal_data.json, expire after 7 days
-  dismissedEmailedKeys: [],  // keys of emailed items Jenn has checked off â persists so they don't come back on reload
+  dismissedEmailedKeys: [],  // keys of emailed items Jenn has checked off — persists so they don't come back on reload
   dataSource: 'embedded',  // 'fetched' once meal_data.json loads
 };
 
 function getSaturday(d) {
-  const day = d.getDay(); // 0=Sun â¦ 6=Sat
+  const day = d.getDay(); // 0=Sun … 6=Sat
   const diff = (day === 6) ? 0 : (day + 1); // days back to last Saturday
   const s = new Date(d);
   s.setDate(d.getDate() - diff);
@@ -1439,7 +1452,7 @@ function resolveMealName(dayPlan) {
   if (dayPlan.leftoverOf !== undefined) {
     const src = STATE.plan[dayPlan.leftoverOf];
     const srcName = src ? resolveMealName(src) : null;
-    return srcName ? 'Leftovers â ' + srcName : 'Leftovers';
+    return srcName ? 'Leftovers — ' + srcName : 'Leftovers';
   }
   if (dayPlan.recipeId) {
     const r = RECIPES.find(x => x.id === dayPlan.recipeId);
@@ -1456,6 +1469,7 @@ function syncPlanToSheets() {
     const planRows = [];
     STATE.plan.forEach((dayPlan, i) => {
       const mealName = resolveMealName(dayPlan);
+      // Always send all 7 days so empty slots clear stale entries
       planRows.push({
         weekOf,
         date: dates[i].toISOString().slice(0, 10),
@@ -1463,6 +1477,9 @@ function syncPlanToSheets() {
         plannedMeal: mealName || ''
       });
     });
+    // mode:'no-cors' avoids preflight CORS failure with Apps Script.
+    // The request still reaches the server; we just get an opaque response.
+    // Do NOT set Content-Type — text/plain (default) keeps it a simple request.
     // mode:'no-cors' avoids preflight CORS failure with Apps Script.
     // The request still reaches the server; we just get an opaque response.
     fetch(APPS_SCRIPT_URL, {
@@ -1508,7 +1525,9 @@ function loadState() {
     if (raw) {
       const s = JSON.parse(raw);
       if (s.weekStart) {
-        STATE.weekStart = new Date(s.weekStart);
+        const restored = new Date(s.weekStart);
+        // Validate it's a Saturday; stale Monday-based saves get recalculated
+        STATE.weekStart = (restored.getDay() === 6) ? restored : getSaturday(new Date());
         STATE.plan = s.plan || Array(7).fill(null);
       }
       if (s.ryanHomeDays) STATE.ryanHomeDays = s.ryanHomeDays;
@@ -1521,6 +1540,10 @@ function loadState() {
       if (s.manualButcherItems) STATE.manualButcherItems = s.manualButcherItems;
       if (s.dismissedEmailedKeys) STATE.dismissedEmailedKeys = s.dismissedEmailedKeys;
       if (s.newToTry) STATE.newToTry = s.newToTry;
+      if (s.acceptedRecipes) {
+        STATE.acceptedRecipes = s.acceptedRecipes;
+        s.acceptedRecipes.forEach(r => { if (!RECIPES.find(x => x.id === r.id)) RECIPES.push(r); });
+      }
     }
   } catch(e) { console.error('load failed', e); }
   STATE.apiKey = localStorage.getItem('maund_api_key') || '';
@@ -1535,10 +1558,10 @@ function renderTopbar() {
   const apiEl = document.getElementById('api-status');
   if (STATE.apiKey && STATE.apiKey.startsWith('sk-ant')) {
     apiEl.className = 'api-status ok';
-    apiEl.textContent = 'â API connected';
+    apiEl.textContent = '✓ API connected';
   } else {
     apiEl.className = 'api-status missing';
-    apiEl.textContent = 'â  Set API key';
+    apiEl.textContent = '⚠ Set API key';
   }
 }
 
@@ -1566,11 +1589,11 @@ function renderSetup() {
     stepperEl.innerHTML = `
       <div class="lunch-stepper">
         <span class="lunch-label" style="margin-bottom:0;white-space:nowrap">Lunches this week:</span>
-        <button class="stepper-btn" onclick="setRyanLunches(-1)">â</button>
+        <button class="stepper-btn" onclick="setRyanLunches(-1)">−</button>
         <span class="stepper-count">${lunchCount}</span>
         <button class="stepper-btn" onclick="setRyanLunches(1)">+</button>
         ${isManual
-          ? `<button class="stepper-reset" onclick="resetRyanLunchesToAuto()" title="Reset to auto (weekday home days)">âº auto</button>`
+          ? `<button class="stepper-reset" onclick="resetRyanLunchesToAuto()" title="Reset to auto (weekday home days)">↺ auto</button>`
           : `<span class="stepper-auto">(auto from weekdays)</span>`}
       </div>
       <div class="field-hint" style="margin-top:4px">${lunchCount} salad kit${lunchCount===1?'':'s'} + ${lunchCount} chicken supreme</div>
@@ -1620,7 +1643,7 @@ function changeWeek(delta) {
 }
 
 // Returns the number of lunches to buy for Ryan.
-// null in STATE = auto (count MonâFri home days); number = manual override.
+// null in STATE = auto (count Mon–Fri home days); number = manual override.
 function getRyanLunchCount() {
   if (STATE.ryanLunches !== null) return STATE.ryanLunches;
   return STATE.ryanHomeDays.slice(2).filter(Boolean).length;
@@ -1632,7 +1655,7 @@ function setRyanLunches(delta) {
   // If the result equals what auto would give AND user hasn't already overridden, stay auto
   const autoVal = STATE.ryanHomeDays.slice(0, 5).filter(Boolean).length;
   if (STATE.ryanLunches === null && next === autoVal - 1) {
-    STATE.ryanLunches = next;  // just went below auto â now manual
+    STATE.ryanLunches = next;  // just went below auto — now manual
   } else {
     STATE.ryanLunches = next;
   }
@@ -1669,18 +1692,18 @@ function renderDayContent(day,i) {
   if (!day) {
     return `
       <div class="drop-hint">Drop a meal here</div>
-      <div class="or-divider">â or â</div>
+      <div class="or-divider">— or —</div>
       <div class="day-actions">
         <button class="day-action-btn" onclick="openCustomMeal(${i})">+ Type your own</button>
-        <button class="day-action-btn" onclick="setLeftover(${i})" title="Mark as leftover">â» Leftover</button>
-        <button class="day-action-btn" onclick="setEatingOut(${i})">ð½ Eating out</button>
+        <button class="day-action-btn" onclick="setLeftover(${i})" title="Mark as leftover">↻ Leftover</button>
+        <button class="day-action-btn" onclick="setEatingOut(${i})">🍽 Eating out</button>
       </div>`;
   }
   if (day.eatingOut) {
     return `
-      <button class="clear-btn" onclick="clearDay(${i})" title="Clear">Ã</button>
+      <button class="clear-btn" onclick="clearDay(${i})" title="Clear">×</button>
       <div class="day-meal">
-        <div class="meal-title">ð½ Eating out</div>
+        <div class="meal-title">🍽 Eating out</div>
         <div class="meal-tags"><span class="tag-chip">no shopping</span></div>
       </div>`;
   }
@@ -1689,9 +1712,9 @@ function renderDayContent(day,i) {
     const srcName = src && src.recipeId ? (RECIPES.find(r=>r.id===src.recipeId)||{}).name : (src && src.custom ? src.custom.name : '?');
     const noteValL = (day.note||'').replace(/"/g,'&quot;');
     return `
-      <button class="clear-btn" onclick="clearDay(${i})" title="Clear">Ã</button>
+      <button class="clear-btn" onclick="clearDay(${i})" title="Clear">×</button>
       <div class="day-meal">
-        <div class="meal-title">â» Leftover of ${DAY_NAMES[day.leftoverOf]}</div>
+        <div class="meal-title">↻ Leftover of ${DAY_NAMES[day.leftoverOf]}</div>
         <div style="font-size:10px;color:var(--text-muted);margin-top:2px">${srcName||''}</div>
         <div class="meal-tags"><span class="tag-chip leftover">leftover</span></div>
       </div>
@@ -1708,11 +1731,11 @@ function renderDayContent(day,i) {
     tags.push(`<span class="tag-chip">${r.time} min</span>`);
     const sidesHtml = (day.sides||[]).map((sid,si) => {
       const sr = RECIPES.find(x=>x.id===sid);
-      return sr ? `<div class="day-side-item"><span>+ ${sr.name}</span><button class="side-remove-btn" onclick="event.stopPropagation();removeSide(${i},${si})" title="Remove side">Ã</button></div>` : '';
+      return sr ? `<div class="day-side-item"><span>+ ${sr.name}</span><button class="side-remove-btn" onclick="event.stopPropagation();removeSide(${i},${si})" title="Remove side">×</button></div>` : '';
     }).join('');
     const noteVal = (day.note||'').replace(/"/g,'&quot;');
     return `
-      <button class="clear-btn" onclick="clearDay(${i})" title="Clear day">Ã</button>
+      <button class="clear-btn" onclick="clearDay(${i})" title="Clear day">×</button>
       <div class="day-meal">
         <div class="meal-title">${r.name}</div>
         <div class="meal-tags">${tags.join('')}</div>
@@ -1724,11 +1747,11 @@ function renderDayContent(day,i) {
   if (day.custom) {
     const sidesHtml = (day.sides||[]).map((sid,si) => {
       const sr = RECIPES.find(x=>x.id===sid);
-      return sr ? `<div class="day-side-item"><span>+ ${sr.name}</span><button class="side-remove-btn" onclick="event.stopPropagation();removeSide(${i},${si})" title="Remove side">Ã</button></div>` : '';
+      return sr ? `<div class="day-side-item"><span>+ ${sr.name}</span><button class="side-remove-btn" onclick="event.stopPropagation();removeSide(${i},${si})" title="Remove side">×</button></div>` : '';
     }).join('');
     const noteVal = (day.note||'').replace(/"/g,'&quot;');
     return `
-      <button class="clear-btn" onclick="clearDay(${i})" title="Clear day">Ã</button>
+      <button class="clear-btn" onclick="clearDay(${i})" title="Clear day">×</button>
       <div class="day-meal">
         <div class="meal-title">${day.custom.name}</div>
         <div class="meal-tags"><span class="tag-chip">custom</span></div>
@@ -1754,7 +1777,7 @@ function removeSide(dayIndex, sideIndex) {
 function updateDayNote(dayIndex, value) {
   if (STATE.plan[dayIndex]) {
     STATE.plan[dayIndex].note = value.trim();
-    saveState(); // no re-render â would lose focus
+    saveState(); // no re-render — would lose focus
   }
 }
 function setEatingOut(i) {
@@ -1814,10 +1837,10 @@ function onDrop(e, i) {
   if (_draggingRecipeId) {
     const recipeName = (RECIPES.find(r=>r.id===_draggingRecipeId)||{}).name || 'Recipe';
     if (!STATE.plan[i] || STATE.plan[i].eatingOut) {
-      // Empty slot (or eating out) â set as primary
+      // Empty slot (or eating out) — set as primary
       STATE.plan[i] = {recipeId: _draggingRecipeId};
     } else {
-      // Occupied â add as side dish
+      // Occupied — add as side dish
       if (!STATE.plan[i].sides) STATE.plan[i].sides = [];
       const alreadyPrimary = STATE.plan[i].recipeId === _draggingRecipeId;
       const alreadySide = (STATE.plan[i].sides||[]).includes(_draggingRecipeId);
@@ -1833,7 +1856,7 @@ function onDrop(e, i) {
 }
 function onCardClick(e, recipeId) {
   const firstEmpty = STATE.plan.findIndex(d => !d);
-  if (firstEmpty === -1) { showToast('Week is full â clear a day first','error'); return; }
+  if (firstEmpty === -1) { showToast('Week is full — clear a day first','error'); return; }
   STATE.plan[firstEmpty] = {recipeId};
   saveState(); renderWeek(); renderGrocery();
   showToast(`Added to ${DAY_NAMES[firstEmpty]}`,'success');
@@ -1846,29 +1869,29 @@ function renderVarietyChips() {
   const wrap = document.getElementById('variety-row');
   const recipes = STATE.plan.filter(d => d && d.recipeId).map(d => RECIPES.find(r => r.id === d.recipeId)).filter(Boolean);
   if (recipes.length === 0) {
-    wrap.innerHTML = '<span class="variety-chip info">â³ Drag your first meal to get started</span>';
+    wrap.innerHTML = '<span class="variety-chip info">⏳ Drag your first meal to get started</span>';
     return;
   }
   const chips = [];
   const thighCount = recipes.filter(r => r.thigh).length;
-  if (thighCount === 0) chips.push('<span class="variety-chip ok">â no thigh meals</span>');
-  else if (thighCount === 1) chips.push('<span class="variety-chip ok">â 1 thigh meal</span>');
-  else chips.push(`<span class="variety-chip warn">â ï¸ ${thighCount} thigh meals â consider a breast</span>`);
+  if (thighCount === 0) chips.push('<span class="variety-chip ok">✅ no thigh meals</span>');
+  else if (thighCount === 1) chips.push('<span class="variety-chip ok">✅ 1 thigh meal</span>');
+  else chips.push(`<span class="variety-chip warn">⚠️ ${thighCount} thigh meals — consider a breast</span>`);
   const proteins = new Set(recipes.map(r => r.protein));
-  if (proteins.size >= 3) chips.push(`<span class="variety-chip ok">â ${proteins.size} proteins</span>`);
+  if (proteins.size >= 3) chips.push(`<span class="variety-chip ok">✅ ${proteins.size} proteins</span>`);
   else if (proteins.size === 2) chips.push('<span class="variety-chip info">2 proteins</span>');
-  else chips.push('<span class="variety-chip warn">â ï¸ only 1 protein â add variety</span>');
+  else chips.push('<span class="variety-chip warn">⚠️ only 1 protein — add variety</span>');
   const chickenCount = recipes.filter(r => r.protein === 'breast' || r.protein === 'thigh').length;
-  if (chickenCount >= 5) chips.push(`<span class="variety-chip warn">â ï¸ ${chickenCount} chicken â try turkey or pork</span>`);
+  if (chickenCount >= 5) chips.push(`<span class="variety-chip warn">⚠️ ${chickenCount} chicken — try turkey or pork</span>`);
   const bbqCount = recipes.filter(r => r.bbq).length;
-  if (bbqCount > 0) chips.push(`<span class="variety-chip info">ð¥ ${bbqCount} BBQ-friendly</span>`);
+  if (bbqCount > 0) chips.push(`<span class="variety-chip info">🔥 ${bbqCount} BBQ-friendly</span>`);
   const creamCount = recipes.filter(r => r.creamHeavy).length;
-  if (creamCount > 1) chips.push(`<span class="variety-chip warn">â ï¸ ${creamCount} cream meals â max 1/wk</span>`);
-  // Frequency warnings â recipes scheduled too soon after last cook
+  if (creamCount > 1) chips.push(`<span class="variety-chip warn">⚠️ ${creamCount} cream meals — max 1/wk</span>`);
+  // Frequency warnings — recipes scheduled too soon after last cook
   const tooSoonRecipes = recipes.filter(r => r._tooSoon);
   if (tooSoonRecipes.length > 0) {
     const names = tooSoonRecipes.map(r => r.name).join(', ');
-    chips.push(`<span class="variety-chip warn" title="${names}">â³ ${tooSoonRecipes.length} meal${tooSoonRecipes.length===1?'':'s'} repeat too soon</span>`);
+    chips.push(`<span class="variety-chip warn" title="${names}">⏳ ${tooSoonRecipes.length} meal${tooSoonRecipes.length===1?'':'s'} repeat too soon</span>`);
   }
   // Ryan-home-only meal on Ryan-away day
   const ryanIssues = [];
@@ -1877,10 +1900,10 @@ function renderVarietyChips() {
     const r = RECIPES.find(x => x.id === day.recipeId);
     if (!r) return;
     if (r.ryanHomeOnly && !STATE.ryanHomeDays[i]) ryanIssues.push(`${r.name} on ${DAY_NAMES[i]} (Ryan away)`);
-    if (r.ryanAway && STATE.ryanHomeDays[i]) ryanIssues.push(`${r.name} on ${DAY_NAMES[i]} (Ryan home â has beef)`);
+    if (r.ryanAway && STATE.ryanHomeDays[i]) ryanIssues.push(`${r.name} on ${DAY_NAMES[i]} (Ryan home — has beef)`);
   });
   if (ryanIssues.length > 0) {
-    chips.push(`<span class="variety-chip warn" title="${ryanIssues.join('; ')}">â ï¸ ${ryanIssues.length} Ryan conflict${ryanIssues.length===1?'':'s'}</span>`);
+    chips.push(`<span class="variety-chip warn" title="${ryanIssues.join('; ')}">⚠️ ${ryanIssues.length} Ryan conflict${ryanIssues.length===1?'':'s'}</span>`);
   }
   const emptyCount = STATE.plan.filter(d => !d).length;
   if (emptyCount > 0) chips.push(`<span class="variety-chip info">${emptyCount} day${emptyCount===1?'':'s'} still empty</span>`);
@@ -1895,7 +1918,7 @@ const TABS = [
   {id:'cook', label:'Cook night', filter: r => r.cook},
   {id:'bbq', label:'BBQ-ready', filter: r => r.bbq},
   {id:'fresh', label:'Fresh picks', filter: r => true, sort: (a,b) => (b._freshScore||0) - (a._freshScore||0), top: 8},
-  {id:'new', label:'â¨ New to try', filter: () => false, isNewTab: true},
+  {id:'new', label:'✨ New to try', filter: () => false, isNewTab: true},
 ];
 
 function renderTabs() {
@@ -1942,13 +1965,13 @@ function renderDeckContent() {
       wrap.innerHTML = `
         <div class="empty-tab-msg">
           <div>No new recipe candidates yet.</div>
-          <button onclick="fetchNewToTry()" id="new-fetch-btn">â¨ Find me 3 new recipes</button>
-          <div style="font-size:11px;margin-top:10px;opacity:.7">Claude searches for 3 candidates that fit your rules. ~3Â¢ per call.</div>
+          <button onclick="fetchNewToTry()" id="new-fetch-btn">✨ Find me 3 new recipes</button>
+          <div style="font-size:11px;margin-top:10px;opacity:.7">Claude searches for 3 candidates that fit your rules. ~3¢ per call.</div>
         </div>`;
       return;
     }
     wrap.innerHTML = `<div class="deck-grid">${STATE.newToTry.map((c,i) => renderCandidateCard(c,i)).join('')}</div>
-      <div style="margin-top:14px;text-align:center"><button class="btn-secondary" onclick="fetchNewToTry()">â» Find 3 more</button></div>`;
+      <div style="margin-top:14px;text-align:center"><button class="btn-secondary" onclick="fetchNewToTry()">↻ Find 3 more</button></div>`;
     return;
   }
   const list = filterRecipes(tab);
@@ -1962,25 +1985,25 @@ function renderDeckContent() {
 function renderRecipeCard(r, freshTab) {
   const tags = [];
   tags.push(`<span class="meta-chip protein">${r.protein}</span>`);
-  if (r.season !== 'all') tags.push(`<span class="meta-chip season">${r.season==='summer'?'âï¸ summer':'âï¸ winter'}</span>`);
+  if (r.season !== 'all') tags.push(`<span class="meta-chip season">${r.season==='summer'?'☀️ summer':'❄️ winter'}</span>`);
   tags.push(`<span class="meta-chip">${r.time} min</span>`);
 
   let bringBack = '';
   if (freshTab && r._avgRating >= 4 && r._weeksSince >= 5 && r._weeksSince < 99) {
-    bringBack = `<span class="bring-back-badge">â¨ Bring back</span>`;
+    bringBack = `<span class="bring-back-badge">✨ Bring back</span>`;
   }
   let leftoverTag = '';
-  if (r.leftoverViability === 'good') leftoverTag = `<span class="leftover-tag good">â»ï¸ Great leftover</span>`;
-  else if (r.leftoverViability === 'bad') leftoverTag = `<span class="leftover-tag bad">â ï¸ Don't double-batch</span>`;
+  if (r.leftoverViability === 'good') leftoverTag = `<span class="leftover-tag good">♻️ Great leftover</span>`;
+  else if (r.leftoverViability === 'bad') leftoverTag = `<span class="leftover-tag bad">⚠️ Don't double-batch</span>`;
   let tooSoonTag = '';
-  if (r._tooSoon) tooSoonTag = `<span class="leftover-tag bad">â³ Just had this â usually wait ${r.frequencyWeeks}wk</span>`;
+  if (r._tooSoon) tooSoonTag = `<span class="leftover-tag bad">⏳ Just had this — usually wait ${r.frequencyWeeks}wk</span>`;
   let ryanFlag = '';
-  if (r.ryanHomeOnly) ryanFlag = `<span class="leftover-tag" style="background:var(--blue-soft);color:var(--blue-dark)">ð¨ Ryan-home only</span>`;
-  else if (r.ryanAway) ryanFlag = `<span class="leftover-tag" style="background:var(--blue-soft);color:var(--blue-dark)">ð Ryan-away only</span>`;
+  if (r.ryanHomeOnly) ryanFlag = `<span class="leftover-tag" style="background:var(--blue-soft);color:var(--blue-dark)">👨 Ryan-home only</span>`;
+  else if (r.ryanAway) ryanFlag = `<span class="leftover-tag" style="background:var(--blue-soft);color:var(--blue-dark)">🚐 Ryan-away only</span>`;
   let modNote = '';
-  if (r.modificationNote) modNote = `<div class="last-cook-note">ð <strong>Note:</strong> ${r.modificationNote}</div>`;
+  if (r.modificationNote) modNote = `<div class="last-cook-note">📝 <strong>Note:</strong> ${r.modificationNote}</div>`;
 
-  const ratingStr = r._avgRating ? `â ${r._avgRating.toFixed(1)}` : 'â new â';
+  const ratingStr = r._avgRating ? `★ ${r._avgRating.toFixed(1)}` : '— new —';
   const lastStr = r._lastCooked ? `${r._weeksSince} wk${r._weeksSince===1?'':'s'} ago` : 'never cooked';
 
   return `
@@ -1998,7 +2021,7 @@ function renderRecipeCard(r, freshTab) {
       <div class="stats">
         <span class="rating">${ratingStr}</span>
         <span>${lastStr}</span>
-        <button class="btn-mini" onclick="event.stopPropagation();showRecipeDetail(${r.id})" style="padding:2px 8px;font-size:10px;flex:none;color:var(--blue);border-color:var(--blue-soft)" title="View full recipe">ð Recipe</button>
+        <button class="btn-mini" onclick="event.stopPropagation();showRecipeDetail(${r.id})" style="padding:2px 8px;font-size:10px;flex:none;color:var(--blue);border-color:var(--blue-soft)" title="View full recipe">👁 Recipe</button>
       </div>
     </div>`;
 }
@@ -2006,17 +2029,17 @@ function renderRecipeCard(r, freshTab) {
 function renderCandidateCard(c, idx) {
   return `
     <div class="recipe-card candidate">
-      <span class="new-flag">â Pick</span>
+      <span class="new-flag">★ Pick</span>
       <div class="name">${c.name}</div>
       <div class="meta-row">
         <span class="meta-chip protein">${c.protein||'tbd'}</span>
-        ${c.season ? `<span class="meta-chip season">${c.season==='summer'?'âï¸ summer':c.season==='winter'?'âï¸ winter':'ð all-season'}</span>`:''}
+        ${c.season ? `<span class="meta-chip season">${c.season==='summer'?'☀️ summer':c.season==='winter'?'❄️ winter':'🍃 all-season'}</span>`:''}
         ${c.time ? `<span class="meta-chip">${c.time} min</span>`:''}
       </div>
       <div style="font-size:12px;color:var(--text-muted);margin-bottom:8px;line-height:1.4">${c.why || ''}</div>
-      ${c.source ? `<div style="font-size:11px;margin-bottom:8px"><a href="${c.source}" target="_blank" style="color:var(--blue);text-decoration:none">View source â</a></div>`:''}
+      ${c.source ? `<div style="font-size:11px;margin-bottom:8px"><a href="${c.source}" target="_blank" style="color:var(--blue);text-decoration:none">View source →</a></div>`:''}
       <div class="candidate-actions">
-        <button class="btn-mini accept" onclick="acceptCandidate(${idx})">â Add</button>
+        <button class="btn-mini accept" onclick="acceptCandidate(${idx})">✓ Add</button>
         <button class="btn-mini reject" onclick="rejectCandidate(${idx})">Skip</button>
       </div>
     </div>`;
@@ -2054,7 +2077,7 @@ function buildGroceryList() {
   sections.push({title:'Weekly Staples', items: STAPLE_ITEMS.map(i => ({...i, key:'staple-'+i.name})), defaultChecked:false});
   if (STATE.emailedGroceryItems && STATE.emailedGroceryItems.length > 0) {
     sections.push({
-      title: 'ð¬ Emailed Items',
+      title: '📬 Emailed Items',
       items: STATE.emailedGroceryItems.map(i => {
         const d = i.addedDate ? new Date(i.addedDate + 'T12:00:00') : null;
         const dateLabel = d ? d.toLocaleDateString('en-US',{month:'short',day:'numeric'}) : '';
@@ -2078,22 +2101,22 @@ function buildGroceryList() {
       butcher:[{cut:'Chicken Breasts (Waldorf)',qty:'5'}]
     });
   } else if (STATE.jennLunch && STATE.jennLunch.trim()) {
-    sections.push({title:`Jenn's Lunch â ${STATE.jennLunch}`, items: [], note:'Add ingredients via a custom meal entry on a day, or to dinner ingredients.'});
+    sections.push({title:`Jenn's Lunch — ${STATE.jennLunch}`, items: [], note:'Add ingredients via a custom meal entry on a day, or to dinner ingredients.'});
   }
   const lunchCount = getRyanLunchCount();
   if (lunchCount > 0) {
     sections.push({
       title:`Ryan's Lunches (${lunchCount} day${lunchCount===1?'':'s'})`,
       items: [
-        {name:`Salad kits (${lunchCount} different â never Caesar)`, qty:`${lunchCount}`, key:'ryan-saladkits'},
-        {name:`Chicken Supreme servings`, qty:`${lunchCount}`, key:'ryan-supreme'},
+        {name:`Salad kits (${lunchCount} different — never Caesar)`, qty:`${lunchCount}`, key:'ryan-saladkits'},
       ],
-      defaultChecked:false
+      defaultChecked:false,
+      butcher: [{cut:`Chicken Supremes`, qty:`${lunchCount}`}]
     });
   }
   const kidsItems = parseKidsLunches();
   if (kidsItems.length > 0) {
-    sections.push({title:"ð± Kids' Lunches", items: kidsItems, defaultChecked:false});
+    sections.push({title:"🍱 Kids' Lunches", items: kidsItems, defaultChecked:false});
   }
   const dinnerData = aggregateDinnerIngredients();
   if (dinnerData.items.length > 0) {
@@ -2103,14 +2126,14 @@ function buildGroceryList() {
   if (STATE.manualGroceryItems && STATE.manualGroceryItems.length > 0) {
     sections.push({title:'✏️ Added This Week', items: STATE.manualGroceryItems.map(i => ({...i, isManualGrocery: true})), defaultChecked:false, isManualGrocery:true});
   }
-  // Build butcher list combining recipe butcher + waldorf butcher + custom butcher
+  // Build butcher list combining recipe butcher + waldorf butcher + custom butcher + manual butcher
   const allButcher = [...dinnerData.butcher];
   sections.forEach(s => { if (s.butcher) allButcher.push(...s.butcher.map(b => ({cut: b.cut || b.name, qty: b.qty, key: 'butcher-'+(b.cut||b.name).toLowerCase().replace(/[^a-z]/g,'').slice(0,15)}))); });
   if (STATE.manualButcherItems && STATE.manualButcherItems.length > 0) {
     STATE.manualButcherItems.forEach(b => allButcher.push({...b, isManualButcher: true}));
   }
   if (allButcher.length > 0) {
-    sections.push({title:'ð¥© Butcher List', items: allButcher.map(b => ({name: b.cut || b.name, qty: b.qty, key: b.key || 'butcher-'+(b.cut||b.name).toLowerCase().replace(/[^a-z]/g,'').slice(0,15)})), defaultChecked:false, isButcher:true});
+    sections.push({title:'🥩 Butcher List', items: allButcher.map(b => ({name: b.cut || b.name, qty: b.qty, key: b.key || 'butcher-'+(b.cut||b.name).toLowerCase().replace(/[^a-z]/g,'').slice(0,15), isManualButcher: b.isManualButcher})), defaultChecked:false, isButcher:true});
   }
   sections.push({title:'High-Frequency Extras (restock?)', items: HIGH_FREQ_EXTRAS.map(i => ({...i, key:'hf-'+i.name})), defaultChecked:true});
   return sections;
@@ -2192,9 +2215,9 @@ function renderGrocerySection(s) {
   const titleHtml = isButcher
     ? `<div class="butcher-header">
          <div class="section-title" style="margin-bottom:0">${s.title} <span class="item-count">${s.items.length}</span></div>
-         <button class="btn-butcher-email" onclick="emailButcherList()">ð± Email me</button>
+         <button class="btn-butcher-email" onclick="emailButcherList()">📱 Email me</button>
        </div>
-       <div style="font-size:11px;color:var(--coral-dark);margin:6px 0 8px">Different store than groceries â phone-friendly list.</div>`
+       <div style="font-size:11px;color:var(--coral-dark);margin:6px 0 8px">Different store than groceries — phone-friendly list.</div>`
     : `<div class="section-title">${s.title} <span class="item-count">${s.items.length}</span></div>`;
   const itemsHtml = s.items.map(item => renderGroceryItem(item, s.defaultChecked)).join('');
   const restockHtml = s.restock ? `
@@ -2222,6 +2245,7 @@ function renderGroceryItem(item, defaultChecked) {
       <input type="checkbox" ${checked?'checked':''} onchange="toggleGroceryItem('${k}', this.checked, ${JSON.stringify(!!item.dateLabel)})">
       <span class="item-name">${item.name}${dateHtml}</span>
       <span class="item-qty">${item.qty || ''}</span>
+      ${removeBtn}
     </div>`;
 }
 
@@ -2260,6 +2284,7 @@ function addManualGroceryItem() {
   STATE.manualGroceryItems.push({name, qty, key, isManualGrocery: true});
   nameEl.value = ''; qtyEl.value = '';
   saveState(); renderGrocery();
+  // Refocus name input for quick multi-add
   document.getElementById('manual-grocery-name').focus();
 }
 function addManualButcherItem() {
@@ -2290,7 +2315,7 @@ function removeManualButcherItem(key) {
 // COPY / EMAIL
 // ============================================================
 function copyGroceryList() {
-  const lines = [`GROCERY LIST â week of ${fmtDate(getWeekDates()[0])}`];
+  const lines = [`GROCERY LIST — week of ${fmtDate(getWeekDates()[0])}`];
   buildGroceryList().forEach(s => {
     if (s.isButcher) return;
     const isChecked = i => STATE.groceryChecks.hasOwnProperty(i.key) ? STATE.groceryChecks[i.key] : s.defaultChecked;
@@ -2298,8 +2323,8 @@ function copyGroceryList() {
     const restock = (s.restock || []).filter(i => !isChecked(i));
     if (items.length === 0 && restock.length === 0) return;
     lines.push(`\n${s.title.toUpperCase()}`);
-    items.forEach(i => lines.push(`  â¢ ${i.name}${i.qty?' â '+i.qty:''}`));
-    restock.forEach(i => lines.push(`  â¢ ${i.name}${i.qty?' â '+i.qty:''}`));
+    items.forEach(i => lines.push(`  • ${i.name}${i.qty?' — '+i.qty:''}`));
+    restock.forEach(i => lines.push(`  • ${i.name}${i.qty?' — '+i.qty:''}`));
   });
   const text = lines.join('\n').trim();
   navigator.clipboard.writeText(text).then(() => showToast('Grocery list copied','success'))
@@ -2313,10 +2338,10 @@ function emailGroceryList() {
     const items = (s.items || []).filter(i => !(STATE.groceryChecks.hasOwnProperty(i.key) ? STATE.groceryChecks[i.key] : s.defaultChecked));
     if (items.length === 0) return;
     lines.push(`\n${s.title}`);
-    items.forEach(i => lines.push(`  â¢ ${i.name}${i.qty?' â '+i.qty:''}`));
+    items.forEach(i => lines.push(`  • ${i.name}${i.qty?' — '+i.qty:''}`));
   });
   const body = encodeURIComponent(lines.join('\n').trim());
-  const subj = encodeURIComponent(`Grocery list â week of ${fmtDate(getWeekDates()[0])}`);
+  const subj = encodeURIComponent(`Grocery list — week of ${fmtDate(getWeekDates()[0])}`);
   window.open(`mailto:?subject=${subj}&body=${body}`,'_blank');
 }
 
@@ -2326,15 +2351,17 @@ function emailButcherList() {
   if (!butcherSec || butcherSec.items.length === 0) {
     showToast('No butcher items yet','error'); return;
   }
-  const lines = [`BUTCHER LIST â week of ${fmtDate(getWeekDates()[0])}`, ''];
+  const lines = [`BUTCHER LIST — week of ${fmtDate(getWeekDates()[0])}`, ''];
   butcherSec.items.forEach(i => {
-    if (STATE.groceryChecks.hasOwnProperty(i.key) ? STATE.groceryChecks[i.key] : true) {
-      lines.push(`â¢ ${i.name}${i.qty?' â '+i.qty:''}`);
+    // Include items that have NOT been checked (not yet ordered)
+    if (!(STATE.groceryChecks.hasOwnProperty(i.key) && STATE.groceryChecks[i.key])) {
+      lines.push(`• ${i.name}${i.qty?' — '+i.qty:''}`);
     }
   });
+  if (lines.length <= 2) { showToast('All butcher items already ordered','info'); return; }
   const body = encodeURIComponent(lines.join('\n'));
-  const subj = encodeURIComponent(`Butcher list â week of ${fmtDate(getWeekDates()[0])}`);
-  window.open(`mailto:?subject=${subj}&body=${body}`,'_blank');
+  const subj = encodeURIComponent(`Butcher list — week of ${fmtDate(getWeekDates()[0])}`);
+  window.location.href = `mailto:?subject=${subj}&body=${body}`;
 }
 
 // ============================================================
@@ -2364,8 +2391,8 @@ function cmSearchLibrary() {
   const wrap = document.getElementById('cm-matches');
   if (q.length < 3) { wrap.innerHTML = ''; return; }
   const matches = RECIPES.filter(r => r.name.toLowerCase().includes(q)).slice(0,3);
-  if (matches.length === 0) { wrap.innerHTML = '<div style="font-size:11px;color:var(--text-muted)">No library match â pick how to fill the grocery list.</div>'; return; }
-  wrap.innerHTML = matches.map(r => `<div style="padding:6px 10px;background:var(--blue-soft);border-radius:6px;margin-top:4px;font-size:12px;cursor:pointer" onclick="cmUseRecipe(${r.id})"><strong>Match:</strong> ${r.name} â tap to use</div>`).join('');
+  if (matches.length === 0) { wrap.innerHTML = '<div style="font-size:11px;color:var(--text-muted)">No library match — pick how to fill the grocery list.</div>'; return; }
+  wrap.innerHTML = matches.map(r => `<div style="padding:6px 10px;background:var(--blue-soft);border-radius:6px;margin-top:4px;font-size:12px;cursor:pointer" onclick="cmUseRecipe(${r.id})"><strong>Match:</strong> ${r.name} → tap to use</div>`).join('');
 }
 function cmUseRecipe(id) {
   STATE.plan[STATE.cmDayIndex] = {recipeId: id};
@@ -2378,9 +2405,9 @@ async function cmAskClaude() {
   if (!name) { showToast('Type a meal name first','error'); return; }
   if (!STATE.apiKey) { promptApiKey(); return; }
   const btn = document.getElementById('cm-ask-btn');
-  btn.disabled = true; btn.textContent = 'Generatingâ¦';
+  btn.disabled = true; btn.textContent = 'Generating…';
   const result = document.getElementById('cm-ai-result');
-  result.innerHTML = '<div class="modal-loading">Asking Claudeâ¦</div>';
+  result.innerHTML = '<div class="modal-loading">Asking Claude…</div>';
   try {
     const prompt = `Generate a grocery list for "${name}" for a family of 4 + leftovers. Constraints: gluten-free preferred, no sweet potatoes, quinoa, chia, cabbage, honey-garlic, sun-dried tomato, balsamic-heavy, teriyaki, fish/seafood. Reply with JSON only: {"ingredients":[{"name":"...","qty":"..."}], "butcherItems":[{"cut":"...","qty":"..."}]}. No markdown, no explanation.`;
     const resp = await callClaude(prompt);
@@ -2390,13 +2417,13 @@ async function cmAskClaude() {
     result.innerHTML = `
       <div style="background:var(--teal-soft);border:1px solid var(--teal);border-radius:8px;padding:10px;font-size:12px">
         <strong>Generated ${(parsed.ingredients||[]).length} ingredients + ${(parsed.butcherItems||[]).length} butcher.</strong>
-        <ul style="margin-top:6px;margin-left:16px">${(parsed.ingredients||[]).map(i => `<li>${i.name}${i.qty?' â '+i.qty:''}</li>`).join('')}</ul>
-        ${(parsed.butcherItems||[]).length ? `<div style="margin-top:6px"><strong>Butcher:</strong><ul style="margin-left:16px">${parsed.butcherItems.map(b => `<li>${b.cut||b.name}${b.qty?' â '+b.qty:''}</li>`).join('')}</ul></div>`:''}
+        <ul style="margin-top:6px;margin-left:16px">${(parsed.ingredients||[]).map(i => `<li>${i.name}${i.qty?' — '+i.qty:''}</li>`).join('')}</ul>
+        ${(parsed.butcherItems||[]).length ? `<div style="margin-top:6px"><strong>Butcher:</strong><ul style="margin-left:16px">${parsed.butcherItems.map(b => `<li>${b.cut||b.name}${b.qty?' — '+b.qty:''}</li>`).join('')}</ul></div>`:''}
       </div>`;
   } catch(e) {
     result.innerHTML = `<div style="color:var(--coral-dark);font-size:12px">Error: ${e.message}</div>`;
   } finally {
-    btn.disabled = false; btn.textContent = 'Generate ingredients â';
+    btn.disabled = false; btn.textContent = 'Generate ingredients →';
   }
 }
 async function cmParseUrl() {
@@ -2404,9 +2431,9 @@ async function cmParseUrl() {
   if (!url) { showToast('Paste a URL first','error'); return; }
   if (!STATE.apiKey) { promptApiKey(); return; }
   const btn = document.getElementById('cm-url-btn');
-  btn.disabled = true; btn.textContent = 'Parsingâ¦';
+  btn.disabled = true; btn.textContent = 'Parsing…';
   const result = document.getElementById('cm-url-result');
-  result.innerHTML = '<div class="modal-loading">Fetching and parsingâ¦</div>';
+  result.innerHTML = '<div class="modal-loading">Fetching and parsing…</div>';
   try {
     const fetchResp = await fetch(`${PROXY_URL}?url=${encodeURIComponent(url)}`);
     if (!fetchResp.ok) throw new Error('Fetch failed: ' + fetchResp.status);
@@ -2421,12 +2448,12 @@ async function cmParseUrl() {
     result.innerHTML = `
       <div style="background:var(--teal-soft);border:1px solid var(--teal);border-radius:8px;padding:10px;font-size:12px">
         <strong>${parsed.name || 'Recipe'}: ${(parsed.ingredients||[]).length} ingredients + ${(parsed.butcherItems||[]).length} butcher.</strong>
-        <ul style="margin-top:6px;margin-left:16px">${(parsed.ingredients||[]).map(i => `<li>${i.name}${i.qty?' â '+i.qty:''}</li>`).join('')}</ul>
+        <ul style="margin-top:6px;margin-left:16px">${(parsed.ingredients||[]).map(i => `<li>${i.name}${i.qty?' — '+i.qty:''}</li>`).join('')}</ul>
       </div>`;
   } catch(e) {
     result.innerHTML = `<div style="color:var(--coral-dark);font-size:12px">Error: ${e.message}</div>`;
   } finally {
-    btn.disabled = false; btn.textContent = 'Parse recipe â';
+    btn.disabled = false; btn.textContent = 'Parse recipe →';
   }
 }
 function cmSave() {
@@ -2459,7 +2486,7 @@ function cmSave() {
 async function fetchNewToTry() {
   if (!STATE.apiKey) { promptApiKey(); return; }
   const btn = document.getElementById('new-fetch-btn');
-  if (btn) { btn.disabled = true; btn.textContent = 'Searchingâ¦'; }
+  if (btn) { btn.disabled = true; btn.textContent = 'Searching…'; }
   try {
     const recentNames = RECIPES.map(r => r.name).slice(0,15).join(', ');
     const month = new Date().toLocaleDateString('en-US',{month:'long'});
@@ -2474,13 +2501,13 @@ async function fetchNewToTry() {
     showToast(`Found ${parsed.length} candidates`,'success');
   } catch(e) {
     showToast('Error: ' + e.message, 'error');
-    if (btn) { btn.disabled = false; btn.textContent = 'â¨ Find me 3 new recipes'; }
+    if (btn) { btn.disabled = false; btn.textContent = '✨ Find me 3 new recipes'; }
   }
 }
 function acceptCandidate(idx) {
   const c = STATE.newToTry[idx];
   const newId = Math.max(...RECIPES.map(r => r.id), 54) + 1;
-  RECIPES.push({
+  const newRecipe = {
     id: newId,
     name: c.name,
     protein: c.protein || 'breast',
@@ -2491,12 +2518,15 @@ function acceptCandidate(idx) {
     butcherItems: c.butcherItems || [],
     sourceUrl: c.source,
     _new: true,
-  });
+  };
+  RECIPES.push(newRecipe);
+  if (!STATE.acceptedRecipes) STATE.acceptedRecipes = [];
+  STATE.acceptedRecipes.push(newRecipe);
   STATE.newToTry.splice(idx, 1);
   saveState();
   renderTabs();
   renderDeckContent();
-  showToast(`Added "${c.name}" to your library (this session)`,'success');
+  showToast(`Added "${c.name}" to your recipe library`,'success');
 }
 function rejectCandidate(idx) {
   STATE.newToTry.splice(idx, 1);
@@ -2532,7 +2562,7 @@ function promptApiKey() {
 }
 function saveApiKey() {
   const key = document.getElementById('api-key-input').value.trim();
-  if (!key.startsWith('sk-ant')) { showToast('Key should start with sk-antâ¦','error'); return; }
+  if (!key.startsWith('sk-ant')) { showToast('Key should start with sk-ant…','error'); return; }
   STATE.apiKey = key;
   localStorage.setItem('maund_api_key', key);
   closeModalById('api-key-modal');
@@ -2550,15 +2580,15 @@ function showRecipeDetail(id) {
 
   const tagChips = [];
   tagChips.push(`<span class="recipe-detail-chip protein">${r.protein}</span>`);
-  tagChips.push(`<span class="recipe-detail-chip time">â± ${r.time} min</span>`);
-  if (r.easy) tagChips.push(`<span class="recipe-detail-chip easy">â Easy night</span>`);
-  if (r.bbq) tagChips.push(`<span class="recipe-detail-chip easy">ð¥ BBQ</span>`);
-  if (r.cook) tagChips.push(`<span class="recipe-detail-chip tag">ð³ Cook night</span>`);
-  if (r.season !== 'all') tagChips.push(`<span class="recipe-detail-chip tag">${r.season==='summer'?'âï¸ Summer':'âï¸ Winter'}</span>`);
-  if (r.ryanAway) tagChips.push(`<span class="recipe-detail-chip tag">ð Ryan away only</span>`);
-  if (r.ryanHomeOnly) tagChips.push(`<span class="recipe-detail-chip tag">ð¨ Ryan home only</span>`);
+  tagChips.push(`<span class="recipe-detail-chip time">⏱ ${r.time} min</span>`);
+  if (r.easy) tagChips.push(`<span class="recipe-detail-chip easy">✓ Easy night</span>`);
+  if (r.bbq) tagChips.push(`<span class="recipe-detail-chip easy">🔥 BBQ</span>`);
+  if (r.cook) tagChips.push(`<span class="recipe-detail-chip tag">🍳 Cook night</span>`);
+  if (r.season !== 'all') tagChips.push(`<span class="recipe-detail-chip tag">${r.season==='summer'?'☀️ Summer':'❄️ Winter'}</span>`);
+  if (r.ryanAway) tagChips.push(`<span class="recipe-detail-chip tag">🚐 Ryan away only</span>`);
+  if (r.ryanHomeOnly) tagChips.push(`<span class="recipe-detail-chip tag">👨 Ryan home only</span>`);
 
-  const ratingStr = r._avgRating ? `â ${r._avgRating.toFixed(1)}/5 Â· last cooked ${r._weeksSince} wk${r._weeksSince===1?'':'s'} ago` : 'Not yet cooked';
+  const ratingStr = r._avgRating ? `★ ${r._avgRating.toFixed(1)}/5 · last cooked ${r._weeksSince} wk${r._weeksSince===1?'':'s'} ago` : 'Not yet cooked';
 
   const allIng = r.ingredients || [];
   const butcherIng = r.butcherItems || [];
@@ -2570,18 +2600,18 @@ function showRecipeDetail(id) {
     `<div class="recipe-detail-ingredient"><span>${i.name}</span><span class="ing-qty">${i.qty||''}</span></div>`
   ).join('');
   const butcherHTML = butcherList.map(i =>
-    `<div class="recipe-detail-ingredient butcher-item"><span>ð¥© ${i.cut||i.name}</span><span class="ing-qty">${i.qty||''}</span></div>`
+    `<div class="recipe-detail-ingredient butcher-item"><span>🥩 ${i.cut||i.name}</span><span class="ing-qty">${i.qty||''}</span></div>`
   ).join('');
 
   // Cooking steps
   const steps = (typeof RECIPE_STEPS !== 'undefined' && RECIPE_STEPS[r.id]) || [];
   const stepsHTML = steps.length
-    ? `<div class="recipe-detail-section-label" style="margin-top:16px">ð©âð³ How to cook</div>
+    ? `<div class="recipe-detail-section-label" style="margin-top:16px">👩‍🍳 How to cook</div>
        <ol class="recipe-steps-list">${steps.map(s => `<li>${s}</li>`).join('')}</ol>`
     : '';
 
   const sourceLink = r.sourceUrl
-    ? `<a href="${r.sourceUrl}" target="_blank" class="recipe-source-link">ð View original recipe</a>`
+    ? `<a href="${r.sourceUrl}" target="_blank" class="recipe-source-link">🔗 View original recipe</a>`
     : '';
 
   document.getElementById('recipe-detail-content').innerHTML = `
@@ -2590,9 +2620,9 @@ function showRecipeDetail(id) {
       <div class="recipe-detail-chips">${tagChips.join('')}</div>
       <div style="font-size:12px;color:var(--text-muted)">${ratingStr}</div>
     </div>
-    ${r.modificationNote ? `<div class="recipe-detail-note">ð <strong>Note:</strong> ${r.modificationNote}</div>` : ''}
-    ${butcherHTML ? `<div class="recipe-detail-section-label" style="margin-top:14px">ð¥© Butcher</div>${butcherHTML}` : ''}
-    ${ingHTML ? `<div class="recipe-detail-section-label" style="margin-top:14px">ð Grocery ingredients</div>${ingHTML}` : ''}
+    ${r.modificationNote ? `<div class="recipe-detail-note">📝 <strong>Note:</strong> ${r.modificationNote}</div>` : ''}
+    ${butcherHTML ? `<div class="recipe-detail-section-label" style="margin-top:14px">🥩 Butcher</div>${butcherHTML}` : ''}
+    ${ingHTML ? `<div class="recipe-detail-section-label" style="margin-top:14px">🛒 Grocery ingredients</div>${ingHTML}` : ''}
     ${stepsHTML}
     ${sourceLink ? `<div style="margin-top:14px;padding-top:12px;border-top:1px solid var(--border)">${sourceLink}</div>` : ''}
   `;
@@ -2604,7 +2634,7 @@ function showRecipeDetail(id) {
 // ============================================================
 function printWeeklyPlan() {
   const dates = getWeekDates();
-  const weekLabel = `Week of ${fmtDate(dates[0])} â ${fmtDate(dates[6])}`;
+  const weekLabel = `Week of ${fmtDate(dates[0])} – ${fmtDate(dates[6])}`;
   let html = `<div class="pv-header">Maund Family Meal Plan</div><div class="pv-week">${weekLabel}</div>`;
 
   for (let i = 0; i < 7; i++) {
@@ -2613,7 +2643,7 @@ function printWeeklyPlan() {
     const dayLabel = `${DAY_NAMES[i]}, ${fmtDate(d)}`;
 
     if (!entry) {
-      html += `<div class="pv-day"><div class="pv-day-name">${dayLabel}</div><div class="pv-empty">â Not planned â</div></div>`;
+      html += `<div class="pv-day"><div class="pv-day-name">${dayLabel}</div><div class="pv-empty">— Not planned —</div></div>`;
       continue;
     }
 
@@ -2627,12 +2657,12 @@ function printWeeklyPlan() {
         if (r.bbq) chips.push('BBQ');
         if (r.cook) chips.push('Cook night');
         chips.push(`${r.time} min`);
-        tagsHtml = chips.length ? `<div class="pv-tags">${chips.join(' Â· ')}</div>` : '';
-        if (r.modificationNote) noteHtml = `<div class="pv-note">ð ${r.modificationNote}</div>`;
+        tagsHtml = chips.length ? `<div class="pv-tags">${chips.join(' · ')}</div>` : '';
+        if (r.modificationNote) noteHtml = `<div class="pv-note">📝 ${r.modificationNote}</div>`;
         const allIng = r.ingredients || [];
         const groceryIng = allIng.filter(i => !isButcherIngredient(i.name));
         const butcherIng = (r.butcherItems || []).length ? r.butcherItems : allIng.filter(i => isButcherIngredient(i.name));
-        ingRows += butcherIng.map(i => `<div class="pv-ing-row pv-butcher"><span class="qty">${i.qty||''}</span><span>ð¥© ${i.cut||i.name}</span></div>`).join('');
+        ingRows += butcherIng.map(i => `<div class="pv-ing-row pv-butcher"><span class="qty">${i.qty||''}</span><span>🥩 ${i.cut||i.name}</span></div>`).join('');
         ingRows += groceryIng.map(i => `<div class="pv-ing-row"><span class="qty">${i.qty||''}</span><span>${i.name}</span></div>`).join('');
         const psteps = (typeof RECIPE_STEPS !== 'undefined' && RECIPE_STEPS[r.id]) || [];
         stepsRows = psteps.length
@@ -2644,7 +2674,7 @@ function printWeeklyPlan() {
       }
     } else if (entry.leftoverOf !== undefined) {
       const src = RECIPES.find(x => x.id === STATE.plan[entry.leftoverOf]?.recipeId);
-      mealName = src ? `Leftovers â ${src.name}` : 'Leftovers';
+      mealName = src ? `Leftovers — ${src.name}` : 'Leftovers';
     } else if (entry.custom) {
       mealName = entry.custom.name;
       const allIng = entry.custom.ingredients || [];
@@ -2665,7 +2695,7 @@ function printWeeklyPlan() {
         if (sr.sourceUrl) sidesHtml += `<div class="pv-source">Source: ${sr.sourceUrl}</div>`;
       });
     }
-    const dayNoteHtml = entry.note ? `<div class="pv-day-note">ð ${entry.note}</div>` : '';
+    const dayNoteHtml = entry.note ? `<div class="pv-day-note">📝 ${entry.note}</div>` : '';
     html += `
       <div class="pv-day">
         <div class="pv-day-name">${dayLabel}</div>
@@ -2717,7 +2747,7 @@ function wireEvents() {
 }
 
 // ============================================================
-// FETCH meal_data.json â server-side data layer
+// FETCH meal_data.json — server-side data layer
 // ============================================================
 async function fetchMealData() {
   try {
@@ -2772,7 +2802,7 @@ function renderFailureBanner() {
   if (banned.length === 0) { wrap.innerHTML = ''; return; }
   wrap.innerHTML = `
     <div style="background:var(--coral-soft);border:1px solid var(--coral);ding:8px 14px;margin-bottom:14px;font-size:12px;color:var(--coral-dark);display:flex;align-items:center;gap:8px;flex-wrap:wrap">
-      <strong>ð« Auto-flagged profiles:</strong>
+      <strong>🚫 Auto-flagged profiles:</strong>
       ${banned.map(p => `<span style="background:#FFF;padding:2px 8px;border-radius:8px;font-weight:600">${p.profile}</span>`).join('')}
     </div>`;
 }
