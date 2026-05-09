@@ -1525,11 +1525,11 @@ function loadState() {
     const raw = localStorage.getItem(STORAGE_KEY);
     if (raw) {
       const s = JSON.parse(raw);
+      if (s.plan) STATE.plan = s.plan;   // restore plan independently of weekStart
       if (s.weekStart) {
         const restored = new Date(s.weekStart);
         // Validate it's a Saturday; stale Monday-based saves get recalculated
         STATE.weekStart = (restored.getDay() === 6) ? restored : getSaturday(new Date());
-        STATE.plan = s.plan || Array(7).fill(null);
       }
       if (s.ryanHomeDays) STATE.ryanHomeDays = s.ryanHomeDays;
       STATE.ryanLunches = s.ryanLunches !== undefined ? s.ryanLunches : null;
