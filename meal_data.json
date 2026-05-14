@@ -1,7 +1,7 @@
 {
   "schema": "maund-meal-data-v1",
-  "lastUpdated": "2026-05-12",
-  "lastSyncedBy": "friday-meal-sync",
+  "lastUpdated": "2026-05-14T23:11:17.346Z",
+  "lastSyncedBy": "weekly-recipe-research",
   "mealHistory": [
     {
       "date": "2026-03-24",
@@ -392,6 +392,30 @@
     }
   ],
   "newToTry": [
+    {
+      "name": "Mexican Adobo Grilled Pork Tenderloin",
+      "protein": "pork",
+      "season": "summer",
+      "time": 45,
+      "why": "Bold Mexican spice rub; first true BBQ pork option beyond sausages/chops; naturally GF; grilled whole tenderloin",
+      "source": "https://www.skinnytaste.com/mexican-adobo-rubbed-grilled-pork/"
+    },
+    {
+      "name": "Turkey Stuffed Peppers",
+      "protein": "turkey",
+      "season": "all",
+      "time": 60,
+      "why": "Fills underused turkey gap; stuffed pepper format is novel vs. bowls; cumin-tomato-rice profile; GF",
+      "source": "https://www.skinnytaste.com/turkey-stuffed-peppers-45-pts/"
+    },
+    {
+      "name": "Vineyard Chicken",
+      "protein": "chicken_breast",
+      "season": "summer",
+      "time": 45,
+      "why": "Chicken breast fills thigh-heavy library gap; roasted grapes + sherry vinegar + shallot + butter sauce is completely new flavor territory; naturally GF",
+      "source": "https://themodernproper.com/vineyard-chicken"
+    },
     {
       "name": "Peruvian Chicken with Creamy Green Sauce",
       "protein": "breast",
