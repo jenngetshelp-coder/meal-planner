@@ -1518,6 +1518,7 @@ function saveState() {
     };
     localStorage.setItem(STORAGE_KEY, JSON.stringify(s));
     scheduleSheetsSync(); // keep Dinner Log in sync for the 9pm review email
+    schedulePlanAutoSave(); // auto-save plan to GitHub so dinner check-in doesn't need Chrome
   } catch(e) { console.error('save failed', e); }
 }
 function loadState() {
@@ -2572,6 +2573,56 @@ async function pushRecipeToGitHub(recipe) {
     showToast(`"${recipe.name}" saved locally — will sync on next push`, 'warning');
   }
 }
+
+// ── PLAN AUTO-SAVE TO GITHUB ─────────────────────────────────
+// Called from saveState() on every plan change (debounced 3s).
+// Writes a `weeklyPlan` key to meal_data.json so dinner check-in
+// can read tonight's meal without opening Chrome.
+let _planAutoSaveTimer = null;
+function schedulePlanAutoSave() {
+  clearTimeout(_planAutoSaveTimer);
+  _planAutoSaveTimer = setTimeout(autosavePlanToGitHub, 3000);
+}
+async function autosavePlanToGitHub() {
+  const TOKEN = localStorage.getItem('maund_github_token');
+  if (!TOKEN) return; // silently skip if token not set
+  const REPO = 'jenngetshelp-coder/meal-planner';
+  const PATH = 'meal_data.json';
+  try {
+    const weeklyPlan = {
+      weekStart: STATE.weekStart.toISOString().slice(0, 10),
+      savedAt: new Date().toISOString(),
+      days: STATE.plan.map((dayPlan, i) => ({
+        dayIndex: i,
+        dayName: DAY_NAMES[i],
+        meal: resolveMealName(dayPlan),
+        isLeftover: dayPlan ? dayPlan.leftoverOf !== undefined : false,
+        isEatingOut: dayPlan ? !!dayPlan.eatingOut : false
+      }))
+    };
+    const getRes = await fetch(`https://api.github.com/repos/${REPO}/contents/${PATH}`, {
+      headers: { Authorization: `token ${TOKEN}`, Accept: 'application/vnd.github.v3+json' }
+    });
+    if (!getRes.ok) throw new Error('GET failed: ' + getRes.status);
+    const meta = await getRes.json();
+    const content = JSON.parse(atob(meta.content.replace(/\n/g, '')));
+    content.weeklyPlan = weeklyPlan;
+    content.lastUpdated = new Date().toISOString().slice(0, 10);
+    const b64 = btoa(unescape(encodeURIComponent(JSON.stringify(content, null, 2))));
+    const putRes = await fetch(`https://api.github.com/repos/${REPO}/contents/${PATH}`, {
+      method: 'PUT',
+      headers: { Authorization: `token ${TOKEN}`, 'Content-Type': 'application/json', Accept: 'application/vnd.github.v3+json' },
+      body: JSON.stringify({ message: `Auto-save weekly plan (${weeklyPlan.weekStart})`, content: b64, sha: meta.sha, branch: 'main' })
+    });
+    if (!putRes.ok) throw new Error('PUT failed: ' + putRes.status);
+    console.log('Plan auto-saved to GitHub ✓', weeklyPlan.weekStart);
+  } catch(e) {
+    console.warn('Plan auto-save failed (non-critical):', e.message);
+    // Silent failure — localStorage is still the source of truth locally
+  }
+}
+// ─────────────────────────────────────────────────────────────
+
 function rejectCandidate(idx) {
   STATE.newToTry.splice(idx, 1);
   saveState();
