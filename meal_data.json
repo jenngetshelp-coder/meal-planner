@@ -1,7 +1,7 @@
 {
   "schema": "maund-meal-data-v1",
   "lastUpdated": "2026-05-21",
-  "lastSyncedBy": "friday-meal-sync",
+  "lastSyncedBy": "weekly-recipe-research",
   "mealHistory": [
     {
       "date": "2026-03-24",
@@ -420,6 +420,30 @@
   ],
   "newToTry": [
     {
+      "name": "Sweet & Fiery Pork Tenderloin with Mango Salsa",
+      "protein": "pork",
+      "season": "summer",
+      "time": 50,
+      "why": "Bold sweet-heat glaze + mango salsa; whole tenderloin, no cutting",
+      "source": "https://www.skinnytaste.com/sweet-and-fiery-pork-tenderloin-with/"
+    },
+    {
+      "name": "The Best Grilled Chicken Breasts",
+      "protein": "breast",
+      "season": "summer",
+      "time": 30,
+      "why": "Proven technique — pound flat, lemon-herb marinade, summer BBQ",
+      "source": "https://www.onceuponachef.com/recipes/perfectly-grilled-chicken-breasts.html"
+    },
+    {
+      "name": "Mustard Glazed Pork Tenderloin",
+      "protein": "pork",
+      "season": "all",
+      "time": 35,
+      "why": "Elegant Dijon-sherry glaze; whole tenderloins, rich pan sauce",
+      "source": "https://www.onceuponachef.com/recipes/pork-tenderloin-mustard-glaze.html"
+    },
+    {
       "name": "Mexican Adobo Grilled Pork Tenderloin",
       "protein": "pork",
       "season": "summer",
@@ -442,30 +466,6 @@
       "time": 45,
       "why": "Chicken breast fills thigh-heavy library gap; roasted grapes + sherry vinegar + shallot + butter sauce is completely new flavor territory; naturally GF",
       "source": "https://themodernproper.com/vineyard-chicken"
-    },
-    {
-      "name": "Peruvian Chicken with Creamy Green Sauce",
-      "protein": "breast",
-      "season": "all",
-      "time": 40,
-      "why": "Whole oven-baked breasts, Peruvian spice rub, uses your weekly mango",
-      "source": "https://www.halfbakedharvest.com/peruvian-chicken/"
-    },
-    {
-      "name": "Cilantro Lime Grilled Chicken Breasts",
-      "protein": "breast",
-      "season": "summer",
-      "time": 20,
-      "why": "5-ingredient marinade, whole breasts on the grill, done in 10 min",
-      "source": "https://www.skinnytaste.com/cilantro-lime-chicken-breast/"
-    },
-    {
-      "name": "Chipotle Chicken",
-      "protein": "breast",
-      "season": "summer",
-      "time": 25,
-      "why": "Smoky-spicy rub, no marinating needed, grill or skillet, 15 min",
-      "source": "https://www.skinnytaste.com/chipotle-chicken/"
     }
   ],
   "emailedGroceryItems": [
