@@ -2917,4 +2917,17 @@ async function init() {
   computeRecipeStats();
   renderTopbar();
   renderSetup();
-  rend
+  renderWeek();
+  renderTabs();
+  renderDeckContent();
+  renderGrocery();
+  renderFailureBanner();
+  wireEvents();
+  // Sync whatever plan is in localStorage to Sheets on load
+  // (covers the case where plan exists locally but not yet in Sheets)
+  setTimeout(syncPlanToSheets, 3000);
+}
+init();
+</script>
+</body>
+</html>
