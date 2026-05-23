@@ -2855,6 +2855,13 @@ async function fetchMealData() {
     if (Array.isArray(d.newToTry)) {
       if (!STATE.newToTry || STATE.newToTry.length === 0) {
         STATE.newToTry = d.newToTry;
+      } else {
+        // Merge: prepend any GitHub items not already in local list (weekly fresh candidates)
+        const existingNames = new Set(STATE.newToTry.map(r => r.name.toLowerCase()));
+        const incoming = d.newToTry.filter(r => !existingNames.has(r.name.toLowerCase()));
+        if (incoming.length > 0) {
+          STATE.newToTry = [...incoming, ...STATE.newToTry];
+        }
       }
     }
     if (Array.isArray(d.failurePatterns)) {
@@ -2907,21 +2914,4 @@ function renderFailureBanner() {
 // ============================================================
 async function init() {
   loadState();
-  await fetchMealData();
-  computeRecipeStats();
-  renderTopbar();
-  renderSetup();
-  renderWeek();
-  renderTabs();
-  renderDeckContent();
-  renderGrocery();
-  renderFailureBanner();
-  wireEvents();
-  // Sync whatever plan is in localStorage to Sheets on load
-  // (covers the case where plan exists locally but not yet in Sheets)
-  setTimeout(syncPlanToSheets, 3000);
-}
-init();
-</script>
-</body>
-</html>
+  await fetc
