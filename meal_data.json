@@ -1,6 +1,6 @@
 {
   "schema": "maund-meal-data-v1",
-  "lastUpdated": "2026-05-22",
+  "lastUpdated": "2026-05-23",
   "lastSyncedBy": "friday-meal-sync",
   "mealHistory": [
     {
@@ -17,7 +17,7 @@
       "meal": "Pork tenderloin (Greek seasoning) + Little Potato Co. baby potatoes + frozen mixed veg",
       "rating": 3,
       "liked": "Low prep",
-      "change": "Not flavourful â needs sauce",
+      "change": "Not flavourful Ã¢ÂÂ needs sauce",
       "keepOrDrop": "Modify",
       "frequency": ""
     },
@@ -34,7 +34,7 @@
       "date": "2026-03-27",
       "meal": "Leftovers",
       "rating": 2,
-      "liked": "I didnât have to cook. I made salads and reheated leftovers",
+      "liked": "I didnÃ¢ÂÂt have to cook. I made salads and reheated leftovers",
       "change": "The leftovers were from mediocre meals so no one wants to eat it again.",
       "keepOrDrop": "One-off - we had it, not a regular",
       "frequency": "\""
@@ -53,7 +53,7 @@
       "meal": "Fried rice",
       "rating": 3,
       "liked": "It was different than just eating chicken",
-      "change": "It wasnât very flavourful",
+      "change": "It wasnÃ¢ÂÂt very flavourful",
       "keepOrDrop": "Try again with modifications",
       "frequency": "\""
     },
@@ -71,7 +71,7 @@
       "meal": "Chicken drumsticks",
       "rating": 3,
       "liked": "The flavour was good. I liked the chimichuri sauce.",
-      "change": "I had to marinate the night before. The family didnât love eating drumsticks. It took a really long time to cook.",
+      "change": "I had to marinate the night before. The family didnÃ¢ÂÂt love eating drumsticks. It took a really long time to cook.",
       "keepOrDrop": "Try again with modifications",
       "frequency": "\""
     },
@@ -97,10 +97,10 @@
       "date": "2026-04-02",
       "meal": "Chicken shawarma bowls",
       "rating": 4,
-      "liked": "Flavourful. Didnât take too long to make.",
+      "liked": "Flavourful. DidnÃ¢ÂÂt take too long to make.",
       "change": "\"",
       "keepOrDrop": "Keep it - add to regular rotation",
-      "frequency": "Every 2â3 weeks"
+      "frequency": "Every 2Ã¢ÂÂ3 weeks"
     },
     {
       "date": "2026-04-03",
@@ -109,7 +109,7 @@
       "liked": "No cooking. Just reheating.",
       "change": "\"",
       "keepOrDrop": "Keep it - add to regular rotation",
-      "frequency": "Every 2â3 weeks"
+      "frequency": "Every 2Ã¢ÂÂ3 weeks"
     },
     {
       "date": "2026-04-04",
@@ -154,7 +154,7 @@
       "liked": "Quick to cook",
       "change": "\"",
       "keepOrDrop": "Keep it - add to regular rotation",
-      "frequency": "Every 2â3 weeks"
+      "frequency": "Every 2Ã¢ÂÂ3 weeks"
     },
     {
       "date": "2026-04-10",
@@ -172,7 +172,7 @@
       "liked": "Flavourful",
       "change": "\"",
       "keepOrDrop": "Keep it - add to regular rotation",
-      "frequency": "Every 2â3 weeks"
+      "frequency": "Every 2Ã¢ÂÂ3 weeks"
     },
     {
       "date": "2026-04-12",
@@ -188,7 +188,7 @@
       "meal": "Thai Peanut Chicken Lettuce Wraps",
       "rating": 4,
       "liked": "It was yummy",
-      "change": "It took a while to make the sauce and chop everything. Itâs also very messy, which we donât love.",
+      "change": "It took a while to make the sauce and chop everything. ItÃ¢ÂÂs also very messy, which we donÃ¢ÂÂt love.",
       "keepOrDrop": "Try again with modifications",
       "frequency": "\""
     },
@@ -206,7 +206,7 @@
       "meal": "Leftover lettuce wraps in bowls",
       "rating": 3,
       "liked": "Easy",
-      "change": "Itâs messy",
+      "change": "ItÃ¢ÂÂs messy",
       "keepOrDrop": "One-off - we had it, not a regular",
       "frequency": "\""
     },
@@ -251,7 +251,7 @@
       "meal": "Coconut curry chicken and salad",
       "rating": 3,
       "liked": "It was fast to heat up",
-      "change": "Chicken didnât heat up well",
+      "change": "Chicken didnÃ¢ÂÂt heat up well",
       "keepOrDrop": "One-off - we had it, not a regular",
       "frequency": "\""
     },
@@ -280,7 +280,7 @@
       "liked": "Super quick",
       "change": "Salad was boring.",
       "keepOrDrop": "Keep it - add to regular rotation",
-      "frequency": "Every 2â3 weeks"
+      "frequency": "Every 2Ã¢ÂÂ3 weeks"
     },
     {
       "date": "2026-04-26",
@@ -316,7 +316,7 @@
       "liked": "Easy, flavourful, fresh",
       "change": "Could use a sauce to put over the bowl",
       "keepOrDrop": "Keep it - add to regular rotation",
-      "frequency": "Every 2â3 weeks"
+      "frequency": "Every 2Ã¢ÂÂ3 weeks"
     },
     {
       "date": "2026-04-30",
@@ -356,7 +356,7 @@
     },
     {
       "date": "2026-05-04",
-      "meal": "Turkey meatballs in tomatoâs sauce with salad",
+      "meal": "Turkey meatballs in tomatoÃ¢ÂÂs sauce with salad",
       "rating": 4,
       "liked": "Easy. Tasted good",
       "change": "\"",
@@ -388,7 +388,7 @@
       "liked": "Flavourful and quick to make",
       "change": "\"",
       "keepOrDrop": "Keep it - add to regular rotation",
-      "frequency": "Every 2â3 weeks"
+      "frequency": "Every 2Ã¢ÂÂ3 weeks"
     },
     {
       "date": "2026-05-09",
@@ -401,7 +401,7 @@
     },
     {
       "date": "2026-05-11",
-      "meal": "Leftovers â Steak, Potatoes, Peppers",
+      "meal": "Leftovers Ã¢ÂÂ Steak, Potatoes, Peppers",
       "rating": 4,
       "liked": "Quick to reheat. Food everyone liked",
       "change": "\"",
@@ -432,7 +432,7 @@
       "protein": "breast",
       "season": "summer",
       "time": 30,
-      "why": "Proven technique Ã¢ÂÂ pound flat, lemon-herb marinade, summer BBQ",
+      "why": "Proven technique ÃÂ¢ÃÂÃÂ pound flat, lemon-herb marinade, summer BBQ",
       "source": "https://www.onceuponachef.com/recipes/perfectly-grilled-chicken-breasts.html"
     },
     {
@@ -483,7 +483,7 @@
   "failurePatterns": [
     {
       "profile": "honey garlic",
-      "reason": "Two dishes rated 0â1/5",
+      "reason": "Two dishes rated 0Ã¢ÂÂ1/5",
       "status": "banned"
     },
     {
