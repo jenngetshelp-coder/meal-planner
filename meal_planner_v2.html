@@ -886,9 +886,9 @@ const RECIPES = [
    ingredients:[{name:"Pre-marinated bulgogi from butcher",qty:"1.5–2 lbs"},{name:"Jasmine rice",qty:"1 bag"},{name:"Edamame (frozen)",qty:"1 bag"},{name:"Carrots",qty:"1 bag"},{name:"English cucumber",qty:"1"},{name:"Sesame seeds",qty:"1 small jar"},{name:"Green onions",qty:"1 bunch"}],
    butcherItems:[{cut:"Korean Bulgogi (pre-marinated)",qty:"1.5–2 lbs"}],
    sourceUrl:"https://www.recipetineats.com/korean-beef-bowl/"},
-  {id:6,name:"Turkey and Rice Soup",protein:"turkey",season:"winter",time:50,bbq:false,easy:false,cook:true,thigh:false,
-   ingredients:[{name:"Ground turkey",qty:"1 lb"},{name:"Long grain rice",qty:"1 bag"},{name:"Carrots",qty:"1 bag"},{name:"Celery stalks",qty:"1 bunch"},{name:"Yellow onion",qty:"1 large"},{name:"Crusty bread",qty:"1 loaf"}],
-   butcherItems:[{cut:"Ground Turkey",qty:"1 lb"}],
+  {id:6,name:"Turkey and Rice Soup",protein:"breast",season:"winter",time:50,bbq:false,easy:false,cook:true,thigh:false,
+   ingredients:[{name:"Cooked chicken (BBQ or rotisserie)",qty:"2 cups, shredded"},{name:"Long grain rice",qty:"1 bag"},{name:"Carrots",qty:"1 bag"},{name:"Celery stalks",qty:"1 bunch"},{name:"Yellow onion",qty:"1 large"},{name:"Crusty bread",qty:"1 loaf"}],
+   butcherItems:[],
    sourceUrl:"https://iamhomesteader.com/turkey-rice-soup/"},
   {id:7,name:"Mango Black Bean Salad with Grilled Chicken",protein:"breast",season:"summer",time:25,bbq:true,easy:true,cook:false,thigh:false,
    ingredients:[{name:"Chicken breasts",qty:"3 breasts"},{name:"Mangos",qty:"2"},{name:"Canned black beans",qty:"1 can"},{name:"Red bell pepper",qty:"1"},{name:"Red onion (small)",qty:"1 small"},{name:"Limes",qty:"2"},{name:"Avocados",qty:"2"},{name:"Mixed greens",qty:"1 bag"},{name:"Fresh cilantro",qty:"1 bunch"}],
@@ -923,8 +923,9 @@ const RECIPES = [
    butcherItems:[{cut:"Turkey Meatballs (pre-made, raw)",qty:"1.5–2 lbs"}],
    sourceUrl:"https://www.wellplated.com/turkey-meatballs/"},
   {id:17,name:"Turkey Tornados",protein:"turkey",season:"all",time:60,bbq:false,easy:false,cook:true,thigh:false,
-   ingredients:[{name:"Turkey breast (cut into 2-inch chunks)",qty:"1.5 lbs"},{name:"Bacon strips",qty:"1 pkg"},{name:"Butter",qty:""},{name:"Garlic",qty:"1 head"},{name:"Baby potatoes (Little Potato Co.)",qty:"1 bag"},{name:"Green beans",qty:"1 lb"}],
-   butcherItems:[{cut:"Turkey Breast (chunked)",qty:"1.5 lbs"},{cut:"Bacon",qty:"1 pkg"}],
+   modificationNote:"Tornados are pre-made from the butcher — turkey wrapped in bacon, ready to sear. No assembly needed.",
+   ingredients:[{name:"Turkey Tornados (pre-made, from butcher)",qty:"6–8 pieces"},{name:"Butter",qty:""},{name:"Garlic",qty:"1 head"},{name:"Baby potatoes (Little Potato Co.)",qty:"1 bag"},{name:"Green beans",qty:"1 lb"}],
+   butcherItems:[{cut:"Turkey Tornados (pre-made)",qty:"6–8 pieces"}],
    sourceUrl:"https://www.justapinch.com/recipes/main-course/turkey/turkey-tornadoes.html"},
   {id:20,name:"Arroz con Pollo",protein:"thigh",season:"winter",time:55,bbq:false,easy:false,cook:true,thigh:true,
    ingredients:[{name:"Bone-in skin-on chicken thighs",qty:"6–8 pieces"},{name:"Long grain white rice",qty:"1 bag"},{name:"Yellow onion",qty:"1 large"},{name:"Red bell pepper",qty:"1"},{name:"Garlic",qty:"1 head"},{name:"Canned diced tomatoes",qty:"1 can (400ml)"},{name:"Frozen peas",qty:"1 bag"},{name:"Limes",qty:"2"},{name:"Fresh cilantro",qty:"1 small bunch"}],
@@ -1056,7 +1057,7 @@ const RECIPE_STEPS = {
     "Pour in 8 cups turkey or chicken broth. Bring to a boil.",
     "Reduce heat to medium-low. Add 1 cup long-grain white rice and stir.",
     "Simmer 10–12 min until rice is almost done but still slightly firm.",
-    "Add 2 cups cubed cooked turkey. Simmer 15–20 more min until rice is fully cooked and soup is thick.",
+    "Add 2 cups shredded BBQ or rotisserie chicken. Simmer 15–20 more min until rice is fully cooked and soup is thick.",
     "Taste, adjust salt. Garnish with fresh parsley and serve."
   ],
   7: [
@@ -1122,14 +1123,12 @@ const RECIPE_STEPS = {
     "Drain pasta. Plate pasta, top with meatballs and sauce. Done."
   ],
   17: [
-    "Cut 1.5 lbs turkey breast into 2-inch chunks.",
-    "Wrap each chunk tightly with one strip of bacon. Secure with a toothpick pushed through the side. (This takes time — put on music. It's worth it.)",
+    "Pick up pre-made Turkey Tornados from the butcher — already wrapped in bacon, ready to cook.",
     "Make garlic herb butter: 3 tbsp butter + 3 garlic cloves minced + 1 tbsp fresh thyme + 1 tbsp fresh rosemary + salt.",
     "Heat an oven-safe skillet over medium-high until hot. Sear tornados 2–3 min per side, rotating to crisp the bacon all around.",
     "Baste generously with garlic herb butter.",
     "Transfer pan to oven at 400°F. Bake 12–15 min until turkey reaches 165°F.",
-    "Pull from oven and baste one more time with the pan butter. Rest 3 min before serving.",
-    "Note: Bacon wrapping does NOT count as the weekly pork meal."
+    "Pull from oven and baste one more time with the pan butter. Rest 3 min before serving."
   ],
   20: [
     "Season 6–8 chicken pieces with 1 tsp cumin, 1 tsp paprika, 1 tsp garlic powder, 1 tsp salt, ½ tsp oregano.",
@@ -2914,4 +2913,8 @@ function renderFailureBanner() {
 // ============================================================
 async function init() {
   loadState();
-  await fetc
+  await fetchMealData();
+  computeRecipeStats();
+  renderTopbar();
+  renderSetup();
+  rend
