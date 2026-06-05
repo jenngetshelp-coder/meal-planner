@@ -1,7 +1,7 @@
 {
   "schema": "maund-meal-data-v1",
-  "lastUpdated": "2026-06-04",
-  "lastSyncedBy": "weekly-recipe-research",
+  "lastUpdated": "2026-06-05",
+  "lastSyncedBy": "friday-meal-sync",
   "mealHistory": [
     {
       "date": "2026-03-24",
@@ -448,7 +448,7 @@
       "protein": "turkey",
       "season": "all",
       "time": 20,
-      "why": "GF-native turkey with white wine garlic pan sauce — fast and saucy",
+      "why": "GF-native turkey with white wine garlic pan sauce â fast and saucy",
       "source": "https://www.cookincanuck.com/easy-turkey-cutlets-in-white-wine-sauce/"
     },
     {
@@ -456,7 +456,7 @@
       "protein": "breast",
       "season": "all",
       "time": 25,
-      "why": "Smoky-bold chipotle tomato sauce + avocado crema — 25 min, GF",
+      "why": "Smoky-bold chipotle tomato sauce + avocado crema â 25 min, GF",
       "source": "https://www.skinnytaste.com/skillet-chicken-in-tomato-chipotle-sauce/"
     },
     {
@@ -464,7 +464,7 @@
       "protein": "breast",
       "season": "summer",
       "time": 50,
-      "why": "Bistro lemon-butter shallot pan sauce — GF, elegant cook night",
+      "why": "Bistro lemon-butter shallot pan sauce â GF, elegant cook night",
       "source": "https://themodernproper.com/chicken-paillard"
     }
   ],
@@ -518,7 +518,7 @@
       {
         "dayIndex": 2,
         "dayName": "Mon",
-        "meal": "Leftovers — Turkey Tornados",
+        "meal": "Leftovers â Turkey Tornados",
         "isLeftover": true,
         "isEatingOut": false
       },
