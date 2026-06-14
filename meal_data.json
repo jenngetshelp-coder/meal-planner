@@ -1,7 +1,7 @@
 {
   "schema": "maund-meal-data-v1",
   "lastUpdated": "2026-06-14",
-  "lastSyncedBy": "friday-meal-sync",
+  "lastSyncedBy": "weekly-recipe-research",
   "mealHistory": [
     {
       "date": "2026-03-24",
@@ -420,6 +420,30 @@
   ],
   "newToTry": [
     {
+      "name": "Korean BBQ Chicken Breasts",
+      "protein": "breast",
+      "season": "summer",
+      "time": 25,
+      "why": "Saucy tamari-ginger-sesame marinade; grill whole; sub tamari (GF)",
+      "source": "https://www.skinnytaste.com/korean-grilled-chicken-breast/"
+    },
+    {
+      "name": "Grilled Pork Tenderloin with Chermoula",
+      "protein": "pork",
+      "season": "summer",
+      "time": 35,
+      "why": "North African herb sauce (cilantro/mint/cumin/lemon); distinct from chimichurri",
+      "source": "https://themodernproper.com/grilled-pork-tenderloin-with-carrots-and-chermoula"
+    },
+    {
+      "name": "Blackened Chicken Breast",
+      "protein": "breast",
+      "season": "summer",
+      "time": 25,
+      "why": "Bold Cajun spice rub; no marinating needed; grill or skillet; 5 min cook",
+      "source": "https://www.onceuponachef.com/recipes/blackened-chicken-skillet-grill-or-grill-pan.html"
+    },
+    {
       "name": "Grilled Tequila Lime Chicken",
       "protein": "breast",
       "season": "summer",
@@ -442,30 +466,6 @@
       "time": 45,
       "why": "Bold smoky adobo rub on whole tenderloin; GF, lean, summery",
       "source": "https://www.skinnytaste.com/mexican-adobo-rubbed-grilled-pork/"
-    },
-    {
-      "name": "Turkey Cutlets in White Wine Sauce",
-      "protein": "turkey",
-      "season": "all",
-      "time": 20,
-      "why": "GF-native turkey with white wine garlic pan sauce ÃÂ¢ÃÂÃÂ fast and saucy",
-      "source": "https://www.cookincanuck.com/easy-turkey-cutlets-in-white-wine-sauce/"
-    },
-    {
-      "name": "Skillet Chicken in Tomato-Chipotle Sauce",
-      "protein": "breast",
-      "season": "all",
-      "time": 25,
-      "why": "Smoky-bold chipotle tomato sauce + avocado crema ÃÂ¢ÃÂÃÂ 25 min, GF",
-      "source": "https://www.skinnytaste.com/skillet-chicken-in-tomato-chipotle-sauce/"
-    },
-    {
-      "name": "Chicken Paillard",
-      "protein": "breast",
-      "season": "summer",
-      "time": 50,
-      "why": "Bistro lemon-butter shallot pan sauce ÃÂ¢ÃÂÃÂ GF, elegant cook night",
-      "source": "https://themodernproper.com/chicken-paillard"
     }
   ],
   "emailedGroceryItems": [
