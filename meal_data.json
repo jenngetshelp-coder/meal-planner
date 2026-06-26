@@ -1,6 +1,6 @@
 {
   "schema": "maund-meal-data-v1",
-  "lastUpdated": "2026-06-14",
+  "lastUpdated": "2026-06-26",
   "lastSyncedBy": "weekly-recipe-research",
   "mealHistory": [
     {
@@ -420,6 +420,30 @@
   ],
   "newToTry": [
     {
+      "name": "Grilled Flank Steak with Garlic & Rosemary",
+      "protein": "beef",
+      "season": "summer",
+      "time": 30,
+      "why": "Ryan-away beef; 5-min marinade, grill 10 min; zero gluten, zero fuss",
+      "source": "https://www.onceuponachef.com/recipes/grilled-flank-steak.html"
+    },
+    {
+      "name": "Creamy Tomato Chicken Skillet",
+      "protein": "breast",
+      "season": "all",
+      "time": 40,
+      "why": "One-pan tomato cream sauce; chicken IN the sauce (not naked); GF, 40 min",
+      "source": "https://themodernproper.com/creamy-tomato-chicken-skillet-dinner"
+    },
+    {
+      "name": "Grilled Turkey Tenderloin",
+      "protein": "turkey",
+      "season": "summer",
+      "time": 30,
+      "why": "Bold tamari-lemon-Dijon marinade; whole tenderloin on BBQ; GF with tamari",
+      "source": "https://foolproofliving.com/grilled-turkey-tenderloin/"
+    },
+    {
       "name": "Korean BBQ Chicken Breasts",
       "protein": "breast",
       "season": "summer",
@@ -442,30 +466,6 @@
       "time": 25,
       "why": "Bold Cajun spice rub; no marinating needed; grill or skillet; 5 min cook",
       "source": "https://www.onceuponachef.com/recipes/blackened-chicken-skillet-grill-or-grill-pan.html"
-    },
-    {
-      "name": "Grilled Tequila Lime Chicken",
-      "protein": "breast",
-      "season": "summer",
-      "time": 20,
-      "why": "Bold ancho-lime-tequila marinade; whole BBQ breasts, no cutting",
-      "source": "https://www.onceuponachef.com/recipes/grilled-tequila-lime-chicken.html"
-    },
-    {
-      "name": "Cheesy Green Chile Stuffed Chicken",
-      "protein": "breast",
-      "season": "all",
-      "time": 40,
-      "why": "Cream cheese + pepper jack + salsa verde; saucy, cheesy, one skillet",
-      "source": "https://www.halfbakedharvest.com/green-chile-chicken/"
-    },
-    {
-      "name": "Mexican Adobo Grilled Pork Tenderloin",
-      "protein": "pork",
-      "season": "summer",
-      "time": 45,
-      "why": "Bold smoky adobo rub on whole tenderloin; GF, lean, summery",
-      "source": "https://www.skinnytaste.com/mexican-adobo-rubbed-grilled-pork/"
     }
   ],
   "emailedGroceryItems": [
