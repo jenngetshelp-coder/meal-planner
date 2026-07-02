@@ -1,6 +1,6 @@
 {
   "schema": "maund-meal-data-v1",
-  "lastUpdated": "2026-06-26",
+  "lastUpdated": "2026-07-02",
   "lastSyncedBy": "weekly-recipe-research",
   "mealHistory": [
     {
@@ -420,6 +420,30 @@
   ],
   "newToTry": [
     {
+      "name": "Turkey Cutlets in White Wine Sauce",
+      "protein": "turkey",
+      "season": "all",
+      "time": 20,
+      "why": "Fills turkey gap; rosemary-wine pan sauce, naturally GF, 20 min",
+      "source": "https://www.cookincanuck.com/easy-turkey-cutlets-in-white-wine-sauce/"
+    },
+    {
+      "name": "Grilled Tequila Lime Chicken",
+      "protein": "breast",
+      "season": "summer",
+      "time": 30,
+      "why": "Bold Southwestern BBQ breast; marinate-then-grill is Jenn's zone",
+      "source": "https://www.onceuponachef.com/recipes/grilled-tequila-lime-chicken.html"
+    },
+    {
+      "name": "Glazed Pork Tenderloin",
+      "protein": "pork",
+      "season": "all",
+      "time": 35,
+      "why": "Saucy mustard-sherry glaze; pork variety, marinate ahead",
+      "source": "https://www.onceuponachef.com/recipes/pork-tenderloin-mustard-glaze.html"
+    },
+    {
       "name": "Grilled Flank Steak with Garlic & Rosemary",
       "protein": "beef",
       "season": "summer",
@@ -442,30 +466,6 @@
       "time": 30,
       "why": "Bold tamari-lemon-Dijon marinade; whole tenderloin on BBQ; GF with tamari",
       "source": "https://foolproofliving.com/grilled-turkey-tenderloin/"
-    },
-    {
-      "name": "Korean BBQ Chicken Breasts",
-      "protein": "breast",
-      "season": "summer",
-      "time": 25,
-      "why": "Saucy tamari-ginger-sesame marinade; grill whole; sub tamari (GF)",
-      "source": "https://www.skinnytaste.com/korean-grilled-chicken-breast/"
-    },
-    {
-      "name": "Grilled Pork Tenderloin with Chermoula",
-      "protein": "pork",
-      "season": "summer",
-      "time": 35,
-      "why": "North African herb sauce (cilantro/mint/cumin/lemon); distinct from chimichurri",
-      "source": "https://themodernproper.com/grilled-pork-tenderloin-with-carrots-and-chermoula"
-    },
-    {
-      "name": "Blackened Chicken Breast",
-      "protein": "breast",
-      "season": "summer",
-      "time": 25,
-      "why": "Bold Cajun spice rub; no marinating needed; grill or skillet; 5 min cook",
-      "source": "https://www.onceuponachef.com/recipes/blackened-chicken-skillet-grill-or-grill-pan.html"
     }
   ],
   "emailedGroceryItems": [
