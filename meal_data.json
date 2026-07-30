@@ -1,6 +1,6 @@
 {
   "schema": "maund-meal-data-v1",
-  "lastUpdated": "2026-07-23",
+  "lastUpdated": "2026-07-30",
   "lastSyncedBy": "weekly-recipe-research",
   "mealHistory": [
     {
@@ -420,6 +420,30 @@
   ],
   "newToTry": [
     {
+      "name": "Chicken Dijon (Creamy Mustard-Tarragon)",
+      "protein": "breast",
+      "season": "all",
+      "time": 35,
+      "why": "Saucy Dijon-tarragon sauce fights chicken fatigue; whole breasts, no cutting",
+      "source": "https://themodernproper.com/chicken-dijon"
+    },
+    {
+      "name": "Garlic Herb Turkey Tenderloin",
+      "protein": "turkey",
+      "season": "summer",
+      "time": 35,
+      "why": "Grows turkey variety; sear+bake or grill, no honey-garlic or balsamic",
+      "source": "https://keytomylime.com/turkey-tenderloin-recipe/"
+    },
+    {
+      "name": "Mexican Adobo Grilled Pork Tenderloin",
+      "protein": "pork",
+      "season": "summer",
+      "time": 45,
+      "why": "Bold spice rub fixes pork's blandness; grilled, lean and simple",
+      "source": "https://www.skinnytaste.com/mexican-adobo-rubbed-grilled-pork/"
+    },
+    {
       "name": "Grilled Flank Steak with Garlic & Rosemary",
       "protein": "beef",
       "season": "summer",
@@ -442,30 +466,6 @@
       "time": 25,
       "why": "Sausage-boosted patty fixes dry turkey burgers; fills underused-turkey gap",
       "source": "https://www.onceuponachef.com/recipes/turkey-burgers.html"
-    },
-    {
-      "name": "Chimichurri Steak",
-      "protein": "beef",
-      "season": "summer",
-      "time": 25,
-      "why": "Beef gap-filler; bright herb sauce family already loves (Ryan-away)",
-      "source": "https://themodernproper.com/chimichurri-steak"
-    },
-    {
-      "name": "Baked Pesto Chicken",
-      "protein": "breast",
-      "season": "all",
-      "time": 30,
-      "why": "Saucy pesto-baked whole breasts, no cutting/batch-browning",
-      "source": "https://cookathomemom.com/baked-pesto-chicken-keto/"
-    },
-    {
-      "name": "Garlic-Lime Marinated Pork Chops",
-      "protein": "pork",
-      "season": "summer",
-      "time": 25,
-      "why": "Bold garlic-lime marinade, 10-min cook, grill or broiler",
-      "source": "https://www.skinnytaste.com/garlic-lime-marinated-pork-chops-6-pts/"
     }
   ],
   "emailedGroceryItems": [
