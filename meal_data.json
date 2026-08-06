@@ -1,6 +1,6 @@
 {
   "schema": "maund-meal-data-v1",
-  "lastUpdated": "2026-07-30",
+  "lastUpdated": "2026-08-06",
   "lastSyncedBy": "weekly-recipe-research",
   "mealHistory": [
     {
@@ -420,6 +420,30 @@
   ],
   "newToTry": [
     {
+      "name": "Skillet Chicken in Tomato-Chipotle Sauce with Avocado Crema",
+      "protein": "breast",
+      "season": "all",
+      "time": 25,
+      "why": "Bold tomato-chipotle sauce fights chicken fatigue, no cream",
+      "source": "https://www.skinnytaste.com/skillet-chicken-in-tomato-chipotle-sauce/"
+    },
+    {
+      "name": "Easy Mexican Pork Chops",
+      "protein": "pork",
+      "season": "all",
+      "time": 25,
+      "why": "5-ingredient marinade, quick weeknight pork, no blandness",
+      "source": "https://cookathomemom.com/easy-mexican-style-pork-chops/"
+    },
+    {
+      "name": "Quick and Easy Pepper Steak",
+      "protein": "beef",
+      "season": "all",
+      "time": 20,
+      "why": "Fast Ryan-away beef stir-fry, peppers add veg variety",
+      "source": "https://www.skinnytaste.com/pepper-steak/"
+    },
+    {
       "name": "Chicken Dijon (Creamy Mustard-Tarragon)",
       "protein": "breast",
       "season": "all",
@@ -442,30 +466,6 @@
       "time": 45,
       "why": "Bold spice rub fixes pork's blandness; grilled, lean and simple",
       "source": "https://www.skinnytaste.com/mexican-adobo-rubbed-grilled-pork/"
-    },
-    {
-      "name": "Grilled Flank Steak with Garlic & Rosemary",
-      "protein": "beef",
-      "season": "summer",
-      "time": 30,
-      "why": "Whole-piece grill-then-slice beef, no cutting/browning, bold herb marinade",
-      "source": "https://www.onceuponachef.com/recipes/grilled-flank-steak.html"
-    },
-    {
-      "name": "The Best Chicken Marinade (Dijon-Worcestershire Breasts)",
-      "protein": "breast",
-      "season": "all",
-      "time": 30,
-      "why": "Bold saucy breast marinade, fills chicken-fatigue gap, no honey/balsamic/teriyaki",
-      "source": "https://themodernproper.com/the-best-chicken-marinade"
-    },
-    {
-      "name": "Juiciest Grilled Turkey Burgers (no bun)",
-      "protein": "turkey",
-      "season": "summer",
-      "time": 25,
-      "why": "Sausage-boosted patty fixes dry turkey burgers; fills underused-turkey gap",
-      "source": "https://www.onceuponachef.com/recipes/turkey-burgers.html"
     }
   ],
   "emailedGroceryItems": [
