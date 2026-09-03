@@ -1,6 +1,6 @@
 {
   "schema": "maund-meal-data-v1",
-  "lastUpdated": "2026-09-01",
+  "lastUpdated": "2026-09-03",
   "lastSyncedBy": "weekly-recipe-research",
   "mealHistory": [
     {
@@ -420,6 +420,30 @@
   ],
   "newToTry": [
     {
+      "name": "Creamy Tomato Chicken Skillet Dinner",
+      "protein": "breast",
+      "season": "all",
+      "time": 30,
+      "why": "Saucy one-pan chicken breast (whole, not cut) — no naked chicken",
+      "source": "https://themodernproper.com/creamy-tomato-chicken-skillet-dinner"
+    },
+    {
+      "name": "Best Steak Fajitas",
+      "protein": "beef",
+      "season": "all",
+      "time": 30,
+      "why": "Bold marinade, Ryan-away beef night, fills protein variety gap",
+      "source": "https://downshiftology.com/recipes/steak-fajitas/"
+    },
+    {
+      "name": "Mexican Adobo Rubbed Grilled Pork Tenderloin",
+      "protein": "pork",
+      "season": "all",
+      "time": 30,
+      "why": "Dead-simple 3-ingredient rub, whole piece, grill or broiler",
+      "source": "https://www.skinnytaste.com/mexican-adobo-rubbed-grilled-pork/"
+    },
+    {
       "name": "Skillet Basil-Peach Chicken Breasts",
       "protein": "breast",
       "season": "summer",
@@ -442,30 +466,6 @@
       "time": 20,
       "why": "Quick turkey variety, herb rub + pan sauce, no breading",
       "source": "https://www.cookincanuck.com/easy-turkey-cutlets-in-white-wine-sauce/"
-    },
-    {
-      "name": "Skillet Chicken in Tomato-Chipotle Sauce with Avocado Crema",
-      "protein": "breast",
-      "season": "all",
-      "time": 25,
-      "why": "Bold tomato-chipotle sauce fights chicken fatigue, no cream",
-      "source": "https://www.skinnytaste.com/skillet-chicken-in-tomato-chipotle-sauce/"
-    },
-    {
-      "name": "Easy Mexican Pork Chops",
-      "protein": "pork",
-      "season": "all",
-      "time": 25,
-      "why": "5-ingredient marinade, quick weeknight pork, no blandness",
-      "source": "https://cookathomemom.com/easy-mexican-style-pork-chops/"
-    },
-    {
-      "name": "Quick and Easy Pepper Steak",
-      "protein": "beef",
-      "season": "all",
-      "time": 20,
-      "why": "Fast Ryan-away beef stir-fry, peppers add veg variety",
-      "source": "https://www.skinnytaste.com/pepper-steak/"
     }
   ],
   "emailedGroceryItems": [
